@@ -95,15 +95,15 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitJumpInsn(Opcodes.IFNULL, l9);
 			mv.visitVarInsn(Opcodes.ALOAD, 9);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/item/ItemStack", "getItem", "()Lnet/minecraft/item/Item;", false);
-			mv.visitTypeInsn(Opcodes.INSTANCEOF, "trinarybrain/magianaturalis/api/IRevealInvisible");
+			mv.visitTypeInsn(Opcodes.INSTANCEOF, "trinarybrain/magia/naturalis/api/IRevealInvisible");
 			mv.visitJumpInsn(Opcodes.IFEQ, l9);
 			mv.visitVarInsn(Opcodes.ALOAD, 9);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/item/ItemStack", "getItem", "()Lnet/minecraft/item/Item;", false);
-			mv.visitTypeInsn(Opcodes.CHECKCAST, "trinarybrain/magianaturalis/api/IRevealInvisible");
+			mv.visitTypeInsn(Opcodes.CHECKCAST, "trinarybrain/magia/naturalis/api/IRevealInvisible");
 			mv.visitVarInsn(Opcodes.ALOAD, 9);
 			mv.visitVarInsn(Opcodes.ALOAD, 8);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
-			mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "trinarybrain/magianaturalis/api/IRevealInvisible", "showInvisibleEntity", "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z", true);
+			mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "trinarybrain/magia/naturalis/api/IRevealInvisible", "showInvisibleEntity", "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z", true);
 			mv.visitJumpInsn(Opcodes.IFEQ, l9);
 			mv.visitLabel(l8);
 			mv.visitLineNumber(71, l8);
