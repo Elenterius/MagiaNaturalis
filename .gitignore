@@ -1,6 +1,5 @@
 # exclude all
 /*
-/*/
 
 !gradle/
 !gradlew
