@@ -10,30 +10,27 @@ import trinarybrain.magia.naturalis.common.core.Log;
 
 public class Agent implements IClassTransformer
 {
-	public static int dev = 1;
+
 	@Override
 	public byte[] transform(String className, String transformedName, byte[] classfileBuffer)
 	{
-		if(className.equals("boh"))
-			Agent.dev = 0;
-		else if(!className.equals("net.minecraft.client.renderer.entity.RendererLivingEntity"))
+		if(!className.equals("net.minecraft.client.renderer.entity.RendererLivingEntity"))
 		{
 			return classfileBuffer;
 		}
 		
 		byte[] result = classfileBuffer;
-		Log.logger.info("Transformed class name: " + transformedName);
 		
 		try
 		{
 			//Create class reader from buffer
 			ClassReader reader = new ClassReader(classfileBuffer);
 			
-			//Create writer
+			//Make writer
 			ClassWriter writer = new ClassWriter(0);
 			ClassVisitor profiler = new ProfileClass(writer, className);
 			
-			//Add the class profiler as a modifier
+			//Add the class adapter as a modifier
 			reader.accept(profiler, 0);
 			result = writer.toByteArray();
 			Log.logger.info("Returning Udated class: " + className);
