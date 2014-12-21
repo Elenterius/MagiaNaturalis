@@ -11,60 +11,49 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 	private String className;
 	private String methodName;
 
-	public ProfileMethod(MethodVisitor mv, int access, String className, String methodName, String desc, String signature)
+	public ProfileMethod(MethodVisitor mv, String className, String methodName)
 	{
 		super(ASM4, mv);
 		this.className = className;
 		this.methodName = methodName;
-		
-		Log.logger.info("Profiling " + methodName + " in class " + className);
-		
-		if(methodName.equals(Mapping.m_renderModel[Agent.dev]))
-		{
-			Log.logger.info("==========> DEV: " + Agent.dev);
-			Log.logger.info("==========> Profiling " + methodName + " in class " + className);
-			Log.logger.info("==========> Current Access: " + access + "Vs. Protected Acces: " + Opcodes.ACC_PROTECTED);
-			Log.logger.info("==========> Description: " + desc);
-			Log.logger.info("==========> signature: " + signature);
-		}
+		Log.logger.info("Profiled " + methodName + " in class " + className+ ".");
 		
 		if(methodName.equals("renderModel"))
 		{
-			Log.logger.info("Profiled class " + className+ ".");
-			Log.logger.info("Replacing " + methodName + " Method Body.");
+			Log.logger.info("Replacing " + methodName + " Body in class.");
 			mv.visitCode();
 			Label l0 = new Label();
 			mv.visitLabel(l0);
 			mv.visitLineNumber(61, l0);
 			mv.visitVarInsn(Opcodes.ALOAD, 0);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_RendererLivingEntity[Agent.dev], Mapping.m_bindEntityTexture[Agent.dev], "(L" + Mapping.r_Entity[Agent.dev] + ";)V", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/client/renderer/entity/RendererLivingEntity", "bindEntityTexture", "(Lnet/minecraft/entity/Entity;)V", false);
 			Label l1 = new Label();
 			mv.visitLabel(l1);
 			mv.visitLineNumber(62, l1);
-			mv.visitMethodInsn(Opcodes.INVOKESTATIC, Mapping.r_Minecraft[Agent.dev], Mapping.m_getMinecraft[Agent.dev], "()L" + Mapping.r_Minecraft[Agent.dev] + ";", false);
-			mv.visitFieldInsn(Opcodes.GETFIELD, Mapping.r_Minecraft[Agent.dev], Mapping.f_thePlayer[Agent.dev], "L" + Mapping.r_EntityClientPlayerMP[Agent.dev] +";");
+			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "net/minecraft/client/Minecraft", "getMinecraft", "()Lnet/minecraft/client/Minecraft;", false);
+			mv.visitFieldInsn(Opcodes.GETFIELD, "net/minecraft/client/Minecraft", "thePlayer", "Lnet/minecraft/client/entity/EntityClientPlayerMP;");
 			mv.visitVarInsn(Opcodes.ASTORE, 8);
 			Label l2 = new Label();
 			mv.visitLabel(l2);
 			mv.visitLineNumber(63, l2);
 			mv.visitVarInsn(Opcodes.ALOAD, 8);
-			mv.visitFieldInsn(Opcodes.GETFIELD, Mapping.r_EntityPlayer[Agent.dev], Mapping.f_inventory[Agent.dev], "L" + Mapping.r_InventoryPlayer[Agent.dev] + ";");
+			mv.visitFieldInsn(Opcodes.GETFIELD, "net/minecraft/entity/player/EntityPlayer", "inventory", "Lnet/minecraft/entity/player/InventoryPlayer;");
 			mv.visitInsn(Opcodes.ICONST_3);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_InventoryPlayer[Agent.dev], "armorItemInSlot", "(I)Lnet/minecraft/item/ItemStack;", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/entity/player/InventoryPlayer", "armorItemInSlot", "(I)Lnet/minecraft/item/ItemStack;", false);
 			mv.visitVarInsn(Opcodes.ASTORE, 9);
 			Label l3 = new Label();
 			mv.visitLabel(l3);
 			mv.visitLineNumber(65, l3);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_EntityLivingBase[Agent.dev], Mapping.m_isInvisible[Agent.dev], "()Z", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/entity/EntityLivingBase", "isInvisible", "()Z", false);
 			Label l4 = new Label();
 			mv.visitJumpInsn(Opcodes.IFNE, l4);
 			Label l5 = new Label();
 			mv.visitLabel(l5);
 			mv.visitLineNumber(67, l5);
 			mv.visitVarInsn(Opcodes.ALOAD, 0);
-			mv.visitFieldInsn(Opcodes.GETFIELD, Mapping.r_RendererLivingEntity[Agent.dev], Mapping.f_mainModel[Agent.dev], "Lnet/minecraft/client/model/ModelBase;");
+			mv.visitFieldInsn(Opcodes.GETFIELD, "net/minecraft/client/renderer/entity/RendererLivingEntity", "mainModel", "Lnet/minecraft/client/model/ModelBase;");
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
 			mv.visitVarInsn(Opcodes.FLOAD, 2);
 			mv.visitVarInsn(Opcodes.FLOAD, 3);
@@ -83,12 +72,12 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitFrame(Opcodes.F_APPEND,2, new Object[] {"net/minecraft/entity/player/EntityPlayer", "net/minecraft/item/ItemStack"}, 0, null);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
 			mv.visitVarInsn(Opcodes.ALOAD, 8);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_EntityLivingBase[Agent.dev], "isInvisibleToPlayer", "(L" + Mapping.r_EntityPlayer[Agent.dev] + ";)Z", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/entity/EntityLivingBase", "isInvisibleToPlayer", "(Lnet/minecraft/entity/player/EntityPlayer;)Z", false);
 			Label l8 = new Label();
 			mv.visitJumpInsn(Opcodes.IFEQ, l8);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
 			mv.visitVarInsn(Opcodes.ALOAD, 8);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_EntityLivingBase[Agent.dev], "isInvisibleToPlayer", "(L" + Mapping.r_EntityPlayer[Agent.dev] + ";)Z", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "net/minecraft/entity/EntityLivingBase", "isInvisibleToPlayer", "(Lnet/minecraft/entity/player/EntityPlayer;)Z", false);
 			Label l9 = new Label();
 			mv.visitJumpInsn(Opcodes.IFEQ, l9);
 			mv.visitVarInsn(Opcodes.ALOAD, 9);
@@ -203,7 +192,7 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitLocalVariable("p_77036_5_", "F", null, l0, l21, 5);
 			mv.visitLocalVariable("p_77036_6_", "F", null, l0, l21, 6);
 			mv.visitLocalVariable("p_77036_7_", "F", null, l0, l21, 7);
-			mv.visitLocalVariable("player", "L" + Mapping.r_EntityPlayer[Agent.dev] + ";", null, l2, l21, 8);
+			mv.visitLocalVariable("player", "Lnet/minecraft/entity/player/EntityPlayer;", null, l2, l21, 8);
 			mv.visitLocalVariable("stack", "Lnet/minecraft/item/ItemStack;", null, l3, l21, 9);
 			mv.visitMaxs(8, 10);
 			mv.visitEnd();

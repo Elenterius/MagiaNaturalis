@@ -17,6 +17,6 @@ public class ProfileClass extends ClassVisitor implements Opcodes
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)
 	{
 		MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
-		return new ProfileMethod(mv, access, this.name, name, desc, signature);
+		return new ProfileMethod(mv, this.name, name);
 	} 
 }
