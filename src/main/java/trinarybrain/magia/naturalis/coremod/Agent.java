@@ -10,7 +10,7 @@ import trinarybrain.magia.naturalis.common.core.Log;
 
 public class Agent implements IClassTransformer
 {
-	public static byte dev = 1;
+	public static int dev = 1;
 	@Override
 	public byte[] transform(String className, String transformedName, byte[] classfileBuffer)
 	{

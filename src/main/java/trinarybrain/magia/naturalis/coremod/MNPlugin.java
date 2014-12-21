@@ -6,14 +6,14 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name(value = "MNCoremod")
 @IFMLLoadingPlugin.MCVersion(value = "1.7.10")
-@IFMLLoadingPlugin.TransformerExclusions(value = "trinarybrain.magianaturalis.coremod")
+@IFMLLoadingPlugin.TransformerExclusions(value = "trinarybrain.magia.naturalis.coremod")
 @IFMLLoadingPlugin.SortingIndex(value = 990)
 public class MNPlugin implements IFMLLoadingPlugin
 {
 	@Override
 	public String[] getASMTransformerClass()
 	{
-		return new String[]{"trinarybrain.magianaturalis.coremod.Agent"};
+		return new String[]{"trinarybrain.magia.naturalis.coremod.Agent"};
 	}
 
 	@Override

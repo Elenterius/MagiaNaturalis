@@ -21,6 +21,7 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 		
 		if(methodName.equals(Mapping.m_renderModel[Agent.dev]))
 		{
+			Log.logger.info("==========> DEV: " + Agent.dev);
 			Log.logger.info("==========> Profiling " + methodName + " in class " + className);
 			Log.logger.info("==========> Current Access: " + access + "Vs. Protected Acces: " + Opcodes.ACC_PROTECTED);
 			Log.logger.info("==========> Description: " + desc);
