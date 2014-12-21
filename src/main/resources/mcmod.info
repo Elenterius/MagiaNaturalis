@@ -1,0 +1,18 @@
+[
+{
+  "modid": "magia_naturalis",
+  "name": "§2Magia Naturalis",
+  "description": "Explore the Philosophy of the Natural and discover new principles that broaden your expertise.
+Meet new foes and friends and experience how dangerous Thaumaturgy really is.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["§5TrinaryBrain"],
+  "credits": "Itaros & Abdo for their IRC talk",
+  "logoFile": "",
+  "screenshots": [],
+  "requiredMods": ["Forge","Thaumcraft"],
+  "dependencies": ["Forge","Thaumcraft"]
+}
+]
