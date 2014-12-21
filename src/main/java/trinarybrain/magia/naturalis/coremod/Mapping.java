@@ -10,7 +10,7 @@ public final class Mapping
 	public final static String[] r_Minecraft = {"bao", "net/minecraft/client/Minecraft"};
 	public final static String[] m_getMinecraft = {"x", "getMinecraft"};
 	public final static String[] f_thePlayer = {"g", "thePlayer"};
-	public final static String[] r_EntityClientPlayerMP = {"bjk", "EntityClientPlayerMP"};
+	public final static String[] r_EntityClientPlayerMP = {"bjk", "net/minecraft/client/entity/EntityClientPlayerMP"};
 	public final static String[] r_EntityPlayer = {"yz", "net/minecraft/entity/player/EntityPlayer"};
 	public final static String[] f_inventory = {"by", "inventory"};
 	public final static String[] r_InventoryPlayer = {"yx", "net/minecraft/entity/player/InventoryPlayer"};

@@ -49,9 +49,9 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitLabel(l2);
 			mv.visitLineNumber(63, l2);
 			mv.visitVarInsn(Opcodes.ALOAD, 8);
-			mv.visitFieldInsn(Opcodes.GETFIELD, Mapping.r_EntityPlayer[Agent.dev], Mapping.f_inventory[Agent.dev], "L" + Mapping.r_InventoryPlayer + ";");
+			mv.visitFieldInsn(Opcodes.GETFIELD, Mapping.r_EntityPlayer[Agent.dev], Mapping.f_inventory[Agent.dev], "L" + Mapping.r_InventoryPlayer[Agent.dev] + ";");
 			mv.visitInsn(Opcodes.ICONST_3);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_EntityPlayer[Agent.dev], "armorItemInSlot", "(I)Lnet/minecraft/item/ItemStack;", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, Mapping.r_InventoryPlayer[Agent.dev], "armorItemInSlot", "(I)Lnet/minecraft/item/ItemStack;", false);
 			mv.visitVarInsn(Opcodes.ASTORE, 9);
 			Label l3 = new Label();
 			mv.visitLabel(l3);
