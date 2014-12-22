@@ -48,13 +48,17 @@ tile.magianaturalis:arcaneWood.swPlanks.1.name=Silverwood Planks
 entity.taintBreeder.name=Taint Breeder
 
 # RESEARCH
-tc.research_category.MNaturalis=Magia Naturalis
+tc.research_category.magia_naturalis=Magia Naturalis
 
-tc.research_name.INTRO=Philosophy of the Natural
-tc.research_text.INTRO=One must know its Nature in order to comprehend ones Life
-tc.research_page.INTRO.1=The meaning of life has always been one of the greatest fascinations of brilliant minds, as they try to discover some purpose to the chaos they find themselves in.<BR>The question of whether life inherently has some predetermined purpose is much more interesting when several Entities claim to be the only true god to have created life.<BR>However, some thaumaturges explore other possibilities for the nature of existence, and their studies inevitably lead them to the grand discipline of Magia Naturalis.
-tc.research_page.INTRO.2=While this discipline is very controversial and deemed unorthodox in some subcategories, it implies the possibility of manipulating the nature of the living and the material they are composed of.<BR>Some naturalists, known for their insane experiments such as speaking with dead beings or mutating plants, claim to have discovered the systems that might have once led to our own existence.
+mn.research_name.INTRO=Philosophy of the Natural
+mn.research_text.INTRO=One must know its Nature in order to comprehend ones Life
+mn.research_page.INTRO.1=The meaning of life has always been one of the greatest fascinations of brilliant minds, as they try to discover some purpose to the chaos they find themselves in.<BR>The question of whether life inherently has some predetermined purpose is much more interesting when several Entities claim to be the only true god to have created life.<BR>However, some thaumaturges explore other possibilities for the nature of existence, and their studies inevitably lead them to the grand discipline of Magia Naturalis.
+mn.research_page.INTRO.2=While this discipline is very controversial and deemed unorthodox in some subcategories, it implies the possibility of manipulating the nature of the living and the material they are composed of.<BR>Some naturalists, known for their insane experiments such as speaking with dead beings or mutating plants, claim to have discovered the systems that might have once led to our own existence.
 
-tc.research_name.GEOCCULTISM=Geoccultism
-tc.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
-tc.research_page.GEOCCULTISM.1=Observing and studying geographic regions and the ancient totems found in the center of unique regions you have discovered that regions can be transformed. The ancients seemed to use Obsidian Totems in combination with Aura Nodes in order to create artificial geo-poles that slowly converted the region around them to the desired result. You have discovered that using a nether star in a crystal cluster(similar to the TC3 one for merging nodes) on top of a obsidian totem and fueling it with certain types of metal you are able to transform the region to your will. Converting a 8x8 area costs about 9 ingots of a specific metal.
+mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
+mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
+mn.research_page.TRANSCRIBINGTABLE.1=A magic feather dances across the Tables counter top. It dips it's head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowlegde into physical form.
+
+mn.research_name.GEOCCULTISM=Geoccultism
+mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
+mn.research_page.GEOCCULTISM.1=Observing and studying geographic regions and the ancient totems found in the center of unique regions you have discovered that regions can be transformed. The ancients seemed to use Obsidian Totems in combination with Aura Nodes in order to create artificial geo-poles that slowly converted the region around them to the desired result. You have discovered that using a nether star in a crystal cluster(similar to the TC3 one for merging nodes) on top of a obsidian totem and fueling it with certain types of metal you are able to transform the region to your will. Converting a 8x8 area costs about 9 ingots of a specific metal.

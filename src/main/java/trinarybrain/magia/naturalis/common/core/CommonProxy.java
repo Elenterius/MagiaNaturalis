@@ -8,6 +8,7 @@ import trinarybrain.magia.naturalis.common.container.ContainerArcaneChest;
 import trinarybrain.magia.naturalis.common.container.ContainerTranscribingTable;
 import trinarybrain.magia.naturalis.common.entity.EntitiesMN;
 import trinarybrain.magia.naturalis.common.item.ItemsMN;
+import trinarybrain.magia.naturalis.common.research.Research;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
