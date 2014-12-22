@@ -8,15 +8,15 @@
 :downloadClient SKIPPED
 :downloadServer SKIPPED
 :getVersionJson
-:extractUserDev
+:extractUserDev UP-TO-DATE
 :mergeJars SKIPPED
 :applyBinPatches SKIPPED
 :downloadMcpTools SKIPPED
-:extractMcpData
+:extractMcpData UP-TO-DATE
 :genSrgs SKIPPED
 :deobfBinJar SKIPPED
-:extractNatives
-:copyNativesLegacy
+:extractNatives UP-TO-DATE
+:copyNativesLegacy UP-TO-DATE
 :getAssetsIndex
 :getAssets
 :makeStart SKIPPED
@@ -27,15 +27,11 @@
 Injecting fml files
 Applying fml patches
 Applying forge patches
-:remapJar
-:extractMinecraftSrc
-:recompMinecraftNote: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-Note: Some input files use unchecked or unsafe operations.
-Note: Recompile with -Xlint:unchecked for details.
-
-:repackMinecraft
-:setupDecompWorkspace
+:remapJar SKIPPED
+:extractMinecraftSrc SKIPPED
+:recompMinecraft SKIPPED
+:repackMinecraft SKIPPED
+:setupDecompWorkspace UP-TO-DATE
 :eclipseClasspath
 :eclipseJdt
 :eclipseProject
@@ -43,4 +39,4 @@ Note: Recompile with -Xlint:unchecked for details.
 
 BUILD SUCCESSFUL
 
-Total time: 2 mins 7.078 secs
+Total time: 3 mins 8.496 secs
