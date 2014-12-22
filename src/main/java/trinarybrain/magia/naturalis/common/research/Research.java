@@ -51,7 +51,7 @@ public class Research
 		research.setRound().setAutoUnlock().registerResearchItem();
 		
 		research = new CustomResearchItem("DUMMY", 0, 4, 0, new ItemStack(Blocks.lapis_ore, 1, 0));
-		research.setPages(new ResearchPage(LoreCollector.getLore("dummy")));
+		research.setPages(new ResearchPage("mn.research_page.DUMMY.1"));
 		research.setRound().setAutoUnlock().registerResearchItem();
 	}
 }

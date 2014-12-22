@@ -1,4 +1,4 @@
-package trinarybrain.magia.naturalis.common.research;
+package trinarybrain.magia.naturalis.coremod;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,14 +11,14 @@ import trinarybrain.magia.naturalis.common.core.Log;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
-public final class LoreCollector
+public final class ObfMapCollector
 {
 	private static final Map<String, String> map = new HashMap<String, String>();
 	private static final Gson GSON = new Gson();
 
 	static
 	{
-		InputStream stream = LoreCollector.class.getResourceAsStream("assets/magianaturalis/lore.json");
+		InputStream stream = ObfMapCollector.class.getResourceAsStream("/mapping.json");
 		try
 		{
 			if(stream == null) { throw new NullPointerException("Stream == null"); }
@@ -28,7 +28,6 @@ public final class LoreCollector
 		catch(Exception exception)
 		{
 			Log.logger.catching(exception);
-			exception.printStackTrace(System.err);
 		}
 		finally
 		{
@@ -41,12 +40,12 @@ public final class LoreCollector
 			}
 			catch(IOException exception)
 			{
-				exception.printStackTrace(System.err);
+				Log.logger.catching(exception);
 			}
 		}
 	}
 
-	public static String getLore(String key)
+	public static String getMapping(String key)
 	{
 		return map.get(key);
 	}

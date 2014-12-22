@@ -1,11 +1,11 @@
 package trinarybrain.magia.naturalis.coremod;
 
-public final class Mapping
+public final class ObfMapping
 {
 	public final static String[] m_renderModel = {"a", "renderModel"};
 	public final static String[] c_RendererLivingEntity = {"boh", "net.minecraft.client.renderer.entity.RendererLivingEntity"};
 	public final static String[] r_RendererLivingEntity = {"boh", "net/minecraft/client/renderer/entity/RendererLivingEntity"};
-	public final static String[] m_bindEntityTexture = {"bindEntityTexture", "b"};
+	public final static String[] m_bindEntityTexture = {"b", "bindEntityTexture"};
 	public final static String[] r_Entity = {"sa", "net/minecraft/entity/Entity"};
 	public final static String[] r_Minecraft = {"bao", "net/minecraft/client/Minecraft"};
 	public final static String[] m_getMinecraft = {"x", "getMinecraft"};
