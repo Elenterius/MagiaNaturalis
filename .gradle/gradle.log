@@ -23,10 +23,7 @@
 :setupDevWorkspace UP-TO-DATE
 :deobfuscateJar SKIPPED
 :decompile SKIPPED
-:processSources
-Injecting fml files
-Applying fml patches
-Applying forge patches
+:processSources SKIPPED
 :remapJar SKIPPED
 :extractMinecraftSrc SKIPPED
 :recompMinecraft SKIPPED
@@ -39,4 +36,4 @@ Applying forge patches
 
 BUILD SUCCESSFUL
 
-Total time: 3 mins 8.496 secs
+Total time: 2 mins 14.894 secs
