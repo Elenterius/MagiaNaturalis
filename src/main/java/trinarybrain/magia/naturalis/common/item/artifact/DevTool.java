@@ -18,7 +18,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
+import thaumcraft.api.nodes.NodeModifier;
+import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.tiles.TileOwned;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
@@ -68,7 +71,7 @@ public class DevTool extends BaseItem
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
 	{
 		if(Platform.isClient()) return false;
-		
+
 		// DO DEV MAGIC HERE !!!
 		if(stack.getItemDamage() == 0)
 		{
@@ -109,7 +112,30 @@ public class DevTool extends BaseItem
 			else if(tile instanceof INode)
 			{
 				INode node = (INode) tile;
-				System.out.print("\nAspectBase: " + node.getAspectsBase());
+				if(player.isSneaking())
+				{
+					node.setNodeType(NodeType.PURE);
+					node.setNodeModifier(NodeModifier.BRIGHT);
+
+					node.setNodeVisBase(Aspect.FIRE, (short) 1000);
+					node.setNodeVisBase(Aspect.AIR, (short) 1000);
+					node.setNodeVisBase(Aspect.WATER, (short) 1000);
+					node.setNodeVisBase(Aspect.EARTH, (short) 1000);
+					node.setNodeVisBase(Aspect.ENTROPY, (short) 1000);
+					node.setNodeVisBase(Aspect.ORDER, (short) 1000);
+
+					AspectList aspects = node.getAspects();
+					aspects.merge(Aspect.FIRE, 1000);
+					aspects.merge(Aspect.AIR, 1000);
+					aspects.merge(Aspect.WATER, 1000);
+					aspects.merge(Aspect.EARTH, 1000);
+					aspects.merge(Aspect.ENTROPY, 1000);
+					aspects.merge(Aspect.ORDER, 1000);
+					node.setAspects(aspects);
+					
+					world.markBlockForUpdate(x, y, z);
+				}
+				System.out.print("\nAspectBase: " + node.getAspectsBase().visSize());
 			}
 		}
 		else if(stack.getItemDamage() == 1)
@@ -120,7 +146,7 @@ public class DevTool extends BaseItem
 			System.out.printf("%n%s UUID: %s", name + "Offline", uuid.toString());
 			System.out.printf("%n%s GameProfile: %s%n", gameprofile.getName(), gameprofile.toString());
 		}
-		
+
 		return false;
 	}
 }
