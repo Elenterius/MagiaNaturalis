@@ -86,7 +86,7 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitJumpInsn(Opcodes.IFNULL, l9);
 			mv.visitVarInsn(Opcodes.ALOAD, 9);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, ObfMapCollector.getMapping("net/minecraft/item/ItemStack"), ObfMapCollector.getMapping("getItem"), "()L" + ObfMapCollector.getMapping("net/minecraft/item/Item") + ";", false);
-			mv.visitTypeInsn(Opcodes.INSTANCEOF, ObfMapCollector.getMapping("trinarybrain/magia/naturalis/api/IRevealInvisible"));
+			mv.visitTypeInsn(Opcodes.INSTANCEOF, "trinarybrain/magia/naturalis/api/IRevealInvisible");
 			mv.visitJumpInsn(Opcodes.IFEQ, l9);
 			mv.visitVarInsn(Opcodes.ALOAD, 9);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, ObfMapCollector.getMapping("net/minecraft/item/ItemStack"), ObfMapCollector.getMapping("getItem"), "()L" + ObfMapCollector.getMapping("net/minecraft/item/Item") + ";", false);
