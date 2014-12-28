@@ -49,6 +49,8 @@ public final class ObfMapCollector
 	public static String getMapping(String key)
 	{
 		if(dev == 1) return key;
+		if(map.get(key) == null)
+			Log.logger.error("Mapping is missing for -> " + key);
 		return map.get(key);
 	}
 }
