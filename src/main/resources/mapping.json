@@ -1,7 +1,7 @@
 {
     "renderModel":"a",
     "net.minecraft.client.renderer.entity.RendererLivingEntity":"boh",
-    "net/minecraft/client.renderer/entity/RendererLivingEntity":"boh",
+    "net/minecraft/client/renderer/entity/RendererLivingEntity":"boh",
     "bindEntityTexture":"b",
     "net/minecraft/entity/Entity":"sa",
     "net/minecraft/client/Minecraft":"bao",
@@ -13,5 +13,6 @@
     "net/minecraft/entity/player/InventoryPlayer":"yx",
     "net/minecraft/entity/EntityLivingBase":"sv",
     "isInvisible":"ap",
-    "mainModel":"i"
+    "mainModel":"i",
+    "net/minecraft/client/model/ModelBase":"bhr"
 }
