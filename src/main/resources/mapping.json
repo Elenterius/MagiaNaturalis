@@ -11,6 +11,7 @@
     "net/minecraft/entity/player/EntityPlayer":"yz",
     "inventory":"bm",
     "net/minecraft/entity/player/InventoryPlayer":"yx",
+    "armorItemInSlot":"d",
     "net/minecraft/entity/EntityLivingBase":"sv",
     "isInvisible":"ap",
     "mainModel":"i",
