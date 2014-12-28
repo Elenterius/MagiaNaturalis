@@ -11,16 +11,18 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 	private String className;
 	private String methodName;
 
-	public ProfileMethod(MethodVisitor mv, String className, String methodName)
+	public ProfileMethod(MethodVisitor mv, String className, String methodName, String desc)
 	{
 		super(ASM4, mv);
 		this.className = className;
 		this.methodName = methodName;
 		
-		if(methodName.equals(ObfMapCollector.getMapping("renderModel")))
+		// (Lnet/minecraft/entity/EntityLivingBase;FFFFFF)V
+		// (Lsv;FFFFFF)V
+		if(methodName.equals(ObfMapCollector.getMapping("renderModel")) && desc.equals("(L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";FFFFFF)V"))
 		{
-			Log.logger.info("Profiled " + methodName + " in class " + className+ ".");
-			Log.logger.info("Replacing " + methodName + " Body in class.");
+			Log.logger.info("Profiled Method " + methodName + " in class " + className+ ".");
+			Log.logger.info("Replacing " + methodName + " Method-Body in class.");
 			mv.visitCode();
 			Label l0 = new Label();
 			mv.visitLabel(l0);
