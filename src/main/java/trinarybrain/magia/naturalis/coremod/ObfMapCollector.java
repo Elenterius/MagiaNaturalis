@@ -15,6 +15,7 @@ public final class ObfMapCollector
 {
 	private static final Map<String, String> map = new HashMap<String, String>();
 	private static final Gson GSON = new Gson();
+	public static byte dev = 0;
 
 	static
 	{
@@ -47,6 +48,7 @@ public final class ObfMapCollector
 
 	public static String getMapping(String key)
 	{
+		if(dev == 1) return key;
 		return map.get(key);
 	}
 }

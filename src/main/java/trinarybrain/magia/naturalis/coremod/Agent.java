@@ -10,13 +10,17 @@ import trinarybrain.magia.naturalis.common.core.Log;
 
 public class Agent implements IClassTransformer
 {
-
 	@Override
 	public byte[] transform(String className, String transformedName, byte[] classfileBuffer)
 	{
-		if(!className.equals("net.minecraft.client.renderer.entity.RendererLivingEntity"))
+		if(className.equals("net.minecraft.client.renderer.entity.RendererLivingEntity"))
 		{
-			return classfileBuffer;
+			ObfMapCollector.dev = 1;
+		}
+		else
+		{
+			if(!className.equals(ObfMapCollector.getMapping("net.minecraft.client.renderer.entity.RendererLivingEntity")))
+				return classfileBuffer;
 		}
 		
 		byte[] result = classfileBuffer;
