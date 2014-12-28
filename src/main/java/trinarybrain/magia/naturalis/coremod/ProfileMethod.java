@@ -16,10 +16,10 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 		super(ASM4, mv);
 		this.className = className;
 		this.methodName = methodName;
-		Log.logger.info("Profiled " + methodName + " in class " + className+ ".");
 		
 		if(methodName.equals(ObfMapCollector.getMapping("renderModel")))
 		{
+			Log.logger.info("Profiled " + methodName + " in class " + className+ ".");
 			Log.logger.info("Replacing " + methodName + " Body in class.");
 			mv.visitCode();
 			Label l0 = new Label();
