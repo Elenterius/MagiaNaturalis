@@ -49,8 +49,18 @@ public final class ObfMapCollector
 	public static String getMapping(String key)
 	{
 		if(dev == 1) return key;
+		
 		if(map.get(key) == null)
-			Log.logger.error("Mapping is missing for -> " + key);
+		{
+//			Log.logger.error("Mapping is missing for -> " + key);
+			System.out.println("Mapping is " + map.get(key) + " for -> " + key);
+			if(key.equals("net.minecraft.client.renderer.entity.RendererLivingEntity"))
+			{
+				map.put("net.minecraft.client.renderer.entity.RendererLivingEntity", "boh");
+				return "boh";
+			}
+		}
+		
 		return map.get(key);
 	}
 }
