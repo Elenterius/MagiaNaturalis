@@ -44,16 +44,16 @@ public class Agent implements IClassTransformer
 			Log.logger.catching(e);
 		}
 
-		String[] desc = {"obf", "dev"};
-		try(FileOutputStream fos = new FileOutputStream("D:/RendererLivingEntity_bytecode_" + desc[ObfMapCollector.dev] + ".class"))
-		{
-			Log.logger.info("Dumping bytecode as D:/RendererLivingEntity_bytecode_" + desc[ObfMapCollector.dev] + ".class");
-			fos.write(result);
-		}
-		catch(IOException ioe)
-		{
-			Log.logger.catching(ioe);
-		}
+//		String[] desc = {"obf", "dev"};
+//		try(FileOutputStream fos = new FileOutputStream("D:/RendererLivingEntity_bytecode_" + desc[ObfMapCollector.dev] + ".class"))
+//		{
+//			Log.logger.info("Dumping bytecode as D:/RendererLivingEntity_bytecode_" + desc[ObfMapCollector.dev] + ".class");
+//			fos.write(result);
+//		}
+//		catch(IOException ioe)
+//		{
+//			Log.logger.catching(ioe);
+//		}
 
 		return result;
 	}
