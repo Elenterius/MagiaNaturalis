@@ -1,5 +1,9 @@
 package trinarybrain.magia.naturalis.coremod;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.util.FakePlayer;
+
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -75,7 +79,7 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitFrame(Opcodes.F_APPEND,2, new Object[] {ObfMapCollector.getMapping("net/minecraft/entity/player/EntityPlayer"), ObfMapCollector.getMapping("net/minecraft/item/ItemStack")}, 0, null);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
 			mv.visitVarInsn(Opcodes.ALOAD, 8);
-			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase"), ObfMapCollector.getMapping("isInvisibleToPlayer"), "(Lnet/minecraft/entity/player/EntityPlayer;)Z", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase"), ObfMapCollector.getMapping("isInvisibleToPlayer"), "(L" + ObfMapCollector.getMapping("net/minecraft/entity/player/EntityPlayer") + ";)Z", false);
 			Label l8 = new Label();
 			mv.visitJumpInsn(Opcodes.IFEQ, l8);
 			mv.visitVarInsn(Opcodes.ALOAD, 1);
