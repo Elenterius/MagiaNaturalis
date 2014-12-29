@@ -22,6 +22,7 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 		if(methodName.equals(ObfMapCollector.getMapping("renderModel")) && desc.equals("(L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";FFFFFF)V"))
 		{
 			Log.logger.info("Profiled Method " + methodName + " in class " + className+ ".");
+			this.mv = null; //set the current method visitor null in order to removes the old method
 			Log.logger.info("Replacing " + methodName + " Method-Body in class.");
 			mv.visitCode();
 			Label l0 = new Label();
@@ -187,13 +188,13 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			Label l21 = new Label();
 			mv.visitLabel(l21);
 			mv.visitLocalVariable("this", "L" + ObfMapCollector.getMapping("net/minecraft/client/renderer/entity/RendererLivingEntity") + ";", null, l0, l21, 0);
-			mv.visitLocalVariable("p_77036_1_", "L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";", null, l0, l21, 1);
-			mv.visitLocalVariable("p_77036_2_", "F", null, l0, l21, 2);
-			mv.visitLocalVariable("p_77036_3_", "F", null, l0, l21, 3);
-			mv.visitLocalVariable("p_77036_4_", "F", null, l0, l21, 4);
-			mv.visitLocalVariable("p_77036_5_", "F", null, l0, l21, 5);
-			mv.visitLocalVariable("p_77036_6_", "F", null, l0, l21, 6);
-			mv.visitLocalVariable("p_77036_7_", "F", null, l0, l21, 7);
+			mv.visitLocalVariable("entity", "L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";", null, l0, l21, 1);
+			mv.visitLocalVariable("f1", "F", null, l0, l21, 2);
+			mv.visitLocalVariable("f2", "F", null, l0, l21, 3);
+			mv.visitLocalVariable("f3", "F", null, l0, l21, 4);
+			mv.visitLocalVariable("f4", "F", null, l0, l21, 5);
+			mv.visitLocalVariable("f5", "F", null, l0, l21, 6);
+			mv.visitLocalVariable("f6", "F", null, l0, l21, 7);
 			mv.visitLocalVariable("player", "L" + ObfMapCollector.getMapping("net/minecraft/entity/player/EntityPlayer") + ";", null, l2, l21, 8);
 			mv.visitLocalVariable("stack", "L" + ObfMapCollector.getMapping("net/minecraft/item/ItemStack") + ";", null, l3, l21, 9);
 			mv.visitMaxs(8, 10);
