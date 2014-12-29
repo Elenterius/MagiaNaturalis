@@ -1,5 +1,8 @@
 package trinarybrain.magia.naturalis.coremod;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import net.minecraft.launchwrapper.IClassTransformer;
 
 import org.objectweb.asm.ClassReader;
@@ -39,9 +42,18 @@ public class Agent implements IClassTransformer
 			result = writer.toByteArray();
 			Log.logger.info("Returning Udated class: " + className);
 		}
-		catch (Exception e)
+		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+
+		try(FileOutputStream fos = new FileOutputStream("/RendererLivingEntity_bytecode_obf.class"))
+		{
+			fos.write(result);
+		}
+		catch(IOException ioe)
+		{
+			Log.logger.catching(ioe);
 		}
 
 		return result;
