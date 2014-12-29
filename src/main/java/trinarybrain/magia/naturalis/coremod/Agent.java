@@ -30,21 +30,18 @@ public class Agent implements IClassTransformer
 		
 		try
 		{
-			//Create class reader from buffer
 			ClassReader reader = new ClassReader(classfileBuffer);
 			
-			//Make writer
 			ClassWriter writer = new ClassWriter(0);
 			ClassVisitor profiler = new ProfileClass(writer, className);
 			
-			//Add the class adapter as a modifier
 			reader.accept(profiler, 0);
 			result = writer.toByteArray();
 			Log.logger.info("Returning Udated class: " + className);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Log.logger.catching(e);
 		}
 
 		try(FileOutputStream fos = new FileOutputStream("D:/RendererLivingEntity_bytecode_obf.class"))
