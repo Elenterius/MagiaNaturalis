@@ -47,7 +47,7 @@ public class Agent implements IClassTransformer
 			e.printStackTrace();
 		}
 
-		try(FileOutputStream fos = new FileOutputStream("/RendererLivingEntity_bytecode_obf.class"))
+		try(FileOutputStream fos = new FileOutputStream("D:/RendererLivingEntity_bytecode_obf.class"))
 		{
 			fos.write(result);
 		}
