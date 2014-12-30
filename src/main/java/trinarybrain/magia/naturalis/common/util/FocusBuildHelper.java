@@ -95,43 +95,36 @@ public final class FocusBuildHelper
 		}
 	}
 
-	public static boolean setShape(ItemStack stack, Shape shape)
+	public static NBTTagCompound setShape(ItemStack stack, Shape shape)
 	{
-		if(stack == null)
+		if(stack == null) return null;
+
+		NBTTagCompound data = NBTUtil.openNbtData(stack);
+		NBTTagList nbttaglist = data.getTagList("hitu", 10);
+
+		NBTTagCompound tempData;
+		if(nbttaglist == null)
 		{
-			return false;
+			nbttaglist = new NBTTagList();
+			tempData = new NBTTagCompound();
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
-			NBTTagCompound nbttagcompound;
-
-			if(nbttaglist == null)
-			{
-				nbttaglist = new NBTTagList();
-				nbttagcompound = new NBTTagCompound();
-			}
-			else
-			{
-				nbttagcompound = nbttaglist.getCompoundTagAt(0);
-			}
-
-			nbttagcompound.setByte("shape", (byte)shape.ordinal());			
-			nbttaglist.appendTag(nbttagcompound);
-
-			if (nbttaglist.tagCount() > 0)
-			{
-
-				stack.setTagInfo("hitu", nbttaglist);
-				return true;
-
-			}
-			else if (stack.hasTagCompound())
-			{
-				stack.getTagCompound().removeTag("hitu");
-			}
+			tempData = nbttaglist.getCompoundTagAt(0);
 		}
-		return false;
+
+		tempData.setByte("shape", (byte)shape.ordinal());			
+		nbttaglist.appendTag(tempData);
+
+		if(nbttaglist.tagCount() > 0)
+		{
+
+			data.setTag("hitu", nbttaglist);
+			return data;
+
+		}
+
+		return data;
 	}
 
 	public static int getSize(ItemStack stack)
@@ -156,40 +149,31 @@ public final class FocusBuildHelper
 
 	public static boolean setSize(ItemStack stack, int size)
 	{
-		if(stack == null)
+		if(stack == null) return false;
+
+		NBTTagCompound data = NBTUtil.openNbtData(stack);
+		NBTTagList nbttaglist = data.getTagList("hitu", 10);
+		NBTTagCompound tempData;
+
+		if(nbttaglist == null)
 		{
-			return false;
+			nbttaglist = new NBTTagList();
+			tempData = new NBTTagCompound();
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
-			NBTTagCompound nbttagcompound;
-
-			if(nbttaglist == null)
-			{
-				nbttaglist = new NBTTagList();
-				nbttagcompound = new NBTTagCompound();
-			}
-			else
-			{
-				nbttagcompound = nbttaglist.getCompoundTagAt(0);
-			}
-
-			nbttagcompound.setByte("size", (byte)size);			
-			nbttaglist.appendTag(nbttagcompound);
-
-			if (nbttaglist.tagCount() > 0)
-			{
-
-				stack.setTagInfo("hitu", nbttaglist);
-				return true;
-
-			}
-			else if (stack.hasTagCompound())
-			{
-				stack.getTagCompound().removeTag("hitu");
-			}
+			tempData = nbttaglist.getCompoundTagAt(0);
 		}
+
+		tempData.setByte("size", (byte)size);			
+		nbttaglist.appendTag(tempData);
+
+		if(nbttaglist.tagCount() > 0)
+		{
+			stack.setTagInfo("hitu", nbttaglist);
+			return true;
+		}
+		
 		return false;
 	}
 

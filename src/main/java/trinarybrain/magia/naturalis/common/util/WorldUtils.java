@@ -117,12 +117,13 @@ public class WorldUtils
 		if(player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting)
 		{
 			ItemStack stack = player.getCurrentEquippedItem();
+			ItemWandCasting wand = (ItemWandCasting) stack.getItem();
 			Block oBlock = world.getBlock(ox, oy, oz);
 			int oBD = world.getBlockMetadata(ox, oy, oz);
 			
-			Meta lmeta = FocusBuildHelper.getMeta(stack);
-			Shape lshape = FocusBuildHelper.getShape(stack);
-			int lsize = FocusBuildHelper.getSize(stack);
+			Meta lmeta = FocusBuildHelper.getMeta(wand.getFocusItem(stack));
+			Shape lshape = FocusBuildHelper.getShape(wand.getFocusItem(stack));
+			int lsize = FocusBuildHelper.getSize(wand.getFocusItem(stack));
 
 			int disX = (int) Math.abs(P1.x-P2.x);
 			int disY = (int) Math.abs(P1.y-P2.y);

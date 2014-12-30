@@ -40,6 +40,15 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		super();
 		this.setCreativeTab(MagiaNaturalis.creativeTab);
 	}
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean advancedItemTooltips)
+	{
+		super.addInformation(stack, player, lines, advancedItemTooltips);
+		lines.add("");
+		lines.add(EnumChatFormatting.BLUE+"Meta: "+FocusBuildHelper.getMeta(stack));
+		lines.add(EnumChatFormatting.BLUE+"Shape: "+FocusBuildHelper.getShape(stack)+"  Size: "+FocusBuildHelper.getSize(stack));
+	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
@@ -84,10 +93,24 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			if(player.isSneaking())
 			{
 				ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
-				wand.getFocusItem(wandstack); //TODO: REPLACE wandstackS with this
-				FocusBuildHelper.setShape(wandstack, Shape.CUBE);
-				FocusBuildHelper.setSize(wandstack, 2);
-				FocusBuildHelper.setpickedBlock(wandstack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+				
+				boolean printStack = true;
+				
+				if(printStack)
+				{
+					System.out.println(wand);
+					System.out.println(wand.getFocusItem(wandstack));
+					System.out.println("TagCMP: " + wand.getFocusItem(wandstack).hasTagCompound());
+					wand.getFocusItem(wandstack).stackTagCompound = FocusBuildHelper.setShape(wand.getFocusItem(wandstack), Shape.CUBE);
+					System.out.println("TagCMP: " + wand.getFocusItem(wandstack).hasTagCompound());
+					return wandstack;
+					
+					//TODO: fix static methods not changing nbttagcmp of the itemstack, needs to be done here
+				}
+				
+				FocusBuildHelper.setShape(wand.getFocusItem(wandstack), Shape.CUBE);
+				FocusBuildHelper.setSize(wand.getFocusItem(wandstack), 2);
+				FocusBuildHelper.setpickedBlock(wand.getFocusItem(wandstack), world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
 				return wandstack;
 			}
 			
@@ -110,19 +133,21 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		if(!player.capabilities.allowEdit) 
 			return false;
 
-		int size = FocusBuildHelper.getSize(stack);
+		ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+		
+		int size = FocusBuildHelper.getSize(wand.getFocusItem(stack));
 		if(size < 1 || size > this.maxSize)
 			return false;
 
-		Shape lshape = FocusBuildHelper.getShape(stack);
+		Shape lshape = FocusBuildHelper.getShape(wand.getFocusItem(stack));
 		if(lshape == Shape.NONE)
 			return false;
 
-		int[] i = FocusBuildHelper.getPickedBlock(stack);
+		int[] i = FocusBuildHelper.getPickedBlock(wand.getFocusItem(stack));
 		Block pblock = Block.getBlockById(i[0]);
 		int pbdata = i[1];
 
-		if(FocusBuildHelper.getMeta(stack) == Meta.UNIFORM)
+		if(FocusBuildHelper.getMeta(wand.getFocusItem(stack)) == Meta.UNIFORM)
 		{
 			pblock = world.getBlock(x, y, z);
 			pbdata = world.getBlockMetadata(x, y, z);
@@ -141,8 +166,9 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		List blocks = null;
 		ForgeDirection face = ForgeDirection.getOrientation(side);
-
-		switch(FocusBuildHelper.getShape(stack))
+		ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+		
+		switch(FocusBuildHelper.getShape(wand.getFocusItem(stack)))
 		{
 		case CUBE:
 			x += face.offsetX * size;
@@ -184,9 +210,8 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		if(blocks.size() > 0)
 		{
 			int ls = blocks.size();
-			if(!player.capabilities.isCreativeMode && stack.getItem() instanceof ItemWandCasting)
+			if(!player.capabilities.isCreativeMode)
 			{
-				ItemWandCasting wand = (ItemWandCasting) stack.getItem();
 				double costD = blocks.size() * 5;
 				if(costD > wand.getVis(stack, Aspect.ORDER))
 				{
@@ -275,11 +300,11 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 				hitZ = Math.abs(hitZ);
 
 				ForgeDirection face = ForgeDirection.getOrientation(target.sideHit);
-				ItemWandCasting item = ((ItemWandCasting) stack.getItem());
+				ItemWandCasting wand = ((ItemWandCasting) stack.getItem());
 				ArrayList blocks = null;
-				int size = FocusBuildHelper.getSize(stack);
+				int size = FocusBuildHelper.getSize(wand.getFocusItem(stack));
 				
-				switch(FocusBuildHelper.getShape(stack))
+				switch(FocusBuildHelper.getShape(wand.getFocusItem(stack)))
 				{
 				case CUBE:
 					x += face.offsetX * size;

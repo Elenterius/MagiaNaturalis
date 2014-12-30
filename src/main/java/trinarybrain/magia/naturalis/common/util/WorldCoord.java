@@ -21,19 +21,25 @@ public class WorldCoord extends BlockCoordinates
 		super(x, y, z);
 	}
 
-	public void add(ForgeDirection opposite, int i)
+	public void add(ForgeDirection direction, int length)
 	{
-		//TODO: ADD METHOD BODY
+		this.x += direction.offsetX * length;
+		this.y += direction.offsetY * length;
+		this.z += direction.offsetZ * length;
 	}
 
-	public void add(int minmax, int i, int minmax2)
+	public void add(int x, int y, int z)
 	{
-		//TODO: ADD METHOD BODY
+		this.x += x;
+		this.y += y;
+		this.z += z;
 	}
 
-	public void subtract(int i, int j, int k)
+	public void subtract(int x, int y, int z)
 	{
-		//TODO: ADD METHOD BODY
+		this.x -= x;
+		this.y -= y;
+		this.z -= z;
 	}
 
 }
