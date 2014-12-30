@@ -95,14 +95,14 @@ public final class FocusBuildHelper
 		}
 	}
 
-	public static NBTTagCompound setShape(ItemStack stack, Shape shape)
+	public static boolean setShape(ItemStack stack, Shape shape)
 	{
-		if(stack == null) return null;
+		if(stack == null) return false;
 
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
 		NBTTagList nbttaglist = data.getTagList("hitu", 10);
-
 		NBTTagCompound tempData;
+		
 		if(nbttaglist == null)
 		{
 			nbttaglist = new NBTTagList();
@@ -119,12 +119,12 @@ public final class FocusBuildHelper
 		if(nbttaglist.tagCount() > 0)
 		{
 
-			data.setTag("hitu", nbttaglist);
-			return data;
+			stack.setTagInfo("hitu", nbttaglist);
+			return true;
 
 		}
 
-		return data;
+		return false;
 	}
 
 	public static int getSize(ItemStack stack)
@@ -177,49 +177,38 @@ public final class FocusBuildHelper
 		return false;
 	}
 
-	public static boolean setpickedBlock(ItemStack stack, Block block, int data)
+	public static boolean setpickedBlock(ItemStack stack, Block block, int metadata)
 	{
-		if(stack == null)
+		if(stack == null) return false;
+
+		int bid = Block.getIdFromBlock(block);
+		if(metadata < 0 || metadata > 15) metadata = 0;
+		
+		NBTTagCompound data = NBTUtil.openNbtData(stack);
+		NBTTagList nbttaglist = data.getTagList("hitu", 10);
+		NBTTagCompound nbttagcompound;
+
+		if(nbttaglist == null)
 		{
-			return false;
+			nbttaglist = new NBTTagList();
+			nbttagcompound = new NBTTagCompound();
 		}
 		else
 		{
-			int bid = Block.getIdFromBlock(block);
-			if(data < 0 || data > 15)
-			{
-				data = 0;
-			}
+			nbttagcompound = nbttaglist.getCompoundTagAt(0);
+		}
 
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
-			NBTTagCompound nbttagcompound;
+		nbttagcompound.setInteger("bid", bid);
+		nbttagcompound.setByte("bdata", (byte)metadata);
 
-			if(nbttaglist == null)
-			{
-				nbttaglist = new NBTTagList();
-				nbttagcompound = new NBTTagCompound();
-			}
-			else
-			{
-				nbttagcompound = nbttaglist.getCompoundTagAt(0);
-			}
+		nbttaglist.appendTag(nbttagcompound);
 
-			nbttagcompound.setInteger("bid", bid);
-			nbttagcompound.setByte("bdata", (byte)data);
+		if(nbttaglist.tagCount() > 0)
+		{
 
-			nbttaglist.appendTag(nbttagcompound);
+			stack.setTagInfo("hitu", nbttaglist);
+			return true;
 
-			if (nbttaglist.tagCount() > 0)
-			{
-
-				stack.setTagInfo("hitu", nbttaglist);
-				return true;
-
-			}
-			else if (stack.hasTagCompound())
-			{
-				stack.getTagCompound().removeTag("hitu");
-			}
 		}
 		return false;
 	}
@@ -233,9 +222,8 @@ public final class FocusBuildHelper
 		}
 		else
 		{
-
 			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
-			if (nbttaglist == null)
+			if(nbttaglist == null)
 			{
 				return i;
 			}

@@ -93,24 +93,14 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			if(player.isSneaking())
 			{
 				ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
+				ItemStack stackFocus = wand.getFocusItem(wandstack);
 				
-				boolean printStack = true;
+				FocusBuildHelper.setShape(stackFocus, Shape.CUBE);
+				FocusBuildHelper.setSize(stackFocus, 3);
+				FocusBuildHelper.setpickedBlock(stackFocus, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
 				
-				if(printStack)
-				{
-					System.out.println(wand);
-					System.out.println(wand.getFocusItem(wandstack));
-					System.out.println("TagCMP: " + wand.getFocusItem(wandstack).hasTagCompound());
-					wand.getFocusItem(wandstack).stackTagCompound = FocusBuildHelper.setShape(wand.getFocusItem(wandstack), Shape.CUBE);
-					System.out.println("TagCMP: " + wand.getFocusItem(wandstack).hasTagCompound());
-					return wandstack;
-					
-					//TODO: fix static methods not changing nbttagcmp of the itemstack, needs to be done here
-				}
+				wand.setFocus(wandstack, stackFocus);
 				
-				FocusBuildHelper.setShape(wand.getFocusItem(wandstack), Shape.CUBE);
-				FocusBuildHelper.setSize(wand.getFocusItem(wandstack), 2);
-				FocusBuildHelper.setpickedBlock(wand.getFocusItem(wandstack), world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
 				return wandstack;
 			}
 			
@@ -301,10 +291,11 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 
 				ForgeDirection face = ForgeDirection.getOrientation(target.sideHit);
 				ItemWandCasting wand = ((ItemWandCasting) stack.getItem());
+				ItemStack stackFocus = wand.getFocusItem(stack);
 				ArrayList blocks = null;
-				int size = FocusBuildHelper.getSize(wand.getFocusItem(stack));
+				int size = FocusBuildHelper.getSize(stackFocus);
 				
-				switch(FocusBuildHelper.getShape(wand.getFocusItem(stack)))
+				switch(FocusBuildHelper.getShape(stackFocus))
 				{
 				case CUBE:
 					x += face.offsetX * size;
@@ -351,6 +342,6 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@Override
 	public boolean showAxis(ItemStack stack, World world, EntityPlayer player, int side, EnumAxis axis)
 	{
-		return true;
+		return false;
 	}
 }
