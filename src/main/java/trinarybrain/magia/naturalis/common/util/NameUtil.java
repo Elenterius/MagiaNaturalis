@@ -25,4 +25,5 @@ public final class NameUtil
 	public static final String MIXING_FLASK = "mixingFlask";
 	public static final String GOGGLES_DARK_CRYSTAL = "gogglesDarkCrystal";
 	public static final String SPECTACLES = "spectacles";
+	public static final String FOCUS_BUILD = "focusBuild";
 }

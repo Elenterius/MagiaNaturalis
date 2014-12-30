@@ -27,6 +27,7 @@ import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
 import trinarybrain.magia.naturalis.common.util.Platform;
+import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import trinarybrain.magia.naturalis.common.util.WorldCoord;
 import trinarybrain.magia.naturalis.common.util.WorldUtils;
 
@@ -53,7 +54,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.icon = ir.registerIcon("thaumcraft:focus_trade");
+		this.icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_build");
 	}
 
 	@Override

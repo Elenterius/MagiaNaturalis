@@ -38,7 +38,7 @@ public class ItemsMN
 		spectacles = new ItemSpectacles(); registerItem(spectacles, NameUtil.SPECTACLES);
 		
 		swordObsidian = new ItemSwordObsidian(); registerItem(swordObsidian, "swordObsidian");
-		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, "focusBuild");
+		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, NameUtil.FOCUS_BUILD);
 	}
 
 	private static void registerItem(Item item, String str)

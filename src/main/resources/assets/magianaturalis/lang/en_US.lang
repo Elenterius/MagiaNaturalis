@@ -32,6 +32,7 @@ item.magianaturalis:key.0.name=Key of Unraveling
 item.magianaturalis:key.1.name=Key of Endorsing
 item.magianaturalis:gogglesDarkCrystal.name=Dark Crystal Goggles
 item.magianaturalis:spectacles.name=Magnifying Spectacles
+item.magianaturalis:focusBuild.name=Focus: Construction
 
 # TILE ENTITY NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table
