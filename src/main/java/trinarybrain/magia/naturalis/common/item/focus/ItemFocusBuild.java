@@ -95,8 +95,9 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 				ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
 				ItemStack stackFocus = wand.getFocusItem(wandstack);
 				
+				FocusBuildHelper.setMeta(stackFocus, Meta.UNIFORM);
 				FocusBuildHelper.setShape(stackFocus, Shape.CUBE);
-				FocusBuildHelper.setSize(stackFocus, 3);
+				FocusBuildHelper.setSize(stackFocus, 2);
 				FocusBuildHelper.setpickedBlock(stackFocus, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
 				
 				wand.setFocus(wandstack, stackFocus);
