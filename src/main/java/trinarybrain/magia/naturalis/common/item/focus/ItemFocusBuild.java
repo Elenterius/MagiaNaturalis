@@ -82,6 +82,11 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		return cost;
 	}
 	
+	public int getMaxAreaSize(ItemStack focusstack)
+	{
+		return this.maxSize;
+	}
+	
 	@Override
 	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack, int rank)
 	{
