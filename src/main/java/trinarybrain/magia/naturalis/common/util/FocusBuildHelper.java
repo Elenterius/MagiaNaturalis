@@ -15,7 +15,7 @@ public final class FocusBuildHelper
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
+			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
 			if(nbttaglist == null)
 			{
 				return Meta.NONE;
@@ -44,7 +44,7 @@ public final class FocusBuildHelper
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
+			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
 			NBTTagCompound nbttagcompound;
 
 			if(nbttaglist == null)
@@ -63,13 +63,13 @@ public final class FocusBuildHelper
 			if (nbttaglist.tagCount() > 0)
 			{
 
-				stack.setTagInfo("hitu", nbttaglist);
+				stack.setTagInfo("magia_naturalis", nbttaglist);
 				return true;
 
 			}
 			else if (stack.hasTagCompound())
 			{
-				stack.getTagCompound().removeTag("hitu");
+				stack.getTagCompound().removeTag("magia_naturalis");
 			}
 		}
 		return false;
@@ -83,7 +83,7 @@ public final class FocusBuildHelper
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
+			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
 			if (nbttaglist == null)
 			{
 				return Shape.NONE;
@@ -100,7 +100,7 @@ public final class FocusBuildHelper
 		if(stack == null) return false;
 
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("hitu", 10);
+		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
 		NBTTagCompound tempData;
 		
 		if(nbttaglist == null)
@@ -119,7 +119,7 @@ public final class FocusBuildHelper
 		if(nbttaglist.tagCount() > 0)
 		{
 
-			stack.setTagInfo("hitu", nbttaglist);
+			stack.setTagInfo("magia_naturalis", nbttaglist);
 			return true;
 
 		}
@@ -135,7 +135,7 @@ public final class FocusBuildHelper
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
+			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
 			if(nbttaglist == null)
 			{
 				return 1;
@@ -152,7 +152,7 @@ public final class FocusBuildHelper
 		if(stack == null) return false;
 
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("hitu", 10);
+		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
 		NBTTagCompound tempData;
 
 		if(nbttaglist == null)
@@ -170,7 +170,7 @@ public final class FocusBuildHelper
 
 		if(nbttaglist.tagCount() > 0)
 		{
-			stack.setTagInfo("hitu", nbttaglist);
+			stack.setTagInfo("magia_naturalis", nbttaglist);
 			return true;
 		}
 		
@@ -185,7 +185,7 @@ public final class FocusBuildHelper
 		if(metadata < 0 || metadata > 15) metadata = 0;
 		
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("hitu", 10);
+		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
 		NBTTagCompound nbttagcompound;
 
 		if(nbttaglist == null)
@@ -206,7 +206,7 @@ public final class FocusBuildHelper
 		if(nbttaglist.tagCount() > 0)
 		{
 
-			stack.setTagInfo("hitu", nbttaglist);
+			stack.setTagInfo("magia_naturalis", nbttaglist);
 			return true;
 
 		}
@@ -216,13 +216,13 @@ public final class FocusBuildHelper
 	public static int[] getPickedBlock(ItemStack stack)
 	{
 		int[] i = {0, 0};
-		if (stack == null || !stack.hasTagCompound())
+		if(stack == null || !stack.hasTagCompound())
 		{
 			return i;
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("hitu", 10);
+			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
 			if(nbttaglist == null)
 			{
 				return i;
@@ -246,13 +246,13 @@ public final class FocusBuildHelper
 			switch(this)
 			{
 			case NONE:
-				return Platform.translate("enum.hitu.none");
+				return Platform.translate("enum.magianaturalis:none");
 			case UNIFORM:
-				return Platform.translate("enum.hitu.uniform");
+				return Platform.translate("enum.magianaturalis:uniform");
 			default:
 				break;			
 			}
-			return Platform.translate("enum.hitu.unknown");
+			return Platform.translate("enum.magianaturalis:unknown");
 		}
 	}
 
@@ -269,19 +269,19 @@ public final class FocusBuildHelper
 			switch(this)
 			{
 			case CUBE:
-				return Platform.translate("enum.hitu.cube");
+				return Platform.translate("enum.magianaturalis:cube");
 			case NONE:
-				return Platform.translate("enum.hitu.none");
+				return Platform.translate("enum.magianaturalis:none");
 			case PLANE:
-				return Platform.translate("enum.hitu.plane");
+				return Platform.translate("enum.magianaturalis:plane");
 			case PLANE_EXTEND:
-				return Platform.translate("enum.hitu.plane.extend");
+				return Platform.translate("enum.magianaturalis:plane.extend");
 			case SPHERE:
-				return Platform.translate("enum.hitu.sphere");
+				return Platform.translate("enum.magianaturalis:sphere");
 			default:
 				break;
 			}
-			return Platform.translate("enum.hitu.unknown");
+			return Platform.translate("enum.magianaturalis:unknown");
 		}
 	}
 

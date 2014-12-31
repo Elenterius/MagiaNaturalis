@@ -12,15 +12,24 @@ chat.magianaturalis:key.accesslist=%s was added to the Keys Access List.
 chat.magianaturalis:chest.access.denied=The Arcane Chest doesn't seem to like You.
 chat.magianaturalis:chest.resist=The Chest resists Your Attempt of Miniaturization.
 
-#Flavor Text & Tool Hint
+# Flavor Text & Tool Hint & Misc 
 flavor.magianaturalis:key.0=One to Open Them All...
 flavor.magianaturalis:key.1=One to Grant Acces for Others...
 flavor.magianaturalis:chest=Obstinate and discriminating, protects its treasure.
+
 hint.magianaturalis:ctrl=<Press Ctrl>
 hint.magianaturalis:chest.items=Contains Treasure
 hint.magianaturalis:chest.access=Has Access List
 hint.magianaturalis:horizontal=Horizontal
 hint.magianaturalis:vertical=Vertical
+
+enum.magianaturalis:none=None
+enum.magianaturalis:unknown=Unknown
+enum.magianaturalis:uniform=Uniform
+enum.magianaturalis:cube=Cube
+enum.magianaturalis:plane=Plane
+enum.magianaturalis:plane.extend=Plane Extend
+enum.magianaturalis:sphere=Sphere
 
 # ITEM NAMES
 item.magianaturalis:researchLog.name=Research Log
@@ -32,7 +41,7 @@ item.magianaturalis:key.0.name=Key of Unraveling
 item.magianaturalis:key.1.name=Key of Endorsing
 item.magianaturalis:gogglesDarkCrystal.name=Dark Crystal Goggles
 item.magianaturalis:spectacles.name=Magnifying Spectacles
-item.magianaturalis:focusBuild.name=Focus: Construction
+item.magianaturalis:focusBuild.name=Wand Focus: Construction
 
 # TILE ENTITY NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table

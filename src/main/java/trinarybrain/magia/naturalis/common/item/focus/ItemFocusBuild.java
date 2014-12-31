@@ -1,5 +1,6 @@
 package trinarybrain.magia.naturalis.common.item.focus;
 
+import java.awt.FocusTraversalPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
@@ -47,8 +50,18 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		super.addInformation(stack, player, lines, advancedItemTooltips);
 		lines.add("");
-		lines.add(EnumChatFormatting.BLUE+"Meta: "+FocusBuildHelper.getMeta(stack));
-		lines.add(EnumChatFormatting.BLUE+"Shape: "+FocusBuildHelper.getShape(stack)+"  Size: "+FocusBuildHelper.getSize(stack));
+		lines.add(EnumChatFormatting.DARK_GRAY + "Meta: " + FocusBuildHelper.getMeta(stack));
+		lines.add(EnumChatFormatting.DARK_GRAY + "Shape: " + FocusBuildHelper.getShape(stack) + "  Size: "+FocusBuildHelper.getSize(stack));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(Item item, CreativeTabs creativeTabs, List list)
+	{
+		ItemStack stack = new ItemStack(item, 1, 0);
+		this.applyUpgrade(stack, FocusUpgradeType.architect, 1);
+		FocusBuildHelper.setSize(stack, 1);
+		FocusBuildHelper.setShape(stack, Shape.CUBE);
+		list.add(stack);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -60,7 +73,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@Override
 	public int getFocusColor(ItemStack focusstack)
 	{
-		return 0;
+		return 0x857B93;
 	}
 
 	@Override
@@ -68,11 +81,11 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		return cost;
 	}
-
+	
 	@Override
 	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack, int rank)
 	{
-		return new FocusUpgradeType[] {FocusUpgradeType.architect};
+		return new FocusUpgradeType[] {FocusUpgradeType.enlarge, FocusUpgradeType.frugal, FocusUpgradeType.silktouch};
 	}
 
 	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition)
@@ -91,18 +104,13 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			int y = target.blockY;
 			int z = target.blockZ;
 			
+			ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
+			ItemStack focusStack = wand.getFocusItem(wandstack);
+			
 			if(player.isSneaking())
 			{
-				ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
-				ItemStack stackFocus = wand.getFocusItem(wandstack);
-				
-				FocusBuildHelper.setMeta(stackFocus, Meta.UNIFORM);
-				FocusBuildHelper.setShape(stackFocus, Shape.CUBE);
-				FocusBuildHelper.setSize(stackFocus, 2);
-				FocusBuildHelper.setpickedBlock(stackFocus, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
-				
-				wand.setFocus(wandstack, stackFocus);
-				
+				FocusBuildHelper.setpickedBlock(focusStack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+				wand.setFocus(wandstack, focusStack); //update focus with new NBT data in wand 
 				return wandstack;
 			}
 			
@@ -111,56 +119,51 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			float hitZ = (float) (target.hitVec.zCoord - z);
 
 			hitX = Math.abs(hitX);
-			hitY = Math.abs(hitY); //Wasted Operation since blocks can't be placed below y=0 in "default" minecraft!
+			hitY = Math.abs(hitY); //Wasted Operation since blocks can't be placed below y=0 in "default" Minecraft!
 			hitZ = Math.abs(hitZ);
 
-			this.onFocusUse(wandstack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ);
+			if(!this.onFocusUse(wandstack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ))
+				world.playSoundAtEntity(player, "thaumcraft:wandfail", 0.5F, 0.8F + world.rand.nextFloat() * 0.1F);
 		}
 
 		return wandstack;
 	}
 
-	public boolean onFocusUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	public boolean onFocusUse(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
-		if(!player.capabilities.allowEdit) 
-			return false;
-
-		ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+		if(!player.capabilities.allowEdit) return false;
 		
-		int size = FocusBuildHelper.getSize(wand.getFocusItem(stack));
-		if(size < 1 || size > this.maxSize)
-			return false;
+		ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
+		
+		int size = FocusBuildHelper.getSize(wand.getFocusItem(wandStack));
+		if(size < 1 || size > this.maxSize) return false;
 
-		Shape lshape = FocusBuildHelper.getShape(wand.getFocusItem(stack));
-		if(lshape == Shape.NONE)
-			return false;
+		Shape lshape = FocusBuildHelper.getShape(wand.getFocusItem(wandStack));
+		if(lshape == Shape.NONE) return false;
 
-		int[] i = FocusBuildHelper.getPickedBlock(wand.getFocusItem(stack));
+		int[] i = FocusBuildHelper.getPickedBlock(wand.getFocusItem(wandStack));
 		Block pblock = Block.getBlockById(i[0]);
 		int pbdata = i[1];
 
-		if(FocusBuildHelper.getMeta(wand.getFocusItem(stack)) == Meta.UNIFORM)
+		if(FocusBuildHelper.getMeta(wand.getFocusItem(wandStack)) == Meta.UNIFORM)
 		{
 			pblock = world.getBlock(x, y, z);
 			pbdata = world.getBlockMetadata(x, y, z);
 		}
 
-		if(pblock == null)
-			return false;
+		if(pblock == null) return false;
+		if(pbdata < 0 || pbdata > 15) return false;
 
-		if(pbdata < 0 || pbdata > 15)
-			return false;
-
-		return this.buildAction(stack, player, world, x, y, z, side, hitX, hitY, hitZ, size, pblock, pbdata);
+		return this.buildAction(wandStack, player, world, x, y, z, side, hitX, hitY, hitZ, size, pblock, pbdata);
 	}
 
-	private boolean buildAction(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size, Block pickedblock, int pbData)
+	private boolean buildAction(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size, Block pickedblock, int pbData)
 	{
 		List blocks = null;
 		ForgeDirection face = ForgeDirection.getOrientation(side);
-		ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+		ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
 		
-		switch(FocusBuildHelper.getShape(wand.getFocusItem(stack)))
+		switch(FocusBuildHelper.getShape(wand.getFocusItem(wandStack)))
 		{
 		case CUBE:
 			x += face.offsetX * size;
@@ -196,8 +199,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			break;
 		}
 
-		if(blocks.size() == 0)
-			return false;
+		if(blocks.size() == 0) return false;
 
 		if(blocks.size() > 0)
 		{
@@ -205,14 +207,13 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			if(!player.capabilities.isCreativeMode)
 			{
 				double costD = blocks.size() * 5;
-				if(costD > wand.getVis(stack, Aspect.ORDER))
+				if(costD > wand.getVis(wandStack, Aspect.ORDER))
 				{
-					int i = (int) (blocks.size() - (blocks.size() - wand.getVis(stack, Aspect.ORDER) / 5));
+					int i = (int) (blocks.size() - (blocks.size() - wand.getVis(wandStack, Aspect.ORDER) / 5));
 					ls = i;
 				}
 
-				if(ls == 0)
-					return false;
+				if(ls == 0) return false;
 
 				ItemStack tempStack = new ItemStack(pickedblock, 1, pbData);
 				if(tempStack.getItem() != null)
@@ -229,8 +230,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 					if(itemAmount < ls)
 						ls = itemAmount;
 
-					if(ls == 0)
-						return false;
+					if(ls == 0) return false;
 
 					for(int j = 0; j < ls; j++)
 					{
@@ -240,7 +240,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 					player.inventoryContainer.detectAndSendChanges();
 
 					int costN = 5 * ls;
-					if(!ThaumcraftApiHelper.consumeVisFromWand(stack, player, new AspectList().add(Aspect.ORDER, costN).add(Aspect.EARTH, costN), true, false))
+					if(!ThaumcraftApiHelper.consumeVisFromWand(wandStack, player, new AspectList().add(Aspect.ORDER, costN).add(Aspect.EARTH, costN), true, false))
 					{
 						return false;
 					}
@@ -251,8 +251,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 				}
 			}
 
-			if(ls == 0)
-				return false;
+			if(ls == 0) return false;
 
 			for(int i = 0; i < ls; i++)
 			{
@@ -275,10 +274,10 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			x = target.blockX;
 			y = target.blockY;
 			z = target.blockZ;
-
+			
 			Block block1 = player.worldObj.getBlock(x, y, z);
 			if(block1 == null) return null;
-
+			
 			int b1damage = block1.getDamageValue(player.worldObj, x, y, z);
 			
 			if(stack != null && stack.getItem() instanceof ItemWandCasting)
@@ -337,7 +336,6 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 				return (ArrayList<BlockCoordinates>) blocks;
 			}
 		}
-
 		return null;
 	}
 
