@@ -1,12 +1,12 @@
 /*
-/
 !.gitignore
-!gradle/
+!/src/
+!/src/*
+!/gradle/
+!/gradle/*
 !gradlew
 !gradlew.bat
 !build.gradle
-!build.properties
-!src/
 !README.md
 !License.md
 *.db
