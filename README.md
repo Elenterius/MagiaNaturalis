@@ -7,6 +7,7 @@ Gradel Eclipse Setup Help:
 - create lib folder or paste the files in eclipse in the lib folder
 	- put Thaumcraft-deobf-1.7.10-4.2.2.0 in lib folder
 	- put Baubles-deobf-1.7.10-1.0.1.10 in lib folder
-	(You can attach the Thaumcraft & Baubles API as src to the referenced libraries)
+	- You can attach the Thaumcraft & Baubles API as src to the referenced libraries
+- Add to your VM Argument: -Dfml.coreMods.load=trinarybrain.magia.naturalis.coremod.MNPlugin
 
 Visit me on IRC ESPER-NET #ChemLab #FortRose #Thaumcraft
