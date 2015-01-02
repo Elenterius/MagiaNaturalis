@@ -9,100 +9,30 @@ public final class FocusBuildHelper
 {
 	public static Meta getMeta(ItemStack stack)
 	{
-		if(stack == null || !stack.hasTagCompound())
+		if(stack == null) return Meta.NONE;
+		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+		if(nbttaglist == null) return Meta.NONE;
+
+		int i = nbttaglist.getCompoundTagAt(0).getByte("meta");
+		switch(i)
 		{
+		case 0:
 			return Meta.NONE;
-		}
-		else
-		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
-			if(nbttaglist == null)
-			{
-				return Meta.NONE;
-			}
-			else
-			{
-				int i = nbttaglist.getCompoundTagAt(0).getByte("meta");
-				switch(i)
-				{
-				case 0:
-					return Meta.NONE;
-				case 1:
-					return Meta.UNIFORM;
-				default:
-					return Meta.NONE;
-				}
-			}
+		case 1:
+			return Meta.UNIFORM;
+		default:
+			return Meta.NONE;
 		}
 	}
 
 	public static boolean setMeta(ItemStack stack, Meta meta)
-	{
-		if(stack == null)
-		{
-			return false;
-		}
-		else
-		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
-			NBTTagCompound nbttagcompound;
-
-			if(nbttaglist == null)
-			{
-				nbttaglist = new NBTTagList();
-				nbttagcompound = new NBTTagCompound();
-			}
-			else
-			{
-				nbttagcompound = nbttaglist.getCompoundTagAt(0);
-			}
-
-			nbttagcompound.setByte("meta", (byte)meta.ordinal());			
-			nbttaglist.appendTag(nbttagcompound);
-
-			if (nbttaglist.tagCount() > 0)
-			{
-
-				stack.setTagInfo("magia_naturalis", nbttaglist);
-				return true;
-
-			}
-			else if (stack.hasTagCompound())
-			{
-				stack.getTagCompound().removeTag("magia_naturalis");
-			}
-		}
-		return false;
-	}
-
-	public static Shape getShape(ItemStack stack)
-	{
-		if (stack == null || !stack.hasTagCompound())
-		{
-			return Shape.NONE;
-		}
-		else
-		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
-			if (nbttaglist == null)
-			{
-				return Shape.NONE;
-			}
-			else
-			{
-				return getShapeByID(nbttaglist.getCompoundTagAt(0).getByte("shape"));
-			}
-		}
-	}
-
-	public static boolean setShape(ItemStack stack, Shape shape)
 	{
 		if(stack == null) return false;
 
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
 		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
 		NBTTagCompound tempData;
-		
+
 		if(nbttaglist == null)
 		{
 			nbttaglist = new NBTTagList();
@@ -113,15 +43,53 @@ public final class FocusBuildHelper
 			tempData = nbttaglist.getCompoundTagAt(0);
 		}
 
-		tempData.setByte("shape", (byte)shape.ordinal());			
+		tempData.setByte("meta", (byte) meta.ordinal());
 		nbttaglist.appendTag(tempData);
 
 		if(nbttaglist.tagCount() > 0)
 		{
+			data.setTag("magia_naturalis", nbttaglist);
+			return true;
+		}
 
+		return false;
+	}
+
+	public static Shape getShape(ItemStack stack)
+	{
+		if(stack == null) return Shape.NONE;
+
+		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+		if(nbttaglist == null) return Shape.NONE;
+
+		return getShapeByID(nbttaglist.getCompoundTagAt(0).getByte("shape"));
+	}
+
+	public static boolean setShape(ItemStack stack, Shape shape)
+	{
+		if(stack == null) return false;
+
+		NBTTagCompound data = NBTUtil.openNbtData(stack);
+		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
+		NBTTagCompound tempData;
+
+		if(nbttaglist == null)
+		{
+			nbttaglist = new NBTTagList();
+			tempData = new NBTTagCompound();
+		}
+		else
+		{
+			tempData = nbttaglist.getCompoundTagAt(0);
+		}
+
+		tempData.setByte("shape", (byte) shape.ordinal());
+		nbttaglist.appendTag(tempData);
+
+		if(nbttaglist.tagCount() > 0)
+		{
 			stack.setTagInfo("magia_naturalis", nbttaglist);
 			return true;
-
 		}
 
 		return false;
@@ -129,22 +97,12 @@ public final class FocusBuildHelper
 
 	public static int getSize(ItemStack stack)
 	{
-		if(stack == null || !stack.hasTagCompound())
-		{
-			return 1;
-		}
-		else
-		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
-			if(nbttaglist == null)
-			{
-				return 1;
-			}
-			else
-			{
-				return nbttaglist.getCompoundTagAt(0).getByte("size");
-			}
-		}
+		if(stack == null) return 1;
+
+		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+		if(nbttaglist == null) return 1;
+
+		return nbttaglist.getCompoundTagAt(0).getByte("size");
 	}
 
 	public static boolean setSize(ItemStack stack, int size)
@@ -165,7 +123,7 @@ public final class FocusBuildHelper
 			tempData = nbttaglist.getCompoundTagAt(0);
 		}
 
-		tempData.setByte("size", (byte)size);			
+		tempData.setByte("size", (byte) size);
 		nbttaglist.appendTag(tempData);
 
 		if(nbttaglist.tagCount() > 0)
@@ -173,7 +131,7 @@ public final class FocusBuildHelper
 			stack.setTagInfo("magia_naturalis", nbttaglist);
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -183,7 +141,7 @@ public final class FocusBuildHelper
 
 		int bid = Block.getIdFromBlock(block);
 		if(metadata < 0 || metadata > 15) metadata = 0;
-		
+
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
 		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
 		NBTTagCompound nbttagcompound;
@@ -199,7 +157,7 @@ public final class FocusBuildHelper
 		}
 
 		nbttagcompound.setInteger("bid", bid);
-		nbttagcompound.setByte("bdata", (byte)metadata);
+		nbttagcompound.setByte("bdata", (byte) metadata);
 
 		nbttaglist.appendTag(nbttagcompound);
 
@@ -215,32 +173,26 @@ public final class FocusBuildHelper
 
 	public static int[] getPickedBlock(ItemStack stack)
 	{
-		int[] i = {0, 0};
-		if(stack == null || !stack.hasTagCompound())
+		int[] i = { 0, 0 };
+		if(stack == null) return i;
+
+		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+		if(nbttaglist == null)
 		{
 			return i;
 		}
 		else
 		{
-			NBTTagList nbttaglist = stack.stackTagCompound.getTagList("magia_naturalis", 10);
-			if(nbttaglist == null)
-			{
-				return i;
-			}
-			else
-			{
-				i[0] = nbttaglist.getCompoundTagAt(0).getInteger("bid");
-				i[1] = nbttaglist.getCompoundTagAt(0).getByte("bdata");
-				return i;
-			}
+			i[0] = nbttaglist.getCompoundTagAt(0).getInteger("bid");
+			i[1] = nbttaglist.getCompoundTagAt(0).getByte("bdata");
+			return i;
 		}
 	}
-	
+
 	public enum Meta
 	{
-		NONE,
-		UNIFORM;
-		
+		NONE, UNIFORM;
+
 		public String toString()
 		{
 			switch(this)
@@ -250,7 +202,7 @@ public final class FocusBuildHelper
 			case UNIFORM:
 				return Platform.translate("enum.magianaturalis:uniform");
 			default:
-				break;			
+				break;
 			}
 			return Platform.translate("enum.magianaturalis:unknown");
 		}
@@ -258,12 +210,8 @@ public final class FocusBuildHelper
 
 	public enum Shape
 	{
-		NONE,
-		PLANE,
-		CUBE,
-		PLANE_EXTEND,
-		SPHERE;
-		
+		NONE, PLANE, CUBE, PLANE_EXTEND, SPHERE;
+
 		public String toString()
 		{
 			switch(this)

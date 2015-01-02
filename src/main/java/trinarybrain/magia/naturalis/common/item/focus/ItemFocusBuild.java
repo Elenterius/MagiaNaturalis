@@ -35,7 +35,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 {
 	private static final AspectList cost = new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
-	public int maxSize = 16;
+	public static int maxSize = 16;
 
 	public ItemFocusBuild()
 	{
@@ -59,6 +59,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		this.applyUpgrade(stack, FocusUpgradeType.architect, 1);
 		FocusBuildHelper.setSize(stack, 1);
 		FocusBuildHelper.setShape(stack, Shape.CUBE);
+		FocusBuildHelper.setMeta(stack, Meta.UNIFORM);
 		list.add(stack);
 	}
 
@@ -80,11 +81,6 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		return cost;
 	}
 
-	public int getMaxAreaSize(ItemStack focusstack)
-	{
-		return this.maxSize;
-	}
-
 	@Override
 	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack, int rank)
 	{
@@ -94,7 +90,10 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition)
 	{
 		if(Platform.isClient()) 
+		{
+			//TODO: add ctrl for picking blocks
 			return wandstack;
+		}
 
 		MovingObjectPosition target = this.getMovingObjectPositionFromPlayer(world, player, true);
 

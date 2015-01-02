@@ -5,6 +5,7 @@ import thaumcraft.common.Thaumcraft;
 import trinarybrain.magia.naturalis.common.core.CommonProxy;
 import trinarybrain.magia.naturalis.common.core.CreativeTab;
 import trinarybrain.magia.naturalis.common.core.Log;
+import trinarybrain.magia.naturalis.common.network.NetworkHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -34,6 +35,7 @@ public class MagiaNaturalis
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		NetworkHandler.instance = new NetworkHandler("MagiaNaturC");
 		proxy.init(event);
 	}
 
