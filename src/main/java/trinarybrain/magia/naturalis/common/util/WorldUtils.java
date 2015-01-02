@@ -7,10 +7,13 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Direction;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -226,6 +229,29 @@ public class WorldUtils
 		}
 		return false;
 	}
+	
+	public static MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer player, double blockReachDistance, boolean bool)
+    {
+        float f = 1.0F;
+        float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f;
+        float yaw = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;
+        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)f;
+        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)f + (double)(world.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
+        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)f;
+        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
+        float f3 = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+        float f4 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+        float f5 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f6 = MathHelper.sin(-pitch * 0.017453292F);
+        float f7 = f4 * f5;
+        float f8 = f3 * f5;
+        
+        double d3 = blockReachDistance;
+        if(d3 <= 0) d3 = 5D;
+        
+        Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
+        return world.func_147447_a(vec3, vec31, bool, !bool, false);
+    }
 
 	private static List<WorldCoord> plotHelper(WorldCoord P1, WorldCoord P2, ForgeDirection side, float hitX, float hitY, float hitZ, int size)
 	{
