@@ -22,6 +22,7 @@ import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
@@ -36,6 +37,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 {
 	private static final AspectList cost = new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
 	public static int maxSize = 16;
+	public static double reachDistance = 8D;
 
 	public ItemFocusBuild()
 	{
@@ -86,35 +88,29 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		return new FocusUpgradeType[] {FocusUpgradeType.enlarge, FocusUpgradeType.frugal, FocusUpgradeType.silktouch};
 	}
-
+	
 	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition)
 	{
-		if(Platform.isClient()) 
-		{
-			//TODO: add ctrl for picking blocks
-			return wandstack;
-		}
-
-		MovingObjectPosition target = this.getMovingObjectPositionFromPlayer(world, player, true);
-
-		if(target == null)
-			return wandstack;
+		if(Platform.isClient()) return wandstack;
+		
+		MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
+		if(target == null) return wandstack;
 
 		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
-			int x = target.blockX;
+			int x = target.blockX; 
 			int y = target.blockY;
 			int z = target.blockZ;
 
 			ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
 			ItemStack focusStack = wand.getFocusItem(wandstack);
 
-			if(player.isSneaking())
-			{
-				FocusBuildHelper.setpickedBlock(focusStack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
-				wand.setFocus(wandstack, focusStack); //update focus with new NBT data in wand 
-				return wandstack;
-			}
+//			if(player.isSneaking())
+//			{
+//				FocusBuildHelper.setpickedBlock(focusStack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+//				wand.setFocus(wandstack, focusStack); //update focus with new NBT data in wand 
+//				return wandstack;
+//			}
 
 			float hitX = (float) (target.hitVec.xCoord - x);
 			float hitY = (float) (target.hitVec.yCoord - y);
@@ -268,7 +264,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@Override
 	public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player)
 	{
-		MovingObjectPosition target = this.getMovingObjectPositionFromPlayer(world, player, true);
+		MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
 		if(target == null) return null;
 
 		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)

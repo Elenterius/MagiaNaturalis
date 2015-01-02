@@ -227,9 +227,8 @@ public final class FocusBuildHelper
 			case SPHERE:
 				return Platform.translate("enum.magianaturalis:sphere");
 			default:
-				break;
+				return Platform.translate("enum.magianaturalis:unknown");
 			}
-			return Platform.translate("enum.magianaturalis:unknown");
 		}
 	}
 
