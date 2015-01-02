@@ -64,7 +64,7 @@ public class KeyHandler
 			{
 				id = 5;
 			}
-			else if(this.keyShape.isPressed() && this.keyPickBlock.isPressed())
+			else if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown() && this.keyShape.isPressed())
 			{
 				id = 51;
 			}
