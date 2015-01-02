@@ -264,6 +264,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@Override
 	public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player)
 	{
+		//TODO: render not working with extendeed reach distance
 		MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
 		if(target == null) return null;
 
