@@ -9,6 +9,7 @@ import trinarybrain.magia.naturalis.common.item.artifact.ItemKey;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemResearchLog;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemSpectacles;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemSwordObsidian;
+import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.util.NameUtil;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -24,6 +25,7 @@ public class ItemsMN
 	public static Item spectacles;
 	
 	public static Item swordObsidian;
+	public static Item focusBuild;
 
 	public static void initItems()
 	{
@@ -36,6 +38,7 @@ public class ItemsMN
 		spectacles = new ItemSpectacles(); registerItem(spectacles, NameUtil.SPECTACLES);
 		
 		swordObsidian = new ItemSwordObsidian(); registerItem(swordObsidian, "swordObsidian");
+		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, NameUtil.FOCUS_BUILD);
 	}
 
 	private static void registerItem(Item item, String str)

@@ -33,26 +33,26 @@ public class EventHandlerPlayer
 				{
 					hasAccess = true;
 				}
-				
+
 				if(hasAccess)
 				{
 					System.out.print("\nHAS ACCESS");
 					if(data.hasKey("display", NBT.TAG_COMPOUND))
-			        {
-			            NBTTagCompound tempData = data.getCompoundTag("display");
-			            if(tempData.hasKey("Name", NBT.TAG_STRING))
-			            {
-			            	String str = tempData.getString("Name");
-			            	System.out.print("\n"+str);
-			            	str = str.substring(2, str.length());
-			            	System.out.print("\n"+str);
-			            }
-			        }
+					{
+						NBTTagCompound tempData = data.getCompoundTag("display");
+						if(tempData.hasKey("Name", NBT.TAG_STRING))
+						{
+							String str = tempData.getString("Name");
+							System.out.print("\n"+str);
+							str = str.substring(2, str.length());
+							System.out.print("\n"+str);
+						}
+					}
 				}
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onAnvilUpdate(AnvilUpdateEvent event)
 	{
@@ -60,20 +60,20 @@ public class EventHandlerPlayer
 		{
 			if(event.left.getItem() instanceof ItemKey)
 			{
-//				if(ScrollHelper.getKeyFromStack(event.right).equals(ScrollLib.LOST_KEY))
-//				{
-//					ItemStack blade = new ItemStack(ModItems.itemNamelessBlade);
-//					RelicHelper.setUpgrade(blade, ScrollLib.LOST_KEY);
-//					event.cost = 10;
-//					event.output = blade;
-//				}
-//				if(ScrollHelper.getKeyFromStack(event.right).equals(ScrollLib.ORIGIN2_KEY))
-//				{
-//					ItemStack blade = new ItemStack(ModItems.itemNamelessBlade);
-//					RelicHelper.setUpgrade(blade, ScrollLib.ORIGIN2_KEY);
-//					event.cost = 10;
-//					event.output = blade;
-//				}
+				//				if(ScrollHelper.getKeyFromStack(event.right).equals(ScrollLib.LOST_KEY))
+				//				{
+				//					ItemStack blade = new ItemStack(ModItems.itemNamelessBlade);
+				//					RelicHelper.setUpgrade(blade, ScrollLib.LOST_KEY);
+				//					event.cost = 10;
+				//					event.output = blade;
+				//				}
+				//				if(ScrollHelper.getKeyFromStack(event.right).equals(ScrollLib.ORIGIN2_KEY))
+				//				{
+				//					ItemStack blade = new ItemStack(ModItems.itemNamelessBlade);
+				//					RelicHelper.setUpgrade(blade, ScrollLib.ORIGIN2_KEY);
+				//					event.cost = 10;
+				//					event.output = blade;
+				//				}
 			}
 		}
 	}

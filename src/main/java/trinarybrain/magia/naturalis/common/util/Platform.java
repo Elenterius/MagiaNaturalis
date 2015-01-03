@@ -2,11 +2,12 @@ package trinarybrain.magia.naturalis.common.util;
 
 import java.util.UUID;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.StatCollector;
+
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.StatCollector;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public final class Platform

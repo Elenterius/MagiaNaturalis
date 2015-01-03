@@ -2,51 +2,43 @@ package trinarybrain.magia.naturalis.client.core;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelSkeletonHead;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.nodes.INode;
-import thaumcraft.common.config.Config;
-import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.config.ConfigItems;
+import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileOwned;
 import thaumcraft.common.tiles.TileTubeBuffer;
-import trinarybrain.magia.naturalis.api.IRevealInvisible;
 import trinarybrain.magia.naturalis.api.ISpectacles;
+import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.core.Log;
-import trinarybrain.magia.naturalis.common.item.artifact.ItemSpectacles;
+import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
+import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
+import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -56,34 +48,163 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class EventHandlerRender
 {
 	public Minecraft mc = Minecraft.getMinecraft();
-	
+	FontRenderer fontRenderer = mc.fontRenderer;
+	RenderItem itemRender = new RenderItem();
+	ItemStack lastItem = null;
+	int lastCount = 0;
+	private static final ResourceLocation rlSilk = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
+
 	public static void register()
 	{
 		MinecraftForge.EVENT_BUS.register(new EventHandlerRender());
 	}
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent event)
 	{
 		if(event.type == RenderGameOverlayEvent.ElementType.HELMET)
 		{
-			if((mc.getMinecraft().renderViewEntity instanceof EntityPlayer))
+			if(mc.isGuiEnabled() && !mc.isGamePaused() && mc.currentScreen == null && !mc.gameSettings.showDebugInfo)
 			{
-				EntityPlayer player = mc.thePlayer;
-				if((player != null) && (mc.isGuiEnabled()))
+				if(mc.renderViewEntity != null && mc.renderViewEntity instanceof EntityPlayer)
 				{
+					EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
+
 					ItemStack stack = player.inventory.armorItemInSlot(3);
 					if(stack != null && stack.getItem() instanceof ISpectacles && ((ISpectacles) stack.getItem()).drawSpectacleHUD(stack, player))
 					{
 						this.renderSpectaclesHUD(mc, player);
+					}
+
+					stack = player.inventory.getCurrentItem();
+					if(stack != null && stack.getItem() instanceof ItemWandCasting)
+					{
+						ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+						ItemFocusBasic focus = wand.getFocus(stack);
+						if(focus != null && focus instanceof ItemFocusBuild)
+						{
+							ItemStack focusStack = wand.getFocusItem(stack);
+							this.renderBuildFocusHUD(focusStack, player);
+						}
 					}
 				}
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+//	@SubscribeEvent
+//	public void renderBlockHighlight(DrawBlockHighlightEvent event)
+//	{
+//		int ticks = event.player.ticksExisted;
+//		MovingObjectPosition target = event.target;
+//		
+//		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
+//
+//		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof IArchitect && event.player.getHeldItem().getItem() instanceof ItemFocusBuild)
+//		{
+//			if (Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
+//				event.setCanceled(true);
+//		}
+//	}
+
+	protected void renderBuildFocusHUD(ItemStack focusStack, EntityPlayer player)
+	{
+		GL11.glClear(GL11.GL_ACCUM);
+
+		Meta meta = FocusBuildHelper.getMeta(focusStack);
+		Block pblock = null;
+		int pbdata = 0;
+		Item item = null;
+		ItemStack pickedBlock = null;
+
+		if(meta == Meta.UNIFORM)
+		{	
+			if(mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit == MovingObjectType.BLOCK)
+			{
+				pblock = player.worldObj.getBlock(mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ);
+				pbdata = player.worldObj.getBlockMetadata(mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ);
+				item = Item.getItemFromBlock(pblock);
+			}
+
+			if(item != null)
+			{
+				if(pblock == Blocks.double_plant)
+					pbdata = pblock.getDamageValue(player.worldObj, mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ);
+
+				pickedBlock = new ItemStack(item, 1, pbdata);
+			}
+
+			if(pickedBlock == null && pblock != null)
+			{
+				if(pblock == Blocks.lit_redstone_ore)
+					pickedBlock = new ItemStack(Blocks.redstone_ore);
+				else
+					pickedBlock = pblock.getPickBlock(mc.objectMouseOver, player.worldObj, mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ);
+			}
+		}
+		else
+		{
+			int[] i = FocusBuildHelper.getPickedBlock(focusStack);
+			pblock = Block.getBlockById(i[0]);
+			pbdata = i[1];
+			
+			if(pblock != Blocks.air && pblock != null)
+			{
+				item = Item.getItemFromBlock(pblock);
+				pickedBlock = new ItemStack(item, 1, pbdata);
+			}
+		}
+
+		if(pickedBlock != null)
+		{
+			int amount = this.lastCount;
+			if(player.inventory.inventoryChanged || !pickedBlock.isItemEqual(this.lastItem))
+			{
+				amount = 0;
+				for(ItemStack is : player.inventory.mainInventory)
+				{
+					if(is != null && is.isItemEqual(pickedBlock))
+					{
+						amount += is.stackSize;
+					}
+				}
+				this.lastItem = pickedBlock;
+				player.inventory.inventoryChanged = false;
+			}
+			this.lastCount = amount;
+
+			GL11.glPushMatrix();
+			GL11.glTranslatef(45F, 40F, 0F);
+			GL11.glScalef(1.5F, 1.5F, 1.5F);
+			if(itemRender != null && fontRenderer != null)
+				RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
+			GL11.glEnable(GL11.GL_BLEND); //TODO: REMOVE this Hack when TC4 fixes its shaders issues 
+
+			GL11.glPushMatrix();
+			String am = "" + amount;
+			int sw = fontRenderer.getStringWidth(am);
+			GL11.glTranslatef(0.0F, -fontRenderer.FONT_HEIGHT, 500.0F);
+			GL11.glScalef(0.5F, 0.5F, 0.5F);
+			for(int a = -1; a <= 1; a++)
+				for(int b = -1; b <= 1; b++)
+					if((a == 0 || b == 0) && (a != 0 || b != 0))
+						mc.fontRenderer.drawString(am, a + 16 - sw, b + 24, 0);
+			mc.fontRenderer.drawString(am, 16 - sw, 24, 16777215);
+
+			if(meta == Meta.UNIFORM)
+			{
+				GL11.glPushMatrix();
+				GL11.glScalef(1.5F, 1.5F, 1.5F);
+				GL11.glTranslatef(15F, 15F, 0F);
+				RenderUtil.drawTextureQuad(rlSilk, 16, 16);
+				GL11.glPopMatrix();
+			}
+
+			GL11.glPopMatrix();
+			GL11.glPopMatrix();
+		}
+	}
+
 	protected void renderSpectaclesHUD(Minecraft mc, EntityPlayer player)
 	{
 		Boolean meterEquiped = false;
@@ -106,7 +227,7 @@ public class EventHandlerRender
 					tile = player.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
 				}
 			}
-			
+
 			if(tile != null)
 			{
 				ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
@@ -137,7 +258,7 @@ public class EventHandlerRender
 					s = new ChatComponentTranslation("tc.resonator2", new Object[] {"" + essentiaTransport.getSuctionAmount(face), s}).getFormattedText();
 
 					FontRenderer fontRenderer = mc.fontRenderer;
-					
+
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
 
@@ -149,7 +270,7 @@ public class EventHandlerRender
 				else if(tile instanceof INode)
 				{
 					INode node = (INode) tile;
-					
+
 					String t = Platform.translate("nodetype." + node.getNodeType() + ".name");
 					if(node.getNodeModifier() != null)
 						t = t + ", " + Platform.translate(new StringBuilder().append("nodemod.").append(node.getNodeModifier()).append(".name").toString());
@@ -158,14 +279,14 @@ public class EventHandlerRender
 					String v = " ";
 
 					if(node.getAspectsBase() != null && node.getAspectsBase().size() > 0)
-			        {
+					{
 						for(Aspect a : node.getAspectsBase().getAspects())
 						{
 							if(a != null)
 								v += a.getName() + "Max:§5 " + Integer.toString(node.getAspectsBase().getAmount(a)) + "§r ";
 						}
-			        }
-					
+					}
+
 					String msg = "I'm a happy little Aura Node, happy... happy...";
 					FontRenderer fontRenderer = mc.fontRenderer;
 
@@ -197,24 +318,24 @@ public class EventHandlerRender
 				else if(tile instanceof TileOwned)
 				{
 					TileOwned owned = (TileOwned) tile;
-					
+
 					String owner = "Owner: " + owned.owner;
 					ArrayList<String> accessList = owned.accessList;
-					
+
 					FontRenderer fontRenderer = mc.fontRenderer;
-					
+
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
-					
+
 					fontRenderer.drawStringWithShadow(owner, -fontRenderer.getStringWidth(owner) / 2, 10, 100100);
-					
+
 					int offset = 0;
 					for(String str : accessList)
 					{
 						fontRenderer.drawStringWithShadow(str, -fontRenderer.getStringWidth(str) / 2, 15 + 10 * offset, 16777215);
 						offset++;
 					}
-					
+
 					GL11.glPopMatrix();
 				}
 				else if(tile instanceof TileArcaneChest)
@@ -224,37 +345,4 @@ public class EventHandlerRender
 			}
 		}
 	}
-
-//	@SideOnly(Side.CLIENT)
-//	@SubscribeEvent
-//	public void renderParticlesForInvisible(RenderLivingEvent.Post event)
-//	{
-//		if(event.entity.isInvisible() && mc.getMinecraft().renderViewEntity instanceof EntityPlayer)
-//		{
-//			EntityPlayer player = mc.thePlayer;
-//			if(!event.entity.getUniqueID().equals(player.getUniqueID()))
-//			{
-//				ItemStack stack = player.inventory.armorItemInSlot(3);
-//				if(stack != null && stack.getItem() instanceof IRevealInvisible)
-//				{
-//					if(event.entity.isInvisibleToPlayer(player) && ((IRevealInvisible) stack.getItem()).showInvisibleEntity(stack, player, event.entity))
-//					{
-//						
-//						Coremodding is easy if you have two things:
-//							<Itaros> 1)Compiled code before transformation
-//							<Itaros> 2)Compile code with change
-//							<Itaros> Then you you cut similar parts off
-//							<Itaros> And write a routine to go to requered frame and replace it
-//							<Itaros> But:
-//							<Itaros> There is a twist. Frame size is tricky to calculate properly, because it envolves deep knowledge of JVM
-//							<Itaros> It is much easier to replace method
-//							<Itaros> instead of injecting something into it :)
-//							<Itaros> You can look at CL coremod. It injects new methods and changes something. I don't actually recall what it does XDDD
-//							
-//						event.entity.setInvisible(false);
-//					}
-//				}
-//			}
-//		}
-//	}
 }

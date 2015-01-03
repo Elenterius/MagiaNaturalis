@@ -1,6 +1,8 @@
 package trinarybrain.magia.naturalis.common.core;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.INetHandler;
+import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.world.World;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.block.BlocksMN;
@@ -27,7 +29,7 @@ public class CommonProxy implements IGuiHandler
 
 	public void init(FMLInitializationEvent event)
 	{
-		//MinecraftForge.EVENT_BUS.register(new EventHandlerPlayer());
+		// MinecraftForge.EVENT_BUS.register(new EventHandlerPlayer());
 		BlocksMN.initTileEntities();
 		NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
 	}
@@ -43,9 +45,9 @@ public class CommonProxy implements IGuiHandler
 	{
 		switch(ID)
 		{
-		case 1: 
+		case 1:
 			return new ContainerTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
-		case 2: 
+		case 2:
 			return new ContainerArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
 		default:
 			return null;
@@ -56,5 +58,17 @@ public class CommonProxy implements IGuiHandler
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
 		return null;
+	}
+
+	public EntityPlayer getPlayerFromNetHandler(INetHandler handler)
+	{
+		if(handler instanceof NetHandlerPlayServer)
+		{
+			return ((NetHandlerPlayServer) handler).playerEntity;
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

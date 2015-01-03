@@ -2,7 +2,6 @@ package trinarybrain.magia.naturalis.client.core;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import trinarybrain.magia.naturalis.client.gui.GuiArcaneChest;
 import trinarybrain.magia.naturalis.client.gui.GuiTranscribingTable;
@@ -13,6 +12,7 @@ import trinarybrain.magia.naturalis.client.render.tile.TileArcaneChestRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileJarPrisonRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileTranscribingTableRenderer;
 import trinarybrain.magia.naturalis.common.core.CommonProxy;
+import trinarybrain.magia.naturalis.common.core.KeyHandler;
 import trinarybrain.magia.naturalis.common.entity.taint.EntityTaintBreeder;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
@@ -20,6 +20,7 @@ import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 
 public class ClientProxy extends CommonProxy
@@ -30,6 +31,7 @@ public class ClientProxy extends CommonProxy
 		super.init(event);
 		this.registerRenderer();
 		EventHandlerRender.register();
+		FMLCommonHandler.instance().bus().register(new KeyHandler());
 	}
 
 	public void registerRenderer()

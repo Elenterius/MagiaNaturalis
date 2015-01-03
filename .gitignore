@@ -9,4 +9,8 @@
 !build.gradle
 !README.md
 !License.md
+<<<<<<< HEAD
 *.db
+=======
+*.db
+>>>>>>> origin/FocusOfConstruction

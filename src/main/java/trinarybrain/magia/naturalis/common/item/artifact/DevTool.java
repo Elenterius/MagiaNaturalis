@@ -22,6 +22,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
+import thaumcraft.common.entities.monster.EntityWatcher;
 import thaumcraft.common.tiles.TileOwned;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
@@ -76,13 +77,18 @@ public class DevTool extends BaseItem
 		if(stack.getItemDamage() == 0)
 		{
 			TileEntity tile = world.getTileEntity(x, y, z);
-			if(tile == null) return false;
+			if(tile == null)
+			{			
+				return false;
+			}
+						
 			if(tile instanceof TileOwned)
 			{
 				TileOwned owned = (TileOwned) tile;
 				System.out.print("\n---------------------------------------------------------------");
 				System.out.printf("%nX= %d, Y= %d, Z= %d%nOwner: %s", x, y, z, owned.owner);
 				System.out.print("\nAccesList:" + owned.accessList);
+				return true;
 			}
 			else if(tile instanceof TileArcaneChest)
 			{
@@ -90,6 +96,7 @@ public class DevTool extends BaseItem
 				System.out.print("\n---------------------------------------------------------------");
 				System.out.printf("%nX= %d, Y= %d, Z= %d%nOwner UUID: %s%nPlayer UUID: %s", x, y, z, chest.owner.toString(), player.getGameProfile().getId());
 				System.out.print("\nAccesList:" + chest.accessList.toString());
+				return true;
 			}
 			else if(tile instanceof TileTranscribingTable)
 			{
@@ -136,6 +143,7 @@ public class DevTool extends BaseItem
 					world.markBlockForUpdate(x, y, z);
 				}
 				System.out.print("\nAspectBase: " + node.getAspectsBase().visSize());
+				return true;
 			}
 		}
 		else if(stack.getItemDamage() == 1)
@@ -145,6 +153,7 @@ public class DevTool extends BaseItem
 			GameProfile gameprofile = Platform.findGameProfileByName(name);
 			System.out.printf("%n%s UUID: %s", name + "Offline", uuid.toString());
 			System.out.printf("%n%s GameProfile: %s%n", gameprofile.getName(), gameprofile.toString());
+			return true;
 		}
 
 		return false;

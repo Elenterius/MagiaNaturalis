@@ -38,7 +38,7 @@ jar {
 
 dependencies {
     compile files (
-        'lib/Thaumcraft-deobf-1.7.10-4.2.2.0.jar',
+        'lib/Thaumcraft-deobf-1.7.10-4.2.2.1.jar',
         'lib/Baubles-deobf-1.7.10-1.0.1.10.jar'
     )
 }
