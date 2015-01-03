@@ -28,16 +28,14 @@ public class KeyHandler
 {
 	public KeyBinding keyMultSize = new KeyBinding("key.magianaturalis:size.add", Keyboard.KEY_ADD, "key.categories.magianaturalis");
 	public KeyBinding keySubSize = new KeyBinding("key.magianaturalis:size.sub", Keyboard.KEY_SUBTRACT, "key.categories.magianaturalis");
-	public KeyBinding keyMeta = new KeyBinding("key.magianaturalis:meta", Keyboard.KEY_DIVIDE, "key.categories.magianaturalis");
-	public KeyBinding keyShape = new KeyBinding("key.magianaturalis:shape", Keyboard.KEY_MULTIPLY, "key.categories.magianaturalis");
+	public KeyBinding keyMisc = new KeyBinding("key.magianaturalis:misc", Keyboard.KEY_V, "key.categories.magianaturalis");
 	public KeyBinding keyPickBlock = new KeyBinding("key.magianaturalis:pickBlock", Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode(), "key.categories.magianaturalis");
 
 	public KeyHandler()
 	{
 		ClientRegistry.registerKeyBinding(this.keyMultSize);
 		ClientRegistry.registerKeyBinding(this.keySubSize);
-		ClientRegistry.registerKeyBinding(this.keyMeta);
-		ClientRegistry.registerKeyBinding(this.keyShape);
+		ClientRegistry.registerKeyBinding(this.keyMisc);
 		ClientRegistry.registerKeyBinding(this.keyPickBlock);
 	}
 
@@ -57,17 +55,13 @@ public class KeyHandler
 			{
 				id = 3;
 			}
-			else if(this.keyMeta.isPressed())
+			else if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown() && this.keyMisc.isPressed())
 			{
-				id = 4;
+				id = 4; //Meta
 			}
-			else if(this.keyShape.isPressed())
+			else if(this.keyMisc.isPressed())
 			{
-				id = 5;
-			}
-			else if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown() && this.keyShape.isPressed())
-			{
-				id = 51;
+				id = 5; //Shape
 			}
 			else if(this.keyPickBlock.isPressed())
 			{
