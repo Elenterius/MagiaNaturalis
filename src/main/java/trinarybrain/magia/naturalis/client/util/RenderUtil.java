@@ -48,7 +48,7 @@ public final class RenderUtil
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 
-	public static void drawItemStack(RenderItem itemRender, FontRenderer font, ItemStack stack, int x, int y)
+	public static void drawItemStack(RenderItem itemRender, FontRenderer fontRenderer, ItemStack stack, int x, int y)
 	{
 		itemRender.zLevel = 200.0F;
 		RenderHelper.enableGUIStandardItemLighting();
@@ -58,7 +58,7 @@ public final class RenderUtil
 		GL11.glEnable(GL11.GL_LIGHTING);
 		try
 		{
-			itemRender.renderItemAndEffectIntoGUI(font, Minecraft.getMinecraft().getTextureManager(), stack, x, y);
+			itemRender.renderItemAndEffectIntoGUI(fontRenderer, Minecraft.getMinecraft().getTextureManager(), stack, x, y);
 		}
 		catch(Exception e)
 		{

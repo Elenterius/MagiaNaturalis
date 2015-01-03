@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
 
 import thaumcraft.api.wands.ItemFocusBasic;
@@ -29,7 +30,7 @@ public class KeyHandler
 	public KeyBinding keySubSize = new KeyBinding("key.magianaturalis:size.sub", Keyboard.KEY_SUBTRACT, "key.categories.magianaturalis");
 	public KeyBinding keyMeta = new KeyBinding("key.magianaturalis:meta", Keyboard.KEY_DIVIDE, "key.categories.magianaturalis");
 	public KeyBinding keyShape = new KeyBinding("key.magianaturalis:shape", Keyboard.KEY_MULTIPLY, "key.categories.magianaturalis");
-	public KeyBinding keyPickBlock = new KeyBinding("key.magianaturalis:pickBlock", Minecraft.isRunningOnMac ? Keyboard.KEY_LMETA : Keyboard.KEY_LCONTROL, "key.categories.magianaturalis");
+	public KeyBinding keyPickBlock = new KeyBinding("key.magianaturalis:pickBlock", Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode(), "key.categories.magianaturalis");
 
 	public KeyHandler()
 	{
@@ -70,20 +71,29 @@ public class KeyHandler
 			}
 			else if(this.keyPickBlock.isPressed())
 			{
-				MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, ItemFocusBuild.reachDistance, true);
-				if(target != null)
+				EntityPlayer player = event.player;
+				if(player != null && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting)
 				{
-					if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+					ItemWandCasting wand = (ItemWandCasting) player.getCurrentEquippedItem().getItem();
+					ItemFocusBasic focus = wand.getFocus(player.getCurrentEquippedItem());
+					if(focus != null && focus instanceof ItemFocusBuild)
 					{
-						int x = target.blockX; 
-						int y = target.blockY;
-						int z = target.blockZ;
+						MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, ItemFocusBuild.reachDistance, true);
+						if(target != null)
+						{
+							if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+							{
+								int x = target.blockX; 
+								int y = target.blockY;
+								int z = target.blockZ;
 
-						Block block = event.player.worldObj.getBlock(x, y, z);
-						int meta = (byte) event.player.worldObj.getBlockMetadata(x, y, z);
-						if(block == Blocks.double_plant) meta = block.getDamageValue(event.player.worldObj, x, y, z);
-						if(meta < 0 || meta > 15) meta = 0;
-						NetworkHandler.instance.sendToServer(new PacketPickedBlock(PacketID.PACKET_PICKED_BLOCK, Block.getIdFromBlock(block), meta));
+								Block block = event.player.worldObj.getBlock(x, y, z);
+								int meta = (byte) event.player.worldObj.getBlockMetadata(x, y, z);
+								if(block == Blocks.double_plant) meta = block.getDamageValue(event.player.worldObj, x, y, z);
+								if(meta < 0 || meta > 15) meta = 0;
+								NetworkHandler.instance.sendToServer(new PacketPickedBlock(PacketID.PACKET_PICKED_BLOCK, Block.getIdFromBlock(block), meta));
+							}
+						}
 					}
 				}
 			}

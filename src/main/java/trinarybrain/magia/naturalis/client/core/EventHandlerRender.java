@@ -34,6 +34,7 @@ import thaumcraft.common.tiles.TileOwned;
 import thaumcraft.common.tiles.TileTubeBuffer;
 import trinarybrain.magia.naturalis.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
@@ -49,6 +50,9 @@ public class EventHandlerRender
 	public Minecraft mc = Minecraft.getMinecraft();
 	FontRenderer fontRenderer = mc.fontRenderer;
 	RenderItem itemRender = new RenderItem();
+	ItemStack lastItem = null;
+	int lastCount = 0;
+	private static final ResourceLocation rlSilk = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
 
 	public static void register()
 	{
@@ -88,9 +92,21 @@ public class EventHandlerRender
 		}
 	}
 
-	ItemStack lastItem = null;
-	int lastCount = 0;
-	private static final ResourceLocation rlSilk = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
+//	@SubscribeEvent
+//	public void renderBlockHighlight(DrawBlockHighlightEvent event)
+//	{
+//		int ticks = event.player.ticksExisted;
+//		MovingObjectPosition target = event.target;
+//		
+//		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
+//
+//		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof IArchitect && event.player.getHeldItem().getItem() instanceof ItemFocusBuild)
+//		{
+//			if (Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
+//				event.setCanceled(true);
+//		}
+//	}
+
 	protected void renderBuildFocusHUD(ItemStack focusStack, EntityPlayer player)
 	{
 		GL11.glClear(GL11.GL_ACCUM);
@@ -131,8 +147,12 @@ public class EventHandlerRender
 			int[] i = FocusBuildHelper.getPickedBlock(focusStack);
 			pblock = Block.getBlockById(i[0]);
 			pbdata = i[1];
-			item = Item.getItemFromBlock(pblock);
-			pickedBlock = new ItemStack(item, 1, pbdata);
+			
+			if(pblock != Blocks.air && pblock != null)
+			{
+				item = Item.getItemFromBlock(pblock);
+				pickedBlock = new ItemStack(item, 1, pbdata);
+			}
 		}
 
 		if(pickedBlock != null)
@@ -156,7 +176,8 @@ public class EventHandlerRender
 			GL11.glPushMatrix();
 			GL11.glTranslatef(45F, 40F, 0F);
 			GL11.glScalef(1.5F, 1.5F, 1.5F);
-			RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
+			if(itemRender != null && fontRenderer != null)
+				RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
 			GL11.glEnable(GL11.GL_BLEND); //TODO: REMOVE this Hack when TC4 fixes its shaders issues 
 
 			GL11.glPushMatrix();
