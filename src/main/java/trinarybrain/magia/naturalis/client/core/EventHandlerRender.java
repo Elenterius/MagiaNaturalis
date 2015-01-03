@@ -17,17 +17,21 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import thaumcraft.api.IArchitect;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.wands.ItemFocusBasic;
+import thaumcraft.client.lib.REHWandHandler;
+import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileOwned;
@@ -97,13 +101,22 @@ public class EventHandlerRender
 //	{
 //		int ticks = event.player.ticksExisted;
 //		MovingObjectPosition target = event.target;
-//		
+//
 //		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
 //
-//		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof IArchitect && event.player.getHeldItem().getItem() instanceof ItemFocusBuild)
+//		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 //		{
-//			if (Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
-//				event.setCanceled(true);
+//			if(event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof ItemWandCasting)
+//			{
+//				ItemWandCasting wand = (ItemWandCasting) event.player.getHeldItem().getItem();
+//				ItemStack focus = wand.getFocusItem( event.player.getHeldItem());
+//				if(focus.getItem() instanceof ItemFocusBuild)
+//				{
+//					Log.logger.info("DO IT NOW");
+//					if(Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
+//						event.setCanceled(true);
+//				}
+//			}
 //		}
 //	}
 

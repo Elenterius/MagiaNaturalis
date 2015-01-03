@@ -92,11 +92,11 @@ public class PacketHandler extends SimpleChannelInboundHandler<PacketBase>
 				{
 				case 2:
 					int i = FocusBuildHelper.getSize(focusStack) - 1;
-					FocusBuildHelper.setSize(focusStack, i < 1 ? ItemFocusBuild.maxSize : i);
+					FocusBuildHelper.setSize(focusStack, i < 1 ? focus.getMaxAreaSize(focusStack) : i);
 					break;
 				case 3:
 					int j = FocusBuildHelper.getSize(focusStack) + 1;
-					FocusBuildHelper.setSize(focusStack, j > ItemFocusBuild.maxSize ? 1 : j);
+					FocusBuildHelper.setSize(focusStack, j > focus.getMaxAreaSize(focusStack) ? 1 : j);
 					break;
 				case 4:
 					int k = FocusBuildHelper.getMeta(focusStack).ordinal();
