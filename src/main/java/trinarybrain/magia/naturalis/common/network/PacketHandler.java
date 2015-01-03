@@ -104,11 +104,11 @@ public class PacketHandler extends SimpleChannelInboundHandler<PacketBase>
 					break;
 				case 5:
 					int l = FocusBuildHelper.getShape(focusStack).ordinal() + 1;
-					FocusBuildHelper.setShape(focusStack, l > 4 ? Shape.PLANE : FocusBuildHelper.getShapeByID(l));
+					FocusBuildHelper.setShape(focusStack, l > 3 ? Shape.PLANE : FocusBuildHelper.getShapeByID(l));
 					break;
 				case 51:
 					int q = FocusBuildHelper.getShape(focusStack).ordinal() - 1;
-					FocusBuildHelper.setShape(focusStack, q < 1 ? Shape.SPHERE : FocusBuildHelper.getShapeByID(q));
+					FocusBuildHelper.setShape(focusStack, q < 1 ? Shape.PLANE_EXTEND : FocusBuildHelper.getShapeByID(q));
 					break;
 				default:
 					Log.logger.error("Invalid KEY ID revieved.");
