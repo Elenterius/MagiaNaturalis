@@ -25,6 +25,7 @@ import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.entities.monster.EntityWatcher;
+import thaumcraft.common.tiles.TileBanner;
 import thaumcraft.common.tiles.TileOwned;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
@@ -84,6 +85,10 @@ public class DevTool extends BaseItem
 			ThaumcraftApiHelper.addStickyWarpToPlayer(player, -100);
 			ThaumcraftApiHelper.addWarpToPlayer(player, -100, true);
 		}
+		if(stack.getItemDamage() == 0)
+		{
+			Log.logger.info("Item: " + player.inventory.getStackInSlot(0));
+		}
 
 		return stack;
 	}
@@ -96,6 +101,7 @@ public class DevTool extends BaseItem
 		if(stack.getItemDamage() == 1)
 		{
 			TileEntity tile = world.getTileEntity(x, y, z);
+			
 			if(tile == null)
 			{			
 				return false;
@@ -159,6 +165,10 @@ public class DevTool extends BaseItem
 				}
 				Log.logger.info("AspectBase: " + node.getAspectsBase().visSize());
 				return true;
+			}
+			else if(tile instanceof TileBanner)
+			{
+				Log.logger.info("Block: " + world.getBlock(x, y, z));
 			}
 		}
 //		else if(stack.getItemDamage() == 2)

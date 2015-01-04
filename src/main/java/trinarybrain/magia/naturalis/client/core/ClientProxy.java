@@ -9,12 +9,14 @@ import trinarybrain.magia.naturalis.client.render.block.BlockJarRenderer;
 import trinarybrain.magia.naturalis.client.render.block.BlockRenderer;
 import trinarybrain.magia.naturalis.client.render.entity.RenderTaintBreeder;
 import trinarybrain.magia.naturalis.client.render.tile.TileArcaneChestRenderer;
+import trinarybrain.magia.naturalis.client.render.tile.TileBannerCustomRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileJarPrisonRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileTranscribingTableRenderer;
 import trinarybrain.magia.naturalis.common.core.CommonProxy;
 import trinarybrain.magia.naturalis.common.core.KeyHandler;
 import trinarybrain.magia.naturalis.common.entity.taint.EntityTaintBreeder;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
+import trinarybrain.magia.naturalis.common.tile.TileBannerCustom;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -39,10 +41,11 @@ public class ClientProxy extends CommonProxy
 		this.registerBlockRenderer(new BlockRenderer());
 		this.registerTileEntitySpecialRenderer(TileTranscribingTable.class, new TileTranscribingTableRenderer());
 		this.registerTileEntitySpecialRenderer(TileArcaneChest.class, new TileArcaneChestRenderer());
-		
+		this.registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
+
 		this.registerBlockRenderer(new BlockJarRenderer());
 		this.registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
 	}
 

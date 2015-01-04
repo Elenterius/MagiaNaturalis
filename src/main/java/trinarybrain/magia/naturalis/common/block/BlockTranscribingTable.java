@@ -26,6 +26,7 @@ public class BlockTranscribingTable extends BlockContainer
 	{
 		super(Material.wood);
 		this.setHardness(2.5F);
+		this.setResistance(10.0F);
 		this.setStepSound(this.soundTypeWood);
 		this.setCreativeTab(MagiaNaturalis.creativeTab);
 	}

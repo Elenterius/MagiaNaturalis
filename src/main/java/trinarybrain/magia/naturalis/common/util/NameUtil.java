@@ -15,6 +15,7 @@ public final class NameUtil
 	public static final String ARCANE_CHEST = "arcaneChest";
 	public static final String JAR_PRISON = "jarPrison";
 	public static final String ARCANE_WOOD = "arcaneWood";
+	public static final String BANNER = "banner";
 	
 	// Item Names
 	public static final String DEV_TOOL = "devTool";
