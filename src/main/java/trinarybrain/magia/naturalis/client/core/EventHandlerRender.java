@@ -39,6 +39,7 @@ import thaumcraft.common.tiles.TileTubeBuffer;
 import trinarybrain.magia.naturalis.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.core.Log;
+import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
@@ -106,7 +107,7 @@ public class EventHandlerRender
 	{
 		ModelBiped model = event.renderer.modelBipedMain;
 		ItemStack itemstack = event.entityPlayer.inventory.armorItemInSlot(3);
-		if(itemstack != null && event.renderHelmet)
+		if(event.renderHelmet && itemstack != null && itemstack.getItem() instanceof ItemGogglesDark)
 		{
 			GL11.glPushMatrix();
 			float f6 = 0.0625F;
@@ -117,7 +118,7 @@ public class EventHandlerRender
 			GL11.glTranslatef(0.0F, f6, -0.01F);
 			GL11.glScalef(1.25F, 1.25F, 1.25F);
 			GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
+            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
             
             if(event.entityPlayer.isInvisible())
                 GL11.glDepthMask(false);

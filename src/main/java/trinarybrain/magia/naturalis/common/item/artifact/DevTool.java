@@ -17,6 +17,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
@@ -24,6 +26,7 @@ import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.entities.monster.EntityWatcher;
 import thaumcraft.common.tiles.TileOwned;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
@@ -39,7 +42,7 @@ public class DevTool extends BaseItem
 	public DevTool()
 	{
 		super();
-		this.modes = 20;
+		this.modes = 2;
 		this.maxStackSize = 1;
 	}
 
@@ -48,6 +51,13 @@ public class DevTool extends BaseItem
 	{
 		super.addInformation(stack, player, list, par4);
 		list.add(EnumChatFormatting.DARK_PURPLE + "Modus Operandi: " + stack.getItemDamage());
+		
+		if(stack.getItemDamage() == 0)
+			list.add(EnumChatFormatting.DARK_GRAY + "Do Nothing");
+		else if(stack.getItemDamage() == 1)
+			list.add(EnumChatFormatting.DARK_GRAY + "Debug Certain Tiles");
+		else if(stack.getItemDamage() == 2)
+			list.add(EnumChatFormatting.DARK_GRAY + "Remove Temp Warp");
 	}
 
 	@Override @SideOnly(Side.CLIENT)
@@ -58,14 +68,23 @@ public class DevTool extends BaseItem
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
+		if(Platform.isClient()) return stack;
+		
 		//Change DEV Tool Modes!!!
-		//		if(player.isSneaking())
-		//		{
-		//			stack.setItemDamage(stack.getItemDamage()+1);
-		//			if(stack.getItemDamage() >= modes)
-		//				stack.setItemDamage(0);
-		//			return stack;
-		//		}
+		if(player.isSneaking())
+		{
+			stack.setItemDamage(stack.getItemDamage()+1);
+			if(stack.getItemDamage() > modes)
+				stack.setItemDamage(0);
+			return stack;
+		}
+
+		if(stack.getItemDamage() == 2)
+		{
+			ThaumcraftApiHelper.addStickyWarpToPlayer(player, -100);
+			ThaumcraftApiHelper.addWarpToPlayer(player, -100, true);
+		}
+
 		return stack;
 	}
 
@@ -74,7 +93,7 @@ public class DevTool extends BaseItem
 		if(Platform.isClient()) return false;
 
 		// DO DEV MAGIC HERE !!!
-		if(stack.getItemDamage() == 0)
+		if(stack.getItemDamage() == 1)
 		{
 			TileEntity tile = world.getTileEntity(x, y, z);
 			if(tile == null)
@@ -85,17 +104,13 @@ public class DevTool extends BaseItem
 			if(tile instanceof TileOwned)
 			{
 				TileOwned owned = (TileOwned) tile;
-				System.out.print("\n---------------------------------------------------------------");
-				System.out.printf("%nX= %d, Y= %d, Z= %d%nOwner: %s", x, y, z, owned.owner);
-				System.out.print("\nAccesList:" + owned.accessList);
+				Log.logger.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner: %s%nAccessList: %s", x, y, z, owned.owner, owned.accessList.toString()).toString());
 				return true;
 			}
 			else if(tile instanceof TileArcaneChest)
 			{
 				TileArcaneChest chest = (TileArcaneChest) tile;
-				System.out.print("\n---------------------------------------------------------------");
-				System.out.printf("%nX= %d, Y= %d, Z= %d%nOwner UUID: %s%nPlayer UUID: %s", x, y, z, chest.owner.toString(), player.getGameProfile().getId());
-				System.out.print("\nAccesList:" + chest.accessList.toString());
+				Log.logger.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner UUID: %s%nPlayer UUID: %s%nAccessList: %s", x, y, z, chest.owner.toString(), player.getGameProfile().getId(), chest.accessList.toString()).toString());
 				return true;
 			}
 			else if(tile instanceof TileTranscribingTable)
@@ -112,7 +127,7 @@ public class DevTool extends BaseItem
 					if(log.getResearchPoint(stack2, Aspect.FIRE)  < 64) i--;
 					if(log.getResearchPoint(stack2, Aspect.ORDER)  < 64) i--;
 					if(log.getResearchPoint(stack2, Aspect.ENTROPY)  < 64) i--;
-					System.out.print("\n[DevTool]: ResearchLog " + i + " of 6 RP Maxed");
+					Log.logger.info("ResearchLog " + i + " of 6 RP Maxed");
 					return true;
 				}
 			}
@@ -142,19 +157,19 @@ public class DevTool extends BaseItem
 					
 					world.markBlockForUpdate(x, y, z);
 				}
-				System.out.print("\nAspectBase: " + node.getAspectsBase().visSize());
+				Log.logger.info("AspectBase: " + node.getAspectsBase().visSize());
 				return true;
 			}
 		}
-		else if(stack.getItemDamage() == 1)
-		{
-			String name = "Lord_Cerberus";
-			UUID uuid = Platform.generateOfflineUUIDforName(name);
-			GameProfile gameprofile = Platform.findGameProfileByName(name);
-			System.out.printf("%n%s UUID: %s", name + "Offline", uuid.toString());
-			System.out.printf("%n%s GameProfile: %s%n", gameprofile.getName(), gameprofile.toString());
-			return true;
-		}
+//		else if(stack.getItemDamage() == 2)
+//		{
+//			String name = "Lord_Cerberus";
+//			UUID uuid = Platform.generateOfflineUUIDforName(name);
+//			GameProfile gameprofile = Platform.findGameProfileByName(name);
+//			System.out.printf("%n%s UUID: %s", name + "Offline", uuid.toString());
+//			System.out.printf("%n%s GameProfile: %s%n", gameprofile.getName(), gameprofile.toString());
+//			return true;
+//		}
 
 		return false;
 	}
