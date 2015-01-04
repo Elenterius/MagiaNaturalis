@@ -17,33 +17,29 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.api.IArchitect;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.wands.ItemFocusBasic;
-import thaumcraft.client.lib.REHWandHandler;
-import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileOwned;
 import thaumcraft.common.tiles.TileTubeBuffer;
 import trinarybrain.magia.naturalis.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.Platform;
+import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -57,6 +53,7 @@ public class EventHandlerRender
 	ItemStack lastItem = null;
 	int lastCount = 0;
 	private static final ResourceLocation rlSilk = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
+	private static final ResourceLocation rlHudFrame = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MISC + "frame-9-2-gold.png");
 
 	public static void register()
 	{
@@ -96,29 +93,29 @@ public class EventHandlerRender
 		}
 	}
 
-//	@SubscribeEvent
-//	public void renderBlockHighlight(DrawBlockHighlightEvent event)
-//	{
-//		int ticks = event.player.ticksExisted;
-//		MovingObjectPosition target = event.target;
-//
-//		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
-//
-//		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-//		{
-//			if(event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof ItemWandCasting)
-//			{
-//				ItemWandCasting wand = (ItemWandCasting) event.player.getHeldItem().getItem();
-//				ItemStack focus = wand.getFocusItem( event.player.getHeldItem());
-//				if(focus.getItem() instanceof ItemFocusBuild)
-//				{
-//					Log.logger.info("DO IT NOW");
-//					if(Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
-//						event.setCanceled(true);
-//				}
-//			}
-//		}
-//	}
+	//	@SubscribeEvent
+	//	public void renderBlockHighlight(DrawBlockHighlightEvent event)
+	//	{
+	//		int ticks = event.player.ticksExisted;
+	//		MovingObjectPosition target = event.target;
+	//
+	//		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
+	//
+	//		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+	//		{
+	//			if(event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof ItemWandCasting)
+	//			{
+	//				ItemWandCasting wand = (ItemWandCasting) event.player.getHeldItem().getItem();
+	//				ItemStack focus = wand.getFocusItem( event.player.getHeldItem());
+	//				if(focus.getItem() instanceof ItemFocusBuild)
+	//				{
+	//					Log.logger.info("DO IT NOW");
+	//					if(Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
+	//						event.setCanceled(true);
+	//				}
+	//			}
+	//		}
+	//	}
 
 	protected void renderBuildFocusHUD(ItemStack focusStack, EntityPlayer player)
 	{
@@ -160,13 +157,26 @@ public class EventHandlerRender
 			int[] i = FocusBuildHelper.getPickedBlock(focusStack);
 			pblock = Block.getBlockById(i[0]);
 			pbdata = i[1];
-			
+
 			if(pblock != Blocks.air && pblock != null)
 			{
 				item = Item.getItemFromBlock(pblock);
 				pickedBlock = new ItemStack(item, 1, pbdata);
 			}
 		}
+
+		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glTranslatef(45F, 40F, 0F);
+		RenderUtil.drawTextureQuad(rlHudFrame, 32, 32);
+		if(pickedBlock == null)
+		{
+			GL11.glTranslatef(1.5F, 1F, 0F);
+			GL11.glColor4f(1F, 1F, 1F, 0.3F);
+			RenderUtil.drawTextureQuad(rlSilk, 30, 30);
+			GL11.glColor4f(1F, 1F, 1F, 1F);
+		}
+		GL11.glPopMatrix();
 
 		if(pickedBlock != null)
 		{
@@ -187,8 +197,9 @@ public class EventHandlerRender
 			this.lastCount = amount;
 
 			GL11.glPushMatrix();
-			GL11.glTranslatef(45F, 40F, 0F);
+			GL11.glTranslatef(49F, 44F, 0F);
 			GL11.glScalef(1.5F, 1.5F, 1.5F);
+
 			if(itemRender != null && fontRenderer != null)
 				RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
 			GL11.glEnable(GL11.GL_BLEND); //TODO: REMOVE this Hack when TC4 fixes its shaders issues 
