@@ -117,7 +117,7 @@ public class EventHandlerRender
 			GL11.glTranslatef(0.0F, f6, -0.01F);
 			GL11.glScalef(1.25F, 1.25F, 1.25F);
 			GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_DST_COLOR);
+            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
             
             if(event.entityPlayer.isInvisible())
                 GL11.glDepthMask(false);
