@@ -1,12 +1,17 @@
 package trinarybrain.magia.naturalis.common.item.alchemy;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+import thaumcraft.api.BlockCoordinates;
+import thaumcraft.api.IArchitect;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
@@ -14,7 +19,7 @@ import trinarybrain.magia.naturalis.common.util.alchemy.BlockMorpher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemMutationStone extends BaseItem
+public class ItemMutationStone extends BaseItem implements IArchitect
 {
 
 	public ItemMutationStone()
@@ -40,5 +45,24 @@ public class ItemMutationStone extends BaseItem
 	{
 		if(Platform.isClient()) return false;
 		return BlockMorpher.setMorphOrRotation(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z), player.isSneaking());
+	}
+
+	@Override
+	public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player)
+	{
+		Block block = world.getBlock(x, y, z);
+		if(block != null && block != Blocks.air)
+		{
+			ArrayList blocks = new ArrayList();
+			blocks.add(new BlockCoordinates(x, y, z));
+			return blocks;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean showAxis(ItemStack stack, World world, EntityPlayer player, int side, EnumAxis axis)
+	{
+		return false;
 	}
 }

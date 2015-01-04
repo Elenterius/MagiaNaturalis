@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,6 +20,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -34,6 +37,7 @@ import thaumcraft.common.tiles.TileOwned;
 import thaumcraft.common.tiles.TileTubeBuffer;
 import trinarybrain.magia.naturalis.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
@@ -90,6 +94,28 @@ public class EventHandlerRender
 					}
 				}
 			}
+		}
+	}
+
+	private static final ResourceLocation rlGlowingEyes = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "glowingEyes.png");
+	
+	@SubscribeEvent
+	public void renderPlayerSpecial(RenderPlayerEvent.Specials.Pre event)
+	{
+		ModelBiped model = event.renderer.modelBipedMain;
+		ItemStack itemstack = event.entityPlayer.inventory.armorItemInSlot(3);
+		if(itemstack != null && event.renderHelmet)
+		{
+			GL11.glPushMatrix();
+			float f6 = 0.0625F;
+						
+			model.bipedHead.postRender(f6);
+			GL11.glTranslatef(0.0F, 1.0F, 0.0F);
+			ModelSkeletonHead skull = new ModelSkeletonHead();
+			mc.renderEngine.bindTexture(this.rlGlowingEyes);
+			skull.skeletonHead.render(f6);
+			
+			GL11.glPopMatrix();
 		}
 	}
 

@@ -55,7 +55,7 @@ public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDisco
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return ResourceUtil.PREFIX + ResourceUtil.PATH_MODEL + "armorSpectacles.png";
+		return ResourceUtil.PREFIX + ResourceUtil.PATH_MODEL + "armorGogglesDark.png";
 	}
 
 	@Override
