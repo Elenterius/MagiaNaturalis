@@ -28,6 +28,7 @@ chat.magianaturalis:chest.resist=The Chest resists Your Attempt of Miniaturizati
 flavor.magianaturalis:key.0=One to Open Them All...
 flavor.magianaturalis:key.1=One to Grant Acces for Others...
 flavor.magianaturalis:chest=Obstinate and discriminating, protects its treasure.
+flavor.magianaturalis:banner=A Banner to mark our Presence.
 hint.magianaturalis:ctrl=<Press Ctrl>
 hint.magianaturalis:chest.items=Contains Treasure
 hint.magianaturalis:chest.access=Has Access List
@@ -46,7 +47,7 @@ item.magianaturalis:gogglesDarkCrystal.name=Dark Crystal Goggles
 item.magianaturalis:spectacles.name=Magnifying Spectacles
 item.magianaturalis:focusBuild.name=Wand Focus: Construction
 
-# TILE ENTITY NAMES
+# TILE NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table
 tile.magianaturalis:arcaneChest.unknown.name=Unknown Chest
 tile.magianaturalis:arcaneChest.gw.name=Greatwood Chest
@@ -56,6 +57,7 @@ tile.magianaturalis:arcaneWood.gwPlanks.name=Greatwood Planks
 tile.magianaturalis:arcaneWood.gwOrn.name=Greatwood Ornament
 tile.magianaturalis:arcaneWood.swPlanks.0.name=Silverwood Planks
 tile.magianaturalis:arcaneWood.swPlanks.1.name=Silverwood Planks
+tile.magianaturalis:banner.name=Magia Naturalis Banner
 
 # ENTITIY NAMES
 entity.taintBreeder.name=Taint Breeder
@@ -70,7 +72,44 @@ mn.research_page.INTRO.2=While this discipline is very controversial and deemed 
 
 mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
 mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
-mn.research_page.TRANSCRIBINGTABLE.1=A magic feather dances across the Tables counter top. It dips it's head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowlegde into physical form.
+mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Tables counter top. It dips it's head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowlegde into physical form." - Unknown Poet
+
+mn.research_name.RESEARCH_LOG=Research Log
+mn.research_text.RESEARCH_LOG=Collecting Knowledge for Anyone
+mn.research_page.RESEARCH_LOG.1=In leather bound enchanted paper has the properties to store Research Points.
+
+mn.research_name.KEY_SPECIAL=Thaumium Key
+mn.research_text.KEY_SPECIAL=One to Rule them All
+mn.research_page.KEY_SPECIAL.1=This Key grants Access for the Bound Player to any Tile owned by the Key Forger
+mn.research_page.KEY_SPECIAL.2=This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger
+
+mn.research_name.ARCANE_CHEST=Arcane Chest
+mn.research_text.ARCANE_CHEST=Personal Storage
+mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood this Arcane Chest holds and protects its content against almost anything. Hit it with a wand to pick it up with its content.
+
+mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
+mn.research_text.GOGGLES_DARK=True Sight
+mn.research_page.GOGGLES_DARK.1=See the Invisible
+
+mn.research_name.SPECTACLES=Spectacles
+mn.research_text.SPECTACLES=Sharper Sight
+mn.research_page.SPECTACLES.1=Percieve every little detail without the help of specific Tools
+
+mn.research_name.FOCUS_BUILD=Focus Of Construction
+mn.research_text.FOCUS_BUILD=Grand Architecture
+mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posessed a slight potential at building in a bigger maner, you have refiend and expanded the shear Potentail to its maximum. This Masterpiece of Focus etching has brought forth a Tool befiting a Grand Architect.
+
+mn.research_name.JAR_PRISON=Entity in a Jar
+mn.research_text.JAR_PRISON=Minimized Pets
+mn.research_page.JAR_PRISON.1=Shrink ans Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.
+
+mn.research_name.STONE_PHENO=Phenomorphus Stone
+mn.research_text.STONE_PHENO=Morhphing the Visual
+mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks.
+
+mn.research_name.STONE_QUICKSILVER=Quicksilver Stone
+mn.research_text.STONE_QUICKSILVER=Quickening Potion Effects
+mn.research_page.STONE_QUICKSILVER.1=Shorten and condense at the same time the Effect of Potion Effects. Make the Effect Stronger but las shorter. Needs Glowstone to opperate.
 
 mn.research_name.GEOCCULTISM=Geoccultism
 mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
