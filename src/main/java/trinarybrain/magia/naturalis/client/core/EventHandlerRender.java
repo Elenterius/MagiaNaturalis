@@ -8,6 +8,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelSkeletonHead;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -98,6 +99,7 @@ public class EventHandlerRender
 	}
 
 	private static final ResourceLocation rlGlowingEyes = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "glowingEyes.png");
+	private static ModelBiped modelOverlay = new ModelBiped();
 	
 	@SubscribeEvent
 	public void renderPlayerSpecial(RenderPlayerEvent.Specials.Pre event)
@@ -110,10 +112,25 @@ public class EventHandlerRender
 			float f6 = 0.0625F;
 						
 			model.bipedHead.postRender(f6);
-			GL11.glTranslatef(0.0F, 1.0F, 0.0F);
-			ModelSkeletonHead skull = new ModelSkeletonHead();
 			mc.renderEngine.bindTexture(this.rlGlowingEyes);
-			skull.skeletonHead.render(f6);
+			
+			GL11.glTranslatef(0.0F, f6, -0.01F);
+			GL11.glScalef(1.25F, 1.25F, 1.25F);
+			GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_DST_COLOR);
+            
+            if(event.entityPlayer.isInvisible())
+                GL11.glDepthMask(false);
+            else
+                GL11.glDepthMask(true);
+            
+            char c0 = 61680;
+            int j = c0 % 65536;
+            int k = c0 / 65536;
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			modelOverlay.bipedHead.render(f6);
+			GL11.glDisable(GL11.GL_BLEND);
 			
 			GL11.glPopMatrix();
 		}
