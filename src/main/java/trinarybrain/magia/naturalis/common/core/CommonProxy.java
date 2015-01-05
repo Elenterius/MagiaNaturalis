@@ -4,11 +4,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.block.BlocksMN;
 import trinarybrain.magia.naturalis.common.container.ContainerArcaneChest;
+import trinarybrain.magia.naturalis.common.container.ContainerEvilTrunk;
 import trinarybrain.magia.naturalis.common.container.ContainerTranscribingTable;
 import trinarybrain.magia.naturalis.common.entity.EntitiesMN;
+import trinarybrain.magia.naturalis.common.entity.EntityEvilTrunk;
 import trinarybrain.magia.naturalis.common.item.ItemsMN;
 import trinarybrain.magia.naturalis.common.research.Research;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
@@ -49,6 +52,8 @@ public class CommonProxy implements IGuiHandler
 			return new ContainerTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
 		case 2:
 			return new ContainerArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
+		case 3:
+		      return new ContainerEvilTrunk(player.inventory, world, (EntityEvilTrunk) ((WorldServer)world).getEntityByID(x));
 		default:
 			return null;
 		}

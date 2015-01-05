@@ -1,10 +1,12 @@
 package trinarybrain.magia.naturalis.client.core;
 
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import trinarybrain.magia.naturalis.client.gui.GuiArcaneChest;
+import trinarybrain.magia.naturalis.client.gui.GuiEvilTrunk;
 import trinarybrain.magia.naturalis.client.gui.GuiTranscribingTable;
 import trinarybrain.magia.naturalis.client.render.block.BlockJarRenderer;
 import trinarybrain.magia.naturalis.client.render.block.BlockRenderer;
@@ -76,6 +78,8 @@ public class ClientProxy extends CommonProxy
 			return new GuiTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
 		case 2:
 			return new GuiArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
+		case 3:
+	        return new GuiEvilTrunk(player, (EntityEvilTrunk) ((WorldClient)world).getEntityByID(x));
 		default:
 			return null;
 		}
