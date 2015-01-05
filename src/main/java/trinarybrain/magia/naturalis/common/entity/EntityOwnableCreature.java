@@ -1,5 +1,8 @@
 package trinarybrain.magia.naturalis.common.entity;
 
+import java.util.UUID;
+
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.ai.AIWait;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -13,6 +16,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.world.World;
 
 public class EntityOwnableCreature extends EntityCreature implements IEntityOwnable
@@ -35,21 +39,34 @@ public class EntityOwnableCreature extends EntityCreature implements IEntityOwna
 	{
 		super.writeEntityToNBT(data);
 
-		if(this.getOwnerName() == null)
-			data.setString("Owner", "");
+		if(this.getOwnerUUID() == null)
+			data.setString("OwnerUUID", "");
 		else
-			data.setString("Owner", this.getOwnerName());
-
+			data.setString("OwnerUUID", this.getOwnerUUID());
+		
 		data.setBoolean("Waiting", this.isWaiting());
 	}
 
 	public void readEntityFromNBT(NBTTagCompound data)
 	{
 		super.readEntityFromNBT(data);
-		String s = data.getString("Owner");
 
-		if(s.length() > 0) this.setOwner(s);
+		String s = "";
+		if(data.hasKey("OwnerUUID", 8))
+        {
+            s = data.getString("OwnerUUID");
+        }
+        else
+        {
+            String s1 = data.getString("Owner");
+            s = PreYggdrasilConverter.func_152719_a(s1);
+        }
 
+        if(s.length() > 0)
+        {
+            this.setOwnerUUID(s);
+        }
+		
 		this.aiWait.setWaiting(data.getBoolean("Waiting"));
 		this.setWaiting(data.getBoolean("Waiting"));
 	}
@@ -74,21 +91,34 @@ public class EntityOwnableCreature extends EntityCreature implements IEntityOwna
 	/*
 	*Wrapper for func_152113_b()
 	*/
-	public String getOwnerName()
+	public String getOwnerUUID()
 	{
 		return this.func_152113_b();
 	}
 
-	public void setOwner(String owner)
+	public void setOwnerUUID(String uuid)
 	{
-		this.dataWatcher.updateObject(17, owner);
+		this.dataWatcher.updateObject(17, uuid);
 	}
 
 	@Override
 	public EntityLivingBase getOwner()
 	{
-		return this.worldObj.getPlayerEntityByName(this.getOwnerName());
+		try
+        {
+            UUID uuid = UUID.fromString(this.getOwnerUUID());
+            return uuid == null ? null : this.worldObj.func_152378_a(uuid);
+        }
+        catch (IllegalArgumentException illegalargumentexception)
+        {
+            return null;
+        }
 	}
+	
+	public boolean isOwner(EntityLivingBase entity)
+    {
+        return entity == this.getOwner();
+    }
 
 	public AIWait getAIWaitObj()
 	{
@@ -97,17 +127,17 @@ public class EntityOwnableCreature extends EntityCreature implements IEntityOwna
 
 	public Team getTeam()
 	{
-		EntityLivingBase entitylivingbase = this.getOwner();
-		if(entitylivingbase != null) return entitylivingbase.getTeam();
+		EntityLivingBase owner = this.getOwner();
+		if(owner != null) return owner.getTeam();
 		return super.getTeam();
 	}
 
-	public boolean isOnSameTeam(EntityLivingBase par1EntityLivingBase)
+	public boolean isOnSameTeam(EntityLivingBase entity)
 	{
-		EntityLivingBase entitylivingbase1 = this.getOwner();
-		if(par1EntityLivingBase == entitylivingbase1) return true;
-		if(entitylivingbase1 != null) return entitylivingbase1.isOnSameTeam(par1EntityLivingBase);
-		return super.isOnSameTeam(par1EntityLivingBase);
+		EntityLivingBase owner = this.getOwner();
+		if(entity == owner) return true;
+		if(owner != null) return owner.isOnSameTeam(entity);
+		return super.isOnSameTeam(entity);
 	}
 
 	public boolean canAttack(EntityLivingBase attacker, EntityLivingBase owner)

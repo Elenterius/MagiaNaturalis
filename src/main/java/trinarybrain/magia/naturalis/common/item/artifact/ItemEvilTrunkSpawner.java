@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.EntityEvilTrunk;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -60,7 +61,9 @@ public class ItemEvilTrunkSpawner extends BaseItem
 		double d0 = 0.0D;
 		if(side == 1 && !block.isAir(world, x, y, z) && block.getRenderType() == 11) d0 = 0.5D;
 		EntityEvilTrunk entity = new EntityEvilTrunk(world, stack.getItemDamage());
-		((EntityEvilTrunk) entity).setOwner(player.getCommandSenderName());
+		((EntityEvilTrunk) entity).setOwnerUUID(player.getGameProfile().getId().toString());
+		
+		Log.logger.info("PlayerName: " + player.getCommandSenderName());
 
 		if(entity != null)
 		{

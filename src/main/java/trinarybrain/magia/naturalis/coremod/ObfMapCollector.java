@@ -52,15 +52,12 @@ public final class ObfMapCollector
 		
 		if(map.get(key) == null)
 		{
-//			Log.logger.error("Mapping is missing for -> " + key);
-			System.out.println("Mapping is " + map.get(key) + " for -> " + key);
 			if(key.equals("net.minecraft.client.renderer.entity.RendererLivingEntity"))
 			{
 				map.put("net.minecraft.client.renderer.entity.RendererLivingEntity", "boh");
 				return "boh";
 			}
 		}
-		
 		return map.get(key);
 	}
 }

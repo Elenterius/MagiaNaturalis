@@ -53,6 +53,7 @@ public class RenderItemEvilTrunkSpawner implements IItemRenderer
 		}
 		
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+		GL11.glTranslatef(0.5F, -0.5F, 0.5F);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		if(item.getItem() instanceof ItemEvilTrunkSpawner)
@@ -76,7 +77,6 @@ public class RenderItemEvilTrunkSpawner implements IItemRenderer
 
 			case 3:
 				RenderUtil.bindTexture(RenderEvilTrunk.rlTT);
-				GL11.glTranslatef(0.5F, -0.5F, 0.5F);
 				this.modelTT.render(null, 0, 0, 0, 0, 0, 0);
 				break;
 			}

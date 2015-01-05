@@ -2,10 +2,11 @@ package trinarybrain.magia.naturalis.common.entity.ai;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import trinarybrain.magia.naturalis.common.core.Log;
+import trinarybrain.magia.naturalis.common.entity.EntityOwnableCreature;
 
 public class AIFollowOwner extends EntityAIBase
 {
@@ -25,7 +26,7 @@ public class AIFollowOwner extends EntityAIBase
 
 	public boolean shouldExecute()
 	{
-		this.entityOwner = (EntityLivingBase) ((IEntityOwnable)this.taskOwner).getOwner();
+		this.entityOwner = ((EntityOwnableCreature) this.taskOwner).getOwner();
 		if(this.entityOwner == null)
 		{
 			return false;
@@ -47,7 +48,7 @@ public class AIFollowOwner extends EntityAIBase
 	
 	public void updateTask()
 	{
-		this.entityOwner = (EntityLivingBase) ((IEntityOwnable)this.taskOwner).getOwner();
+		this.entityOwner = ((EntityOwnableCreature)this.taskOwner).getOwner();
 		if(this.entityOwner != null)
 		{
 			float distance = this.taskOwner.getDistanceToEntity(this.entityOwner);

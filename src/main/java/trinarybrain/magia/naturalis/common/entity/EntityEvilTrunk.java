@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.ai.AIFollowOwner;
 import trinarybrain.magia.naturalis.common.entity.ai.AILeapAtTarget;
 import trinarybrain.magia.naturalis.common.entity.ai.AIOwnerHurtByTarget;
@@ -31,15 +32,15 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 	private int eatDelay;
 	public String name[] = new String[] {"corrupted", "sinister", "demonic", "tainted"};
 
-	public EntityEvilTrunk(World world)
-	{
-		super(world);
-	}
-	
 	public EntityEvilTrunk(World world, int type)
 	{
 		this(world);
 		this.setTrunkType((byte) type);
+	}
+	
+	public EntityEvilTrunk(World world)
+	{
+		super(world);
 		this.setSize(0.8F, 0.8F);
 		this.skullrot = 0.0F;
 		this.preventEntitySpawning = true;
@@ -100,7 +101,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 		
 		if(this.getOwner() != null)
 		{
-			if ((this.getAttackTarget() != null) && (!getAttackTarget().isDead) && (this.getAttackTarget() != this.getOwner()))
+			if(this.getAttackTarget() != null && !getAttackTarget().isDead && this.getAttackTarget() != this.getOwner())
 			{
 				this.faceEntity(this.getAttackTarget(), 10.0F, 20.0F);
 				if ((this.attackTime <= 0) && (this.getDistanceToEntity(this.getAttackTarget()) < 1.5D) && (this.getAttackTarget().boundingBox.maxY > this.boundingBox.minY) && (this.getAttackTarget().boundingBox.minY < this.boundingBox.maxY))
@@ -184,29 +185,36 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 
 	public boolean interact(EntityPlayer player)
 	{
-		if (player.isSneaking()) return false;
+		if(player.isSneaking())
+		{
+			Log.logger.info("Owner: " + this.getOwner() + "; Name: " + this.getOwnerUUID());
+			Log.logger.info("IsWaiting: " + this.isWaiting());
+			Log.logger.info("AI enabled: " + this.isAIEnabled());
+			return false;
+		}
+		
 		ItemStack itemstack = player.inventory.getCurrentItem();
 
-		if ((itemstack != null) && ((itemstack.getItem() instanceof ItemFood)) && (getHealth() < getMaxHealth()))
+		if(itemstack != null && itemstack.getItem() instanceof ItemFood && getHealth() < getMaxHealth())
 		{
 			ItemFood itemfood = (ItemFood)itemstack.getItem();
 			itemstack.stackSize -= 1;
 			heal(itemfood.func_150905_g(itemstack));
-			if (getHealth() == getMaxHealth())
+			if(getHealth() == getMaxHealth())
 				this.worldObj.playSoundAtEntity(this, "random.burp", 0.5F, this.worldObj.rand.nextFloat() * 0.5F + 0.5F);
 			else
 				this.worldObj.playSoundAtEntity(this, "random.eat", 0.5F, this.worldObj.rand.nextFloat() * 0.5F + 0.5F);
 			this.worldObj.setEntityState(this, (byte)18);
 			this.skullrot = 0.15F;
-			if (itemstack.stackSize <= 0)
+			if(itemstack.stackSize <= 0)
 			{
 				player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 			}
 			return true;
 		}
-		if (!this.worldObj.isRemote)
+		if(!this.worldObj.isRemote)
 		{
-			if ((!getOwnerName().equals(player.getCommandSenderName()))) return true;
+			if(!this.isOwner(player)) return true;
 			return false;
 		}
 
