@@ -3,18 +3,23 @@ package trinarybrain.magia.naturalis.client.core;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import trinarybrain.magia.naturalis.client.gui.GuiArcaneChest;
 import trinarybrain.magia.naturalis.client.gui.GuiTranscribingTable;
 import trinarybrain.magia.naturalis.client.render.block.BlockJarRenderer;
 import trinarybrain.magia.naturalis.client.render.block.BlockRenderer;
+import trinarybrain.magia.naturalis.client.render.entity.RenderEvilTrunk;
 import trinarybrain.magia.naturalis.client.render.entity.RenderTaintBreeder;
+import trinarybrain.magia.naturalis.client.render.item.RenderItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.client.render.tile.TileArcaneChestRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileBannerCustomRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileJarPrisonRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileTranscribingTableRenderer;
 import trinarybrain.magia.naturalis.common.core.CommonProxy;
 import trinarybrain.magia.naturalis.common.core.KeyHandler;
+import trinarybrain.magia.naturalis.common.entity.EntityEvilTrunk;
 import trinarybrain.magia.naturalis.common.entity.taint.EntityTaintBreeder;
+import trinarybrain.magia.naturalis.common.item.ItemsMN;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileBannerCustom;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
@@ -45,8 +50,11 @@ public class ClientProxy extends CommonProxy
 
 		this.registerBlockRenderer(new BlockJarRenderer());
 		this.registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
+		
+		MinecraftForgeClient.registerItemRenderer(ItemsMN.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
+		RenderingRegistry.registerEntityRenderingHandler(EntityEvilTrunk.class, new RenderEvilTrunk());
 	}
 
 	public void registerTileEntitySpecialRenderer(Class clazz, TileEntitySpecialRenderer tESR)

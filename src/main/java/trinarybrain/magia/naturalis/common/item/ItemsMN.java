@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemMutationStone;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemQuicksilverStone;
 import trinarybrain.magia.naturalis.common.item.artifact.DevTool;
+import trinarybrain.magia.naturalis.common.item.artifact.ItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemKey;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemResearchLog;
@@ -23,6 +24,7 @@ public class ItemsMN
 	public static Item gogglesDark;
 	public static Item spectacles;
 	public static Item focusBuild;
+	public static Item evilTrunkSpawner;
 
 	public static void initItems()
 	{
@@ -34,6 +36,7 @@ public class ItemsMN
 		gogglesDark = new ItemGogglesDark(); registerItem(gogglesDark, NameUtil.GOGGLES_DARK_CRYSTAL);
 		spectacles = new ItemSpectacles(); registerItem(spectacles, NameUtil.SPECTACLES);
 		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, NameUtil.FOCUS_BUILD);
+		evilTrunkSpawner = new ItemEvilTrunkSpawner(); registerItem(evilTrunkSpawner, NameUtil.EVIL_TRUNK);
 	}
 
 	private static void registerItem(Item item, String str)

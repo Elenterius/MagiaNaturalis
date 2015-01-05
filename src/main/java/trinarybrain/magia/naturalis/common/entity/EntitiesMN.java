@@ -10,7 +10,8 @@ public class EntitiesMN
 {
 	public static void registerEntities()
 	{
-		EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, NameUtil.TAINT_BREEDER, EntityRegistry.findGlobalUniqueEntityId(), 16761087, 8388752);
+		EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, NameUtil.TAINT_BREEDER, EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
 		EntityRegistry.registerModEntity(EntityTaintBreeder.class, NameUtil.TAINT_BREEDER, ModUtil.idTaintBreeder, MagiaNaturalis.instance, 64, 3, false);
+		EntityRegistry.registerModEntity(EntityEvilTrunk.class, NameUtil.EVIL_TRUNK, ModUtil.idEvilTrunk, MagiaNaturalis.instance, 64, 3, false);
 	}
 }

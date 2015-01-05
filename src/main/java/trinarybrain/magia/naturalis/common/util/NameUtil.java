@@ -6,6 +6,7 @@ public final class NameUtil
 	
 	// Entity Names
 	public static final String TAINT_BREEDER = "taintBreeder";
+	public static final String EVIL_TRUNK = "evilTrunk";
 //	public static final String WRATHGAZER = "wrathgazer";
 //	public static final String SNAPJAW = "snapjaw";
 //	public static final String DOG_ONYX = "dogOnyx";

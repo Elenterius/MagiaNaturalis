@@ -38,7 +38,7 @@ import trinarybrain.magia.naturalis.common.entity.ai.AILookAtPlayer;
 public class EntityPechCustom extends EntityMob
 {
 	public boolean isInteracting = false;
-	private double damageBonus;
+	private double damageBonus = 2.5D;
 	public String name[] = new String[] {"gambler", "verdant", "alchemist"};
 	
 	public EntityPechCustom(World world)

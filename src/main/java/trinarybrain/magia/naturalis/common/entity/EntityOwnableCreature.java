@@ -31,34 +31,27 @@ public class EntityOwnableCreature extends EntityCreature implements IEntityOwna
 		this.dataWatcher.addObject(17, "");
 	}
 
-	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+	public void writeEntityToNBT(NBTTagCompound data)
 	{
-		super.writeEntityToNBT(par1NBTTagCompound);
+		super.writeEntityToNBT(data);
 
 		if(this.getOwnerName() == null)
-		{
-			par1NBTTagCompound.setString("Owner", "");
-		}
+			data.setString("Owner", "");
 		else
-		{
-			par1NBTTagCompound.setString("Owner", this.getOwnerName());
-		}
+			data.setString("Owner", this.getOwnerName());
 
-		par1NBTTagCompound.setBoolean("Waiting", this.isWaiting());
+		data.setBoolean("Waiting", this.isWaiting());
 	}
 
-	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+	public void readEntityFromNBT(NBTTagCompound data)
 	{
-		super.readEntityFromNBT(par1NBTTagCompound);
-		String s = par1NBTTagCompound.getString("Owner");
+		super.readEntityFromNBT(data);
+		String s = data.getString("Owner");
 
-		if(s.length() > 0)
-		{
-			this.setOwner(s);
-		}
+		if(s.length() > 0) this.setOwner(s);
 
-		this.aiWait.setWaiting(par1NBTTagCompound.getBoolean("Waiting"));
-		this.setWaiting(par1NBTTagCompound.getBoolean("Waiting"));
+		this.aiWait.setWaiting(data.getBoolean("Waiting"));
+		this.setWaiting(data.getBoolean("Waiting"));
 	}
 
 	public boolean isWaiting()
@@ -86,9 +79,9 @@ public class EntityOwnableCreature extends EntityCreature implements IEntityOwna
 		return this.func_152113_b();
 	}
 
-	public void setOwner(String par1Str)
+	public void setOwner(String owner)
 	{
-		this.dataWatcher.updateObject(17, par1Str);
+		this.dataWatcher.updateObject(17, owner);
 	}
 
 	@Override
@@ -105,19 +98,15 @@ public class EntityOwnableCreature extends EntityCreature implements IEntityOwna
 	public Team getTeam()
 	{
 		EntityLivingBase entitylivingbase = this.getOwner();
-
-		if(entitylivingbase != null) { return entitylivingbase.getTeam(); }
+		if(entitylivingbase != null) return entitylivingbase.getTeam();
 		return super.getTeam();
 	}
 
 	public boolean isOnSameTeam(EntityLivingBase par1EntityLivingBase)
 	{
 		EntityLivingBase entitylivingbase1 = this.getOwner();
-
-		if(par1EntityLivingBase == entitylivingbase1) { return true; }
-
-		if(entitylivingbase1 != null) { return entitylivingbase1.isOnSameTeam(par1EntityLivingBase); }
-
+		if(par1EntityLivingBase == entitylivingbase1) return true;
+		if(entitylivingbase1 != null) return entitylivingbase1.isOnSameTeam(par1EntityLivingBase);
 		return super.isOnSameTeam(par1EntityLivingBase);
 	}
 
