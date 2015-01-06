@@ -53,14 +53,14 @@ public class ContainerArcaneChest extends Container
 			ItemStack tempStack = slot.getStack();
 			stack = tempStack.copy();	
 
-			if(index < 54)
+			if(index < 55)
 			{
 				if(!this.mergeItemStack(tempStack, 54, this.inventorySlots.size(), true))
 				{
 					return null;
 				}
 			}
-			else if(!this.mergeItemStack(tempStack, 0, 53, false))
+			else if(!this.mergeItemStack(tempStack, 0, 54, false))
 			{
 				return null;
 			}

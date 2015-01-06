@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.EntityEvilTrunk;
 import trinarybrain.magia.naturalis.common.inventory.InventoryEvilTrunk;
 
@@ -49,19 +50,27 @@ public class ContainerEvilTrunk extends Container
 	{
 		ItemStack stack = null;
 		Slot slot = (Slot) this.inventorySlots.get(index);
+
 		if(slot != null && slot.getHasStack())
 		{
-			ItemStack stack2 = slot.getStack();
-			stack = stack2.copy();
+			ItemStack tempStack = slot.getStack();
+			stack = tempStack.copy();	
 
-			if(index < this.numRows * 9)
-				if(!mergeItemStack(stack2, this.numRows * 9, this.inventorySlots.size(), true)) return null;
-			else if(!mergeItemStack(stack2, 0, this.numRows * 9, false)) return null;
+			if(index < 37)
+			{
+				if(!this.mergeItemStack(tempStack, 36, this.inventorySlots.size(), true))
+					return null;
+			}
+			else if(!this.mergeItemStack(tempStack, 0, 36, false))
+			{
+				return null;
+			}
 
-			if(stack2.stackSize == 0)
-				slot.putStack((ItemStack) null);
-			else
-				slot.onSlotChanged();
+			if(tempStack.stackSize == 0) slot.putStack((ItemStack)null);
+			else slot.onSlotChanged();
+
+			if(tempStack.stackSize == stack.stackSize) return null;
+			slot.onPickupFromSlot(player, tempStack);
 		}
 		return stack;
 	}
