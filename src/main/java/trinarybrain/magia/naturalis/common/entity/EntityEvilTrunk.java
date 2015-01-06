@@ -49,6 +49,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 		this.setSize(0.8F, 0.8F);
 		this.skullrot = 0.0F;
 		this.preventEntitySpawning = true;
+		this.isImmuneToFire = true;
 
 		// if(this.getTrunkType() == 3)
 		// ADD FLIGHT
@@ -125,7 +126,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 		}
 	}
 
-	public boolean attackEntityFrom(DamageSource ds, float par2)
+	public boolean attackEntityFrom(DamageSource damage, float amount)
 	{
 		if(this.isEntityInvulnerable())
 		{
@@ -133,9 +134,11 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 		}
 		else
 		{
-			if(ds == DamageSource.cactus) return false;
-			if(ds == DamageSource.magic) return false;
-			return super.attackEntityFrom(ds, par2);
+			if(damage == DamageSource.lava) return false;
+			if(damage == DamageSource.inFire) return false;
+			if(damage == DamageSource.onFire) return false;
+			if(damage == DamageSource.drown) return false;
+			return super.attackEntityFrom(damage, amount);
 		}
 	}
 
