@@ -8,15 +8,15 @@ import net.minecraft.world.World;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.EntityOwnableCreature;
 
-public class AIFollowOwner extends EntityAIBase
+public class AIFollowJumpOwner extends EntityAIBase
 {
 	World world;
-	EntityLiving taskOwner;
+	EntityOwnableCreature taskOwner;
 	EntityLivingBase entityOwner;
 	private int jumpDelay;
 	private boolean move;
 
-	public AIFollowOwner(EntityLiving TaskOwner)
+	public AIFollowJumpOwner(EntityOwnableCreature TaskOwner)
 	{
 		this.taskOwner = TaskOwner;
 		this.world = TaskOwner.worldObj;
@@ -26,20 +26,21 @@ public class AIFollowOwner extends EntityAIBase
 
 	public boolean shouldExecute()
 	{
-		this.entityOwner = ((EntityOwnableCreature) this.taskOwner).getOwner();
-		if(this.entityOwner == null)
+		if(!this.taskOwner.isWaiting())
 		{
-			return false;
-		}else if(this.taskOwner.getDistanceToEntity(this.entityOwner) > 5.0F)
-		{
-			return true;
+			this.entityOwner =  this.taskOwner.getOwner();
+			
+			if(this.entityOwner == null)
+				return false;
+			else if(this.taskOwner.getDistanceToEntity(this.entityOwner) > 5.0F)
+				return true;
 		}
 		return false;
 	}
 	
 	public boolean continueExecuting()
     {
-		if (this.entityOwner != null && this.taskOwner.getDistanceToEntity(this.entityOwner) > 5.0F)
+		if(!this.taskOwner.isWaiting() && this.entityOwner != null && this.taskOwner.getDistanceToEntity(this.entityOwner) > 5.0F)
 		{
 			return true;
 		}
@@ -48,7 +49,7 @@ public class AIFollowOwner extends EntityAIBase
 	
 	public void updateTask()
 	{
-		this.entityOwner = ((EntityOwnableCreature)this.taskOwner).getOwner();
+		this.entityOwner = this.taskOwner.getOwner();
 		if(this.entityOwner != null)
 		{
 			float distance = this.taskOwner.getDistanceToEntity(this.entityOwner);
@@ -57,31 +58,30 @@ public class AIFollowOwner extends EntityAIBase
 				int i = MathHelper.floor_double(this.entityOwner.posX) - 2;
 				int j = MathHelper.floor_double(this.entityOwner.posZ) - 2;
 				int k = MathHelper.floor_double(this.entityOwner.boundingBox.minY);
+				
 				for (int l = 0; l <= 4; l++)
-				{
 					for (int i1 = 0; i1 <= 4; i1++)
-					{
 						if (((l < 1) || (i1 < 1) || (l > 3) || (i1 > 3)) && (this.world.isBlockNormalCubeDefault(i + l, k - 1, j + i1, false)) && (!this.world.isBlockNormalCubeDefault(i + l, k, j + i1, false)) && (!this.world.isBlockNormalCubeDefault(i + l, k + 1, j + i1, false)))
 						{
 							this.world.playSoundEffect(i + l + 0.5F, k, j + i1 + 0.5F, "mob.endermen.portal", 0.1F, 1.0F);
 							this.taskOwner.setLocationAndAngles(i + l + 0.5F, k, j + i1 + 0.5F, this.taskOwner.rotationYaw, this.taskOwner.rotationPitch);
 							this.taskOwner.setAttackTarget(null);
 						}
-					}
-				}
 			}
-			if (distance > 4.8F)
+			
+			if(distance > 4.8F)
 			{
 				this.taskOwner.faceEntity(this.entityOwner, 15.0F, 20.0F);
 				this.move = true;
-			}else
+			}
+			else
 			{
 				this.move = false;
 			}
 			
 			boolean high = true;
 
-			if ((this.taskOwner.onGround || this.taskOwner.isInWater()) && (this.jumpDelay-- <= 0) && (this.move))
+			if((this.taskOwner.onGround || this.taskOwner.isInWater()) && this.jumpDelay-- <= 0 && this.move)
 			{
 				this.taskOwner.faceEntity(this.entityOwner, 10.0F, 20.0F);
 				this.jumpDelay = this.getJumpDelay()/3;
@@ -107,7 +107,6 @@ public class AIFollowOwner extends EntityAIBase
 		if(f < d0)
 			return true;
 		return false;
-		
 	}
 	
 	protected int getJumpDelay()

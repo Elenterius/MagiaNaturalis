@@ -20,7 +20,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.core.Log;
-import trinarybrain.magia.naturalis.common.entity.ai.AIFollowOwner;
+import trinarybrain.magia.naturalis.common.entity.ai.AIFollowJumpOwner;
 import trinarybrain.magia.naturalis.common.entity.ai.AILeapAtTarget;
 import trinarybrain.magia.naturalis.common.entity.ai.AIOwnerHurtByTarget;
 import trinarybrain.magia.naturalis.common.entity.ai.AIOwnerHurtTarget;
@@ -56,7 +56,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 		this.tasks.addTask(2, this.aiWait);
 		this.tasks.addTask(3, new AILeapAtTarget(this));
 		this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 0.6D, true));
-		this.tasks.addTask(5, new AIFollowOwner(this));
+		this.tasks.addTask(5, new AIFollowJumpOwner(this));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(6, new EntityAILookIdle(this));
 
