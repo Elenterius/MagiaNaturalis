@@ -32,14 +32,15 @@ public class CommonProxy implements IGuiHandler
 
 	public void init(FMLInitializationEvent event)
 	{
-		// MinecraftForge.EVENT_BUS.register(new EventHandlerPlayer());
 		BlocksMN.initTileEntities();
+		EntitiesMN.registerEntities();
+		EntitiesMN.addChampions();
 		NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
 	}
 
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		EntitiesMN.registerEntities();
+		EntitiesMN.addEntitySpawns();
 		Research.init();
 	}
 

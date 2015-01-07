@@ -46,6 +46,10 @@ item.magianaturalis:key.1.name=Key of Endorsing
 item.magianaturalis:gogglesDarkCrystal.name=Dark Crystal Goggles
 item.magianaturalis:spectacles.name=Magnifying Spectacles
 item.magianaturalis:focusBuild.name=Wand Focus: Construction
+item.magianaturalis:evilTrunk.tainted.name=Tainted Trunk
+item.magianaturalis:evilTrunk.demonic.name=Demonic Trunk
+item.magianaturalis:evilTrunk.sinister.name=Sinister Trunk
+item.magianaturalis:evilTrunk.corrupted.name=Corrupted Trunk
 
 # TILE NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table
@@ -61,6 +65,7 @@ tile.magianaturalis:banner.name=Magia Naturalis Banner
 
 # ENTITIY NAMES
 entity.taintBreeder.name=Taint Breeder
+entity.magia_naturalis.evilTrunk.name=Evil Trunk
 
 # RESEARCH
 tc.research_category.magia_naturalis=Magia Naturalis

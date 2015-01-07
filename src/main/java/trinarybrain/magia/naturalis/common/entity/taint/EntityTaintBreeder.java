@@ -3,12 +3,15 @@ package trinarybrain.magia.naturalis.common.entity.taint;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import thaumcraft.api.entities.ITaintedMob;
 import thaumcraft.common.config.Config;
+import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.monster.EntityTaintSpider;
 import trinarybrain.magia.naturalis.common.util.Platform;
 
@@ -63,5 +66,19 @@ public class EntityTaintBreeder extends EntitySpider implements ITaintedMob
 			}
 		
 		super.onLivingUpdate();
+	}
+	
+	protected Item getDropItem()
+    {
+        return ConfigItems.itemResource;
+    }
+	
+	protected void dropFewItems(boolean bool, int chance)
+	{
+		if(this.worldObj.rand.nextInt(6) == 0)
+			if(this.worldObj.rand.nextBoolean())
+				entityDropItem(new ItemStack(ConfigItems.itemResource, 1, 11), this.height / 2.0F);
+			else
+				entityDropItem(new ItemStack(ConfigItems.itemResource, 1, 12), this.height / 2.0F);
 	}
 }
