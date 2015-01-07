@@ -9,7 +9,6 @@ import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 public class RenderTaintBreeder extends RenderLiving
 {
 	private static final ResourceLocation rl = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "taint_breeder.png");
-	//TODO: FIX TEXTURE DERP!!!! IN REAR AND EYE
 	public RenderTaintBreeder()
 	{
 		super(new ModelTaintBreeder(), 1.0F);

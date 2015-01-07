@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.entities.monster.EntityTaintacle;
 import thaumcraft.common.tiles.TileJar;
 import trinarybrain.magia.naturalis.common.util.NBTUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -35,6 +36,10 @@ public class TileJarPrison extends TileJar implements IWandable
 		if(data.hasKey("entity"))
 		{
 			this.cachedEntity = EntityList.createEntityFromNBT(data.getCompoundTag("entity"), this.getWorldObj());
+			
+			if(this.cachedEntity != null && this.cachedEntity instanceof EntityTaintacle)
+				this.cachedEntity.ticksExisted = 30;
+			
 //			if(((EntityLiving) cachedEntity).hasCustomNameTag())
 //			{
 //				((EntityLiving) cachedEntity).setAlwaysRenderNameTag(true);

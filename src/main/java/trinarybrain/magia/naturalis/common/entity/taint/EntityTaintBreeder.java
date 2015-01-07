@@ -7,8 +7,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import thaumcraft.api.entities.ITaintedMob;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigItems;
@@ -25,33 +27,37 @@ public class EntityTaintBreeder extends EntitySpider implements ITaintedMob
 	{
 		super(world);
 	}
-	
+
 	protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(42.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.600000011920929D);
-    }
+	{
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(42.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.600000011920929D);
+	}
+
+	public boolean getCanSpawnHere()
+	{
+		BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posZ));
+		if(biome != null) return biome.biomeID == Config.biomeTaintID && super.getCanSpawnHere();
+		return false;
+	}
 
 	protected Entity findPlayerToAttack()
 	{
 		return this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0D);
 	}
-	
+
 	public boolean isPotionApplicable(PotionEffect potionEffect)
-    {
-        return potionEffect.getPotionID() == Config.potionTaintPoisonID ? false : super.isPotionApplicable(potionEffect);
-    }
-	
+	{
+		return potionEffect.getPotionID() == Config.potionTaintPoisonID ? false : super.isPotionApplicable(potionEffect);
+	}
+
 	public void onLivingUpdate()
 	{
 		if(Platform.isServer())
 			if(this.ticksExisted % 20 == 0)
-			{
 				if(this.getHealth() < this.getMaxHealth() * 0.8F)
-				{
 					if(broodTimer++ % breedTime == 0 && this.findPlayerToAttack() != null)
-					{
 						for(int i = this.worldObj.rand.nextInt(2); i >= 0; i--)
 						{
 							EntityTaintSpider breedling = new EntityTaintSpider(this.worldObj);
@@ -61,18 +67,15 @@ public class EntityTaintBreeder extends EntitySpider implements ITaintedMob
 							breedling.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 144, level - 2));
 							this.worldObj.spawnEntityInWorld(breedling);
 						}
-					}
-				}
-			}
 		
 		super.onLivingUpdate();
 	}
-	
+
 	protected Item getDropItem()
-    {
-        return ConfigItems.itemResource;
-    }
-	
+	{
+		return ConfigItems.itemResource;
+	}
+
 	protected void dropFewItems(boolean bool, int chance)
 	{
 		if(this.worldObj.rand.nextInt(6) == 0)

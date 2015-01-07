@@ -17,12 +17,13 @@ public class EntitiesMN
 	public static void registerEntities()
 	{
 		int id = 0;
-		//TODO: remove registerGlobalEntityID -> leading to major bug - make own spawn eggs
+		// TODO: remove registerGlobalEntityID -> leading to major bug - make
+		// own spawn eggs
 		EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, NameUtil.TAINT_BREEDER, EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
 		EntityRegistry.registerModEntity(EntityTaintBreeder.class, NameUtil.TAINT_BREEDER, id++, MagiaNaturalis.instance, 64, 3, false);
 		EntityRegistry.registerModEntity(EntityEvilTrunk.class, NameUtil.EVIL_TRUNK, id++, MagiaNaturalis.instance, 64, 3, false);
 	}
-	
+
 	public static void addChampions()
 	{
 		FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "taintBreeder:1");

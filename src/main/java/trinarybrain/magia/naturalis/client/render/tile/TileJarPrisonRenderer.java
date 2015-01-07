@@ -3,12 +3,17 @@ package trinarybrain.magia.naturalis.client.render.tile;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import thaumcraft.client.renderers.models.ModelJar;
+import thaumcraft.common.entities.monster.EntityTaintacle;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
 
@@ -21,36 +26,32 @@ public class TileJarPrisonRenderer extends TileEntitySpecialRenderer
 	{
 		this.renderTileEntityAt((TileJarPrison)tile, x, y, z, f);
 	}
-	
+
 	public void renderTileEntityAt(TileJarPrison tile, double x, double y, double z, float f)
 	{
-		Entity entity = tile.getCachedEntity();
+		EntityLiving entity = (EntityLiving) tile.getCachedEntity();
 		if(entity != null)
 		{
 			GL11.glPushMatrix();
-            GL11.glTranslated(x, y, z);
-            GL11.glTranslatef(0.5F, 0.1F, 0.5F);
-            
-            float f1 = 0.21875F;
-            GL11.glScalef(f1, f1, f1);
-            
-            RenderManager.instance.renderEntityWithPosYaw(entity, 0D, 0D, 0D, 0F, 0F);
-            GL11.glPopMatrix();
+			GL11.glTranslated(x, y, z);
+			GL11.glTranslatef(0.5F, 0.1F, 0.5F);
+
+//			GL11.glRotatef(-RenderManager.instance.playerViewY - 180, 0.0F, 1.0F, 0.0F);
+			
+//			EntityLivingBase viewer = Minecraft.getMinecraft().renderViewEntity;
+//			double d0 = viewer.posX - tile.xCoord;
+//	        double d2 = viewer.posZ - tile.yCoord;
+//	        
+//			double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+//	        float f2 = (float)(Math.atan2(viewer.posX, d3) * 180.0D / Math.PI) - 90.0F;
+//	        
+//	        GL11.glRotatef(f2, 0.0F, 1.0F, 0.0F);
+
+			float f1 = 0.21875F;
+			GL11.glScalef(f1, f1, f1);
+
+			RenderManager.instance.renderEntityWithPosYaw(entity, 0D, 0D, 0D, 0F, 0F);
+			GL11.glPopMatrix();
 		}
-		
-		GL11.glPushMatrix();
-		GL11.glDisable(GL11.GL_CULL_FACE);
-//		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		
-		GL11.glTranslatef((float)x + 0.5F, (float)y + 0.01F, (float)z + 0.5F);
-		GL11.glRotatef(180.0F, 1.0F, 0.0F, 1.0F);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		
-//		this.bindTexture(tile.getTexture());
-//		jarModel.renderAll();
-		
-//		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glPopMatrix();
 	}
 }

@@ -197,14 +197,8 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 
 	public boolean interact(EntityPlayer player)
 	{
-		if(player.isSneaking())
-		{
-			Log.logger.info("Owner: " + this.getOwner() + "; Name: " + this.getOwnerUUID());
-			Log.logger.info("IsWaiting: " + this.isWaiting());
-			Log.logger.info("AI enabled: " + this.isAIEnabled());
-			return false;
-		}
-
+		if(player.isSneaking()) return false;
+		
 		ItemStack stack = player.inventory.getCurrentItem();
 		if(stack != null && stack.getItem() instanceof ItemFood && this.getHealth() < this.getMaxHealth())
 		{
