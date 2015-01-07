@@ -273,7 +273,7 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	@Override
 	public ItemStack onWandRightClick(World world, ItemStack stack, EntityPlayer player)
 	{
-		if(Platform.isServer() && world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.restoringBlockSnapshots)
+		if(Platform.isServer() && !world.restoringBlockSnapshots)
 		{
 			boolean hasAccess = false;
 			if(player.capabilities.isCreativeMode || this.owner.equals(player.getGameProfile().getId()))

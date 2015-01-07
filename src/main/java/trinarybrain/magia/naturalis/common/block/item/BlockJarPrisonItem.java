@@ -16,6 +16,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class BlockJarPrisonItem extends ItemBlock
@@ -34,7 +35,7 @@ public class BlockJarPrisonItem extends ItemBlock
 		String id = this.getEntityLivingID(stack);
 		if(id != null)
 		{
-			lines.add("Type " + Platform.translate("entity." + id + ".name"));
+			lines.add(Platform.translate("entity." + id + ".name"));
 		}
 	}
 
@@ -59,18 +60,17 @@ public class BlockJarPrisonItem extends ItemBlock
 			player.inventoryContainer.detectAndSendChanges();
 			return true;
 		}
-
 		return false;
 	}
 
-	public boolean storeEntityLiving(ItemStack stack, EntityLivingBase entity)
+	public static boolean storeEntityLiving(ItemStack stack, EntityLivingBase entity)
 	{
 		if(entity == null || entity instanceof IBossDisplayData || entity instanceof EntityPlayer) return false;
 		if(!(entity instanceof EntityCreature)) return false;
 		if(stack == null) return false;
 
 		NBTTagCompound data = new NBTTagCompound();
-		if(!entity.writeMountToNBT(data)) { return false; }
+		if(!entity.writeMountToNBT(data)) return false;
 		entity.setDead();
 		stack.setTagInfo("entity", data);
 

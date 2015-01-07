@@ -2,23 +2,33 @@ package trinarybrain.magia.naturalis.common.block;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import thaumcraft.common.blocks.CustomStepSound;
+import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.tiles.TileDeconstructionTable;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
+import trinarybrain.magia.naturalis.common.block.item.BlockJarPrisonItem;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
+import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import trinarybrain.magia.naturalis.common.util.NBTUtil;
+import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import trinarybrain.magia.naturalis.common.util.access.UserAccess;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -45,7 +55,7 @@ public class BlockJarPrison extends BlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		this.iconJarSide = ir.registerIcon("thaumcraft:jar_side");
+		this.iconJarSide = ir.registerIcon(ResourceUtil.PREFIX + "jar_prison_side");
 		this.iconJarTop = ir.registerIcon("thaumcraft:jar_top");
 		this.iconJarBottom = ir.registerIcon("thaumcraft:jar_bottom");
 	}
@@ -69,6 +79,19 @@ public class BlockJarPrison extends BlockContainer
 		return RenderUtil.RenderID2;
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+	{
+		if(rand.nextInt(4) == 0)
+		{
+			TileEntity tile = world.getTileEntity(x , y, z);
+			if(tile != null && tile instanceof TileJarPrison)
+			{
+				MagiaNaturalis.proxyTC4.blockSparkle(world, x, y, z, 0xFFD700, 1);
+			}
+		}
+	}
+	
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
 	{
 		TileJarPrison jar = (TileJarPrison) world.getTileEntity(x, y, z);
@@ -81,6 +104,21 @@ public class BlockJarPrison extends BlockContainer
 				jar.setEntityData(data);
 		}
 	}
+		
+	protected void dropBlockAsItem(World world, int x, int y, int z, ItemStack stack)
+    {
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if(tile != null && tile instanceof TileJarPrison)
+        {
+        	TileJarPrison jarPrison = (TileJarPrison) tile;
+        	Entity entity = jarPrison.getCachedEntity();
+        	if(entity != null && entity instanceof EntityLivingBase && stack != null && stack.getItem() instanceof BlockJarPrisonItem)
+        	{
+        		BlockJarPrisonItem.storeEntityLiving(stack, (EntityLivingBase) entity);
+        	}
+        }
+        super.dropBlockAsItem(world, x, y, z, stack);
+    }
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta)

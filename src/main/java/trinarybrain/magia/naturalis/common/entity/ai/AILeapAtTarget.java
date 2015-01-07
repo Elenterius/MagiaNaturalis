@@ -18,7 +18,7 @@ public class AILeapAtTarget extends EntityAIBase
 	{
 		this.taskOwner = entity;
 		this.world = entity.worldObj;
-		this.jumpDelay = this.world.rand.nextInt(20) + 10;
+		if(world != null) this.jumpDelay = this.world.rand.nextInt(20) + 10;
 		this.setMutexBits(5);
 	}
 

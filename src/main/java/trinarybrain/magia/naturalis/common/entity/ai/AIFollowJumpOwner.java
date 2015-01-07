@@ -20,7 +20,7 @@ public class AIFollowJumpOwner extends EntityAIBase
 	{
 		this.taskOwner = TaskOwner;
 		this.world = TaskOwner.worldObj;
-		this.jumpDelay = this.world.rand.nextInt(20) + 10;
+		if(world != null) this.jumpDelay = this.world.rand.nextInt(20) + 10;
 		this.setMutexBits(3);
 	}
 
