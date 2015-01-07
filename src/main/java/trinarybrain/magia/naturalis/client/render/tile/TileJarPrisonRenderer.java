@@ -36,16 +36,12 @@ public class TileJarPrisonRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslated(x, y, z);
 			GL11.glTranslatef(0.5F, 0.1F, 0.5F);
 
-//			GL11.glRotatef(-RenderManager.instance.playerViewY - 180, 0.0F, 1.0F, 0.0F);
-			
-//			EntityLivingBase viewer = Minecraft.getMinecraft().renderViewEntity;
-//			double d0 = viewer.posX - tile.xCoord;
-//	        double d2 = viewer.posZ - tile.yCoord;
-//	        
-//			double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-//	        float f2 = (float)(Math.atan2(viewer.posX, d3) * 180.0D / Math.PI) - 90.0F;
-//	        
-//	        GL11.glRotatef(f2, 0.0F, 1.0F, 0.0F);
+			EntityLivingBase viewer = Minecraft.getMinecraft().renderViewEntity;
+			double dx = viewer.posX - tile.xCoord;
+	        double dz = viewer.posZ - tile.zCoord;
+	        
+	        float f2 = (float) (Math.atan2(dz, dx) * 180.0D / Math.PI) - 90.0F;
+	        GL11.glRotatef(-f2, 0.0F, 1.0F, 0.0F);
 
 			float f1 = 0.21875F;
 			GL11.glScalef(f1, f1, f1);
