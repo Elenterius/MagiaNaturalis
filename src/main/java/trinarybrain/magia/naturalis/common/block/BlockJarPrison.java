@@ -12,6 +12,8 @@ import thaumcraft.common.tiles.TileDeconstructionTable;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.block.item.BlockJarPrisonItem;
+import trinarybrain.magia.naturalis.common.core.Log;
+import trinarybrain.magia.naturalis.common.item.ItemsMN;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
@@ -104,21 +106,35 @@ public class BlockJarPrison extends BlockContainer
 				jar.setEntityData(data);
 		}
 	}
-		
-	protected void dropBlockAsItem(World world, int x, int y, int z, ItemStack stack)
-    {
-        TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile != null && tile instanceof TileJarPrison)
-        {
-        	TileJarPrison jarPrison = (TileJarPrison) tile;
-        	Entity entity = jarPrison.getCachedEntity();
-        	if(entity != null && entity instanceof EntityLivingBase && stack != null && stack.getItem() instanceof BlockJarPrisonItem)
-        	{
-        		BlockJarPrisonItem.storeEntityLiving(stack, (EntityLivingBase) entity);
-        	}
-        }
-        super.dropBlockAsItem(world, x, y, z, stack);
-    }
+	
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+	{
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if(tile != null && tile instanceof TileJarPrison)
+		{
+			TileJarPrison jarPrison = (TileJarPrison) tile;
+			this.nbtCacheEntity = jarPrison.getEntityDataPrimitive();
+		}
+		super.breakBlock(world, x, y, z, block, meta);
+	}
+	
+	private NBTTagCompound nbtCacheEntity;
+	
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+	{
+		if(this.nbtCacheEntity != null)
+		{
+			ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+			ItemStack stack = new ItemStack(this, 1, 0);
+			stack.stackTagCompound = this.nbtCacheEntity;
+			drops.add(stack);
+			this.nbtCacheEntity = null;
+			return drops;
+		}
+		return super.getDrops(world, x, y, z, metadata, fortune);
+	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta)

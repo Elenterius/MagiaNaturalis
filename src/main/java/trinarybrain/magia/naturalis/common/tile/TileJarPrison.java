@@ -87,6 +87,11 @@ public class TileJarPrison extends TileJar implements IWandable
 	{
 		return this.hasEntityInside() ? null : entityData.getCompoundTag("entity");
 	}
+	
+	public NBTTagCompound getEntityDataPrimitive()
+	{
+		return this.entityData;
+	}
 
 	public void releaseFromContainer()
 	{

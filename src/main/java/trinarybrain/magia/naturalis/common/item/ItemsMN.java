@@ -1,6 +1,9 @@
 package trinarybrain.magia.naturalis.common.item;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import trinarybrain.magia.naturalis.common.block.BlocksMN;
+import trinarybrain.magia.naturalis.common.block.item.BlockJarPrisonItem;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemMutationStone;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemQuicksilverStone;
 import trinarybrain.magia.naturalis.common.item.artifact.DevTool;

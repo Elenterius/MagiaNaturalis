@@ -88,6 +88,7 @@ public class DevTool extends BaseItem
 		if(stack.getItemDamage() == 0)
 		{
 			Log.logger.info("Item: " + player.inventory.getStackInSlot(0));
+			Log.logger.info("NBT: " + player.inventory.getStackInSlot(0).stackTagCompound);
 		}
 
 		return stack;
