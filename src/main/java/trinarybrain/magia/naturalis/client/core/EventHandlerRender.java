@@ -213,7 +213,7 @@ public class EventHandlerRender
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glTranslatef(45F, 40F, 0F);
 		RenderUtil.drawTextureQuad(rlHudFrame, 32, 32);
-		if(pickedBlock == null)
+		if(pickedBlock == null && meta == Meta.UNIFORM)
 		{
 			GL11.glTranslatef(1.5F, 1F, 0F);
 			GL11.glColor4f(1F, 1F, 1F, 0.3F);
