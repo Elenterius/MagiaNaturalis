@@ -1,6 +1,6 @@
 Magia Naturalis
 
-"One must know Death in order to understand the Meaning of Life"
+>"One must know Death in order to understand the Meaning of Life"
 
 Gradel Eclipse Setup Help:
 - copy the eclipse folder from a forg-src download inside the repository (should contain .metadata)
