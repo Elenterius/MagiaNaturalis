@@ -93,8 +93,8 @@ mn.research_text.ARCANE_CHEST=Personal Storage
 mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood this Arcane Chest holds and protects its content against almost anything. Hit it with a wand to pick it up with its content.
 
 mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
-mn.research_text.GOGGLES_DARK=True Sight
-mn.research_page.GOGGLES_DARK.1=See the Invisible
+mn.research_text.GOGGLES_DARK=Glowing Red Eyes
+mn.research_page.GOGGLES_DARK.1=Crafted from Spider Eyes and Dark Crsytals this Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings.
 
 mn.research_name.SPECTACLES=Spectacles
 mn.research_text.SPECTACLES=Sharper Sight
