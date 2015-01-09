@@ -116,6 +116,10 @@ mn.research_name.STONE_QUICKSILVER=Quicksilver Stone
 mn.research_text.STONE_QUICKSILVER=Quickening Potion Effects
 mn.research_page.STONE_QUICKSILVER.1=Shorten and condense at the same time the Effect of Potion Effects. Make the Effect Stronger but las shorter. Needs Glowstone to opperate.
 
+mn.research_name.EVIL_TRUNK=Vicious Traveling Trunks
+mn.research_text.EVIL_TRUNK=Infusing Souls into Objects
+mn.research_page.EVIL_TRUNK.1=The more warped the Mind is the more obscure Thoughts surface and one on this ideas was to give your cute Traveling Trunk a Soul. Undoubtly the Trunk got more lively but it seemed to reflect the warped Mind of the Creator.
+
 mn.research_name.GEOCCULTISM=Geoccultism
 mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
 mn.research_page.GEOCCULTISM.1=Observing and studying geographic regions and the ancient totems found in the center of unique regions you have discovered that regions can be transformed. The ancients seemed to use Obsidian Totems in combination with Aura Nodes in order to create artificial geo-poles that slowly converted the region around them to the desired result. You have discovered that using a nether star in a crystal cluster(similar to the TC3 one for merging nodes) on top of a obsidian totem and fueling it with certain types of metal you are able to transform the region to your will. Converting a 8x8 area costs about 9 ingots of a specific metal.

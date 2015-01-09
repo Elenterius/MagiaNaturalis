@@ -78,6 +78,10 @@ public class Research
 		research.setPages(new ResearchPage("mn.research_page.STONE_QUICKSILVER.1"));
 		research.setRound().setAutoUnlock().registerResearchItem();
 		
+		research = new CustomResearchItem("EVIL_TRUNK", 1, 4, 0, new ItemStack(ItemsMN.evilTrunkSpawner, 1, 0));
+		research.setPages(new ResearchPage("mn.research_page.EVIL_TRUNK.1"));
+		research.setRound().setAutoUnlock().registerResearchItem();
+		
 //==============================================================================================================================
 		
 //		research = new CustomResearchItem("SARKOLOGIA", 2, 1, 0, new ResourceLocation(ResourceUtil.DOMAIN, "textures/misc/titan.png"));
