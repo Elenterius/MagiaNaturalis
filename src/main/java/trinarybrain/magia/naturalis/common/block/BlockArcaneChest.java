@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,7 +15,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -24,6 +24,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
@@ -42,7 +43,7 @@ public class BlockArcaneChest extends BlockContainer
 	{
 		super(Material.wood);
 		this.setResistance(999.0F);
-		this.setHardness(-1.0F);
+		this.setHardness(8.0F);
 		this.setStepSound(this.soundTypeWood);
 		this.setCreativeTab(MagiaNaturalis.creativeTab);
 	}
@@ -73,12 +74,30 @@ public class BlockArcaneChest extends BlockContainer
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer)
+	public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer)
 	{
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		TileArcaneChest chest = (TileArcaneChest) world.getTileEntity(target.blockX, target.blockY, target.blockZ);
+
+		if(chest != null && player != null)
+		{
+			if(chest.owner.equals(player.getGameProfile().getId()))
+			{
+				return false;
+			}
+			else
+			{
+				if(chest.accessList != null && chest.accessList.size() > 0)
+					for(UserAccess user : chest.accessList)
+						if(user.getUUID().equals(player.getGameProfile().getId()))
+							return user.getAccessLevel() > 1;
+			}
+		}
+
 		float f = (float)target.hitVec.xCoord - target.blockX;
 		float f1 = (float)target.hitVec.yCoord - target.blockY;
 		float f2 = (float)target.hitVec.zCoord - target.blockZ;
-		MagiaNaturalis.proxyTC4.blockWard(worldObj, target.blockX, target.blockY, target.blockZ, ForgeDirection.getOrientation(target.sideHit), f, f1, f2);
+		MagiaNaturalis.proxyTC4.blockWard(world, target.blockX, target.blockY, target.blockZ, ForgeDirection.getOrientation(target.sideHit), f, f1, f2);
 		return true;
 	}
 
@@ -118,33 +137,25 @@ public class BlockArcaneChest extends BlockContainer
 			EntityPlayer player = (EntityPlayer)entity;
 			chest.owner = player.getUniqueID();
 			chest.setChestType((byte) this.getChestType(stack));
-			
-			ItemStack[] items = NBTUtil.loadInventoryFromNBT(stack, chest.getSizeInventory());
-			if(items != null && items.length == chest.getSizeInventory())
-				chest.setInvetory(items);
-			
-			ArrayList<UserAccess> users = NBTUtil.loadUserAccesFromNBT(stack);
-			if(!users.isEmpty())
-				chest.accessList = users;
-		}
-	}
 
-	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
-	{
-		InventoryUtils.dropItems(world, x, y, z);
-		super.breakBlock(world, x, y, z, block, meta);
+			ItemStack[] items = NBTUtil.loadInventoryFromNBT(stack, chest.getSizeInventory());
+			if(items != null && items.length == chest.getSizeInventory()) chest.setInvetory(items);
+
+			ArrayList<UserAccess> users = NBTUtil.loadUserAccesFromNBT(stack);
+			if(!users.isEmpty()) chest.accessList = users;
+		}
 	}
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f0, float f1, float f3)
 	{
 		if(Platform.isClient()) return false;
-		
+
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile == null) return false;
 		if(tile instanceof TileArcaneChest)
 		{
 			TileArcaneChest chest = (TileArcaneChest) tile;
-			
+
 			boolean hasAccess = false;
 			if(player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.owner))
 			{
@@ -152,20 +163,15 @@ public class BlockArcaneChest extends BlockContainer
 			}
 			else
 			{
-				if(chest.accessList != null)
-				{
-					
+				if(chest.accessList != null && chest.accessList.size() > 0)
 					for(UserAccess user : chest.accessList)
-					{
 						if(user.getUUID().equals(player.getGameProfile().getId()))
 						{
 							hasAccess = user.hasAccess();
+							break;
 						}
-					}
-				}
-				
 			}
-			
+
 			if(hasAccess)
 			{
 				player.openGui(MagiaNaturalis.instance, 2, world, x, y, z);
@@ -181,8 +187,82 @@ public class BlockArcaneChest extends BlockContainer
 	}
 
 	public boolean canHarvestBlock(EntityPlayer player, int meta) {return true;}
-	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {return false;}
+
+	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z)
+	{
+		TileArcaneChest chest = (TileArcaneChest) world.getTileEntity(x, y, z);
+		if(chest != null && player != null && player instanceof EntityPlayer)
+		{
+			if(chest.owner.equals(player.getGameProfile().getId()))
+			{
+				return ForgeHooks.blockStrength(this, player, world, x, y, z);
+			}
+			else
+			{
+				if(chest.accessList != null && chest.accessList.size() > 0)
+					for(UserAccess user : chest.accessList)
+						if(user.getUUID().equals(player.getGameProfile().getId()))
+						{
+							if(user.getAccessLevel() > 1) return ForgeHooks.blockStrength(this, player, world, x, y, z);
+							break;
+						}
+			}
+		}
+		return 0.0F;		
+	}
+
+	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity)
+	{
+		TileArcaneChest chest = (TileArcaneChest) world.getTileEntity(x, y, z);
+		if(chest != null && entity != null && entity instanceof EntityPlayer)
+		{
+			if(chest.owner.equals(entity.getUniqueID())) 
+			{
+				return true;
+			}
+			else
+			{
+				if(chest.accessList != null && chest.accessList.size() > 0)
+					for(UserAccess user : chest.accessList)
+						if(user.getUUID().equals(entity.getUniqueID()))
+							return user.getAccessLevel() > 1;
+			}
+		}
+		return false;
+	}
+
 	public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {}
+
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+	{
+		TileArcaneChest chest = (TileArcaneChest) world.getTileEntity(x, y, z);
+		if(chest != null)
+		{
+			this.CacheChestType = (byte) chest.getChestType();
+		}
+
+		InventoryUtils.dropItems(world, x, y, z);
+		super.breakBlock(world, x, y, z, block, meta);
+	}
+
+	private byte CacheChestType;
+
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+	{
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+
+		if(CacheChestType != -1)
+		{
+			ItemStack stack = new ItemStack(this, 1, CacheChestType);
+			BlockArcaneChest.setChestType(stack, (byte) CacheChestType);
+			CacheChestType = -1;
+			drops.add(stack);
+		}
+
+		return drops;
+	}
 
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
 	{
@@ -194,15 +274,15 @@ public class BlockArcaneChest extends BlockContainer
 	{
 		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
-	
+
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
-    {
+	{
 		TileArcaneChest chest = (TileArcaneChest) world.getTileEntity(x, y, z);
 		if(chest == null) return null;
-		
-		ItemStack stack = new ItemStack(BlocksMN.arcaneChest, 1, chest.getChestType());
+
+		ItemStack stack = new ItemStack(this, 1, chest.getChestType());
 		BlockArcaneChest.setChestType(stack, (byte) chest.getChestType());
-		
-        return stack;
-    }
+
+		return stack;
+	}
 }
