@@ -12,6 +12,7 @@ import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemKey;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemResearchLog;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemSpectacles;
+import trinarybrain.magia.naturalis.common.item.baubles.ItemFocusPouchEnder;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.util.NameUtil;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
@@ -28,6 +29,8 @@ public class ItemsMN
 	public static Item spectacles;
 	public static Item focusBuild;
 	public static Item evilTrunkSpawner;
+	
+	public static Item focusPouchEnder;
 
 	public static void initItems()
 	{
@@ -40,6 +43,8 @@ public class ItemsMN
 		spectacles = new ItemSpectacles(); registerItem(spectacles, NameUtil.SPECTACLES);
 		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, NameUtil.FOCUS_BUILD);
 		evilTrunkSpawner = new ItemEvilTrunkSpawner(); registerItem(evilTrunkSpawner, NameUtil.EVIL_TRUNK);
+		
+		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 	}
 
 	private static void registerItem(Item item, String str)
