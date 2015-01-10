@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -32,7 +33,11 @@ public class ItemFocusPouchEnder extends ItemFocusPouch
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
 		if(Platform.isServer())
-			player.openGui(Thaumcraft.instance, 5, world, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ));
+		{
+			InventoryEnderChest inventoryenderchest = player.getInventoryEnderChest();
+			if(inventoryenderchest != null)
+				player.displayGUIChest(inventoryenderchest);
+		}
 
 		//TODO: OPEN ENDERCHEST HERE
 		
