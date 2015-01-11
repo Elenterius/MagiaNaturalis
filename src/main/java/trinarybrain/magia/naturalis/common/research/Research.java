@@ -25,7 +25,7 @@ public class Research
 
 	private static void initCategory()
 	{
-		ResearchCategories.registerCategory(ProjectInfo.ID, new ResourceLocation(ResourceUtil.DOMAIN, "textures/misc/ouroboros.png"), new ResourceLocation(ResourceUtil.DOMAIN, "textures/misc/neon.png"));
+		ResearchCategories.registerCategory(ProjectInfo.ID, new ResourceLocation(ResourceUtil.DOMAIN, "textures/items/book_magia_natura.png"), new ResourceLocation(ResourceUtil.DOMAIN, "textures/misc/neon.png"));
 	}
 
 	private static void initEntry()
@@ -80,6 +80,10 @@ public class Research
 		
 		research = new CustomResearchItem("EVIL_TRUNK", 1, 4, 0, new ItemStack(ItemsMN.evilTrunkSpawner, 1, 0));
 		research.setPages(new ResearchPage("mn.research_page.EVIL_TRUNK.1"));
+		research.setRound().setAutoUnlock().registerResearchItem();
+		
+		research = new CustomResearchItem("ENDER_POUCH", 2, 0, 0, new ItemStack(ItemsMN.focusPouchEnder, 1, 0));
+		research.setPages(new ResearchPage("mn.research_page.ENDER_POUCH.1"));
 		research.setRound().setAutoUnlock().registerResearchItem();
 		
 //==============================================================================================================================

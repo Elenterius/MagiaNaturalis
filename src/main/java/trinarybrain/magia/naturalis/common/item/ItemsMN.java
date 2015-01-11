@@ -29,7 +29,6 @@ public class ItemsMN
 	public static Item spectacles;
 	public static Item focusBuild;
 	public static Item evilTrunkSpawner;
-	
 	public static Item focusPouchEnder;
 
 	public static void initItems()
@@ -43,7 +42,6 @@ public class ItemsMN
 		spectacles = new ItemSpectacles(); registerItem(spectacles, NameUtil.SPECTACLES);
 		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, NameUtil.FOCUS_BUILD);
 		evilTrunkSpawner = new ItemEvilTrunkSpawner(); registerItem(evilTrunkSpawner, NameUtil.EVIL_TRUNK);
-		
 		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 	}
 

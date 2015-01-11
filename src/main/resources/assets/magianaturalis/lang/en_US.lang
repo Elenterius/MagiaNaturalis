@@ -50,6 +50,7 @@ item.magianaturalis:evilTrunk.tainted.name=Tainted Trunk
 item.magianaturalis:evilTrunk.demonic.name=Demonic Trunk
 item.magianaturalis:evilTrunk.sinister.name=Sinister Trunk
 item.magianaturalis:evilTrunk.corrupted.name=Corrupted Trunk
+item.magianaturalis:focusPouchEnder.name=Focus Enderpouch
 
 # TILE NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table
@@ -119,6 +120,10 @@ mn.research_page.STONE_QUICKSILVER.1=Shorten and condense at the same time the E
 mn.research_name.EVIL_TRUNK=Vicious Traveling Trunks
 mn.research_text.EVIL_TRUNK=Infusing Souls into Objects
 mn.research_page.EVIL_TRUNK.1=The more warped the Mind is the more obscure Thoughts surface and one on this ideas was to give your cute Traveling Trunk a Soul. Undoubtly the Trunk got more lively but it seemed to reflect the warped Mind of the Creator.
+
+mn.research_name.ENDER_POUCH=Enderpouch
+mn.research_text.ENDER_POUCH=Extradimensional Storage
+mn.research_page.ENDER_POUCH.1=Open Enderchest Storage or access any Foci sotred with your Wand.
 
 mn.research_name.GEOCCULTISM=Geoccultism
 mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems

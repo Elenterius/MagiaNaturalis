@@ -1,11 +1,15 @@
 package trinarybrain.magia.naturalis.common.item.baubles;
 
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -14,9 +18,12 @@ import net.minecraft.world.World;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.items.wands.ItemFocusPouch;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
+import trinarybrain.magia.naturalis.common.core.Log;
+import trinarybrain.magia.naturalis.common.util.NBTUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
+import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 
-public class ItemFocusPouchEnder extends ItemFocusPouch
+public class ItemFocusPouchEnder extends ItemFocusPouch implements IBauble
 {
 
 	public ItemFocusPouchEnder()
@@ -30,8 +37,13 @@ public class ItemFocusPouchEnder extends ItemFocusPouch
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.icon = ir.registerIcon("thaumcraft:focuspouch");
+		this.icon = ir.registerIcon(ResourceUtil.PREFIX + "focus_pouch_ender");
 	}
+	
+	public EnumRarity getRarity(ItemStack stack)
+    {
+        return EnumRarity.epic;
+    }
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
@@ -45,13 +57,31 @@ public class ItemFocusPouchEnder extends ItemFocusPouch
 
 	public void onUpdate(ItemStack stack, World world, Entity entity, int ticks, boolean bool)
 	{
-		if(Platform.isServer() && entity instanceof EntityPlayer)
+		//TODO: Remove this Hacky/Brutforce Way and asm the shit out of thaumcraft
+		if(Platform.isServer() && entity instanceof EntityPlayer && entity.ticksExisted % 5 == 0)
 		{
-			ItemStack[] stackList = this.getInventory(stack);
 			InventoryEnderChest invEnderchest = ((EntityPlayer) entity).getInventoryEnderChest();
-			if(invEnderchest != null && stackList != null)
+			if(invEnderchest != null)
 			{
-				//TODO: DO STUFF HERE!
+				NBTTagCompound data = NBTUtil.openNbtData(stack);
+				boolean isInvDirty = data.getBoolean("isInvDirty");
+
+				if(isInvDirty) // Push InvPouch to InvEnderChest
+				{
+					NBTTagList dataList = data.getTagList("Inventory", 10);
+					invEnderchest.loadInventoryFromNBT(dataList);
+					data.setBoolean("isInvDirty", false);
+				}
+				else // Push InvEnderChest to InvPouch
+				{
+					NBTTagList dataListChest = invEnderchest.saveInventoryToNBT();
+					NBTTagList dataListPouch = data.getTagList("Inventory", 10);
+
+					if(!dataListChest.equals(dataListPouch))
+					{
+						data.setTag("Inventory", dataListChest);
+					}
+				}
 			}
 		}
 	}
@@ -86,5 +116,36 @@ public class ItemFocusPouchEnder extends ItemFocusPouch
 			}
 		}
 		stack.setTagInfo("Inventory", dataList);
+		stack.stackTagCompound.setBoolean("isInvDirty", true);
+	}
+
+	@Override
+	public BaubleType getBaubleType(ItemStack itemstack)
+	{
+		return BaubleType.BELT;
+	}
+
+	@Override
+	public void onWornTick(ItemStack stack, EntityLivingBase player)
+	{
+		this.onUpdate(stack, player.worldObj, player, player.ticksExisted, false);
+	}
+
+	@Override
+	public void onEquipped(ItemStack itemstack, EntityLivingBase player) {}
+
+	@Override
+	public void onUnequipped(ItemStack itemstack, EntityLivingBase player) {}
+
+	@Override
+	public boolean canEquip(ItemStack itemstack, EntityLivingBase player)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean canUnequip(ItemStack itemstack, EntityLivingBase player)
+	{
+		return true;
 	}
 }
