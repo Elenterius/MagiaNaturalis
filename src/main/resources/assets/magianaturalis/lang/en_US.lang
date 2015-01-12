@@ -104,7 +104,7 @@ mn.research_page.SPECTACLES.1=Percieve every little detail without the help of s
 
 mn.research_name.FOCUS_BUILD=Focus Of Construction
 mn.research_text.FOCUS_BUILD=Grand Architecture
-mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posessed a slight potential at building in a bigger maner, you have refiend and expanded the shear Potentail to its maximum. This Masterpiece of Focus etching has brought forth a Tool befiting a Grand Architect.
+mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posessed a slight potential at building in a bigger maner, you have refiend and expanded the shear Potentail to its maximum. This Masterpiece of Focus etching has brought forth a Tool befiting a Grand Architect.<BR>Check Controls Menu for all Key-Bindings.<BR>V or Ctrl + V -> toggle mode/shape
 
 mn.research_name.JAR_PRISON=Entity in a Jar
 mn.research_text.JAR_PRISON=Minimized Pets
@@ -132,7 +132,7 @@ mn.research_page.SICKLE_THAUM.1=Destroy Crops and Plants in a small area. Also w
 
 mn.research_name.SICKLE_ABUNDANCE=Sickle of Abundance
 mn.research_text.SICKLE_ABUNDANCE=Harvest Feast
-mn.research_page.SICKLE_ABUNDANCE.1=Harvest & Collect Vegetation in a large area. Also works on Sheeps.
+mn.research_page.SICKLE_ABUNDANCE.1=Harvest & Collect Vegetation in a large area. Also works on Sheeps. + More Drops.
 
 mn.research_name.GEOCCULTISM=Geoccultism
 mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
