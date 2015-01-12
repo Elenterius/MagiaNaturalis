@@ -86,6 +86,14 @@ public class Research
 		research.setPages(new ResearchPage("mn.research_page.ENDER_POUCH.1"));
 		research.setRound().setAutoUnlock().registerResearchItem();
 		
+		research = new CustomResearchItem("SICKLE_THAUM", 2, 1, 0, new ItemStack(ItemsMN.sickleThaumium, 1, 0));
+		research.setPages(new ResearchPage("mn.research_page.SICKLE_THAUM.1"));
+		research.setRound().setAutoUnlock().registerResearchItem();
+		
+		research = new CustomResearchItem("SICKLE_ABUNDANCE", 4, 1, 0, new ItemStack(ItemsMN.sickleElemental, 1, 0));
+		research.setPages(new ResearchPage("mn.research_page.SICKLE_ABUNDANCE.1"));
+		research.setRound().setParents("SICKLE_THAUM").registerResearchItem();
+		
 //==============================================================================================================================
 		
 //		research = new CustomResearchItem("SARKOLOGIA", 2, 1, 0, new ResourceLocation(ResourceUtil.DOMAIN, "textures/misc/titan.png"));
