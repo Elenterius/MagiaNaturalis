@@ -13,7 +13,7 @@ import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 
 public class GuiTranscribingTable extends GuiContainer
 {
-	private static final ResourceLocation rl = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_CONTAINER + "transcribing_table.png");
+	private static final ResourceLocation rl = new ResourceLocation("thaumcraft", "textures/gui/gui_decontable.png");
 	private TileTranscribingTable tileTable;
 
 	public GuiTranscribingTable(InventoryPlayer invPlayer, TileTranscribingTable tileTable)

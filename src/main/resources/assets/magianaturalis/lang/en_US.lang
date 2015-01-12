@@ -79,8 +79,7 @@ mn.research_page.INTRO.2=While this discipline is very controversial and deemed 
 
 mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
 mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
-mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Tables counter top. It dips it's head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowlegde into physical form." - Unknown Poet
-Collects Research Points of Deconstruction Tables into the Research Log. Looks for up to 8 DT placed around the TT with a 1 block gap between any Table.
+mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Tables counter top. It dips it's head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowlegde into physical form." - Unknown Poet<BR>Collects Research Points of Deconstruction Tables into the Research Log. Looks for up to 8 DT placed around the TT with a 1 block gap between any Table.
 
 mn.research_name.RESEARCH_LOG=Research Log
 mn.research_text.RESEARCH_LOG=Collecting Knowledge for Anyone
@@ -109,7 +108,7 @@ mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posess
 
 mn.research_name.JAR_PRISON=Entity in a Jar
 mn.research_text.JAR_PRISON=Minimized Pets
-mn.research_page.JAR_PRISON.1=Shrink ans Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.
+mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.
 
 mn.research_name.STONE_PHENO=Phenomorphus Stone
 mn.research_text.STONE_PHENO=Morhphing the Visual

@@ -25,7 +25,7 @@ public class Research
 
 	private static void initCategory()
 	{
-		ResearchCategories.registerCategory(ProjectInfo.ID, new ResourceLocation(ResourceUtil.DOMAIN, "textures/items/book_magia_natura.png"), new ResourceLocation(ResourceUtil.DOMAIN, "textures/misc/neon.png"));
+		ResearchCategories.registerCategory(ProjectInfo.ID, new ResourceLocation(ResourceUtil.DOMAIN, "textures/items/book_magia_natura.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
 	}
 
 	private static void initEntry()
