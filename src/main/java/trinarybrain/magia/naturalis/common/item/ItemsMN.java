@@ -1,12 +1,10 @@
 package trinarybrain.magia.naturalis.common.item;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import trinarybrain.magia.naturalis.common.block.BlocksMN;
-import trinarybrain.magia.naturalis.common.block.item.BlockJarPrisonItem;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemMutationStone;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemQuicksilverStone;
 import trinarybrain.magia.naturalis.common.item.artifact.DevTool;
+import trinarybrain.magia.naturalis.common.item.artifact.ItemElementalSickle;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemKey;
@@ -32,7 +30,8 @@ public class ItemsMN
 	public static Item evilTrunkSpawner;
 	public static Item focusPouchEnder;
 	public static Item sickleThaumium;
-
+	public static Item sickleElemental;
+	
 	public static void initItems()
 	{
 		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
@@ -46,6 +45,7 @@ public class ItemsMN
 		evilTrunkSpawner = new ItemEvilTrunkSpawner(); registerItem(evilTrunkSpawner, NameUtil.EVIL_TRUNK);
 		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
+		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
 	}
 
 	private static void registerItem(Item item, String str)

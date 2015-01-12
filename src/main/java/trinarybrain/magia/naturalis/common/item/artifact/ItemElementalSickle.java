@@ -10,28 +10,26 @@ import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemThaumiumSickle extends ItemSickle implements IRepairable
+public class ItemElementalSickle extends ItemSickle implements IRepairable
 {
-	public ItemThaumiumSickle()
+	public ItemElementalSickle()
 	{
-		super(ThaumcraftApi.toolMatThaumium);
-		this.areaSize = 2;
+		super(ThaumcraftApi.toolMatElemental);
+		this.areaSize = 9;
+		this.collectLoot = true;
+		this.colorLoot = 0;
+		this.abundanceLevel = 2;
 	}
 
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "sickle_thaumium");
-	}
-
-	public int getItemEnchantability()
-	{
-		return 5;
+		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "sickle_abundance_wood");
 	}
 
 	public EnumRarity getRarity(ItemStack itemstack)
 	{
-		return EnumRarity.uncommon;
+		return EnumRarity.rare;
 	}
 
 	public boolean getIsRepairable(ItemStack stack, ItemStack stack2)

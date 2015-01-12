@@ -51,6 +51,8 @@ item.magianaturalis:evilTrunk.demonic.name=Demonic Trunk
 item.magianaturalis:evilTrunk.sinister.name=Sinister Trunk
 item.magianaturalis:evilTrunk.corrupted.name=Corrupted Trunk
 item.magianaturalis:focusPouchEnder.name=Focus Enderpouch
+item.magianaturalis:sickleThaumium.name=Thaumium Sickle
+item.magianaturalis:sickleElemental.name=Sickle of Abundance
 
 # TILE NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table

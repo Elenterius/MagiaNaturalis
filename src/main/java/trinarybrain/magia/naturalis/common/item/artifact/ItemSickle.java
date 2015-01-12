@@ -3,16 +3,11 @@ package trinarybrain.magia.naturalis.common.item.artifact;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,8 +17,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
@@ -31,7 +24,11 @@ import thaumcraft.common.blocks.BlockMagicalLeaves;
 import thaumcraft.common.lib.utils.BlockUtils;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.Platform;
+import trinarybrain.magia.naturalis.common.util.WorldCoord;
 import trinarybrain.magia.naturalis.common.util.WorldUtils;
+
+import com.google.common.collect.Multimap;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,7 +38,9 @@ public class ItemSickle extends BaseItem
 	protected float efficiencyOnProperMaterial = 8.0F;
 	private float damageVsEntity = 3.0F;
 	protected int abundanceLevel = 0;
-	protected int areaSize = 18;
+	protected int areaSize = 0;
+	protected int colorLoot = 3;
+	protected boolean collectLoot = false;
 	private static final Block[] isEffective = {Blocks.web, Blocks.tallgrass, Blocks.vine, Blocks.tripwire, Blocks.redstone_wire};
 
 	public ItemSickle(ToolMaterial material)
@@ -95,28 +94,6 @@ public class ItemSickle extends BaseItem
 		return false;
 	}
 
-	int side = 0;
-
-	public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player)
-	{
-		if(Platform.isClient()) return false;
-
-		Block block = player.worldObj.getBlock(x, y, z);
-		if(block != null && block instanceof BlockMagicalLeaves)
-		{
-			for(int i = 0; i < this.abundanceLevel; i++)
-				block.dropBlockAsItemWithChance(player.worldObj, x, y, z, player.worldObj.getBlockMetadata(x, y, z), 1.0F,  3);
-		}
-
-		MovingObjectPosition movingobjectposition = BlockUtils.getTargetBlock(player.worldObj, player, true);
-		if(movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-		{
-			this.side = movingobjectposition.sideHit;
-		}
-
-		return false;
-	}
-
 	private boolean isEffectiveVsBlock(Block block)
 	{
 		if(block.getMaterial() == Material.leaves || block instanceof IShearable || block instanceof IPlantable || block instanceof IGrowable && !(block instanceof BlockGrass)) return true;
@@ -133,7 +110,7 @@ public class ItemSickle extends BaseItem
 	}
 
 	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity)
-	{
+	{		
 		if(entity.isSneaking() || !this.isEffectiveVsBlock(block))
 		{
 			return super.onBlockDestroyed(stack, world, block, x, y, z, entity);
@@ -142,28 +119,27 @@ public class ItemSickle extends BaseItem
 		{
 			if(Platform.isServer() && entity instanceof EntityPlayer)
 			{
-				List list = WorldUtils.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
-				
-				for(int dimZ = -this.areaSize; dimZ <= this.areaSize; dimZ++)
+				List<WorldCoord> blocks = WorldUtils.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
+				for(WorldCoord coord : blocks)
 				{
-					int xOffset = 0;
-					int yOffset = 0;
-					int zOffset = 0;
-
-					if(world.canMineBlock((EntityPlayer)entity, x + xOffset, y + yOffset, z + zOffset))
+					if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
 					{
-						Block tempBlock = world.getBlock(x + xOffset, y + yOffset, z + zOffset);
-
-						if(tempBlock.getBlockHardness(world, x + xOffset, y + yOffset, z + zOffset) >= 0.0F && this.isEffectiveVsBlock(tempBlock) && meta == world.getBlockMetadata(x + xOffset, y + yOffset, z + zOffset))
+						Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
+						if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
 						{
+							if(tempBlock != null && tempBlock instanceof BlockMagicalLeaves)
+							{
+								for(int i = 0; i < this.abundanceLevel; i++)
+									BlockUtils.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.colorLoot);
+							}
+
 							stack.damageItem(1, entity);
-							BlockUtils.harvestBlock(world, (EntityPlayer)entity, x + xOffset, y + yOffset, z + zOffset, true, 3);
+							BlockUtils.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.colorLoot);
 						}
 					}
 				}
 			}
 		}
-
 		return true;
 	}
 

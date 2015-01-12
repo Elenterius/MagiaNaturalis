@@ -188,7 +188,7 @@ public class WorldUtils
 		List<WorldCoord> next = new LinkedList();
 		next.add(new WorldCoord(x, y, z));
 
-		while ((blocks < size) && (!next.isEmpty()))
+		while(blocks < size && !next.isEmpty())
 		{
 			List<WorldCoord> temp = next;
 			next = new LinkedList();
@@ -212,6 +212,21 @@ public class WorldUtils
 						next.add(new WorldCoord(wc.x, wc.y - 1, wc.z));
 						next.add(new WorldCoord(wc.x, wc.y, wc.z + 1));
 						next.add(new WorldCoord(wc.x, wc.y, wc.z - 1));
+						
+						next.add(new WorldCoord(wc.x + 1, wc.y - 1, wc.z + 1));
+						next.add(new WorldCoord(wc.x + 1, wc.y - 1, wc.z - 1));
+						next.add(new WorldCoord(wc.x - 1, wc.y - 1, wc.z - 1));
+						next.add(new WorldCoord(wc.x - 1, wc.y - 1, wc.z + 1));
+						
+						next.add(new WorldCoord(wc.x + 1, wc.y, wc.z + 1));
+						next.add(new WorldCoord(wc.x + 1, wc.y, wc.z - 1));
+						next.add(new WorldCoord(wc.x - 1, wc.y, wc.z - 1));
+						next.add(new WorldCoord(wc.x - 1, wc.y, wc.z + 1));
+						
+						next.add(new WorldCoord(wc.x + 1, wc.y + 1, wc.z + 1));
+						next.add(new WorldCoord(wc.x + 1, wc.y + 1, wc.z - 1));
+						next.add(new WorldCoord(wc.x - 1, wc.y + 1, wc.z - 1));
+						next.add(new WorldCoord(wc.x - 1, wc.y + 1, wc.z + 1));
 					}
 			}
 
