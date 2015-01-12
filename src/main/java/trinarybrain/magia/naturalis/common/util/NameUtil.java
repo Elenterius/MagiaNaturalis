@@ -29,4 +29,5 @@ public final class NameUtil
 	public static final String SPECTACLES = "spectacles";
 	public static final String FOCUS_BUILD = "focusBuild";
 	public static final String ENDER_FOCUS_POUCH = "focusPouchEnder";
+	public static final String SICKLE_THAUMIUM = "sickleThaumium";
 }
