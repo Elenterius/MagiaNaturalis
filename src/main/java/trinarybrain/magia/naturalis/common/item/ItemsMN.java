@@ -19,7 +19,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemsMN
 {
-	public static Item devTool;
+//	public static Item devTool;
 	public static Item researchLog;
 	public static Item quicksilverStone;
 	public static Item mutationStone;
@@ -34,7 +34,7 @@ public class ItemsMN
 	
 	public static void initItems()
 	{
-		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
+//		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
 		researchLog = new ItemResearchLog(); registerItem(researchLog, NameUtil.RESEARCH_LOG);
 		quicksilverStone = new ItemQuicksilverStone(); registerItem(quicksilverStone, NameUtil.QUICKSILVER_STONE);
 		mutationStone = new ItemMutationStone(); registerItem(mutationStone, NameUtil.MUTATION_STONE);

@@ -108,7 +108,7 @@ mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posess
 
 mn.research_name.JAR_PRISON=Entity in a Jar
 mn.research_text.JAR_PRISON=Minimized Pets
-mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.
+mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.<BR> Right Click with Wand to release the Entity.
 
 mn.research_name.STONE_PHENO=Phenomorphus Stone
 mn.research_text.STONE_PHENO=Morhphing the Visual
