@@ -134,6 +134,6 @@ mn.research_name.SICKLE_ABUNDANCE=Sickle of Abundance
 mn.research_text.SICKLE_ABUNDANCE=Harvest Feast
 mn.research_page.SICKLE_ABUNDANCE.1=Harvest & Collect Vegetation in a large area. Also works on Sheeps. + More Drops.
 
-mn.research_name.GEOCCULTISM=Geoccultism
-mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
-mn.research_page.GEOCCULTISM.1=Observing and studying geographic regions and the ancient totems found in the center of unique regions you have discovered that regions can be transformed. The ancients seemed to use Obsidian Totems in combination with Aura Nodes in order to create artificial geo-poles that slowly converted the region around them to the desired result. You have discovered that using a nether star in a crystal cluster(similar to the TC3 one for merging nodes) on top of a obsidian totem and fueling it with certain types of metal you are able to transform the region to your will. Converting a 8x8 area costs about 9 ingots of a specific metal.
+#mn.research_name.GEOCCULTISM=Geoccultism
+#mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
+#mn.research_page.GEOCCULTISM.1=Observing and studying geographic regions and the ancient totems found in the center of unique regions you have discovered that regions can be transformed. The ancients seemed to use Obsidian Totems in combination with Aura Nodes in order to create artificial geo-poles that slowly converted the region around them to the desired result. You have discovered that using a nether star in a crystal cluster(similar to the TC3 one for merging nodes) on top of a obsidian totem and fueling it with certain types of metal you are able to transform the region to your will. Converting a 8x8 area costs about 9 ingots of a specific metal.
