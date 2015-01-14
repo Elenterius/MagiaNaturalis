@@ -26,7 +26,7 @@ chat.magianaturalis:chest.resist=The Chest resists Your Attempt of Miniaturizati
 
 # Flavor Text & Tool Hint & Misc 
 flavor.magianaturalis:key.0=One to Open Them All...
-flavor.magianaturalis:key.1=One to Grant Acces for Others...
+flavor.magianaturalis:key.1=One to Grant Access for Others...
 flavor.magianaturalis:chest=Obstinate and discriminating, protects its treasure.
 flavor.magianaturalis:banner=A Banner to mark our Presence.
 hint.magianaturalis:ctrl=<Press Ctrl>
@@ -38,7 +38,7 @@ hint.magianaturalis:vertical=Vertical
 # ITEM NAMES
 item.magianaturalis:researchLog.name=Research Log
 item.magianaturalis:quicksilverStone.name=Quicksilver Alchemist Stone
-item.magianaturalis:mutationStone.name=Phenomoprhus Catalyst Stone
+item.magianaturalis:mutationStone.name=Phenomorphous Catalyst Stone
 item.magianaturalis:devTool.name=Misc Dev Tool
 item.magianaturalis:key.0.name=Key of Unraveling
 item.magianaturalis:key.1.name=Key of Endorsing
@@ -79,7 +79,7 @@ mn.research_page.INTRO.2=While this discipline is very controversial and deemed 
 
 mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
 mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
-mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Tables counter top. It dips it's head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowlegde into physical form." - Unknown Poet<BR>Collects Research Points of Deconstruction Tables into the Research Log. Looks for up to 8 DT placed around the TT with a 1 block gap between any Table.
+mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Table's counter top. It dips its head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowledge into physical form." - Unknown Poet<BR>Collects Research Points of Deconstruction Tables into the Research Log. Looks for up to 8 DT placed around the TT with a 1 block gap between any Table.
 
 mn.research_name.RESEARCH_LOG=Research Log
 mn.research_text.RESEARCH_LOG=Collecting Knowledge for Anyone
@@ -87,48 +87,48 @@ mn.research_page.RESEARCH_LOG.1=Allows you to collect the Research Points of Dec
 
 mn.research_name.KEY_SPECIAL=Thaumium Key
 mn.research_text.KEY_SPECIAL=One to Rule them All
-mn.research_page.KEY_SPECIAL.1=This Key grants Access for the Bound Player to any Tile owned by the Key Forger
-mn.research_page.KEY_SPECIAL.2=This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger
+mn.research_page.KEY_SPECIAL.1=This Key grants Access for the Bound Player to any Tile owned by the Key Forger.
+mn.research_page.KEY_SPECIAL.2=This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger.
 
 mn.research_name.ARCANE_CHEST=Arcane Chest
 mn.research_text.ARCANE_CHEST=Personal Storage
-mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood this Arcane Chest holds and protects its content against almost anything. Hit it with a wand to pick it up with its content.
+mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcane Chest holds and protects its content against almost anything. Hit it with a wand to pick it up with its contents intact.
 
 mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
 mn.research_text.GOGGLES_DARK=Glowing Red Eyes
-mn.research_page.GOGGLES_DARK.1=Crafted from Spider Eyes and Dark Crsytals this Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings.
+mn.research_page.GOGGLES_DARK.1=Crafted from Spider Eyes and Dark Crystals, these Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings.
 
 mn.research_name.SPECTACLES=Spectacles
 mn.research_text.SPECTACLES=Sharper Sight
-mn.research_page.SPECTACLES.1=Percieve every little detail without the help of specific Tools. Node Types are displayed & Essentia Suction.
+mn.research_page.SPECTACLES.1=Percieve every little detail without the help of specific Tools. Node Types are displayed, as wellas Essentia Suction.
 
 mn.research_name.FOCUS_BUILD=Focus Of Construction
 mn.research_text.FOCUS_BUILD=Grand Architecture
-mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posessed a slight potential at building in a bigger maner, you have refiend and expanded the shear Potentail to its maximum. This Masterpiece of Focus etching has brought forth a Tool befiting a Grand Architect.<BR>Check Controls Menu for all Key-Bindings.<BR>V or Ctrl + V -> toggle mode/shape
+mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posessed a slight potential at building in a bigger manner, you have refined and expanded the shear Potential to its maximum. This Masterpiece of Focus etching has brought forth a Tool befitting a Grand Architect.<BR>Check Controls Menu for all Key-Bindings.<BR>V or Ctrl + V -> toggle mode/shape
 
 mn.research_name.JAR_PRISON=Entity in a Jar
 mn.research_text.JAR_PRISON=Minimized Pets
 mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.<BR> Right Click with Wand to release the Entity.
 
-mn.research_name.STONE_PHENO=Phenomorphus Stone
-mn.research_text.STONE_PHENO=Morhphing the Visual
+mn.research_name.STONE_PHENO=Phenomorphous Stone
+mn.research_text.STONE_PHENO=Morphing the Visual
 mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks.
 
 mn.research_name.STONE_QUICKSILVER=Quicksilver Stone
 mn.research_text.STONE_QUICKSILVER=Quickening Potion Effects
-mn.research_page.STONE_QUICKSILVER.1=Shorten and condense at the same time the Effect of Potion Effects. Make the Effect Stronger but las shorter. Needs Glowstone to opperate.
+mn.research_page.STONE_QUICKSILVER.1=Shortens and condense the Effect of Potion Effects at the same time. Makes the Effect Stronger, but last shorter. Needs Glowstone to opperate.
 
-mn.research_name.EVIL_TRUNK=Vicious Traveling Trunks
+mn.research_name.EVIL_TRUNK=Vicious Travelling Trunks
 mn.research_text.EVIL_TRUNK=Infusing Souls into Objects
-mn.research_page.EVIL_TRUNK.1=The more warped the Mind is the more obscure Thoughts surface and one on this Ideas was to give your cute Traveling Trunk a Soul. Undoubtly the Trunk got more lively but it seemed to reflect the warped Mind of the Creator.
+mn.research_page.EVIL_TRUNK.1=The more warped the Mind is, the more obscure Thoughts surface and one such Idea was to give your cute Travelling Trunk a Soul. Undoubtedly the Trunk got more lively, but it seems to reflect the warped Mind of the Creator.
 
 mn.research_name.ENDER_POUCH=Enderpouch
 mn.research_text.ENDER_POUCH=Extradimensional Storage
-mn.research_page.ENDER_POUCH.1=Open Enderchest Storage or access any Foci sotred with your Wand.
+mn.research_page.ENDER_POUCH.1=Open Enderchest Storage or access any Foci stored with your Wand.
 
 mn.research_name.SICKLE_THAUM=Thaumium Sickle
 mn.research_text.SICKLE_THAUM=Reaping Crops
-mn.research_page.SICKLE_THAUM.1=Destroy Crops and Plants in a small area. Also works on Sheeps.
+mn.research_page.SICKLE_THAUM.1=Destroys Crops and Plants in a small area. Also works on Sheep.
 
 mn.research_name.SICKLE_ABUNDANCE=Sickle of Abundance
 mn.research_text.SICKLE_ABUNDANCE=Harvest Feast
