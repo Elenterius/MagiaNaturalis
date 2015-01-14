@@ -108,9 +108,10 @@ public class ItemResearchLog extends BaseItem
 
 	public boolean setResearchPoint(ItemStack stack, Aspect aspect, short size)
 	{
-		if(stack != null && aspect != null && size > 0)
+		if(stack != null && aspect != null)
 		{
 			if(size > 64) return false;
+			if(size < 0) size = 0;
 			NBTUtil.openNbtData(stack).setShort("rp:" + aspect.getTag(), size);
 			return true;
 		}
