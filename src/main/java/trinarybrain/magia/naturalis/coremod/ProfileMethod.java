@@ -25,9 +25,9 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 		// (Lsv;FFFFFF)V
 		if(methodName.equals(ObfMapCollector.getMapping("renderModel")) && desc.equals("(L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";FFFFFF)V"))
 		{
-			Log.logger.info("Profiled Method " + methodName + " in class " + className+ ".");
+			Log.logger.info("Profiling Class: " + className+ ".");
 			this.mv = null; //set the current method visitor null in order to removes the old method
-			Log.logger.info("Replacing " + methodName + " Method-Body in class.");
+			Log.logger.info("Replacing " + methodName + "(" + desc +") Method-Body in class.");
 			mv.visitCode();
 			Label l0 = new Label();
 			mv.visitLabel(l0);

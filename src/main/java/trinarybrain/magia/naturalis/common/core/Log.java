@@ -13,7 +13,7 @@ public class Log
 	public static void initLog()
 	{
 		logger.info(String.format("Starting Magia Naturalis ", ProjectInfo.VERSION));
-		logger.info("Copyright (c) TrinaryBrain 2014");
+		logger.info("Copyright (c) TrinaryBrain 2015");
 	}
 
 	public static void logInRed(String str)
