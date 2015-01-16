@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
 
 import thaumcraft.api.wands.ItemFocusBasic;
@@ -17,7 +16,7 @@ import trinarybrain.magia.naturalis.common.network.NetworkHandler;
 import trinarybrain.magia.naturalis.common.network.packet.PacketID;
 import trinarybrain.magia.naturalis.common.network.packet.PacketKey;
 import trinarybrain.magia.naturalis.common.network.packet.PacketPickedBlock;
-import trinarybrain.magia.naturalis.common.util.WorldUtils;
+import trinarybrain.magia.naturalis.common.util.WorldUtil;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -72,7 +71,7 @@ public class KeyHandler
 					ItemFocusBasic focus = wand.getFocus(player.getCurrentEquippedItem());
 					if(focus != null && focus instanceof ItemFocusBuild)
 					{
-						MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, ItemFocusBuild.reachDistance, true);
+						MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, ItemFocusBuild.reachDistance, true);
 						if(target != null)
 						{
 							if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)

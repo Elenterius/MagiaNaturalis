@@ -23,14 +23,13 @@ import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import trinarybrain.magia.naturalis.common.util.WorldCoord;
-import trinarybrain.magia.naturalis.common.util.WorldUtils;
+import trinarybrain.magia.naturalis.common.util.WorldUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -97,7 +96,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		player.swingItem();
 		if(Platform.isClient()) return wandstack;
 		
-		MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
+		MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
 
 		if(target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
@@ -175,28 +174,28 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			x += face.offsetX * size;
 			y += face.offsetY * size;
 			z += face.offsetZ * size;
-			blocks = WorldUtils.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+			blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
 			break;
 
 		case PLANE:
 			x += face.offsetX;
 			y += face.offsetY;
 			z += face.offsetZ;
-			blocks = WorldUtils.plot2DPlane(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+			blocks = WorldUtil.plot2DPlane(player, world, x, y, z, side, hitX, hitY, hitZ, size);
 			break;
 
 		case PLANE_EXTEND:
 			x += face.offsetX*(size+1)/2;
 			y += face.offsetY*(size+1)/2;
 			z += face.offsetZ*(size+1)/2;
-			blocks = WorldUtils.plot2DPlaneExtension(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+			blocks = WorldUtil.plot2DPlaneExtension(player, world, x, y, z, side, hitX, hitY, hitZ, size);
 			break;
 
 		case SPHERE:
 			x += face.offsetX * size;
 			y += face.offsetY * size;
 			z += face.offsetZ * size;
-			blocks = WorldUtils.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+			blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
 			break;
 
 		case NONE:
@@ -273,7 +272,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player)
 	{
 		//TODO: render not working with extendeed reach distance
-		MovingObjectPosition target = WorldUtils.getMovingObjectPositionFromPlayer(world, player, reachDistance, true); //have to call it here for hitVec
+		MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true); //have to call it here for hitVec
 		
 		if(target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
@@ -324,28 +323,28 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 					x += face.offsetX * size;
 					y += face.offsetY * size;
 					z += face.offsetZ * size;
-					blocks = (ArrayList) WorldUtils.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+					blocks = (ArrayList) WorldUtil.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
 					break;
 
 				case PLANE:
 					x += face.offsetX;
 					y += face.offsetY;
 					z += face.offsetZ;
-					blocks = (ArrayList) WorldUtils.plot2DPlane(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+					blocks = (ArrayList) WorldUtil.plot2DPlane(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
 					break;
 
 				case PLANE_EXTEND:
 					x += face.offsetX*(size+1)/2;
 					y += face.offsetY*(size+1)/2;
 					z += face.offsetZ*(size+1)/2;
-					blocks = (ArrayList) WorldUtils.plot2DPlaneExtension(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+					blocks = (ArrayList) WorldUtil.plot2DPlaneExtension(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
 					break;
 
 				case SPHERE:
 					x += face.offsetX * size;
 					y += face.offsetY * size;
 					z += face.offsetZ * size;
-					blocks = (ArrayList) WorldUtils.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+					blocks = (ArrayList) WorldUtil.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
 					break;
 
 				case NONE:

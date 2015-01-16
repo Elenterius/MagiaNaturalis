@@ -21,11 +21,11 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
 
-public class WorldUtils
+public class WorldUtil
 {
 	public static List<WorldCoord> plot2DPlane(EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size)
 	{		
-		List blocks = WorldUtils.plotHelper(new WorldCoord(x, y, z), new WorldCoord(x, y, z), ForgeDirection.getOrientation(side), hitX, hitY, hitZ, size);
+		List blocks = WorldUtil.plotHelper(new WorldCoord(x, y, z), new WorldCoord(x, y, z), ForgeDirection.getOrientation(side), hitX, hitY, hitZ, size);
 		WorldCoord P1 = new WorldCoord(x, y, z);
 		WorldCoord P2 = new WorldCoord(x, y, z);
 
@@ -35,7 +35,7 @@ public class WorldUtils
 			P2 = (WorldCoord)blocks.get(1);
 		}
 
-		return WorldUtils.plot3DCubeArea(player, world, P1, P2, x, y, z);
+		return WorldUtil.plot3DCubeArea(player, world, P1, P2, x, y, z);
 	}
 
 	public static List<WorldCoord> plot2DPlaneExtension(EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size)
@@ -70,7 +70,7 @@ public class WorldUtils
 			break;
 		}
 
-		List blocks = WorldUtils.plotHelper(new WorldCoord(x, y, z), new WorldCoord(x, y, z), face, hitX, hitY, hitZ, size);
+		List blocks = WorldUtil.plotHelper(new WorldCoord(x, y, z), new WorldCoord(x, y, z), face, hitX, hitY, hitZ, size);
 		WorldCoord P1 = new WorldCoord(x, y, z);
 		WorldCoord P2 = new WorldCoord(x, y, z);
 
@@ -80,13 +80,13 @@ public class WorldUtils
 			P2 = (WorldCoord)blocks.get(1);
 		}
 
-		return WorldUtils.plot3DCubeArea(player, world, P1, P2, x, y, z);
+		return WorldUtil.plot3DCubeArea(player, world, P1, P2, x, y, z);
 	}
 
 	public static List<WorldCoord> plot3DCubeArea(EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size)
 	{
 		ForgeDirection face = ForgeDirection.getOrientation(side);
-		List blocks = WorldUtils.plotHelper(new WorldCoord(x, y, z), new WorldCoord(x, y, z), face, hitX, hitY, hitZ, size);
+		List blocks = WorldUtil.plotHelper(new WorldCoord(x, y, z), new WorldCoord(x, y, z), face, hitX, hitY, hitZ, size);
 		WorldCoord P1 = new WorldCoord(x, y, z);
 		WorldCoord P2 = new WorldCoord(x, y, z);
 
@@ -98,7 +98,7 @@ public class WorldUtils
 
 		P1.add(face.getOpposite(), size-1);
 
-		return WorldUtils.plot3DCubeArea(player, world, P1, P2, x, y, z);
+		return WorldUtil.plot3DCubeArea(player, world, P1, P2, x, y, z);
 	}
 
 	public static List<WorldCoord> plot3DCubeArea(EntityPlayer player, World world, WorldCoord P1, WorldCoord P2, int ox, int oy, int oz)

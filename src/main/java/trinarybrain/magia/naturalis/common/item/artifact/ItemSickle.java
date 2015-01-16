@@ -20,12 +20,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
-import thaumcraft.common.blocks.BlockMagicalLeaves;
 import thaumcraft.common.lib.utils.BlockUtils;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
+import trinarybrain.magia.naturalis.common.util.BlockUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.WorldCoord;
-import trinarybrain.magia.naturalis.common.util.WorldUtils;
+import trinarybrain.magia.naturalis.common.util.WorldUtil;
 
 import com.google.common.collect.Multimap;
 
@@ -119,7 +119,7 @@ public class ItemSickle extends BaseItem
 		{
 			if(Platform.isServer() && entity instanceof EntityPlayer)
 			{
-				List<WorldCoord> blocks = WorldUtils.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
+				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
 				for(WorldCoord coord : blocks)
 				{
 					if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
@@ -127,20 +127,15 @@ public class ItemSickle extends BaseItem
 						Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
 						if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
 						{
-							if(tempBlock != null && tempBlock instanceof BlockMagicalLeaves)
-							{
-								for(int i = 0; i < this.abundanceLevel; i++)
-									BlockUtils.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.colorLoot);
-							}
-
-							stack.damageItem(1, entity);
-							BlockUtils.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.colorLoot);
+							boolean success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
+							if(success) stack.damageItem(1, entity);
+							return success;
 						}
 					}
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
