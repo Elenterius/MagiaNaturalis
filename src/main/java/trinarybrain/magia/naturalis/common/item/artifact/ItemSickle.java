@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 import thaumcraft.common.lib.utils.BlockUtils;
+import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.BlockUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -120,6 +121,7 @@ public class ItemSickle extends BaseItem
 			if(Platform.isServer() && entity instanceof EntityPlayer)
 			{
 				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
+				boolean success = false;
 				for(WorldCoord coord : blocks)
 				{
 					if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
@@ -127,12 +129,12 @@ public class ItemSickle extends BaseItem
 						Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
 						if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
 						{
-							boolean success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
+							success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
 							if(success) stack.damageItem(1, entity);
-							return success;
 						}
 					}
 				}
+				return success;
 			}
 		}
 		return false;

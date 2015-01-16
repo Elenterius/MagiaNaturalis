@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import thaumcraft.common.entities.EntityFollowingItem;
 import thaumcraft.common.lib.utils.EntityUtils;
 
-public final class BlockUtil
+public class BlockUtil
 {
 	public static boolean harvestBlock(World world, EntityPlayer player, int x, int y, int z, boolean followItem, int abundance, int color)
 	{
@@ -27,6 +27,7 @@ public final class BlockUtil
 
 			if(!player.capabilities.isCreativeMode && !EnchantmentHelper.getSilkTouchModifier(player) && abundance > 0)
 			{
+				//TODO: Improve for Silverwood & Greatwood
 				//block.harvestBlock(world, player, x, y, z, meta);
 				block.dropBlockAsItem(world, x, y, z, meta, EnchantmentHelper.getFortuneModifier(player) + abundance); // player will be zero in ForgeEvent & drops will happen unnoticed from stats etc
 			}
