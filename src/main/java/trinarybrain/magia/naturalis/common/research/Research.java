@@ -1,10 +1,7 @@
 package trinarybrain.magia.naturalis.common.research;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
@@ -70,11 +67,11 @@ public class Research
 		research.setPages(new ResearchPage[] { new ResearchPage("mn.research_page.JAR_PRISON.1") });
 		research.setRound().setAutoUnlock().registerResearchItem();
 		
-		research = new CustomResearchItem("STONE_PHENO", 1, 2, 0, new ItemStack(ItemsMN.mutationStone, 1, 0));
+		research = new CustomResearchItem("STONE_PHENO", 1, 2, 0, new ItemStack(ItemsMN.alchemicalStone, 1, 0));
 		research.setPages(new ResearchPage("mn.research_page.STONE_PHENO.1"));
 		research.setRound().setAutoUnlock().registerResearchItem();
 		
-		research = new CustomResearchItem("STONE_QUICKSILVER", 1, 3, 0, new ItemStack(ItemsMN.quicksilverStone, 1, 0));
+		research = new CustomResearchItem("STONE_QUICKSILVER", 1, 3, 0, new ItemStack(ItemsMN.alchemicalStone, 1, 1));
 		research.setPages(new ResearchPage("mn.research_page.STONE_QUICKSILVER.1"));
 		research.setRound().setAutoUnlock().registerResearchItem();
 		

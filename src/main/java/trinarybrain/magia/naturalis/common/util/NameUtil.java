@@ -19,10 +19,11 @@ public final class NameUtil
 	public static final String BANNER = "banner";
 	
 	// Item Names
-	public static final String DEV_TOOL = "devTool";
+//	public static final String DEV_TOOL = "devTool";
 	public static final String RESEARCH_LOG = "researchLog";
-	public static final String QUICKSILVER_STONE = "quicksilverStone";
-	public static final String MUTATION_STONE = "mutationStone";
+//	public static final String QUICKSILVER_STONE = "quicksilverStone";
+//	public static final String MUTATION_STONE = "mutationStone";
+	public static final String ALCHEMICAL_STONE = "alchemicalStone";
 	public static final String KEY = "key";
 	public static final String MIXING_FLASK = "mixingFlask";
 	public static final String GOGGLES_DARK_CRYSTAL = "gogglesDarkCrystal";

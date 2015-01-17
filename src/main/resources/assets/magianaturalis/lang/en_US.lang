@@ -37,8 +37,8 @@ hint.magianaturalis:vertical=Vertical
 
 # ITEM NAMES
 item.magianaturalis:researchLog.name=Research Log
-item.magianaturalis:quicksilverStone.name=Quicksilver Alchemist Stone
-item.magianaturalis:mutationStone.name=Phenomorphous Catalyst Stone
+item.magianaturalis:alchemicalStone.1.name=Quicksilver Alchemist Stone
+item.magianaturalis:alchemicalStone.0.name=Phenomorphous Catalyst Stone
 item.magianaturalis:devTool.name=Misc Dev Tool
 item.magianaturalis:key.0.name=Key of Unraveling
 item.magianaturalis:key.1.name=Key of Endorsing

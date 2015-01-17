@@ -4,9 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.world.World;
-import thaumcraft.api.ItemApi;
+import thaumcraft.common.config.ConfigBlocks;
 
 public class BlockMorpher
 {
@@ -185,7 +184,7 @@ public class BlockMorpher
 			}
 		}
 
-		if(Block.getIdFromBlock(block) == Item.getIdFromItem(ItemApi.getBlock("blockMagicalLog", 0).getItem()))
+		if(block == ConfigBlocks.blockMagicalLog)
 		{
 			meta += 4;
 			if(meta > 13)
@@ -228,7 +227,7 @@ public class BlockMorpher
 			}else
 			{
 				//Only Called by Dirt/Grass & Cobble/MossyCobble & Stairs
-				world.setBlock(x, y, y, block, meta, -2);
+				world.setBlock(x, y, z, block, meta, -2);
 			}
 			return true;
 		}

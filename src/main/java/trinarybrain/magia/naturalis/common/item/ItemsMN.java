@@ -1,9 +1,7 @@
 package trinarybrain.magia.naturalis.common.item;
 
 import net.minecraft.item.Item;
-import trinarybrain.magia.naturalis.common.item.alchemy.ItemMutationStone;
-import trinarybrain.magia.naturalis.common.item.alchemy.ItemQuicksilverStone;
-import trinarybrain.magia.naturalis.common.item.artifact.DevTool;
+import trinarybrain.magia.naturalis.common.item.alchemy.ItemAlchemicalStone;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemElementalSickle;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
@@ -21,8 +19,8 @@ public class ItemsMN
 {
 //	public static Item devTool;
 	public static Item researchLog;
-	public static Item quicksilverStone;
-	public static Item mutationStone;
+
+	public static Item alchemicalStone;
 	public static Item key;
 	public static Item gogglesDark;
 	public static Item spectacles;
@@ -36,8 +34,7 @@ public class ItemsMN
 	{
 //		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
 		researchLog = new ItemResearchLog(); registerItem(researchLog, NameUtil.RESEARCH_LOG);
-		quicksilverStone = new ItemQuicksilverStone(); registerItem(quicksilverStone, NameUtil.QUICKSILVER_STONE);
-		mutationStone = new ItemMutationStone(); registerItem(mutationStone, NameUtil.MUTATION_STONE);
+		alchemicalStone = new ItemAlchemicalStone(); registerItem(alchemicalStone, NameUtil.ALCHEMICAL_STONE);
 		key = new ItemKey(); registerItem(key, NameUtil.KEY);
 		gogglesDark = new ItemGogglesDark(); registerItem(gogglesDark, NameUtil.GOGGLES_DARK_CRYSTAL);
 		spectacles = new ItemSpectacles(); registerItem(spectacles, NameUtil.SPECTACLES);
