@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import thaumcraft.common.blocks.BlockMagicalLeaves;
 import thaumcraft.common.entities.EntityFollowingItem;
 import thaumcraft.common.lib.utils.EntityUtils;
 
@@ -29,7 +30,14 @@ public class BlockUtil
 			{
 				//TODO: Improve for Silverwood & Greatwood
 				//block.harvestBlock(world, player, x, y, z, meta);
-				block.dropBlockAsItem(world, x, y, z, meta, EnchantmentHelper.getFortuneModifier(player) + abundance); // player will be zero in ForgeEvent & drops will happen unnoticed from stats etc
+				
+				if(block instanceof BlockMagicalLeaves)
+				{
+					for(int i = 0; i < abundance + 1; i++)
+						block.dropBlockAsItem(world, x, y, z, meta, 0);
+				}
+				else
+					block.dropBlockAsItem(world, x, y, z, meta, EnchantmentHelper.getFortuneModifier(player) + abundance); // player will be zero in ForgeEvent & drops will happen unnoticed from stats etc
 			}
 
 			if(followItem)

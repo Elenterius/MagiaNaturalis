@@ -112,15 +112,26 @@ public class ItemSickle extends BaseItem
 
 	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity)
 	{		
-		if(entity.isSneaking() || !this.isEffectiveVsBlock(block))
+		if(!this.isEffectiveVsBlock(block))
 		{
 			return super.onBlockDestroyed(stack, world, block, x, y, z, entity);
+		}
+		else if(entity.isSneaking())
+		{
+			boolean success = false;
+			if(world.canMineBlock((EntityPlayer)entity, x, y, z))
+			{
+				success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, x, y, z, this.collectLoot, this.abundanceLevel, this.colorLoot);
+				if(success) stack.damageItem(1, entity);
+			}
+			return success;
 		}
 		else
 		{
 			if(Platform.isServer() && entity instanceof EntityPlayer)
 			{
 				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
+				Log.logger.info(blocks.size());
 				boolean success = false;
 				for(WorldCoord coord : blocks)
 				{
