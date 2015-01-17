@@ -12,27 +12,21 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.IAspectContainer;
-import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import thaumcraft.common.tiles.TileNodeEnergized;
 import thaumcraft.common.tiles.TileOwned;
-import thaumcraft.common.tiles.TileTubeBuffer;
 import trinarybrain.magia.naturalis.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
@@ -136,7 +130,7 @@ public class EventHandlerRender
 	//	@SubscribeEvent
 	//	public void renderBlockHighlight(DrawBlockHighlightEvent event)
 	//	{
-		//		int ticks = event.player.ticksExisted;
+	//		int ticks = event.player.ticksExisted;
 	//		MovingObjectPosition target = event.target;
 	//
 	//		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
@@ -298,58 +292,41 @@ public class EventHandlerRender
 				int w = scaledresolution.getScaledWidth();
 				int h = scaledresolution.getScaledHeight();
 
-				if(tile instanceof IEssentiaTransport)
-				{
-					IEssentiaTransport essentiaTransport = (IEssentiaTransport) tile;
-					ForgeDirection face = ForgeDirection.getOrientation(mop.sideHit);
-					String t = "";
-
-					if(!(tile instanceof TileTubeBuffer) && essentiaTransport.getEssentiaType(face) != null)
-					{
-						t = new ChatComponentTranslation("tc.resonator1", new Object[] {"" + essentiaTransport.getEssentiaAmount(face), essentiaTransport.getEssentiaType(face).getName()}).getFormattedText();
-					}
-					else if(tile instanceof TileTubeBuffer && ((IAspectContainer) tile).getAspects().size() > 0)
-					{
-						for(Aspect aspect : ((IAspectContainer) tile).getAspects().getAspectsSorted())
-						{
-							t = new ChatComponentTranslation("tc.resonator1", new Object[] {"" + ((IAspectContainer) tile).getAspects().getAmount(aspect), aspect.getName()}).getFormattedText();
-						}
-					}
-
-					String s = StatCollector.translateToLocal("tc.resonator3");
-					if(essentiaTransport.getSuctionType(face) != null)
-						s = essentiaTransport.getSuctionType(face).getName();
-					s = new ChatComponentTranslation("tc.resonator2", new Object[] {"" + essentiaTransport.getSuctionAmount(face), s}).getFormattedText();
-
-					FontRenderer fontRenderer = mc.fontRenderer;
-
-					GL11.glPushMatrix();
-					GL11.glTranslatef(w / 2, h / 2, 0F);
-
-					fontRenderer.drawStringWithShadow(t, -fontRenderer.getStringWidth(t) / 2 + 1, 25, 0xFFFFFF);
-					fontRenderer.drawStringWithShadow(s, -fontRenderer.getStringWidth(s) / 2 + 1, 35, 0xFFFFFF);
-
-					GL11.glPopMatrix();
-				}
-				else if(tile instanceof INode)
+				if(tile instanceof INode)
 				{
 					INode node = (INode) tile;
-					String t = Platform.translate("nodetype." + node.getNodeType() + ".name");
+					String meta = Platform.translate("nodetype." + node.getNodeType() + ".name");
 					if(node.getNodeModifier() != null)
-						t = t + ", " + Platform.translate(new StringBuilder().append("nodemod.").append(node.getNodeModifier()).append(".name").toString());
+						meta = meta + ", " + Platform.translate(new StringBuilder().append("nodemod.").append(node.getNodeModifier()).append(".name").toString());
 
-					String d = Platform.translate("tile.blockAiry.0.name");
+					String name = Platform.translate("tile.blockAiry.0.name");
 					FontRenderer fontRenderer = mc.fontRenderer;
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
-					fontRenderer.drawStringWithShadow(d, -fontRenderer.getStringWidth(d) / 2, 25, 0xF057BC);
-					fontRenderer.drawStringWithShadow(t, -fontRenderer.getStringWidth(t) / 2, 35, 0xFFFFFF);
+					fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
+					fontRenderer.drawStringWithShadow(meta, -fontRenderer.getStringWidth(meta) / 2, 35, 0xFFFFFF);
+					GL11.glPopMatrix();
+				}
+				else if(tile instanceof TileNodeEnergized)
+				{
+					TileNodeEnergized nodeEnergized = (TileNodeEnergized) tile;
+
+					String meta = Platform.translate("nodetype." + nodeEnergized.getNodeType() + ".name");
+					if(nodeEnergized.getNodeModifier() != null)
+						meta = meta + ", " + Platform.translate(new StringBuilder().append("nodemod.").append(nodeEnergized.getNodeModifier()).append(".name").toString());
+
+					String name = Platform.translate("tile.blockAiry.5.name");
+					FontRenderer fontRenderer = mc.fontRenderer;
+					GL11.glPushMatrix();
+					GL11.glTranslatef(w / 2, h / 2, 0F);
+					fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
+					fontRenderer.drawStringWithShadow(meta, -fontRenderer.getStringWidth(meta) / 2, 35, 0xFFFFFF);
 					GL11.glPopMatrix();
 				}
 				else if(tile instanceof TileOwned)
 				{
 					TileOwned owned = (TileOwned) tile;
-					String owner = "§5Owner§r " + owned.owner;
+					String owner = new StringBuilder().append("§5Owner§r ").append(owned.owner).toString();
 					FontRenderer fontRenderer = mc.fontRenderer;
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
@@ -359,7 +336,7 @@ public class EventHandlerRender
 				else if(tile instanceof TileArcaneChest)
 				{
 					TileArcaneChest chest = (TileArcaneChest) tile;
-					String name = "§5Owner§r " + chest.getOwnerName();
+					String name = new StringBuilder().append("§5Owner§r ").append(chest.getOwnerName()).toString();
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
 					fontRenderer.drawStringWithShadow(name, -(fontRenderer.getStringWidth(name)-4) / 2, 25, 0xFFFFFF);
