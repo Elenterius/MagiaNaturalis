@@ -131,7 +131,6 @@ public class ItemSickle extends BaseItem
 			if(Platform.isServer() && entity instanceof EntityPlayer)
 			{
 				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
-				Log.logger.info(blocks.size());
 				boolean success = false;
 				for(WorldCoord coord : blocks)
 				{
@@ -141,7 +140,7 @@ public class ItemSickle extends BaseItem
 						if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
 						{
 							success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
-							if(success) stack.damageItem(1, entity);
+							if(success) stack.damageItem(1 + this.abundanceLevel, entity);
 						}
 					}
 				}
