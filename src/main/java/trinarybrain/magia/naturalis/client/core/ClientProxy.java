@@ -52,7 +52,7 @@ public class ClientProxy extends CommonProxy
 
 		this.registerBlockRenderer(new BlockJarRenderer());
 		this.registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
-		
+
 		MinecraftForgeClient.registerItemRenderer(ItemsMN.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
@@ -79,7 +79,7 @@ public class ClientProxy extends CommonProxy
 		case 2:
 			return new GuiArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
 		case 3:
-	        return new GuiEvilTrunk(player, (EntityEvilTrunk) ((WorldClient)world).getEntityByID(x));
+			return new GuiEvilTrunk(player, (EntityEvilTrunk) ((WorldClient)world).getEntityByID(x));
 		default:
 			return null;
 		}

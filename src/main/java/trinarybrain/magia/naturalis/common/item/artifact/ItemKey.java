@@ -170,8 +170,8 @@ public class ItemKey extends BaseItem
 				NBTTagCompound data = NBTUtil.openNbtData(stack);
 				if(!data.hasKey("forger"))
 				{
-					this.setKeyForger(stack, player.getGameProfile());
-					return true;
+//					this.setKeyForger(stack, player.getGameProfile());
+					return false;
 				}
 
 				if(data.hasKey("owner"))

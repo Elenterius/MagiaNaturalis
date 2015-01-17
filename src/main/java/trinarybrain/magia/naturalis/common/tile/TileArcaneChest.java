@@ -21,6 +21,8 @@ import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import trinarybrain.magia.naturalis.common.util.access.UserAccess;
 
+import com.mojang.authlib.GameProfile;
+
 public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, IWandable
 {
 	private ItemStack[] inventory = new ItemStack[54];
@@ -29,6 +31,7 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	public int numUsingPlayers;
 
 	public UUID owner;
+	private String ownerName;
 	//UserAccess - accessLevel: 0 - nothing, 1 - access, 2 - administrator;
 	public ArrayList<UserAccess> accessList = new ArrayList();
 	private byte chestType = 0;
@@ -37,6 +40,22 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	private String customName;
 	private static final int[] sides = { 0, 1, 2, 3, 4, 5 };
 
+	public String getOwnerName()
+	{
+		if(this.ownerName != null && !this.ownerName.equals(""))
+			return this.ownerName;
+		
+		GameProfile profile = Platform.findGameProfileByUUID(this.owner);
+		if(profile != null)
+		{
+			return this.ownerName = profile.getName();
+		}
+		else
+		{
+			return this.ownerName = "Only UUID Available";
+		}
+	}
+	
 	@Override
 	public int getSizeInventory()
 	{

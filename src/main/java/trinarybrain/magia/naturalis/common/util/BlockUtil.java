@@ -30,7 +30,7 @@ public class BlockUtil
 			{
 				//TODO: Improve for Silverwood & Greatwood
 				//block.harvestBlock(world, player, x, y, z, meta);
-				
+
 				if(block instanceof BlockMagicalLeaves)
 				{
 					for(int i = 0; i < abundance + 1; i++)

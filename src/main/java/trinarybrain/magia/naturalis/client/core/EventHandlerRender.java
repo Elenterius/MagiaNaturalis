@@ -1,13 +1,10 @@
 package trinarybrain.magia.naturalis.client.core;
 
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelSkeletonHead;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +35,6 @@ import thaumcraft.common.tiles.TileOwned;
 import thaumcraft.common.tiles.TileTubeBuffer;
 import trinarybrain.magia.naturalis.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
@@ -101,7 +97,7 @@ public class EventHandlerRender
 
 	private static final ResourceLocation rlGlowingEyes = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "glowingEyes.png");
 	private static ModelBiped modelOverlay = new ModelBiped();
-	
+
 	@SubscribeEvent
 	public void renderPlayerSpecial(RenderPlayerEvent.Specials.Pre event)
 	{
@@ -111,28 +107,28 @@ public class EventHandlerRender
 		{
 			GL11.glPushMatrix();
 			float f6 = 0.0625F;
-						
+
 			model.bipedHead.postRender(f6);
 			mc.renderEngine.bindTexture(this.rlGlowingEyes);
-			
+
 			GL11.glTranslatef(0.0F, f6, -0.01F);
 			GL11.glScalef(1.25F, 1.25F, 1.25F);
 			GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            
-            if(event.entityPlayer.isInvisible())
-                GL11.glDepthMask(false);
-            else
-                GL11.glDepthMask(true);
-            
-            char c0 = 61680;
-            int j = c0 % 65536;
-            int k = c0 / 65536;
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+			if(event.entityPlayer.isInvisible())
+				GL11.glDepthMask(false);
+			else
+				GL11.glDepthMask(true);
+
+			char c0 = 61680;
+			int j = c0 % 65536;
+			int k = c0 / 65536;
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			modelOverlay.bipedHead.render(f6);
 			GL11.glDisable(GL11.GL_BLEND);
-			
+
 			GL11.glPopMatrix();
 		}
 	}
@@ -140,7 +136,7 @@ public class EventHandlerRender
 	//	@SubscribeEvent
 	//	public void renderBlockHighlight(DrawBlockHighlightEvent event)
 	//	{
-	//		int ticks = event.player.ticksExisted;
+		//		int ticks = event.player.ticksExisted;
 	//		MovingObjectPosition target = event.target;
 	//
 	//		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
@@ -330,85 +326,44 @@ public class EventHandlerRender
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
 
-					fontRenderer.drawStringWithShadow(t, -fontRenderer.getStringWidth(t) / 2 + 1, 25, 16777215);
-					fontRenderer.drawStringWithShadow(s, -fontRenderer.getStringWidth(s) / 2 + 1, 35, 16777215);
+					fontRenderer.drawStringWithShadow(t, -fontRenderer.getStringWidth(t) / 2 + 1, 25, 0xFFFFFF);
+					fontRenderer.drawStringWithShadow(s, -fontRenderer.getStringWidth(s) / 2 + 1, 35, 0xFFFFFF);
 
 					GL11.glPopMatrix();
 				}
 				else if(tile instanceof INode)
 				{
 					INode node = (INode) tile;
-
 					String t = Platform.translate("nodetype." + node.getNodeType() + ".name");
 					if(node.getNodeModifier() != null)
 						t = t + ", " + Platform.translate(new StringBuilder().append("nodemod.").append(node.getNodeModifier()).append(".name").toString());
 
 					String d = Platform.translate("tile.blockAiry.0.name");
-					String v = " ";
-
-					if(node.getAspectsBase() != null && node.getAspectsBase().size() > 0)
-					{
-						for(Aspect a : node.getAspectsBase().getAspects())
-						{
-							if(a != null)
-								v += a.getName() + "Max:§5 " + Integer.toString(node.getAspectsBase().getAmount(a)) + "§r ";
-						}
-					}
-
-					String msg = "I'm a happy little Aura Node, happy... happy...";
 					FontRenderer fontRenderer = mc.fontRenderer;
-
-					int offset = 0;
-
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
-
-					if((d.length() & 1) != 0)
-					{
-						offset = 1;
-					}
-					fontRenderer.drawStringWithShadow(d, -fontRenderer.getStringWidth(d) / 2 + offset, 10, 100100);
-					offset = 1;
-
-					GL11.glPushMatrix();
-					GL11.glScaled(0.8D, 0.8D, 0.8D);
-					fontRenderer.drawStringWithShadow(t, -fontRenderer.getStringWidth(t) / 2 + offset, 25, 15751100);
-					fontRenderer.drawStringWithShadow(v, -fontRenderer.getStringWidth(v) / 2 + offset, 35, 15651100);
-					GL11.glPopMatrix();
-
-					GL11.glPushMatrix();
-					GL11.glScaled(0.5D, 0.5D, 0.5D);
-					mc.ingameGUI.drawString(fontRenderer, msg, -fontRenderer.getStringWidth(msg) / 2 + offset, 75, 16777215);
-					GL11.glPopMatrix();
-
+					fontRenderer.drawStringWithShadow(d, -fontRenderer.getStringWidth(d) / 2, 25, 0xF057BC);
+					fontRenderer.drawStringWithShadow(t, -fontRenderer.getStringWidth(t) / 2, 35, 0xFFFFFF);
 					GL11.glPopMatrix();
 				}
 				else if(tile instanceof TileOwned)
 				{
 					TileOwned owned = (TileOwned) tile;
-
-					String owner = "Owner: " + owned.owner;
-					ArrayList<String> accessList = owned.accessList;
-
+					String owner = "§5Owner§r " + owned.owner;
 					FontRenderer fontRenderer = mc.fontRenderer;
-
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
-
-					fontRenderer.drawStringWithShadow(owner, -fontRenderer.getStringWidth(owner) / 2, 10, 100100);
-
-					int offset = 0;
-					for(String str : accessList)
-					{
-						fontRenderer.drawStringWithShadow(str, -fontRenderer.getStringWidth(str) / 2, 15 + 10 * offset, 16777215);
-						offset++;
-					}
-
+					fontRenderer.drawStringWithShadow(owner, -(fontRenderer.getStringWidth(owner)-4) / 2, 25, 0xFFFFFF);
 					GL11.glPopMatrix();
 				}
 				else if(tile instanceof TileArcaneChest)
 				{
 					TileArcaneChest chest = (TileArcaneChest) tile;
+					String name = "§5Owner§r " + chest.getOwnerName();
+					GL11.glPushMatrix();
+					GL11.glTranslatef(w / 2, h / 2, 0F);
+					fontRenderer.drawStringWithShadow(name, -(fontRenderer.getStringWidth(name)-4) / 2, 25, 0xFFFFFF);
+					GL11.glPopMatrix();
 				}
 			}
 		}

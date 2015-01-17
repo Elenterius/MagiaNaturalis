@@ -1,21 +1,9 @@
 package trinarybrain.magia.naturalis.common.util;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
-import thaumcraft.common.entities.EntityFollowingItem;
-import thaumcraft.common.lib.utils.EntityUtils;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
@@ -46,6 +34,11 @@ public final class Platform
 	public static GameProfile findGameProfileByName(String playerName)
 	{
 		return MinecraftServer.getServer().func_152358_ax().func_152655_a(playerName);
+	}
+
+	public static GameProfile findGameProfileByUUID(UUID uuid)
+	{
+		return MinecraftServer.getServer().func_152358_ax().func_152652_a(uuid);
 	}
 
 	public static UUID generateOfflineUUIDforName(String playerName)
