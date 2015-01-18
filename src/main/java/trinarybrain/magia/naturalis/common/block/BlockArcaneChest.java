@@ -33,7 +33,6 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.util.NBTUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -154,7 +153,7 @@ public class BlockArcaneChest extends BlockContainer
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f0, float f1, float f3)
 	{
 		if(Platform.isClient()) return false;
-		
+
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile == null) return false;
 		if(tile instanceof TileArcaneChest)
@@ -189,7 +188,7 @@ public class BlockArcaneChest extends BlockContainer
 		}
 		return false;
 	}
-	
+
 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player)
 	{
 		if(Platform.isServer())
@@ -197,59 +196,41 @@ public class BlockArcaneChest extends BlockContainer
 			TileEntity tile = world.getTileEntity(x, y, z);
 			if(tile != null && tile instanceof TileArcaneChest)
 			{
-				TileArcaneChest chest = (TileArcaneChest) tile;
-				int isKeyAdmin = 0;
-				if(player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.owner))
+				ItemStack curStack = player.getCurrentEquippedItem();
+				if(curStack != null && curStack.getItem() == ConfigItems.itemKey)
 				{
-					isKeyAdmin = 2;
-				}
-				else
-				{
-					if(chest.accessList != null && chest.accessList.size() > 0)
-						for(UserAccess user : chest.accessList)
-							if(user.getUUID().equals(player.getGameProfile().getId()))
-							{
-								if(user.getAccessLevel() > 0) isKeyAdmin = 1;
-								break;
-							}
-				}
+					TileArcaneChest chest = (TileArcaneChest) tile;
+					int isKeyAdmin = 0;
 
-				//TODO: FIX THIS PART
-				
-				if(isKeyAdmin > 0)
-				{
-					ItemStack curStack = player.getCurrentEquippedItem();
-					if(curStack != null && curStack.getItem() == ConfigItems.itemKey)
+					if(player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.owner))
+					{
+						isKeyAdmin = 2;
+					}
+					else
+					{
+						if(chest.accessList != null && chest.accessList.size() > 0)
+							for(UserAccess user : chest.accessList)
+								if(user.getUUID().equals(player.getGameProfile().getId()))
+								{
+									if(user.getAccessLevel() > 0) isKeyAdmin = 1;
+									break;
+								}
+					}
+
+					if(curStack.hasTagCompound() && curStack.stackTagCompound.hasKey("location"))
 					{
 						String loc = new StringBuilder().append(x).append(",").append(y).append(",").append(z).toString();
-						if(!curStack.hasTagCompound())
+						if(!loc.equals(curStack.stackTagCompound.getString("location")))
 						{
-							ItemStack stack = new ItemStack(ConfigItems.itemKey, 1, curStack.getItemDamage());
-				            stack.setTagInfo("location", new NBTTagString(loc));
-				            stack.setTagInfo("type", new NBTTagByte((byte) 1));
-				            
-				            if(!player.capabilities.isCreativeMode)
-				            	if(--curStack.stackSize <= 0)
-				            		player.inventory.mainInventory[player.inventory.currentItem] = null;
-				            if(!player.inventory.addItemStackToInventory(stack)) world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack));
-//				            player.inventoryContainer.detectAndSendChanges();
-				            world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
+							player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("tc.key7")).toString()));
 						}
-						else if(curStack.hasTagCompound() && curStack.stackTagCompound.hasKey("location"))
+						else if(loc.equals(curStack.stackTagCompound.getString("location")))
 						{
-							player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("tc.key8")).toString()));
-						}
-					}
-				}
-				else if(isKeyAdmin == 0)
-				{
-					ItemStack curStack = player.getCurrentEquippedItem();
-					if(curStack != null && curStack.getItem() == ConfigItems.itemKey)
-					{
-						if(curStack.hasTagCompound() && curStack.stackTagCompound.hasKey("location"))
-						{
-							String loc = new StringBuilder().append(x).append(",").append(y).append(",").append(z).toString();
-							if(loc.equals(curStack.stackTagCompound.getString("location")))
+							if(isKeyAdmin > 0)
+							{
+								player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("tc.key8")).toString()));
+							}
+							else if(isKeyAdmin == 0)
 							{
 								chest.accessList.add(new UserAccess(player.getGameProfile().getId(), (byte) curStack.getItemDamage()));
 								world.markBlockForUpdate(x, y, z);
@@ -257,17 +238,36 @@ public class BlockArcaneChest extends BlockContainer
 								if(!player.capabilities.isCreativeMode)
 									if(--curStack.stackSize <= 0)
 										player.inventory.mainInventory[player.inventory.currentItem] = null;
-								
-								player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("tc.key6")).toString()));
+
+								player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("chat.magianaturalis:key.access.chest")).toString()));
 								world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
 							}
-							else
-							{
-								player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("tc.key7")).toString()));
-							}
 						}
-					
 					}
+					else if(!curStack.hasTagCompound())
+					{
+						if(isKeyAdmin > 0)
+						{
+							String loc = new StringBuilder().append(x).append(",").append(y).append(",").append(z).toString();
+							ItemStack stack = new ItemStack(ConfigItems.itemKey, 1, curStack.getItemDamage());
+							stack.setTagInfo("location", new NBTTagString(loc));
+							stack.setTagInfo("type", new NBTTagByte((byte) -1));
+
+							if(!player.capabilities.isCreativeMode)
+								if(--curStack.stackSize <= 0)
+									player.inventory.mainInventory[player.inventory.currentItem] = null;
+
+							if(!player.inventory.addItemStackToInventory(stack)) world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack));
+							//player.inventoryContainer.detectAndSendChanges();
+							world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
+						}
+						else
+						{
+							player.addChatMessage(new ChatComponentText(new StringBuilder().append("§5§o").append(Platform.translate("chat.magianaturalis:chest.access.denied")).toString()));
+							world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
+						}
+					}
+
 				}
 			}
 		}
