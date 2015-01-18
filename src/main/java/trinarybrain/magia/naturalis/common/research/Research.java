@@ -2,6 +2,9 @@ package trinarybrain.magia.naturalis.common.research;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
@@ -18,6 +21,15 @@ public class Research
 	{
 		initCategory();
 		initEntry();
+		initObjectTag();
+	}
+	
+	private static void initObjectTag()
+	{
+		ThaumcraftApi.registerObjectTag(new ItemStack(ItemsMN.sickleElemental), new AspectList().add(Aspect.HARVEST, 6).add(Aspect.TOOL, 4).add(Aspect.GREED, 2));
+		ThaumcraftApi.registerObjectTag(new ItemStack(ItemsMN.sickleThaumium), new AspectList().add(Aspect.HARVEST, 3).add(Aspect.TOOL, 4));
+		ThaumcraftApi.registerObjectTag(new ItemStack(ItemsMN.gogglesDark), new AspectList().add(Aspect.ARMOR, 4).add(Aspect.SENSES, 6).add(Aspect.DARKNESS, 4));
+		//TODO: ADD THE REST OF THE ITEMS
 	}
 
 	private static void initCategory()
