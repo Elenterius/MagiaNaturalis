@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import thaumcraft.common.config.ConfigItems;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.ai.AIFollowJumpOwner;
@@ -25,6 +26,7 @@ import trinarybrain.magia.naturalis.common.entity.ai.AILeapAtTarget;
 import trinarybrain.magia.naturalis.common.entity.ai.AIOwnerHurtByTarget;
 import trinarybrain.magia.naturalis.common.entity.ai.AIOwnerHurtTarget;
 import trinarybrain.magia.naturalis.common.inventory.InventoryEvilTrunk;
+import trinarybrain.magia.naturalis.common.item.ItemsMN;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -197,30 +199,53 @@ public class EntityEvilTrunk extends EntityOwnableCreature
 
 	public boolean interact(EntityPlayer player)
 	{
-		if(player.isSneaking()) return false;
-		
 		ItemStack stack = player.inventory.getCurrentItem();
-		if(stack != null && stack.getItem() instanceof ItemFood && this.getHealth() < this.getMaxHealth())
+		if(stack != null)
 		{
-			ItemFood itemfood = (ItemFood)stack.getItem();
-			stack.stackSize -= 1;
-			heal(itemfood.func_150905_g(stack));
-			
-			if(this.getHealth() == this.getMaxHealth())
-				this.worldObj.playSoundAtEntity(this, "random.burp", 0.5F, this.worldObj.rand.nextFloat() * 0.5F + 0.5F);
-			else
-				this.worldObj.playSoundAtEntity(this, "random.eat", 0.5F, this.worldObj.rand.nextFloat() * 0.5F + 0.5F);
-			
-			this.worldObj.setEntityState(this, (byte)18);
-			this.skullrot = 0.15F;
-			
-			if(stack.stackSize <= 0)
-				player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+			if(stack.getItem() instanceof ItemFood && this.getHealth() < this.getMaxHealth())
+			{
+				ItemFood itemfood = (ItemFood)stack.getItem();
+				stack.stackSize -= 1;
+				heal(itemfood.func_150905_g(stack));
+				
+				if(this.getHealth() == this.getMaxHealth())
+					this.worldObj.playSoundAtEntity(this, "random.burp", 0.5F, this.worldObj.rand.nextFloat() * 0.5F + 0.5F);
+				else
+					this.worldObj.playSoundAtEntity(this, "random.eat", 0.5F, this.worldObj.rand.nextFloat() * 0.5F + 0.5F);
+				
+				this.worldObj.setEntityState(this, (byte)18);
+				this.skullrot = 0.15F;
+				
+				if(stack.stackSize <= 0)
+					player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 
-			return true;
+				return true;
+			}
+			else if(this.isOwner(player) && stack.getItem() == ConfigItems.itemGolemBell && !this.isDead)
+			{
+				if(Platform.isClient())
+				{
+					this.spawnExplosionParticle();
+					return true;
+				}
+				else if(Platform.isServer())
+				{
+					ItemStack drop = new ItemStack(ItemsMN.evilTrunkSpawner, 1, this.getTrunkType());
+					
+					if(player.isSneaking())
+						drop.setTagInfo("inventory", this.inventory.writeToNBT(new NBTTagList()));
+					else
+						this.inventory.dropAllItems();
+					
+					this.entityDropItem(drop, 0.5F);
+					this.worldObj.playSoundAtEntity(this, "thaumcraft:zap", 0.5F, 1.0F);
+					this.setDead();
+					return true;
+				}
+			}
 		}
 
-		if(Platform.isServer() && this.isOwner(player))
+		if(Platform.isServer() && this.isOwner(player) && !player.isSneaking())
 		{
 			player.openGui(MagiaNaturalis.instance, 3, this.worldObj, this.getEntityId(), 0, 0); 
 			return true;

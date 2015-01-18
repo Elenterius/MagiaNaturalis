@@ -60,8 +60,6 @@ public class ItemAlchemicalStone extends BaseItem implements IArchitect
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		super.addInformation(stack, player, list, par4);
-
 		if(stack.getItemDamage() == 0)
 			list.add(EnumChatFormatting.DARK_PURPLE + "Mold the Visual");
 		else
@@ -85,7 +83,11 @@ public class ItemAlchemicalStone extends BaseItem implements IArchitect
 		if(Platform.isClient()) return false;
 
 		if(stack.getItemDamage() == 0)
-			return BlockMorpher.setMorphOrRotation(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z), player.isSneaking());
+		{
+			boolean success = BlockMorpher.setMorphOrRotation(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z), player.isSneaking());
+			if(success) world.playSoundAtEntity(player, "thaumcraft:zap", 0.5F, 1.0F);
+			return success;
+		}
 
 		return false;			
 	}

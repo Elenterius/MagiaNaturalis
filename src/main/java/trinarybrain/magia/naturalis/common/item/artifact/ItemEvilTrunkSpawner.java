@@ -8,6 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import trinarybrain.magia.naturalis.common.core.Log;
@@ -43,6 +44,13 @@ public class ItemEvilTrunkSpawner extends BaseItem
 		list.add(new ItemStack(item, 1, 2));
 		list.add(new ItemStack(item, 1, 3));
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
+	{
+		if(stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory"))
+			list.add(Platform.translate("item.TrunkSpawner.text.1"));
+	}
 
 	public String getUnlocalizedName(ItemStack stack)
 	{
@@ -61,12 +69,16 @@ public class ItemEvilTrunkSpawner extends BaseItem
 		double d0 = 0.0D;
 		if(side == 1 && !block.isAir(world, x, y, z) && block.getRenderType() == 11) d0 = 0.5D;
 		EntityEvilTrunk entity = new EntityEvilTrunk(world, stack.getItemDamage());
-		((EntityEvilTrunk) entity).setOwnerUUID(player.getGameProfile().getId().toString());
-		
-		Log.logger.info("PlayerName: " + player.getCommandSenderName());
 
 		if(entity != null)
 		{
+			if(stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory"))
+			{
+				NBTTagList dataList = stack.stackTagCompound.getTagList("inventory", 10);
+		        entity.inventory.readFromNBT(dataList);
+			}
+				
+			entity.setOwnerUUID(player.getGameProfile().getId().toString());
 			entity.setLocationAndAngles(x, y + d0, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 			entity.rotationYawHead = entity.rotationYaw;
 			entity.renderYawOffset = entity.rotationYaw;
