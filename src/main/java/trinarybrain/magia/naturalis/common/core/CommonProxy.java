@@ -13,6 +13,7 @@ import trinarybrain.magia.naturalis.common.container.ContainerTranscribingTable;
 import trinarybrain.magia.naturalis.common.entity.EntitiesMN;
 import trinarybrain.magia.naturalis.common.entity.EntityEvilTrunk;
 import trinarybrain.magia.naturalis.common.item.ItemsMN;
+import trinarybrain.magia.naturalis.common.recipe.Recipes;
 import trinarybrain.magia.naturalis.common.research.Research;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
@@ -41,6 +42,7 @@ public class CommonProxy implements IGuiHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		EntitiesMN.addEntitySpawns();
+		Recipes.init();
 		Research.init();
 	}
 
