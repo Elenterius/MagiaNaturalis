@@ -27,14 +27,14 @@ public class CustomResearchItem extends ResearchItem
 		super(key, ProjectInfo.ID, new AspectList(), col, row, complex, icon);
 	}
 	
-	public CustomResearchItem(String key, String category, AspectList tags, int col, int row, int complex, ResourceLocation icon)
+	public CustomResearchItem(String key, AspectList tags, int col, int row, int complex, ResourceLocation icon)
 	{
-		super(key, category, tags, col, row, complex, icon);
+		super(key, ProjectInfo.ID, tags, col, row, complex, icon);
 	}
 
-	public CustomResearchItem(String key, String category, AspectList tags, int col, int row, int complex, ItemStack icon)
+	public CustomResearchItem(String key, AspectList tags, int col, int row, int complex, ItemStack icon)
 	{
-		super(key, category, tags, col, row, complex, icon);
+		super(key, ProjectInfo.ID, tags, col, row, complex, icon);
 	}
 
 	@SideOnly(Side.CLIENT)

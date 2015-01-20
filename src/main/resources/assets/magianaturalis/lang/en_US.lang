@@ -70,7 +70,7 @@ entity.taintBreeder.name=Taint Breeder
 entity.magia_naturalis.evilTrunk.name=Evil Trunk
 
 # RESEARCH
-tc.research_category.magia_naturalis=Magia Naturalis
+tc.research_category.MagiaNaturalis=Magia Naturalis
 
 mn.research_name.INTRO=Philosophy of the Natural
 mn.research_text.INTRO=One must know its Nature in order to comprehend ones Life
