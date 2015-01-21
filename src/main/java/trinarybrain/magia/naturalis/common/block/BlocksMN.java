@@ -1,6 +1,8 @@
 package trinarybrain.magia.naturalis.common.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import trinarybrain.magia.naturalis.common.block.item.BlockArcaneChestItem;
 import trinarybrain.magia.naturalis.common.block.item.BlockArcaneWoodItem;
 import trinarybrain.magia.naturalis.common.block.item.BlockBannerItem;
@@ -36,6 +38,16 @@ public class BlocksMN
 		
 		banner = new BlockBanner(); banner.setBlockName(ResourceUtil.PREFIX + NameUtil.BANNER);
 		GameRegistry.registerBlock(banner, BlockBannerItem.class, ResourceUtil.TAG_BLOCK + NameUtil.BANNER);
+		
+		registerOreDict();
+	}
+	
+	private static void registerOreDict()
+	{
+		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 0));
+		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 1));
+		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 2));
+		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 3));
 	}
 
 	private static void registerBlock(Block block, String str)
