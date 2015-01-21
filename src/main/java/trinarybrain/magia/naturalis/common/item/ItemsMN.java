@@ -19,7 +19,6 @@ public class ItemsMN
 {
 //	public static Item devTool;
 	public static Item researchLog;
-
 	public static Item alchemicalStone;
 	public static Item key;
 	public static Item gogglesDark;

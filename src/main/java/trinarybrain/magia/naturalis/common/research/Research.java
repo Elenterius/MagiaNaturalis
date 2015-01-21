@@ -1,6 +1,7 @@
 package trinarybrain.magia.naturalis.common.research;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -10,11 +11,11 @@ import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigItems;
-import thaumcraft.common.config.ConfigResearch;
 import trinarybrain.magia.naturalis.common.ProjectInfo;
 import trinarybrain.magia.naturalis.common.block.BlockArcaneChest;
 import trinarybrain.magia.naturalis.common.block.BlocksMN;
 import trinarybrain.magia.naturalis.common.item.ItemsMN;
+import trinarybrain.magia.naturalis.common.recipe.Recipes;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 
 public class Research
@@ -46,15 +47,15 @@ public class Research
 		ResearchItem research = null;
 
 		research = new CustomResearchItem("INTRO", 0, 0, 0, new ItemStack(ConfigItems.itemResource, 1, 15));
-		research.setPages(new ResearchPage[] { new ResearchPage("mn.research_page.INTRO.1"), new ResearchPage("mn.research_page.INTRO.2") });
+		research.setPages(new ResearchPage("mn.research_page.INTRO.1"), new ResearchPage("mn.research_page.INTRO.2"));
 		research.setSpecial().setRound().setAutoUnlock().registerResearchItem();
 		
 		research = new CustomResearchItem("RESEARCH_LOG", new AspectList().add(Aspect.MIND, 3).add(Aspect.VOID, 3).add(Aspect.ORDER, 3), -1, -2, 0, new ItemStack(ItemsMN.researchLog, 1, 0));
-		research.setPages(new ResearchPage[] { new ResearchPage("mn.research_page.RESEARCH_LOG.1") });
+		research.setPages(new ResearchPage("mn.research_page.RESEARCH_LOG.1"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("ResearchLog")));
 		research.setRound().setParentsHidden("DECONSTRUCTOR").registerResearchItem();
 
 		research = new CustomResearchItem("TRANSCRIBINGTABLE", new AspectList().add(Aspect.MIND, 3).add(Aspect.VOID, 3).add(Aspect.ORDER, 3), -2, -4, 0, new ItemStack(BlocksMN.transcribingTable, 1, 0));
-		research.setPages(new ResearchPage[] { new ResearchPage("mn.research_page.TRANSCRIBINGTABLE.1") });
+		research.setPages(new ResearchPage("mn.research_page.TRANSCRIBINGTABLE.1"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("TranscribingTable")));
 		research.setParents("RESEARCH_LOG").registerResearchItem();
 		
 		research = new CustomResearchItem("GOGGLES_DARK", new AspectList().add(Aspect.SENSES, 6).add(Aspect.AURA, 3).add(Aspect.MAGIC, 3).add(Aspect.DARKNESS, 4), -8, -1, 2, new ItemStack(ItemsMN.gogglesDark, 1, 0));
@@ -62,13 +63,13 @@ public class Research
 		research.setParents("SPECTACLES").registerResearchItem();
 		
 		research = new CustomResearchItem("SPECTACLES", new AspectList().add(Aspect.SENSES, 3).add(Aspect.AURA, 3).add(Aspect.MAGIC, 3), -6, 0, 1, new ItemStack(ItemsMN.spectacles, 1, 0));
-		research.setPages(new ResearchPage("mn.research_page.SPECTACLES.1"));
+		research.setPages(new ResearchPage("mn.research_page.SPECTACLES.1"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("Spectacles")));
 		research.setRound().setParents("MN_GOGGLES").registerResearchItem();
 		
 		research = new FakeResearchItem("MN_GOGGLES", ProjectInfo.ID, "GOGGLES", "ARTIFICE", -4, 1, ResearchCategories.getResearch("GOGGLES").icon_item).registerResearchItem();
 				
 		research = new CustomResearchItem("KEY_SPECIAL", new AspectList().add(Aspect.TOOL, 4).add(Aspect.MIND, 3).add(Aspect.MECHANISM, 3), -4, -3, 3, new ItemStack(ItemsMN.key, 1, 0));
-		research.setPages(new ResearchPage("mn.research_page.KEY_SPECIAL.1"), new ResearchPage("mn.research_page.KEY_SPECIAL.2"));
+		research.setPages(new ResearchPage("mn.research_page.KEY_SPECIAL.1"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("ThaumiumKey1")), new ResearchPage("mn.research_page.KEY_SPECIAL.2"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("ThaumiumKey2")));
 		research.setParents("MN_WARDEDARCANA").registerResearchItem();
 		
 		ItemStack chest = new ItemStack(BlocksMN.arcaneChest, 1, 1);
@@ -106,12 +107,14 @@ public class Research
 		research.setRound().setParentsHidden("JARLABEL").registerResearchItem();
 		
 		research = new CustomResearchItem("SICKLE_THAUM", new AspectList().add(Aspect.TOOL, 3).add(Aspect.CROP, 3).add(Aspect.HARVEST, 3), -4, 3, 1, new ItemStack(ItemsMN.sickleThaumium, 1, 0));
-		research.setPages(new ResearchPage("mn.research_page.SICKLE_THAUM.1"));
+		research.setPages(new ResearchPage("mn.research_page.SICKLE_THAUM.1"), new ResearchPage((IRecipe)Recipes.recipes.get("SickleThaumium")));
 		research.setRound().setParentsHidden("THAUMIUM").registerResearchItem();
 		
 		research = new CustomResearchItem("SICKLE_ABUNDANCE", new AspectList().add(Aspect.TOOL, 3).add(Aspect.CROP, 3).add(Aspect.HARVEST, 3).add(Aspect.GREED, 6), -5, 5, 2, new ItemStack(ItemsMN.sickleElemental, 1, 0));
 		research.setPages(new ResearchPage("mn.research_page.SICKLE_ABUNDANCE.1"));
 		research.setParents("SICKLE_THAUM").setParentsHidden("INFUSION").registerResearchItem();
+		
+		research = null;
 		
 //==============================================================================================================================
 		
