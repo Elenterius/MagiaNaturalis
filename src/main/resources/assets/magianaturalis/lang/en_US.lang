@@ -76,12 +76,16 @@ tc.research_category.MagiaNaturalis=Magia Naturalis
 
 mn.research_name.INTRO=Philosophy of the Natural
 mn.research_text.INTRO=One must know its Nature in order to comprehend ones Life
-mn.research_page.INTRO.1=The meaning of life has always been one of the greatest fascinations of brilliant minds, as they try to discover some purpose to the chaos they find themselves in.<BR>The question of whether life inherently has some predetermined purpose is much more interesting when several Entities claim to be the only true god to have created life.<BR>However, some thaumaturges explore other possibilities for the nature of existence, and their studies inevitably lead them to the grand discipline of Magia Naturalis.
-mn.research_page.INTRO.2=While this discipline is very controversial and deemed unorthodox in some subcategories, it implies the possibility of manipulating the nature of the living and the material they are composed of.<BR>Some naturalists, known for their insane experiments such as speaking with dead beings or mutating plants, claim to have discovered the systems that might have once led to our own existence.
+mn.research_page.INTRO.1=The meaning of life has always been one of the greatest fascinations of brilliant minds, as they try to discover the purpose of the Chaos they find themselves in.<BR>The question of whether life inherently has some predetermined purpose is much more interesting when several Cults claim to know what or who has created life.<BR>However, some thaumaturges explore other possibilities for the nature of existence, and their studies inevitably lead them towards the discipline of Magia Naturalis and deeper into the Darkness.
+mn.research_page.INTRO.2=While this discipline seems very mundane and deemed unorthodox in some subcategories, it implies the possibility of manipulating the nature of the living and the material they are composed of.<BR>Some naturalists, known for their insane experiments such as creating living beings or mutating blocks, claim to have discovered the systems that might have once led to our own existence.
+
+mn.research_name.CARPENTRY=Woods
+mn.research_text.CARPENTRY=Building Blocks
+mn.research_page.CARPENTRY.1=Tired of always using the same magical Wood you decided to simply carved on it. A couple of etchings here and there, a bit of gold, sticking together Slabs and the Result was better than anything you ever imagined.
 
 mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
 mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
-mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Table's counter top. It dips its head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowledge into physical form." - Unknown Poet<BR>Collects Research Points of Deconstruction Tables into the Research Log. Looks for up to 8 DT placed around the TT with a 1 block gap between any Table.
+mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Table's counter top. It dips its head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowledge into physical form." - Unknown Poet
 
 mn.research_name.RESEARCH_LOG=Research Log
 mn.research_text.RESEARCH_LOG=Collecting Knowledge for Anyone
@@ -135,7 +139,3 @@ mn.research_page.SICKLE_THAUM.1=Destroys Crops and Plants in a small area. Also 
 mn.research_name.SICKLE_ABUNDANCE=Sickle of Abundance
 mn.research_text.SICKLE_ABUNDANCE=Harvest Feast
 mn.research_page.SICKLE_ABUNDANCE.1=Harvest & Collect Vegetation in a large area. Also works on Sheeps. + More Drops.
-
-#mn.research_name.GEOCCULTISM=Geoccultism
-#mn.research_text.GEOCCULTISM=Transforming Regions through Obsidian Totems
-#mn.research_page.GEOCCULTISM.1=Observing and studying geographic regions and the ancient totems found in the center of unique regions you have discovered that regions can be transformed. The ancients seemed to use Obsidian Totems in combination with Aura Nodes in order to create artificial geo-poles that slowly converted the region around them to the desired result. You have discovered that using a nether star in a crystal cluster(similar to the TC3 one for merging nodes) on top of a obsidian totem and fueling it with certain types of metal you are able to transform the region to your will. Converting a 8x8 area costs about 9 ingots of a specific metal.

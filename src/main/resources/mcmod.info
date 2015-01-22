@@ -8,7 +8,7 @@
   "url": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2328507",
   "updateUrl": "",
   "authorList": ["§5TrinaryBrain"],
-  "credits": "Itaros & Abdo for their IRC talk",
+  "credits": "Itaros & Abdo, Thaumatarge",
   "logoFile": "/logo_mn.png",
   "screenshots": [],
   "requiredMods": ["Forge","Thaumcraft"],

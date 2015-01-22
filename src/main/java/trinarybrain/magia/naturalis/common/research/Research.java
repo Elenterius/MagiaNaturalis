@@ -52,7 +52,6 @@ public class Research
 
 		research = new CustomResearchItem("CARPENTRY", -2, 2, 0, new ItemStack(BlocksMN.arcaneWood, 1, 4));
 		research.setPages(new ResearchPage("mn.research_page.CARPENTRY.1"), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodOrn")), new ResearchPage((IRecipe)Recipes.recipes.get("PlankSilverwood")), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodGoldOrn1")), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodGoldOrn2")), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodGoldTrim"))).setRound().setAutoUnlock().registerResearchItem();
-
 		
 		research = new CustomResearchItem("RESEARCH_LOG", new AspectList().add(Aspect.MIND, 3).add(Aspect.VOID, 3).add(Aspect.ORDER, 3), -1, -2, 0, new ItemStack(ItemsMN.researchLog, 1, 0));
 		research.setPages(new ResearchPage("mn.research_page.RESEARCH_LOG.1"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("ResearchLog"))).setRound().setParentsHidden("DECONSTRUCTOR").registerResearchItem();
