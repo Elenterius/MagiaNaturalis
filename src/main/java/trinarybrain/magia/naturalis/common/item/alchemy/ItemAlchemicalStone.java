@@ -77,6 +77,28 @@ public class ItemAlchemicalStone extends BaseItem implements IArchitect
 	{
 		return new StringBuilder().append(super.getUnlocalizedName()).append(".").append(stack.getItemDamage()).toString();
 	}
+	
+	public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack)
+	{
+		return false;
+	}
+	
+	public boolean isDamageable()
+	{
+		return false;
+	}
+	
+	public void setDamage(ItemStack stack, int damage) {}
+	
+	public boolean hasContainerItem()
+	{
+		return true;
+	}
+	
+	public ItemStack getContainerItem(ItemStack stack)
+	{
+		return stack;
+	}
 
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
 	{

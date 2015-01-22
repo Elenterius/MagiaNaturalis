@@ -27,7 +27,6 @@ public class BlockBannerItem extends ItemBlock
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool)
 	{
-		super.addInformation(stack, player, list, bool);
 		list.add(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(Platform.translate("flavor.magianaturalis:banner")).toString());
 	}
 

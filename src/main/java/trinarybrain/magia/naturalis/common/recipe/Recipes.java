@@ -1,5 +1,6 @@
 package trinarybrain.magia.naturalis.common.recipe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.enchantment.Enchantment;
@@ -9,7 +10,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -23,41 +24,54 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class Recipes
 {
 	public static HashMap<String, Object> recipes = new HashMap();
-	
+
 	public static void init()
 	{
 		initDefault();
 		initArcane();
 		initInfusion();
 	}
-	
-	static IRecipe addShapelessOreDictRecipe(ItemStack output, Object... input)
+
+	static IRecipe addShapelessRecipe(ItemStack stackResult, ItemStack... ingredients)
 	{
-	    IRecipe recipe = new ShapelessOreRecipe(output, input);
-	    CraftingManager.getInstance().getRecipeList().add(recipe);
-	    return recipe;
-	  }
-	
+		ArrayList list = new ArrayList();
+		for(ItemStack stack : ingredients)
+		{
+			list.add(stack);
+		}
+		IRecipe recipe = new ShapelessRecipes(stackResult, list);
+		CraftingManager.getInstance().getRecipeList().add(recipe);
+		return recipe;
+	}
+
 	static void initDefault()
 	{
 		recipes.put("SickleThaumium", GameRegistry.addShapedRecipe(new ItemStack(ItemsMN.sickleThaumium, 1), " I ", "  I", "SI ", 'I', new ItemStack(ConfigItems.itemResource, 1, 2), 'S', Items.stick));
-		
+
 		recipes.put("GreatwoodOrn", GameRegistry.addShapedRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 1), "W", "W", 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 0)));
 		recipes.put("GreatwoodSlab", new IRecipe[] {GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 0), "WWW", 'W', new ItemStack(BlocksMN.arcaneWood, 1, 0)), GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 0), "WWW", 'W', new ItemStack(BlocksMN.arcaneWood, 1, 1))});
 		recipes.put("SilverwoodSlab", new IRecipe[] {GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 1), "WWW", 'W', new ItemStack(BlocksMN.arcaneWood, 1, 2)), GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 1), "WWW", 'W', new ItemStack(BlocksMN.arcaneWood, 1, 3))});
 		recipes.put("PlankSilverwood", GameRegistry.addShapedRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 2), "W", "W", Character.valueOf('W'), new ItemStack(ConfigBlocks.blockSlabWood, 6, 1)));
-	
+		recipes.put("GreatwoodGoldTrim", GameRegistry.addShapedRecipe(new ItemStack(BlocksMN.arcaneWood, 3, 6), "WWW", "NNN", "WWW", 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 0)));
+		recipes.put("GreatwoodGoldOrn1", GameRegistry.addShapedRecipe(new ItemStack(BlocksMN.arcaneWood, 4, 4), "NWN", "WNW", "NWN", 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)));
+		recipes.put("GreatwoodGoldOrn2", GameRegistry.addShapedRecipe(new ItemStack(BlocksMN.arcaneWood, 4, 5), "NWN", "WIW", "NWN", 'I', Items.gold_ingot, 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)));
+		
 		recipes.put("WoodConversion", new IRecipe[] {
-				addShapelessOreDictRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 0), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)),
-				addShapelessOreDictRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 1), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)),
-				addShapelessOreDictRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 2), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 7)),
-				addShapelessOreDictRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 3), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 7)),
-				addShapelessOreDictRecipe(new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 0)),
-				addShapelessOreDictRecipe(new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 1)),
-				addShapelessOreDictRecipe(new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 7), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 2)),
-				addShapelessOreDictRecipe(new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 7), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 3))
+				addShapelessRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 0), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)),
+				addShapelessRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 1), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 0)),
+				addShapelessRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 2), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 7)),
+				addShapelessRecipe(new ItemStack(BlocksMN.arcaneWood, 1, 3), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 2)),
+				addShapelessRecipe(new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 1)),
+				addShapelessRecipe(new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 7), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(BlocksMN.arcaneWood, 1, 3))
 		});
 
+		IRecipe[] recipe = new IRecipe[32];
+		for(int meta = 0; meta < 16; meta++)
+		{
+			recipe[meta] = addShapelessRecipe(new ItemStack(Blocks.stained_hardened_clay, 1, meta), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(Blocks.stained_hardened_clay, 1, 15 - meta));
+			recipe[31 - meta] = addShapelessRecipe(new ItemStack(Blocks.wool, 1, meta), new ItemStack(ItemsMN.alchemicalStone, 1, 0), new ItemStack(Blocks.wool, 1, 15 - meta));
+		}
+		recipes.put("ColorConversion", recipe);
 	}
 
 	static void initArcane()
@@ -109,7 +123,7 @@ public class Recipes
 				'D',  new ItemStack(ConfigBlocks.blockTable, 1, 14),
 				'B', new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6)};
 		recipes.put("TranscribingTable", ThaumcraftApi.addArcaneCraftingRecipe("TRANSCRIBINGTABLE", new ItemStack(BlocksMN.transcribingTable), aspects, recipe));
-		
+
 		aspects = new AspectList().add(Aspect.WATER, 20).add(Aspect.ORDER, 15).add(Aspect.EARTH, 15).add(Aspect.FIRE, 10);
 		recipe = new Object[] {"IBI", "WCW", "IWI",
 				'I', new ItemStack(ConfigItems.itemResource, 1, 2),
@@ -157,7 +171,7 @@ public class Recipes
 				new ItemStack(ConfigItems.itemResource, 1, 2),
 				stackBook};
 		recipes.put("SickleElemental", ThaumcraftApi.addInfusionCraftingRecipe("SICKLE_ABUNDANCE", new ItemStack(ItemsMN.sickleElemental), 1, aspects, new ItemStack(ItemsMN.sickleThaumium), recipe));
-		
+
 		aspects = new AspectList().add(Aspect.CRAFT, 32).add(Aspect.TOOL, 16).add(Aspect.EXCHANGE, 8).add(Aspect.MECHANISM, 3);
 		recipe = new ItemStack[] {
 				new ItemStack(ConfigItems.itemShard, 1, 4),
@@ -170,7 +184,7 @@ public class Recipes
 				new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 7)
 		};
 		recipes.put("FocusBuild", ThaumcraftApi.addInfusionCraftingRecipe("FOCUS_BUILD", new ItemStack(ItemsMN.focusBuild), 5, aspects, new ItemStack(ConfigItems.itemFocusTrade), recipe));
-		
+
 		aspects = new AspectList().add(Aspect.ELDRITCH, 8).add(Aspect.VOID, 8).add(Aspect.TRAVEL, 8).add(Aspect.EXCHANGE, 3);
 		recipe = new ItemStack[] {
 				new ItemStack(Items.ender_pearl),
@@ -178,7 +192,7 @@ public class Recipes
 				new ItemStack(Items.ender_pearl)
 		};
 		recipes.put("EnderPouch", ThaumcraftApi.addInfusionCraftingRecipe("ENDER_POUCH", new ItemStack(ItemsMN.focusPouchEnder), 1, aspects, new ItemStack(ConfigItems.itemFocusPouch), recipe));
-		
+
 		aspects = new AspectList().add(Aspect.ELDRITCH, 8).add(Aspect.VOID, 8).add(Aspect.ARMOR, 8).add(Aspect.EXCHANGE, 8);
 		recipe = new ItemStack[] {
 				new ItemStack(Items.gold_ingot),
@@ -187,7 +201,7 @@ public class Recipes
 				new ItemStack(Items.ender_pearl),
 		};
 		recipes.put("JarPrison", ThaumcraftApi.addInfusionCraftingRecipe("JAR_PRISON", new ItemStack(BlocksMN.jarPrison), 2, aspects, new ItemStack(ConfigBlocks.blockJar), recipe));
-		
+
 		aspects = new AspectList().add(Aspect.EXCHANGE, 32);
 		recipe = new ItemStack[] {
 				new ItemStack(Items.emerald),
@@ -195,7 +209,7 @@ public class Recipes
 				new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 7)
 		};
 		recipes.put("StonePheno", ThaumcraftApi.addInfusionCraftingRecipe("STONE_PHENO", new ItemStack(ItemsMN.alchemicalStone, 1, 0), 2, aspects, new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), recipe));
-		
+
 		aspects = new AspectList().add(Aspect.EXCHANGE, 16).add(Aspect.WATER, 16).add(Aspect.MAGIC, 8).add(Aspect.FLESH, 6);
 		recipe = new ItemStack[] {
 				new ItemStack(Items.glowstone_dust),
@@ -204,5 +218,49 @@ public class Recipes
 				new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6)
 		};
 		recipes.put("StoneQuick", ThaumcraftApi.addInfusionCraftingRecipe("STONE_QUICKSILVER", new ItemStack(ItemsMN.alchemicalStone, 1, 1), 2, aspects, new ItemStack(ConfigItems.itemResource, 1, 3), recipe));
+
+		aspects = new AspectList().add(Aspect.MOTION, 16).add(Aspect.SOUL, 16).add(Aspect.ENTROPY, 16).add(Aspect.FLESH, 6);
+		recipe = new ItemStack[] {
+				new ItemStack(Items.gold_ingot),
+				new ItemStack(ConfigItems.itemZombieBrain),
+				new ItemStack(ConfigItems.itemShard, 1, 6),
+				new ItemStack(Items.iron_ingot),
+				new ItemStack(Items.spider_eye),
+				new ItemStack(Items.ender_eye)
+		};
+		recipes.put("CorruptedTrunk", ThaumcraftApi.addInfusionCraftingRecipe("EVIL_TRUNK", new ItemStack(ItemsMN.evilTrunkSpawner, 1, 0), 2, aspects, new ItemStack(ConfigItems.itemTrunkSpawner), recipe));
+
+		aspects = new AspectList().add(Aspect.TAINT, 16).add(Aspect.SOUL, 16).add(Aspect.ENTROPY, 16).add(Aspect.FLESH, 8);
+		recipe = new ItemStack[] {
+				new ItemStack(ConfigItems.itemResource, 1, 12),
+				new ItemStack(Items.gold_ingot),
+				new ItemStack(ConfigItems.itemResource, 1, 11),
+				new ItemStack(ConfigItems.itemResource, 1, 12),
+				new ItemStack(Items.ender_eye),
+				new ItemStack(ConfigItems.itemResource, 1, 11)
+		};
+		recipes.put("TaintedTrunk", ThaumcraftApi.addInfusionCraftingRecipe("EVIL_TRUNK", new ItemStack(ItemsMN.evilTrunkSpawner, 1, 3), 6, aspects, new ItemStack(ItemsMN.evilTrunkSpawner, 1, 0), recipe));
+
+		aspects = new AspectList().add(Aspect.FIRE, 16).add(Aspect.SOUL, 16).add(Aspect.ENTROPY, 16).add(Aspect.FLESH, 8);
+		recipe = new ItemStack[] {
+				new ItemStack(Items.blaze_rod),
+				new ItemStack(Items.gold_ingot),
+				new ItemStack(Blocks.nether_brick),
+				new ItemStack(Items.blaze_rod),
+				new ItemStack(Blocks.nether_brick),
+				new ItemStack(Blocks.quartz_block)
+		};
+		recipes.put("DemonicTrunk", ThaumcraftApi.addInfusionCraftingRecipe("EVIL_TRUNK", new ItemStack(ItemsMN.evilTrunkSpawner, 1, 2), 6, aspects, new ItemStack(ItemsMN.evilTrunkSpawner, 1, 0), recipe));
+
+		aspects = new AspectList().add(Aspect.MIND, 16).add(Aspect.SOUL, 16).add(Aspect.ENTROPY, 16).add(Aspect.FLESH, 8);
+		recipe = new ItemStack[] {
+				new ItemStack(ConfigItems.itemZombieBrain),
+				new ItemStack(Items.gold_ingot),
+				new ItemStack(ConfigBlocks.blockJar, 1, 1),
+				new ItemStack(ConfigItems.itemAmuletVis),
+				new ItemStack(ConfigItems.itemZombieBrain),
+				new ItemStack(Items.spider_eye)
+		};
+		recipes.put("SinisterTrunk", ThaumcraftApi.addInfusionCraftingRecipe("EVIL_TRUNK", new ItemStack(ItemsMN.evilTrunkSpawner, 1, 1), 6, aspects, new ItemStack(ItemsMN.evilTrunkSpawner, 1, 0), recipe));
 	}
 }

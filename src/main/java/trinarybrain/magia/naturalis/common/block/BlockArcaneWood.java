@@ -21,7 +21,7 @@ public class BlockArcaneWood extends Block
 	// FANCY GREATWOOD & SILVERWOOD SIGN?
 	
 	@SideOnly(Side.CLIENT)
-	private IIcon[] icon = new IIcon[4];
+	private IIcon[] icon = new IIcon[7];
 
 	public BlockArcaneWood()
 	{
@@ -39,12 +39,15 @@ public class BlockArcaneWood extends Block
 		this.icon[1] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_orn");
 		this.icon[2] = ir.registerIcon(ResourceUtil.PREFIX + "silverwood_planks2");
 		this.icon[3] = ir.registerIcon(ResourceUtil.PREFIX + "silverwood_planks");
+		this.icon[4] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_gold_orn");
+		this.icon[5] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_gold_orn2");
+		this.icon[6] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_gold_trim");
 	}
 
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
-		if(meta < 0 || meta > 3)
+		if(meta < 0 || meta > 6)
 			meta = 0;
 		
 		return icon[meta];
@@ -57,6 +60,9 @@ public class BlockArcaneWood extends Block
 		list.add(new ItemStack(item, 1, 1));
 		list.add(new ItemStack(item, 1, 2));
 		list.add(new ItemStack(item, 1, 3));
+		list.add(new ItemStack(item, 1, 4));
+		list.add(new ItemStack(item, 1, 5));
+		list.add(new ItemStack(item, 1, 6));
 	}
 
 	public int damageDropped(int meta)
@@ -68,7 +74,7 @@ public class BlockArcaneWood extends Block
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
 	{
 		int meta = stack.getItemDamage();
-		if(meta < 0 || meta > 3)
+		if(meta < 0 || meta > 6)
 		{
 			meta = 0;
 		}

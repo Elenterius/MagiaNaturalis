@@ -31,9 +31,6 @@ public class BlockArcaneChestItem  extends ItemBlock
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		super.addInformation(stack, player, list, par4);
-		list.add(EnumChatFormatting.DARK_PURPLE + Platform.translate("flavor.magianaturalis:chest"));
-
 		NBTTagCompound data = NBTUtil.openNbtData(stack);
 		if(data != null)
 		{

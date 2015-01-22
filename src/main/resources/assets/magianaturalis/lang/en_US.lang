@@ -27,7 +27,6 @@ chat.magianaturalis:chest.resist=The Chest resists Your Attempt of Miniaturizati
 # Flavor Text & Tool Hint & Misc 
 flavor.magianaturalis:key.0=One to Open Them All...
 flavor.magianaturalis:key.1=One to Grant Access for Others...
-flavor.magianaturalis:chest=Obstinate and discriminating, protects its treasure.
 flavor.magianaturalis:banner=A Banner to mark our Presence.
 hint.magianaturalis:ctrl=<Press Ctrl>
 hint.magianaturalis:chest.items=Contains Treasure
@@ -63,6 +62,9 @@ tile.magianaturalis:arcaneWood.gwPlanks.name=Greatwood Planks
 tile.magianaturalis:arcaneWood.gwOrn.name=Greatwood Ornament
 tile.magianaturalis:arcaneWood.swPlanks.0.name=Silverwood Planks
 tile.magianaturalis:arcaneWood.swPlanks.1.name=Silverwood Planks
+tile.magianaturalis:arcaneWood.gwGoldOrn.0.name=Greatwood Gold Ornament
+tile.magianaturalis:arcaneWood.gwGoldOrn.1.name=Greatwood Gold Ornament
+tile.magianaturalis:arcaneWood.gwGoldTrim.1.name=Greatwood Gold Trim
 tile.magianaturalis:banner.name=Magia Naturalis Banner
 
 # ENTITIY NAMES
@@ -86,16 +88,16 @@ mn.research_text.RESEARCH_LOG=Collecting Knowledge for Anyone
 mn.research_page.RESEARCH_LOG.1=Allows you to collect the Research Points of Deconstruction Tables. Anyone can read the Log in order to gain the RP. 
 
 mn.research_name.KEY_SPECIAL=Thaumium Key
-mn.research_text.KEY_SPECIAL=One to Rule them All
+mn.research_text.KEY_SPECIAL=One to Rule them All...
 mn.research_page.KEY_SPECIAL.1=This Key grants Access for the Bound Player to any Tile owned by the Key Forger.
 mn.research_page.KEY_SPECIAL.2=This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger.
 
 mn.research_name.ARCANE_CHEST=Arcane Chest
-mn.research_text.ARCANE_CHEST=Personal Storage
+mn.research_text.ARCANE_CHEST=Obstinate and discriminating, protects its treasure
 mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcane Chest holds and protects its content against almost anything. Hit it with a wand to pick it up with its contents intact.
 
 mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
-mn.research_text.GOGGLES_DARK=Glowing Red Eyes
+mn.research_text.GOGGLES_DARK=I see Your glowing Red Eyes
 mn.research_page.GOGGLES_DARK.1=Crafted from Spider Eyes and Dark Crystals, these Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings.
 
 mn.research_name.SPECTACLES=Spectacles

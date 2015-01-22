@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,6 +81,11 @@ public class ItemKey extends BaseItem
 	{
 		list.add(new ItemStack(this, 1, 0)); //This Key grants Access for the Bound Player to any Tile owned by the Key Forger
 		list.add(new ItemStack(this, 1, 1)); //This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger
+	}
+	
+	public EnumRarity getRarity(ItemStack itemstack)
+	{
+		return EnumRarity.uncommon;
 	}
 
 	@Override

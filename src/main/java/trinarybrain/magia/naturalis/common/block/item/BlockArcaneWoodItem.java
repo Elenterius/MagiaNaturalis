@@ -14,7 +14,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class BlockArcaneWoodItem extends ItemBlock
 {
-	final String unlocal[] = { "gwPlanks", "gwOrn", "swPlanks.0", "swPlanks.1" };
+	final String unlocal[] = { "gwPlanks", "gwOrn", "swPlanks.0", "swPlanks.1", "gwGoldOrn.0", "gwGoldOrn.1", "gwGoldTrim" };
 
 	public BlockArcaneWoodItem(Block block)
 	{
