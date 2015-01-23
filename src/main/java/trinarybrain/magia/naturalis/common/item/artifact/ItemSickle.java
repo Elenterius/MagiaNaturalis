@@ -114,7 +114,8 @@ public class ItemSickle extends BaseItem
 	{		
 		if(!this.isEffectiveVsBlock(block))
 		{
-			return super.onBlockDestroyed(stack, world, block, x, y, z, entity);
+			stack.damageItem(1, entity);
+			return false;
 		}
 		else if(entity.isSneaking())
 		{
@@ -134,15 +135,23 @@ public class ItemSickle extends BaseItem
 				boolean success = false;
 				for(WorldCoord coord : blocks)
 				{
-					if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
+					if(stack.getItemDamage() <= (stack.getMaxDamage() - this.abundanceLevel))
 					{
-						Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
-						if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
+						if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
 						{
-							success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
-							if(success) stack.damageItem(1 + this.abundanceLevel, entity);
+							Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
+							if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
+							{
+								success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
+								if(success) stack.damageItem(1 + this.abundanceLevel, entity);
+							}
 						}
 					}
+					else
+					{
+						break;
+					}
+					
 				}
 				return success;
 			}

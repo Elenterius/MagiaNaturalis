@@ -35,7 +35,7 @@ public class Research
 		ThaumcraftApi.registerObjectTag(new ItemStack(ItemsMN.gogglesDark), new AspectList().add(Aspect.ARMOR, 4).add(Aspect.SENSES, 7).add(Aspect.DARKNESS, 5).add(Aspect.ENTROPY, 4).add(Aspect.BEAST, 3));
 		ThaumcraftApi.registerObjectTag(new ItemStack(ItemsMN.researchLog), new AspectList().add(Aspect.MIND, 8).add(Aspect.VOID, 6).add(Aspect.MAGIC, 3).add(Aspect.CLOTH, 3));
 		ThaumcraftApi.registerObjectTag(new ItemStack(ItemsMN.spectacles), new AspectList().add(Aspect.ARMOR, 4).add(Aspect.SENSES, 5).add(Aspect.CLOTH, 3).add(Aspect.GREED, 3));
-		//TODO: ADD the Rest
+		//TODO: ADD missing Aspect Tags
 	}
 
 	private static void initCategory()
@@ -48,7 +48,7 @@ public class Research
 		ResearchItem research = null;
 
 		research = new CustomResearchItem("INTRO", 0, 0, 0, new ItemStack(ConfigItems.itemResource, 1, 15));
-		research.setPages(new ResearchPage("mn.research_page.INTRO.1"), new ResearchPage("mn.research_page.INTRO.2")).setSpecial().setRound().setAutoUnlock().registerResearchItem();
+		research.setPages(new ResearchPage("mn.research_page.INTRO.1")).setSpecial().setRound().setAutoUnlock().registerResearchItem();
 
 		research = new CustomResearchItem("CARPENTRY", -2, 2, 0, new ItemStack(BlocksMN.arcaneWood, 1, 4));
 		research.setPages(new ResearchPage("mn.research_page.CARPENTRY.1"), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodOrn")), new ResearchPage((IRecipe)Recipes.recipes.get("PlankSilverwood")), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodGoldOrn1")), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodGoldOrn2")), new ResearchPage((IRecipe)Recipes.recipes.get("GreatwoodGoldTrim"))).setRound().setAutoUnlock().registerResearchItem();

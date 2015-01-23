@@ -97,7 +97,7 @@ mn.research_page.KEY_SPECIAL.2=This Key adds a list of players to the access lis
 
 mn.research_name.ARCANE_CHEST=Arcane Chest
 mn.research_text.ARCANE_CHEST=Obstinate and discriminating, protects its treasure
-mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcane Chest holds and protects its content against almost anything. On the other Hand the Chest has a Brain which allows to add People to a Access List. Carefully use your Wand to shrink the Chest in order to retain all stored Items and its Access List.
+mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcane Chest holds and protects its content against almost anything. On the other Hand the Chest has a Brain which allows to add People to a Access List.<BR>Carefully use your Wand to shrink the Chest in order to retain all stored Items and its Access List.
 
 mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
 mn.research_text.GOGGLES_DARK=I see Your glowing Red Eyes
@@ -113,11 +113,11 @@ mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already posses
 
 mn.research_name.JAR_PRISON=Entity in a Jar
 mn.research_text.JAR_PRISON=Minimized Pets
-mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.<BR>Carefully tap the Jar to break the Warded Glass and release the trapped Being.
+mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.<BR>Carefully tap the Jar with a Wand to break the Warded Glass and release the trapped Being.
 
 mn.research_name.STONE_PHENO=Phenomorphous Stone
 mn.research_text.STONE_PHENO=Morphing the Visual
-mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks.
+mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks. All phenomorphable block are highlighted when looking at them simply click the block to swap it appearance. Sneak to rotate Logs & Stairs.
 
 mn.research_name.STONE_QUICKSILVER=Quicksilver Stone
 mn.research_text.STONE_QUICKSILVER=Quickening Potion Effects
@@ -129,7 +129,7 @@ mn.research_page.EVIL_TRUNK.1=The more warped the Mind is, the more obscure Thou
 
 mn.research_name.ENDER_POUCH=Enderpouch
 mn.research_text.ENDER_POUCH=Extradimensional Storage
-mn.research_page.ENDER_POUCH.1=This Infused Pouch allows the possessor to access his private Storage anywhere he desires. Any Foci stored inside is fully accessible.
+mn.research_page.ENDER_POUCH.1=This Infused Pouch allows the possessor to access his private Storage anywhere he desires. Any Foci stored inside is fully accessible with a Wand.
 
 mn.research_name.SICKLE_THAUM=Thaumium Sickle
 mn.research_text.SICKLE_THAUM=Reaping Crops
@@ -137,4 +137,4 @@ mn.research_page.SICKLE_THAUM.1=Destroys Crops and Plants in a small radius of a
 
 mn.research_name.SICKLE_ABUNDANCE=Sickle of Abundance
 mn.research_text.SICKLE_ABUNDANCE=Harvest Feast
-mn.research_page.SICKLE_ABUNDANCE.1=Evolution of the Thaumium Sickle allowing the Possessor to harvest plants in an even larger radius with a inherent abundance comparable to a fortune level of 2 which includes increased drop chances for Greatwood and Silverwood Saplings.
+mn.research_page.SICKLE_ABUNDANCE.1=Evolution of the Thaumium Sickle allowing the Possessor to harvest plants in an even larger radius with a inherent abundance comparable to a fortune level of 2 which includes increased drop chances for Greatwood and Silverwood Saplings. All the harvested Loot floats towards the player.
