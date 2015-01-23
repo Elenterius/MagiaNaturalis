@@ -76,12 +76,11 @@ tc.research_category.MagiaNaturalis=Magia Naturalis
 
 mn.research_name.INTRO=Philosophy of the Natural
 mn.research_text.INTRO=One must know its Nature in order to comprehend ones Life
-mn.research_page.INTRO.1=The meaning of life has always been one of the greatest fascinations of brilliant minds, as they try to discover the purpose of the Chaos they find themselves in.<BR>The question of whether life inherently has some predetermined purpose is much more interesting when several Cults claim to know what or who has created life.<BR>However, some thaumaturges explore other possibilities for the nature of existence, and their studies inevitably lead them towards the discipline of Magia Naturalis and deeper into the Darkness.
-mn.research_page.INTRO.2=While this discipline seems very mundane and deemed unorthodox in some subcategories, it implies the possibility of manipulating the nature of the living and the material they are composed of.<BR>Some naturalists, known for their insane experiments such as creating living beings or mutating blocks, claim to have discovered the systems that might have once led to our own existence.
+mn.research_page.INTRO.1=All Thaumaturges  can manipulate the Essence of Magic we now call Vis, but few like yourself have managed to look past Corruption and Darkness. Your deep connection with natural Flux and its Primal Occurrences have lead you to understand the real Beauty of this material World.<BR>Fellow Naturalists claim to be able to manipulate the Fabrics of Life itself, Nature and Creatures. They believe to have discovered our nature of existence....
 
 mn.research_name.CARPENTRY=Woods
 mn.research_text.CARPENTRY=Building Blocks
-mn.research_page.CARPENTRY.1=Tired of always using the same magical Wood you decided to simply carved on it. A couple of etchings here and there, a bit of gold, sticking together Slabs and the Result was better than anything you ever imagined.
+mn.research_page.CARPENTRY.1=Tired of always using the same magical Wood for building you decided to simply carve on it. A couple of etchings here, a bit of gold there, sticking together Slabs and the Result was better than anything you ever imagined.
 
 mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
 mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
