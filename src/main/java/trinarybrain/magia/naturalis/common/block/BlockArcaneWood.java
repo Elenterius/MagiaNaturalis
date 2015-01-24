@@ -19,8 +19,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockArcaneWood extends Block
 {
 	// FANCY GREATWOOD & SILVERWOOD SIGN?
-	
-	@SideOnly(Side.CLIENT)
 	private IIcon[] icon = new IIcon[7];
 
 	public BlockArcaneWood()
