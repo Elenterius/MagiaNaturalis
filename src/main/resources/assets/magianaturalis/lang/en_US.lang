@@ -64,7 +64,7 @@ tile.magianaturalis:arcaneWood.swPlanks.0.name=Silverwood Planks
 tile.magianaturalis:arcaneWood.swPlanks.1.name=Silverwood Planks
 tile.magianaturalis:arcaneWood.gwGoldOrn.0.name=Greatwood Gold Ornament
 tile.magianaturalis:arcaneWood.gwGoldOrn.1.name=Greatwood Gold Ornament
-tile.magianaturalis:arcaneWood.gwGoldTrim.1.name=Greatwood Gold Trim
+tile.magianaturalis:arcaneWood.gwGoldTrim.name=Greatwood Gold Trim
 tile.magianaturalis:banner.name=Magia Naturalis Banner
 
 # ENTITIY NAMES
