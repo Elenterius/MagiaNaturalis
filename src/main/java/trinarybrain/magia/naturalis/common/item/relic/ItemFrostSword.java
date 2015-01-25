@@ -10,9 +10,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
 
 public class ItemFrostSword extends ItemVisSword
@@ -38,7 +41,8 @@ public class ItemFrostSword extends ItemVisSword
 		if(Platform.isServer())
 			if(this.itemRand.nextInt(4) == 0) target.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 0));
 
-		return super.hitEntity(stack, target, attacker);
+		this.damageItem(stack, 1, attacker);
+		return true;
 	}
 
 	public void onUpdate(ItemStack stack, World world, Entity entity, int tick, boolean flag)
@@ -49,47 +53,57 @@ public class ItemFrostSword extends ItemVisSword
 			PotionEffect haste = player.getActivePotionEffect(Potion.digSpeed);
 			float check = haste == null ? 0.16666667F : haste.getAmplifier() == 1 ? 0.5F : 0.4F;
 
-			if(player.getCurrentEquippedItem() == stack && !player.isSneaking() && player.swingProgress == check /* && Platform.isServer() && world.rand.nextInt(2) == 0*/)
+			if(player.getCurrentEquippedItem() == stack && !player.isSneaking() && player.swingProgress == check)
 			{
-//				this.doIceBurst(player, world);
-				stack.damageItem(2, player);
-//				world.playSoundAtEntity(player, Blocks.ice.stepSound.getBreakSound(), 0.3F, 1.2F / (world.rand.nextFloat() * 0.2F + 0.9F));
+				if(Platform.isServer())
+				{
+					this.doIceBurst(player, world);
+					this.damageItem(stack, 2, player);
+					world.playSoundAtEntity(player, Blocks.ice.stepSound.getBreakSound(), 0.3F, 1.2F / (world.rand.nextFloat() * 0.2F + 0.9F));
+				}
+				if(Platform.isClient() && stack.getItemDamage() >= this.getMaxDamage()) player.renderBrokenItemStack(stack);
 			}
 		}
 	}
 
-	public void doIceBurst(EntityLivingBase entity, World world)
+	public void damageItem(ItemStack stack, int amount, EntityLivingBase entity)
 	{
-		int frosty = 2;
-		int type = 2;
-		int potency = 0;
-		EntityFrostShard shard = null;
-
-		if(type == 2) //scatter-shot
+		if(!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).capabilities.isCreativeMode)
 		{
-			for (int a = 0; a < 5 + potency * 2; a++)
+			if(stack.isItemStackDamageable())
 			{
-				shard = new EntityFrostShard(world, entity, 8.0F);
-				shard.setDamage(1.0F);
-				shard.fragile = true;
-				shard.setFrosty(frosty);
-				world.spawnEntityInWorld(shard);
+				if(stack.attemptDamageItem(amount, entity.getRNG()))
+				{
+					entity.renderBrokenItemStack(stack);
+					--stack.stackSize;
+
+					if(entity instanceof EntityPlayer)
+					{
+						EntityPlayer player = (EntityPlayer) entity;
+						player.addStat(StatList.objectBreakStats[Item.getIdFromItem(stack.getItem())], 1);
+
+						if(stack.stackSize == 0)
+						{
+							player.destroyCurrentEquippedItem(); //Use ItemDestroyEvent!!
+						}
+					}
+
+					if(stack.stackSize < 0) stack.stackSize = 0;
+					this.setDamage(stack, 0);
+				}
 			}
 		}
-		else if (type == 1) //ice-boulder
+    }
+
+	public void doIceBurst(EntityLivingBase entity, World world)
+	{
+		for (int a = 0; a < 3; a++)
 		{
-			shard = new EntityFrostShard(world, entity, 1.0F);
-			shard.setDamage(4 + potency * 2);
-			shard.bounce = 0.8D;
-			shard.bounceLimit = 6;
-			shard.setFrosty(frosty);
-			world.spawnEntityInWorld(shard);
-		}
-		else
-		{
-			shard = new EntityFrostShard(world, entity, 1.0F);
-			shard.setDamage((float)(3.0D + potency * 1.5D));
-			shard.setFrosty(frosty);
+			EntityFrostShard shard = new EntityFrostShard(world, entity, 8.0F);
+			shard.setDamage(1.0F);
+			shard.bounceLimit = 1;
+			shard.fragile = true;
+			shard.setFrosty(2);
 			world.spawnEntityInWorld(shard);
 		}
 	}
