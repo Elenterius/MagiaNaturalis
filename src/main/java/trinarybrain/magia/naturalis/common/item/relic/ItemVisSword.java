@@ -10,8 +10,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.EnumChatFormatting;
+import thaumcraft.api.IRepairable;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
+import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.NBTUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -19,14 +23,14 @@ import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemVisSword extends BaseItem
+public class ItemVisSword extends ItemSword
 {
-	protected int maxVisSize = 64;
+	protected int maxVisSize = 25;
 
 	public ItemVisSword()
 	{
-		super();
-		this.maxStackSize = 1;
+		super(ThaumcraftApi.toolMatElemental);
+		this.setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@Override @SideOnly(Side.CLIENT)
@@ -83,12 +87,5 @@ public class ItemVisSword extends BaseItem
 			return true;
 		}
 		return false;
-	}
-
-	public Multimap getItemAttributeModifiers()
-	{
-		Multimap multimap = super.getItemAttributeModifiers();
-		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", 8.0D, 0));
-		return multimap;
 	}
 }
