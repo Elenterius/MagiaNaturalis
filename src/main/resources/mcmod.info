@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authorList": ["§5TrinaryBrain"],
   "credits": "Itaros & Abdo, Thaumatarge",
-  "logoFile": "logo_mn.png",
+  "logoFile": "/logo_mn.png",
   "screenshots": [],
   "requiredMods": ["Forge","Thaumcraft"],
   "dependencies": ["Forge","Thaumcraft"]
