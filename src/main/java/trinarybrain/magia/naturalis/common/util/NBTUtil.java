@@ -44,13 +44,10 @@ public final class NBTUtil
 			NBTTagList nbttaglist = new NBTTagList();
 			for(int i = 0; i < inventory.length; i++)
 			{
-				if(inventory[i] != null)
-				{
-					NBTTagCompound tempData = new NBTTagCompound();
-					tempData.setByte("Slot", (byte)i);
-					inventory[i].writeToNBT(tempData);
-					nbttaglist.appendTag(tempData);
-				}
+				NBTTagCompound tempData = new NBTTagCompound();
+				tempData.setByte("Slot", (byte)i);
+				if(inventory[i] != null) inventory[i].writeToNBT(tempData);
+				nbttaglist.appendTag(tempData);
 			}
 			data.setTag("Items", nbttaglist);
 		}
@@ -138,7 +135,7 @@ public final class NBTUtil
 		}
 		return accessList;
 	}
-	
+
 	public static boolean spawnEntityFromNBT(NBTTagCompound data, World world, double x, double y, double z)
 	{
 		if(data != null && data.hasKey("id") && world != null)

@@ -148,8 +148,7 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	public void readFromNBT(NBTTagCompound data)
 	{
 		super.readFromNBT(data);
-
-		NBTUtil.loadInventoryFromNBT(data, this.getSizeInventory());
+		this.inventory = NBTUtil.loadInventoryFromNBT(data, this.getSizeInventory());
 		if(data.hasKey("CustomName"))
 		{
 			this.customName = data.getString("CustomName");
@@ -167,7 +166,6 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	public void writeToNBT(NBTTagCompound data)
 	{
 		super.writeToNBT(data);
-
 		NBTUtil.saveInventoryToNBT(data, this.inventory);
 		if(this.hasCustomInventoryName())
 		{
