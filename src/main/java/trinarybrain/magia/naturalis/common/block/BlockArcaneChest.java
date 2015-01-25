@@ -42,7 +42,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockArcaneChest extends BlockContainer
 {
-
 	public BlockArcaneChest()
 	{
 		super(Material.wood);
@@ -124,7 +123,6 @@ public class BlockArcaneChest extends BlockContainer
 		return false;
 	}
 
-	@Override
 	public TileEntity createNewTileEntity(World world, int meta)
 	{
 		return new TileArcaneChest();
@@ -335,7 +333,6 @@ public class BlockArcaneChest extends BlockContainer
 
 	private byte CacheChestType;
 
-	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();

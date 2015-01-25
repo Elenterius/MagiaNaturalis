@@ -1,9 +1,5 @@
 package trinarybrain.magia.naturalis.common.item.baubles;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,15 +9,16 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.items.wands.ItemFocusPouch;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.util.NBTUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFocusPouchEnder extends ItemFocusPouch implements IBauble
 {
@@ -39,11 +36,11 @@ public class ItemFocusPouchEnder extends ItemFocusPouch implements IBauble
 	{
 		this.icon = ir.registerIcon(ResourceUtil.PREFIX + "focus_pouch_ender");
 	}
-	
+
 	public EnumRarity getRarity(ItemStack stack)
-    {
-        return EnumRarity.epic;
-    }
+	{
+		return EnumRarity.epic;
+	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{

@@ -20,8 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
-import thaumcraft.common.lib.utils.BlockUtils;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.BlockUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -151,7 +149,7 @@ public class ItemSickle extends BaseItem
 					{
 						break;
 					}
-					
+
 				}
 				return success;
 			}

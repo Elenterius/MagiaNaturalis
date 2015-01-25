@@ -21,7 +21,7 @@ public class ItemElementalSickle extends ItemSickle implements IRepairable
 		this.abundanceLevel = 2;
 	}
 
-	@Override @SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
 		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "sickle_abundance_wood");

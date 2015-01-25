@@ -48,9 +48,12 @@ public class BlockArcaneWood extends Block
 		if(meta < 0 || meta > 6)
 			meta = 0;
 		
+		if(meta == 6)
+			return side == 1 || side == 0 ? this.icon[0] : this.icon[meta];
+		
 		return icon[meta];
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list)
 	{

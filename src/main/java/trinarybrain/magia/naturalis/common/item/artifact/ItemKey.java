@@ -1,12 +1,8 @@
 package trinarybrain.magia.naturalis.common.item.artifact;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.mojang.authlib.GameProfile;
-
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -19,14 +15,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
-import scala.reflect.internal.Trees.This;
-import thaumcraft.common.blocks.BlockArcaneDoor;
-import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileOwned;
-import trinarybrain.magia.naturalis.common.block.BlocksMN;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.util.NBTUtil;
@@ -34,13 +25,15 @@ import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import trinarybrain.magia.naturalis.common.util.access.TileAccess;
 import trinarybrain.magia.naturalis.common.util.access.UserAccess;
+
+import com.mojang.authlib.GameProfile;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemKey extends BaseItem
 {
 	//TODO: IMPLEMENT OFFLINE PLAYER ADDING - WITH ANVIL? HOW WILL THAT WORK?
-
 	public ItemKey()
 	{
 		super();
@@ -82,7 +75,7 @@ public class ItemKey extends BaseItem
 		list.add(new ItemStack(this, 1, 0)); //This Key grants Access for the Bound Player to any Tile owned by the Key Forger
 		list.add(new ItemStack(this, 1, 1)); //This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger
 	}
-	
+
 	public EnumRarity getRarity(ItemStack itemstack)
 	{
 		return EnumRarity.uncommon;
@@ -98,7 +91,7 @@ public class ItemKey extends BaseItem
 	{
 		return new StringBuilder().append(super.getUnlocalizedName()).append(".").append(stack.getItemDamage()).toString();
 	}
-	
+
 	public UUID getBoundPlayer(ItemStack stack)
 	{
 		if(stack == null) return null;
@@ -176,7 +169,7 @@ public class ItemKey extends BaseItem
 				NBTTagCompound data = NBTUtil.openNbtData(stack);
 				if(!data.hasKey("forger"))
 				{
-//					this.setKeyForger(stack, player.getGameProfile());
+					//					this.setKeyForger(stack, player.getGameProfile());
 					return false;
 				}
 

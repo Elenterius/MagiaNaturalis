@@ -26,7 +26,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemResearchLog extends BaseItem
 {
-
 	public ItemResearchLog()
 	{
 		super();
@@ -45,12 +44,12 @@ public class ItemResearchLog extends BaseItem
 		super.addInformation(stack, player, list, par4);
 		if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown())
 		{
-			list.add(String.format("%dx %s", this.getResearchPoint(stack, Aspect.AIR), Aspect.AIR.getName()));
-			list.add(String.format("%dx %s", this.getResearchPoint(stack, Aspect.EARTH), Aspect.EARTH.getName()));
-			list.add(String.format("%dx %s", this.getResearchPoint(stack, Aspect.WATER), Aspect.WATER.getName()));
-			list.add(String.format("%dx %s", this.getResearchPoint(stack, Aspect.FIRE), Aspect.FIRE.getName()));
-			list.add(String.format("%dx %s", this.getResearchPoint(stack, Aspect.ORDER), Aspect.ORDER.getName()));
-			list.add(String.format("%dx %s", this.getResearchPoint(stack, Aspect.ENTROPY), Aspect.ENTROPY.getName()));
+			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.AIR), EnumChatFormatting.YELLOW, Aspect.AIR.getName()));
+			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.EARTH), EnumChatFormatting.GREEN, Aspect.EARTH.getName()));
+			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.WATER), EnumChatFormatting.AQUA, Aspect.WATER.getName()));
+			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.FIRE), EnumChatFormatting.RED, Aspect.FIRE.getName()));
+			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.ORDER), EnumChatFormatting.WHITE, Aspect.ORDER.getName()));
+			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.ENTROPY), EnumChatFormatting.DARK_GRAY, Aspect.ENTROPY.getName()));
 		}
 		else
 		{

@@ -11,7 +11,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IRepairable;
 import thaumcraft.api.IVisDiscountGear;
@@ -35,33 +34,28 @@ public class ItemSpectacles extends ItemArmor implements IRepairable, IVisDiscou
 		this.setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
-	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		super.addInformation(stack, player, list, par4);
 		list.add(EnumChatFormatting.DARK_PURPLE + Platform.translate("tc.visdiscount") + ": " + getVisDiscount(stack, player, null) + "%");
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
 		this.itemIcon = ir.registerIcon(ResourceUtil.PREFIX + NameUtil.SPECTACLES);
 	}
 
-	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
 		return ResourceUtil.PREFIX + ResourceUtil.PATH_MODEL + "armorSpectacles.png";
 	}
 
-	@Override
 	public EnumRarity getRarity(ItemStack stack)
 	{
 		return EnumRarity.epic;
 	}
 
-	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack stack2)
 	{
 		return stack2.isItemEqual(new ItemStack(Items.gold_ingot)) ? true : super.getIsRepairable(stack, stack2);

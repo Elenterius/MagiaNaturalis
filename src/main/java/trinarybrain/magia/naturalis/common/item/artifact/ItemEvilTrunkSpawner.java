@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.EntityEvilTrunk;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
 import trinarybrain.magia.naturalis.common.util.Platform;
@@ -29,7 +28,6 @@ public class ItemEvilTrunkSpawner extends BaseItem
 		this.setHasSubtypes(true);
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
@@ -44,7 +42,7 @@ public class ItemEvilTrunkSpawner extends BaseItem
 		list.add(new ItemStack(item, 1, 2));
 		list.add(new ItemStack(item, 1, 3));
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
@@ -60,7 +58,7 @@ public class ItemEvilTrunkSpawner extends BaseItem
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
 		if(Platform.isClient()) return false;
-		
+
 		Block block = world.getBlock(x, y, z);
 		x += net.minecraft.util.Facing.offsetsXForSide[side];
 		y += net.minecraft.util.Facing.offsetsYForSide[side];
@@ -75,9 +73,9 @@ public class ItemEvilTrunkSpawner extends BaseItem
 			if(stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory"))
 			{
 				NBTTagList dataList = stack.stackTagCompound.getTagList("inventory", 10);
-		        entity.inventory.readFromNBT(dataList);
+				entity.inventory.readFromNBT(dataList);
 			}
-				
+
 			entity.setOwnerUUID(player.getGameProfile().getId().toString());
 			entity.setLocationAndAngles(x, y + d0, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 			entity.rotationYawHead = entity.rotationYaw;
@@ -87,7 +85,6 @@ public class ItemEvilTrunkSpawner extends BaseItem
 			entity.playLivingSound();
 			if(!player.capabilities.isCreativeMode) stack.stackSize -= 1;
 		}
-		
 		return true;
 	}
 }
