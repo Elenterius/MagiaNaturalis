@@ -11,6 +11,7 @@ import trinarybrain.magia.naturalis.common.item.artifact.ItemSpectacles;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemThaumiumSickle;
 import trinarybrain.magia.naturalis.common.item.baubles.ItemFocusPouchEnder;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
+import trinarybrain.magia.naturalis.common.item.relic.ItemFrostSword;
 import trinarybrain.magia.naturalis.common.util.NameUtil;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -29,6 +30,8 @@ public class ItemsMN
 	public static Item sickleThaumium;
 	public static Item sickleElemental;
 	
+	public static Item frostSword;
+	
 	public static void initItems()
 	{
 //		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
@@ -42,6 +45,8 @@ public class ItemsMN
 		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
 		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
+		
+		frostSword = new ItemFrostSword(); registerItem(frostSword, NameUtil.FROST_SWORD);
 	}
 
 	private static void registerItem(Item item, String str)

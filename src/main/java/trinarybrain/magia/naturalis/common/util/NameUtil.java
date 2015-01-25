@@ -32,4 +32,6 @@ public final class NameUtil
 	public static final String ENDER_FOCUS_POUCH = "focusPouchEnder";
 	public static final String SICKLE_THAUMIUM = "sickleThaumium";
 	public static final String SICKLE_ELEMENTAL = "sickleElemental";
+
+	public static final String FROST_SWORD = "frostSword";
 }
