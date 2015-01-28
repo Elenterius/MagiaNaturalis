@@ -29,6 +29,8 @@ public class ItemsMN
 	public static Item sickleThaumium;
 	public static Item sickleElemental;
 	
+	public static Item biomeDevTool;
+	
 	public static void initItems()
 	{
 //		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
@@ -42,6 +44,8 @@ public class ItemsMN
 		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
 		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
+	
+		biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
 	}
 
 	private static void registerItem(Item item, String str)
