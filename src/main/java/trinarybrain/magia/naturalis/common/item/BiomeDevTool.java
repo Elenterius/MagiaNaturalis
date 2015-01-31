@@ -1,5 +1,13 @@
 package trinarybrain.magia.naturalis.common.item;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -9,6 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
@@ -48,31 +57,76 @@ public class BiomeDevTool extends BaseItem
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
 	{
 		if(Platform.isClient()) return false;
-
-		BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
-	    int aura = BiomeHandler.getBiomeAura(biome);
+		
+	    String divider = "------------------------------------------------------------------------------------";
 	    
-	    BiomeDictionary.Type[] typeArray = BiomeDictionary.getTypesForBiome(BiomeGenBase.getBiome(biome.biomeID));
-	    Aspect aspect;
-	    AspectList aspectList = new AspectList();
-	    
-	    String aspects = "";
-	    String types = "";
-	    
-	    for(BiomeDictionary.Type type : typeArray)
+	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("/GithubEnv/MagiaNaturalis/eclipse/Biome_Types-Aspects.txt"))))
 	    {
-	    	types += "[" + type.toString() + "]";
-	    	aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
-	    	if(aspect != null)
-		    {
-		      aspectList.add(aspect, 1);
-		      aspects += "[" + aspect.getName() + "]";
-		    }
+	    	String aspects = "";
+	    	String types = "";
+	    	int auraLevel = 0;
+
+	    	Aspect aspect;
+	    	for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
+	    	{
+	    		types = "[" + type.toString() + "]";
+	    		aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
+	    		auraLevel = (int)((List)BiomeHandler.biomeInfo.get(type)).get(0);
+	    		if(aspect != null)
+	    		{
+	    			aspects = "[" + aspect.getName() + "]";
+	    		}
+	    		else
+		    	{
+		    		aspects = "[NULL]";
+		    	}
+	    		
+	    		String info = String.format("%-16s :\t[Aura: %d]\t\t-\t%s%n", types, auraLevel, aspects);
+		    	writer.write(info);
+	    	}
+	    }
+	    catch(IOException e)
+	    {
+	    	e.printStackTrace();
 	    }
 	    
-	    
-	    String divider = "------------------------------------------------------------------------------------";
-	    Log.logger.info(String.format("%n" + divider + "%n  - Biome: %s, ID: %d%n  - Aura: %d%n  - Types: %s%n  - Aspects: %s%n" + divider, biome.biomeName, biome.biomeID, aura, types, aspects));
+	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("/GithubEnv/MagiaNaturalis/eclipse/Biome_Composition.txt"))))
+	    {
+	    	BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
+			for(BiomeGenBase biome : biomes)
+			{
+				if(biome != null)
+				{
+					int aura = BiomeHandler.getBiomeAura(biome);
+				   
+				    String aspects = "";
+				    String types = "";
+				    
+				    Aspect aspect;
+				    for(BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
+				    {
+				    	types += "[" + type.toString() + "]";
+				    	aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
+				    	
+				    	if(aspect != null)
+				    	{
+				    		aspects += "[" + aspect.getName() + "]";
+				    	}
+				    	else
+				    	{
+				    		aspects += "[NULL]";
+				    	}
+				    }
+				    
+				    String info = String.format(divider + "%nBiome: %s%n  - Aura Average.: %d%n  - Types: %s%n  - Aspects: %s%n", biome.biomeName, aura, types, aspects);
+				    writer.write(info);
+				}
+			}
+	    }
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	    
 		return false;
 	}
