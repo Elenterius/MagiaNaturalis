@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,9 +15,15 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.common.Thaumcraft;
+import thaumcraft.common.config.Config;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.misc.PacketBiomeChange;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
 
@@ -122,7 +129,7 @@ public class WorldUtil
 			ItemWandCasting wand = (ItemWandCasting) stack.getItem();
 			Block oBlock = world.getBlock(ox, oy, oz);
 			int oBD = world.getBlockMetadata(ox, oy, oz);
-			
+
 			Meta lmeta = FocusBuildHelper.getMeta(wand.getFocusItem(stack));
 			Shape lshape = FocusBuildHelper.getShape(wand.getFocusItem(stack));
 			int lsize = FocusBuildHelper.getSize(wand.getFocusItem(stack));
@@ -211,17 +218,17 @@ public class WorldUtil
 						next.add(new WorldCoord(wc.x, wc.y - 1, wc.z));
 						next.add(new WorldCoord(wc.x, wc.y, wc.z + 1));
 						next.add(new WorldCoord(wc.x, wc.y, wc.z - 1));
-						
+
 						next.add(new WorldCoord(wc.x + 1, wc.y - 1, wc.z + 1));
 						next.add(new WorldCoord(wc.x + 1, wc.y - 1, wc.z - 1));
 						next.add(new WorldCoord(wc.x - 1, wc.y - 1, wc.z - 1));
 						next.add(new WorldCoord(wc.x - 1, wc.y - 1, wc.z + 1));
-						
+
 						next.add(new WorldCoord(wc.x + 1, wc.y, wc.z + 1));
 						next.add(new WorldCoord(wc.x + 1, wc.y, wc.z - 1));
 						next.add(new WorldCoord(wc.x - 1, wc.y, wc.z - 1));
 						next.add(new WorldCoord(wc.x - 1, wc.y, wc.z + 1));
-						
+
 						next.add(new WorldCoord(wc.x + 1, wc.y + 1, wc.z + 1));
 						next.add(new WorldCoord(wc.x + 1, wc.y + 1, wc.z - 1));
 						next.add(new WorldCoord(wc.x - 1, wc.y + 1, wc.z - 1));
@@ -243,29 +250,66 @@ public class WorldUtil
 		}
 		return false;
 	}
-	
+
 	public static MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer player, double blockReachDistance, boolean bool)
-    {
-        float f = 1.0F;
-        float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f;
-        float yaw = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)f + (double)(world.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight());
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)f;
-        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
-        float f3 = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
-        float f4 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
-        float f5 = -MathHelper.cos(-pitch * 0.017453292F);
-        float f6 = MathHelper.sin(-pitch * 0.017453292F);
-        float f7 = f4 * f5;
-        float f8 = f3 * f5;
-        
-        double d3 = blockReachDistance;
-        if(d3 <= 0) d3 = 5.0D;
-        
-        Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
-        return world.func_147447_a(vec3, vec31, bool, !bool, false);
-    }
+	{
+		float f = 1.0F;
+		float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f;
+		float yaw = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;
+		double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)f;
+		double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)f + (double)(world.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight());
+		double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)f;
+		Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
+		float f3 = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+		float f4 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+		float f5 = -MathHelper.cos(-pitch * 0.017453292F);
+		float f6 = MathHelper.sin(-pitch * 0.017453292F);
+		float f7 = f4 * f5;
+		float f8 = f3 * f5;
+
+		double d3 = blockReachDistance;
+		if(d3 <= 0) d3 = 5.0D;
+
+		Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
+		return world.func_147447_a(vec3, vec31, bool, !bool, false);
+	}
+
+	public static void setBiomeAt(World world, int x, int z, BiomeGenBase biome)
+	{
+		if(biome == null) return;
+		Chunk chunk = world.getChunkFromBlockCoords(x, z);
+		byte[] biomeArray = chunk.getBiomeArray();
+		biomeArray[((z & 0xF) << 4 | x & 0xF)] = ((byte)(biome.biomeID & 0xFF));
+		chunk.setBiomeArray(biomeArray);
+		
+		if(Platform.isServer())
+		      PacketHandler.INSTANCE.sendToAllAround(new PacketBiomeChange(x, z, (short)biome.biomeID), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, world.getHeightValue(x, z), z, 32.0D));
+	}
+
+	public static boolean resetBiomeAt(World world, int x, int z)
+	{
+		BiomeGenBase[] defaultBiome = world.getWorldChunkManager().loadBlockGeneratorData(null, x, z, 1, 1);
+		if(defaultBiome != null && defaultBiome[0] != null)
+		{
+			if(world.getBiomeGenForCoords(x, z) != defaultBiome[0])
+			{
+				WorldUtil.setBiomeAt(world, x, z, defaultBiome[0]);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static void setBiomeAtChunk(World world, Chunk chunk, BiomeGenBase biome)
+	{
+		if(biome == null) return;
+		byte[] biomeArray = chunk.getBiomeArray();
+		for(int i = 0; i < biomeArray.length; i++)
+		{
+			biomeArray[i] = ((byte)(biome.biomeID & 0xFF));
+		}
+		chunk.setBiomeArray(biomeArray);
+	}
 
 	private static List<WorldCoord> plotHelper(WorldCoord P1, WorldCoord P2, ForgeDirection side, float hitX, float hitY, float hitZ, int size)
 	{

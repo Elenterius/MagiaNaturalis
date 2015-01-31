@@ -17,6 +17,7 @@ public final class NameUtil
 	public static final String JAR_PRISON = "jarPrison";
 	public static final String ARCANE_WOOD = "arcaneWood";
 	public static final String BANNER = "banner";
+	public static final String GEO_MORPHER = "geoMorpher";
 	
 	// Item Names
 //	public static final String DEV_TOOL = "devTool";
