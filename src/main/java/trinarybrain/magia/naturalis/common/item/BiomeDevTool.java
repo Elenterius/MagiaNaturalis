@@ -1,6 +1,7 @@
 package trinarybrain.magia.naturalis.common.item;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -24,6 +25,7 @@ import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.ResourceUtil;
+import cpw.mods.fml.relauncher.FMLInjectionData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -60,7 +62,13 @@ public class BiomeDevTool extends BaseItem
 		
 	    String divider = "------------------------------------------------------------------------------------";
 	    
-	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("/GithubEnv/MagiaNaturalis/eclipse/Biome_Types-Aspects.txt"))))
+		File mcDir = (File) FMLInjectionData.data()[6];
+		File modsDir = new File(mcDir, "magia_naturalis");
+		if (!modsDir.exists()) modsDir.mkdirs();
+		
+		File mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Types-Aspects.txt");
+	    
+	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
 	    {
 	    	String aspects = "";
 	    	String types = "";
@@ -90,7 +98,9 @@ public class BiomeDevTool extends BaseItem
 	    	e.printStackTrace();
 	    }
 	    
-	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("/GithubEnv/MagiaNaturalis/eclipse/Biome_Composition.txt"))))
+	    mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Composition.txt");
+	    
+	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
 	    {
 	    	BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
 			for(BiomeGenBase biome : biomes)

@@ -1,24 +1,25 @@
 package trinarybrain.magia.naturalis.common.tile;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.visnet.VisNetHandler;
+import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.WorldUtil;
 
-public class TileGeoMorpher extends TileThaumcraft
+public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 {
 	public int ticks = 0;
 	int morphX = 0;
@@ -36,8 +37,8 @@ public class TileGeoMorpher extends TileThaumcraft
 		{
 			if(++this.ticks % 5 == 0)
 			{
-				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.mesa);
-				 else Log.logger.info("IDLE");
+				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.jungleHills);
+				 else Log.logger.info("IDLE");				 
 			}
 			
 			if(update)
@@ -50,6 +51,7 @@ public class TileGeoMorpher extends TileThaumcraft
 
 	public boolean handleBiomeMorphing(int radius, BiomeGenBase newBiome)
 	{
+		boolean update = false;
 		boolean isComplete = false;
 		if(this.realCost.visSize() > 0)
 		{
@@ -61,20 +63,24 @@ public class TileGeoMorpher extends TileThaumcraft
 
 					if(drain > 0)
 					{
-						this.realCost.reduce(aspect, drain);				
+						this.realCost.reduce(aspect, drain);
+						update = true;
 					}
 					else if(aspect != Aspect.AIR && aspect != Aspect.FIRE && aspect != Aspect.WATER && aspect != Aspect.EARTH && aspect != Aspect.ORDER && aspect != Aspect.ENTROPY)
 					{
-						Log.logger.info("Aspect " + aspect.getName() + "[" + this.realCost.getAmount(aspect) + "] can't be drained from VisNet");
-						this.realCost.reduce(aspect, this.realCost.getAmount(aspect));
+						if(EssentiaHandler.drainEssentia(this, aspect, ForgeDirection.UNKNOWN, 12))
+						{
+							this.realCost.reduce(aspect, 25);
+							update = true;
+						}
 					}
 				}
 			}
 
 			if((this.realCost.visSize() <= 0))
 			{
-				Log.logger.info("Aspects Paid, Setting Biome!");
 				isComplete = true;
+				this.realCost = new AspectList();
 				int posX = this.xCoord - radius + this.morphX;
 				int posZ = this.zCoord - radius + this.morphZ;
 				WorldUtil.setBiomeAt(this.worldObj, posX, posZ, newBiome);
@@ -105,10 +111,9 @@ public class TileGeoMorpher extends TileThaumcraft
 				int posX = this.xCoord - radius + this.morphX;
 				int posZ = this.zCoord - radius + this.morphZ;
 				BiomeGenBase oldBiome = this.worldObj.getBiomeGenForCoords(posX, posZ);
-
-				if(newBiome != oldBiome && (Math.abs(morphX-radius) + Math.abs(morphZ-radius)) <= radius)
+				
+				if(newBiome != oldBiome && Math.sqrt((morphX-radius)*(morphX-radius) + (morphZ-radius)*(morphZ-radius)) <= radius)
 				{
-					Log.logger.info("Found Valid Biome for Morphing, set new aspect cost");
 					if(this.lastBiome != oldBiome) //prevent recalculation of Cost every Cycle
 					{
 						this.lastBiome = oldBiome;
@@ -126,7 +131,7 @@ public class TileGeoMorpher extends TileThaumcraft
 			}
 		}
 
-		return false;
+		return update;
 	}
 
 	public AspectList calculateMorphCost(BiomeGenBase oldBiome, BiomeGenBase newBiome)
@@ -217,6 +222,7 @@ public class TileGeoMorpher extends TileThaumcraft
 		this.realCost.readFromNBT(data);
 		this.morphX = data.getByte("morphX");
 		this.morphZ = data.getByte("morphZ");
+		this.idle = data.getBoolean("idle");
 	}
 
 	@Override
@@ -225,5 +231,57 @@ public class TileGeoMorpher extends TileThaumcraft
 		this.realCost.writeToNBT(data);
 		data.setByte("morphX", (byte) this.morphX);
 		data.setByte("morphZ", (byte) this.morphZ);
+		data.setBoolean("idle", this.idle);
+	}
+
+	@Override
+	public AspectList getAspects()
+	{
+		return this.realCost;
+	}
+
+	@Override
+	public void setAspects(AspectList aspects) {}
+
+	@Override
+	public boolean doesContainerAccept(Aspect tag)
+	{
+		return false;
+	}
+
+	@Override
+	public int addToContainer(Aspect tag, int amount)
+	{
+		return 0;
+	}
+
+	@Override
+	public boolean takeFromContainer(Aspect tag, int amount)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean takeFromContainer(AspectList ot)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean doesContainerContainAmount(Aspect tag, int amount)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean doesContainerContain(AspectList ot)
+	{
+		return false;
+	}
+
+	@Override
+	public int containerContains(Aspect tag)
+	{
+		return 0;
 	}
 }
