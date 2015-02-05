@@ -4,8 +4,11 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
+import trinarybrain.magia.naturalis.common.tile.TileBannerCustom;
 import trinarybrain.magia.naturalis.common.tile.TileGeoMorpher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,4 +38,15 @@ public class BlockGeoMorpher extends BlockContainer
 
 	public boolean isOpaqueCube() {return false;}
 	public boolean renderAsNormalBlock() {return false;}
+
+	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
+	{
+		this.setBlockBounds(0.25F, 0.25F, 0.25F, 0.750F, 0.75F, 0.75F);
+//		this.setBlockBounds(0.75F, 0.25F, 0.75F, 0.750F, 0.75F, 0.75F);
+	}
+
+	public int getRenderType()
+	{
+		return RenderUtil.RenderID;
+	}
 }

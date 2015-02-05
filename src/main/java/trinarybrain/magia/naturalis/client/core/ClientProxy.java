@@ -15,6 +15,7 @@ import trinarybrain.magia.naturalis.client.render.entity.RenderTaintBreeder;
 import trinarybrain.magia.naturalis.client.render.item.RenderItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.client.render.tile.TileArcaneChestRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileBannerCustomRenderer;
+import trinarybrain.magia.naturalis.client.render.tile.TileFloatingCrystalRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileJarPrisonRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileTranscribingTableRenderer;
 import trinarybrain.magia.naturalis.common.core.CommonProxy;
@@ -24,6 +25,7 @@ import trinarybrain.magia.naturalis.common.entity.taint.EntityTaintBreeder;
 import trinarybrain.magia.naturalis.common.item.ItemsMN;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileBannerCustom;
+import trinarybrain.magia.naturalis.common.tile.TileGeoMorpher;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -49,9 +51,9 @@ public class ClientProxy extends CommonProxy
 		this.registerTileEntitySpecialRenderer(TileTranscribingTable.class, new TileTranscribingTableRenderer());
 		this.registerTileEntitySpecialRenderer(TileArcaneChest.class, new TileArcaneChestRenderer());
 		this.registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
-
 		this.registerBlockRenderer(new BlockJarRenderer());
 		this.registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
+		this.registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileFloatingCrystalRenderer());
 
 		MinecraftForgeClient.registerItemRenderer(ItemsMN.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 

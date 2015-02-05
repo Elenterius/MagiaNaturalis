@@ -38,8 +38,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 		{
 			if(++this.ticks % 5 == 0)
 			{
-				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.getBiome(Config.biomeMagicalForestID));
-				 else Log.logger.info("IDLE");				 
+				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.jungle);
 			}
 			
 			if(update)
