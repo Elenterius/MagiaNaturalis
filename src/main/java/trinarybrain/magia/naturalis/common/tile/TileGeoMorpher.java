@@ -13,6 +13,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.visnet.VisNetHandler;
+import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import trinarybrain.magia.naturalis.common.core.Log;
@@ -37,7 +38,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 		{
 			if(++this.ticks % 5 == 0)
 			{
-				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.jungleHills);
+				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.getBiome(Config.biomeMagicalForestID));
 				 else Log.logger.info("IDLE");				 
 			}
 			
@@ -103,7 +104,6 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 				}
 				else
 				{
-					Log.logger.info("Resetting Location for MorphX, Incrementing MorphZ");
 					this.morphX = 0;
 					this.morphZ++;
 				}
@@ -125,7 +125,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 			}
 			else
 			{
-				Log.logger.info("Resetting Location for MorphZ, Now Idle! Biome Conversion done?");
+				Log.logger.info("Now Idle! Biome Conversion done?");
 				this.morphZ = 0;
 				this.idle = true;
 			}
