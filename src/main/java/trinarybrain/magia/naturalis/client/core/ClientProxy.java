@@ -15,7 +15,7 @@ import trinarybrain.magia.naturalis.client.render.entity.RenderTaintBreeder;
 import trinarybrain.magia.naturalis.client.render.item.RenderItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.client.render.tile.TileArcaneChestRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileBannerCustomRenderer;
-import trinarybrain.magia.naturalis.client.render.tile.TileFloatingCrystalRenderer;
+import trinarybrain.magia.naturalis.client.render.tile.TileGeoMorpherRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileJarPrisonRenderer;
 import trinarybrain.magia.naturalis.client.render.tile.TileTranscribingTableRenderer;
 import trinarybrain.magia.naturalis.common.core.CommonProxy;
@@ -53,7 +53,7 @@ public class ClientProxy extends CommonProxy
 		this.registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
 		this.registerBlockRenderer(new BlockJarRenderer());
 		this.registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
-		this.registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileFloatingCrystalRenderer());
+		this.registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileGeoMorpherRenderer());
 
 		MinecraftForgeClient.registerItemRenderer(ItemsMN.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 

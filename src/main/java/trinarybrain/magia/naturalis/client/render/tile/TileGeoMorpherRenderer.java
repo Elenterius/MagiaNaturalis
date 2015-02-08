@@ -16,14 +16,14 @@ import org.lwjgl.opengl.GL11;
 
 import trinarybrain.magia.naturalis.common.tile.TileGeoMorpher;
 
-public class TileFloatingCrystalRenderer extends TileEntitySpecialRenderer
+public class TileGeoMorpherRenderer extends TileEntitySpecialRenderer
 {
 	private Color color;
 	private IModelCustom imodel;
 	private static final ResourceLocation relay = new ResourceLocation("thaumcraft", "textures/models/vis_relay.obj");
 	private ResourceLocation rl = new ResourceLocation("thaumcraft", "textures/models/vis_relay.png");
 
-	public TileFloatingCrystalRenderer()
+	public TileGeoMorpherRenderer()
 	{
 		this.color = new Color(0.0F, 0.5F, 0.5F);
 		this.imodel = AdvancedModelLoader.loadModel(relay);
