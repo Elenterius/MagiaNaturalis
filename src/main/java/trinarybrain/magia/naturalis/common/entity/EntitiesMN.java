@@ -1,11 +1,9 @@
 package trinarybrain.magia.naturalis.common.entity;
 
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
-import trinarybrain.magia.naturalis.common.ProjectInfo;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.entity.taint.EntityTaintBreeder;
 import trinarybrain.magia.naturalis.common.util.NameUtil;

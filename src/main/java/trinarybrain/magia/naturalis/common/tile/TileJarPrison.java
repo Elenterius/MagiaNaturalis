@@ -30,7 +30,7 @@ public class TileJarPrison extends TileJar implements IWandable
 	private void setEntityForCache(NBTTagCompound data)
 	{
 		this.cachedEntity = null;
-		if(data == null) { return; }
+		if(data == null) return;
 
 		if(data.hasKey("entity"))
 		{
