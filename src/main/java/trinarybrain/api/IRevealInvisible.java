@@ -1,4 +1,4 @@
-package trinarybrain.magia.naturalis.api;
+package trinarybrain.api;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;

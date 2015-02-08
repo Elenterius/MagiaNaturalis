@@ -17,7 +17,7 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
-import trinarybrain.magia.naturalis.api.ISpectacles;
+import trinarybrain.api.ISpectacles;
 import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 import trinarybrain.magia.naturalis.common.util.NameUtil;
 import trinarybrain.magia.naturalis.common.util.Platform;

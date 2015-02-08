@@ -1,4 +1,4 @@
-package trinarybrain.magia.naturalis.api;
+package trinarybrain.api;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

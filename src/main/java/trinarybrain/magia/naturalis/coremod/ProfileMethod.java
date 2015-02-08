@@ -106,15 +106,15 @@ public class ProfileMethod extends MethodVisitor implements Opcodes
 			mv.visitJumpInsn(IFNULL, l11);
 			mv.visitVarInsn(ALOAD, 9);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, ObfMapCollector.getMapping("net/minecraft/item/ItemStack"), ObfMapCollector.getMapping("getItem"), "()L" + ObfMapCollector.getMapping("net/minecraft/item/Item") + ";", false);
-			mv.visitTypeInsn(Opcodes.INSTANCEOF, "trinarybrain/magia/naturalis/api/IRevealInvisible");
+			mv.visitTypeInsn(Opcodes.INSTANCEOF, "trinarybrain/api/IRevealInvisible");
 			mv.visitJumpInsn(IFEQ, l11);
 			mv.visitVarInsn(ALOAD, 9);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, ObfMapCollector.getMapping("net/minecraft/item/ItemStack"), ObfMapCollector.getMapping("getItem"), "()L" + ObfMapCollector.getMapping("net/minecraft/item/Item") + ";", false);
-			mv.visitTypeInsn(Opcodes.CHECKCAST, "trinarybrain/magia/naturalis/api/IRevealInvisible");
+			mv.visitTypeInsn(Opcodes.CHECKCAST, "trinarybrain/api/IRevealInvisible");
 			mv.visitVarInsn(ALOAD, 9);
 			mv.visitVarInsn(ALOAD, 8);
 			mv.visitVarInsn(ALOAD, 1);
-			mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "trinarybrain/magia/naturalis/api/IRevealInvisible", "showInvisibleEntity", "(L" + ObfMapCollector.getMapping("net/minecraft/item/ItemStack") + ";L"+ ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";)Z", true);
+			mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "trinarybrain/api/IRevealInvisible", "showInvisibleEntity", "(L" + ObfMapCollector.getMapping("net/minecraft/item/ItemStack") + ";L"+ ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";L" + ObfMapCollector.getMapping("net/minecraft/entity/EntityLivingBase") + ";)Z", true);
 			mv.visitJumpInsn(IFEQ, l11);
 			mv.visitLabel(l10);
 			mv.visitLineNumber(36, l10);

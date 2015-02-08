@@ -27,7 +27,7 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileNodeEnergized;
 import thaumcraft.common.tiles.TileOwned;
-import trinarybrain.magia.naturalis.api.ISpectacles;
+import trinarybrain.api.ISpectacles;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
