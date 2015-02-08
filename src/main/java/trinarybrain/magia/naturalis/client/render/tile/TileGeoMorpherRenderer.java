@@ -25,13 +25,13 @@ public class TileGeoMorpherRenderer extends TileEntitySpecialRenderer
 
 	public TileGeoMorpherRenderer()
 	{
-		this.color = new Color(0.0F, 0.5F, 0.5F);
+		this.color = new Color(0.5F, 0.5F, 0.5F);
 		this.imodel = AdvancedModelLoader.loadModel(relay);
 	}
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick)
-	{			
+	{
 		this.renderCrystalPylon((TileGeoMorpher) tile, x, y, z, tick, color.getRGB(), new Random(tile.xCoord * tile.yCoord + tile.zCoord));
 	}
 
@@ -67,7 +67,7 @@ public class TileGeoMorpherRenderer extends TileEntitySpecialRenderer
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
-				Color c = tile.idle ? new Color(0.25F, 0.25F, 0.25F) : new Color(color);
+				Color c = tile.idle ? new Color(0.25F, 0.25F, 0.3F) : new Color(color);
 				GL11.glColor3f(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F);
 					
 				int shadeOffset = (int) (210F * shade);

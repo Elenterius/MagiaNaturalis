@@ -59,85 +59,91 @@ public class BiomeDevTool extends BaseItem
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
 	{
 		if(Platform.isClient()) return false;
+		boolean ignore = true;
 		
-	    String divider = "------------------------------------------------------------------------------------";
-	    
-		File mcDir = (File) FMLInjectionData.data()[6];
-		File modsDir = new File(mcDir, "magia_naturalis");
-		if (!modsDir.exists()) modsDir.mkdirs();
-		
-		File mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Types-Aspects.txt");
-	    
-	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
-	    {
-	    	String aspects = "";
-	    	String types = "";
-	    	int auraLevel = 0;
+		Log.logger.info(world.getBlock(x, y, z));
+		Log.logger.info(world.getBlockMetadata(x, y, z));
 
-	    	Aspect aspect;
-	    	for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
-	    	{
-	    		types = "[" + type.toString() + "]";
-	    		aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
-	    		auraLevel = (int)((List)BiomeHandler.biomeInfo.get(type)).get(0);
-	    		if(aspect != null)
-	    		{
-	    			aspects = "[" + aspect.getName() + "]";
-	    		}
-	    		else
-		    	{
-		    		aspects = "[NULL]";
-		    	}
-	    		
-	    		String info = String.format("%-16s :\t[Aura: %d]\t\t-\t%s%n", types, auraLevel, aspects);
-		    	writer.write(info);
-	    	}
-	    }
-	    catch(IOException e)
-	    {
-	    	e.printStackTrace();
-	    }
-	    
-	    mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Composition.txt");
-	    
-	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
-	    {
-	    	BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
-			for(BiomeGenBase biome : biomes)
+		if(!ignore) 
+		{
+			String divider = "------------------------------------------------------------------------------------";
+
+			File mcDir = (File) FMLInjectionData.data()[6];
+			File modsDir = new File(mcDir, "magia_naturalis");
+			if (!modsDir.exists()) modsDir.mkdirs();
+
+			File mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Types-Aspects.txt");
+
+			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
 			{
-				if(biome != null)
+				String aspects = "";
+				String types = "";
+				int auraLevel = 0;
+
+				Aspect aspect;
+				for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
 				{
-					int aura = BiomeHandler.getBiomeAura(biome);
-				   
-				    String aspects = "";
-				    String types = "";
-				    
-				    Aspect aspect;
-				    for(BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
-				    {
-				    	types += "[" + type.toString() + "]";
-				    	aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
-				    	
-				    	if(aspect != null)
-				    	{
-				    		aspects += "[" + aspect.getName() + "]";
-				    	}
-				    	else
-				    	{
-				    		aspects += "[NULL]";
-				    	}
-				    }
-				    
-				    String info = String.format(divider + "%nBiome: %s%n  - Aura Average.: %d%n  - Types: %s%n  - Aspects: %s%n", biome.biomeName, aura, types, aspects);
-				    writer.write(info);
+					types = "[" + type.toString() + "]";
+					aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
+					auraLevel = (int)((List)BiomeHandler.biomeInfo.get(type)).get(0);
+					if(aspect != null)
+					{
+						aspects = "[" + aspect.getName() + "]";
+					}
+					else
+					{
+						aspects = "[NULL]";
+					}
+
+					String info = String.format("%-16s :\t[Aura: %d]\t\t-\t%s%n", types, auraLevel, aspects);
+					writer.write(info);
 				}
 			}
-	    }
-		catch(IOException e)
-		{
-			e.printStackTrace();
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+
+			mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Composition.txt");
+
+			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
+			{
+				BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
+				for(BiomeGenBase biome : biomes)
+				{
+					if(biome != null)
+					{
+						int aura = BiomeHandler.getBiomeAura(biome);
+
+						String aspects = "";
+						String types = "";
+
+						Aspect aspect;
+						for(BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
+						{
+							types += "[" + type.toString() + "]";
+							aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
+
+							if(aspect != null)
+							{
+								aspects += "[" + aspect.getName() + "]";
+							}
+							else
+							{
+								aspects += "[NULL]";
+							}
+						}
+
+						String info = String.format(divider + "%nBiome: %s%n  - Aura Average.: %d%n  - Types: %s%n  - Aspects: %s%n", biome.biomeName, aura, types, aspects);
+						writer.write(info);
+					}
+				}
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
-	    
 		return false;
 	}
 }
