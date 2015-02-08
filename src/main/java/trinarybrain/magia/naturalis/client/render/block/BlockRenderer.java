@@ -15,10 +15,12 @@ import thaumcraft.common.blocks.BlockJar;
 import trinarybrain.magia.naturalis.client.util.RenderUtil;
 import trinarybrain.magia.naturalis.common.block.BlockArcaneChest;
 import trinarybrain.magia.naturalis.common.block.BlockBanner;
+import trinarybrain.magia.naturalis.common.block.BlockGeoMorpher;
 import trinarybrain.magia.naturalis.common.block.BlockJarPrison;
 import trinarybrain.magia.naturalis.common.block.BlockTranscribingTable;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileBannerCustom;
+import trinarybrain.magia.naturalis.common.tile.TileGeoMorpher;
 import trinarybrain.magia.naturalis.common.tile.TileJarPrison;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -47,6 +49,12 @@ public class BlockRenderer implements ISimpleBlockRenderingHandler
 			GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
 			GL11.glTranslatef(-1.0F, -0.5F, 0.0F);
 			TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBannerCustom(), 0.0D, 0.0D, 0.0D, 0.0F);
+		}
+		else if(block instanceof BlockGeoMorpher)
+		{
+			TileGeoMorpher tile = new TileGeoMorpher();
+			tile.idle = true;
+			TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
 		}
 
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
