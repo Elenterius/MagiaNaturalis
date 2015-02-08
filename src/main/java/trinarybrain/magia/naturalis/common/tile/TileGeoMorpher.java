@@ -12,13 +12,14 @@ import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
-import thaumcraft.api.visnet.VisNetHandler;
-import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.events.EssentiaHandler;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.fx.PacketFXBlockSparkle;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import trinarybrain.magia.naturalis.common.core.Log;
 import trinarybrain.magia.naturalis.common.util.Platform;
 import trinarybrain.magia.naturalis.common.util.WorldUtil;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 {
@@ -38,7 +39,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 		{
 			if(++this.ticks % 5 == 0)
 			{
-				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.jungle);
+				 if(!idle) update = this.handleBiomeMorphing(8, BiomeGenBase.desert);
 			}
 			
 			if(update)
@@ -55,24 +56,15 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 		boolean isComplete = false;
 		if(this.realCost.visSize() > 0)
 		{
-			for(Aspect aspect : this.realCost.getAspectsSortedAmount())
+			for(Aspect aspect : this.realCost.getAspects())
 			{
 				if(this.realCost.getAmount(aspect) > 0)
 				{
-					int drain = VisNetHandler.drainVis(this.worldObj, this.xCoord, this.yCoord, this.zCoord, aspect, this.realCost.getAmount(aspect));
-
-					if(drain > 0)
+					if(EssentiaHandler.drainEssentia(this, aspect, ForgeDirection.UNKNOWN, 12))
 					{
-						this.realCost.reduce(aspect, drain);
+						this.realCost.reduce(aspect, 1);
 						update = true;
-					}
-					else if(aspect != Aspect.AIR && aspect != Aspect.FIRE && aspect != Aspect.WATER && aspect != Aspect.EARTH && aspect != Aspect.ORDER && aspect != Aspect.ENTROPY)
-					{
-						if(EssentiaHandler.drainEssentia(this, aspect, ForgeDirection.UNKNOWN, 12))
-						{
-							this.realCost.reduce(aspect, 25);
-							update = true;
-						}
+						break;
 					}
 				}
 			}
@@ -83,9 +75,11 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 				this.realCost = new AspectList();
 				int posX = this.xCoord - radius + this.morphX;
 				int posZ = this.zCoord - radius + this.morphZ;
+				int posY = this.worldObj.getTopSolidOrLiquidBlock(posX, posZ);
 				WorldUtil.setBiomeAt(this.worldObj, posX, posZ, newBiome);
 				this.worldObj.getChunkFromBlockCoords(this.xCoord, this.zCoord).setChunkModified();
-				Minecraft.getMinecraft().theWorld.markBlockForUpdate(posX, this.worldObj.getTopSolidOrLiquidBlock(posX, posZ), posZ); //Will only work in SSP
+				Minecraft.getMinecraft().theWorld.markBlockForUpdate(posX, posY, posZ); //Will only work in SSP
+				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(posX, posY, posZ, 12632319), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, posX, posY, posZ, 32.0D));
 			}
 		}
 		else
@@ -164,12 +158,12 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 					if(aspect != null)
 					{
 						int aura = (int)((List)BiomeHandler.biomeInfo.get(oldTypes[i])).get(0);
-						aspectCost.add(aspect, aura);
+						aspectCost.add(aspect, Math.round(aura * 2F / 100F));
 					}
 				}
 				else
 				{
-					aspectCost.add(Aspect.MAGIC, 100);
+					aspectCost.add(Aspect.MAGIC, 2);
 				}
 			}
 		}
@@ -185,6 +179,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 					if(aspect != null)
 					{
 						int aura = (int)((List)BiomeHandler.biomeInfo.get(newTypes[i])).get(0);
+						aura = Math.round(aura * 2F / 100F);
 
 						int currentCost = aspectCost.getAmount(aspect);
 						if(currentCost > 0)
@@ -202,11 +197,11 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 					int currentCost = aspectCost.getAmount(Aspect.MAGIC);
 					if(currentCost > 0)
 					{
-						aspectCost.reduce(Aspect.MAGIC, Math.abs(currentCost - 100));
+						aspectCost.reduce(Aspect.MAGIC, Math.abs(currentCost - 2));
 					}
 					else
 					{
-						aspectCost.add(Aspect.MAGIC, 100);
+						aspectCost.add(Aspect.MAGIC, 2);
 					}
 				}
 			}
