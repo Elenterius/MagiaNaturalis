@@ -29,7 +29,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 	BiomeGenBase lastBiome = null;
 	AspectList morphCost = null;
 	AspectList realCost = new AspectList();	
-	boolean idle = false;
+	public boolean idle = false;
 
 	@Override
 	public void updateEntity()
@@ -66,6 +66,11 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 						update = true;
 						break;
 					}
+					
+					if(EssentiaHandler.findEssentia(this, Aspect.EARTH, ForgeDirection.UNKNOWN, 12))
+					{
+						Log.logger.info("Earth Missing!");
+					}
 				}
 			}
 
@@ -79,7 +84,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer
 				WorldUtil.setBiomeAt(this.worldObj, posX, posZ, newBiome);
 				this.worldObj.getChunkFromBlockCoords(this.xCoord, this.zCoord).setChunkModified();
 				Minecraft.getMinecraft().theWorld.markBlockForUpdate(posX, posY, posZ); //Will only work in SSP
-				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(posX, posY, posZ, 12632319), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, posX, posY, posZ, 32.0D));
+				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.xCoord, this.yCoord, this.zCoord, 0xC0C0FF), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0D));
 			}
 		}
 		else

@@ -14,6 +14,8 @@ import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
+import trinarybrain.magia.naturalis.common.tile.TileGeoMorpher;
+
 public class TileFloatingCrystalRenderer extends TileEntitySpecialRenderer
 {
 	private Color color;
@@ -28,12 +30,12 @@ public class TileFloatingCrystalRenderer extends TileEntitySpecialRenderer
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float tick)
-	{
-		this.renderCrystalPylon((float)x, (float)y, (float)z, tick, color.getRGB(), new Random(entity.xCoord * entity.yCoord + entity.zCoord));
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick)
+	{			
+		this.renderCrystalPylon((TileGeoMorpher) tile, x, y, z, tick, color.getRGB(), new Random(tile.xCoord * tile.yCoord + tile.zCoord));
 	}
 
-	public void renderCrystalPylon(double x, double y, double z, float partialTicks, int color, Random rand)
+	public void renderCrystalPylon(TileGeoMorpher tile, double x, double y, double z, float partialTicks, int color, Random rand)
 	{
 		int ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted;
 		float shade = MathHelper.sin((ticks + rand.nextInt(10)) / (10.0F + rand.nextFloat())) * 0.05F + 0.95F;
@@ -65,7 +67,7 @@ public class TileFloatingCrystalRenderer extends TileEntitySpecialRenderer
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
-				Color c = new Color(color);
+				Color c = tile.idle ? new Color(0.25F, 0.25F, 0.25F) : new Color(color);
 				GL11.glColor3f(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F);
 					
 				int shadeOffset = (int) (210F * shade);
