@@ -31,6 +31,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	public int ticks = 0;
 	int morphX = 0;
 	int morphZ = 0;
+	public BiomeGenBase cachedBiome = null;
 	BiomeGenBase lastBiome = null;
 	AspectList morphCost = null;
 	AspectList realCost = new AspectList();	
@@ -45,7 +46,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 			if(++this.ticks % 5 == 0)
 				if(!idle)
 				{
-					if(this.validateStructure()) update = this.handleBiomeMorphing(8, BiomeGenBase.hell);
+					if(this.validateStructure()) update = this.handleBiomeMorphing(8, cachedBiome);
 					else
 					{
 						idle = true;
@@ -194,6 +195,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	{
 		this.realCost.readFromNBT(data);
 		this.idle = data.getBoolean("idle");
+		this.cachedBiome = BiomeGenBase.getBiome(data.getInteger("biomeID"));
 	}
 
 	@Override
@@ -201,6 +203,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	{
 		this.realCost.writeToNBT(data);
 		data.setBoolean("idle", this.idle);
+		data.setInteger("biomeID", cachedBiome.biomeID);
 	}
 
 	@Override
@@ -233,7 +236,14 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md)
 	{
-		this.idle = !this.idle;
+		if(player.isSneaking())
+		{
+			this.realCost = this.calculateMorphCost(this.cachedBiome);
+		}
+		else
+		{
+			this.idle = !this.idle;
+		}
 		this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 		this.markDirty();
 		return -1;

@@ -51,6 +51,7 @@ item.magianaturalis:evilTrunk.corrupted.name=Corrupted Trunk
 item.magianaturalis:focusPouchEnder.name=Focus Enderpouch
 item.magianaturalis:sickleThaumium.name=Thaumium Sickle
 item.magianaturalis:sickleElemental.name=Sickle of Abundance
+item.magianaturalis:biomeSampler.name=Biome Atuned Crystal
 
 # TILE NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table

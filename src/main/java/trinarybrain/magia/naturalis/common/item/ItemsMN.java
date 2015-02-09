@@ -2,6 +2,7 @@ package trinarybrain.magia.naturalis.common.item;
 
 import net.minecraft.item.Item;
 import trinarybrain.magia.naturalis.common.item.alchemy.ItemAlchemicalStone;
+import trinarybrain.magia.naturalis.common.item.artifact.ItemBiomeSampler;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemElementalSickle;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemEvilTrunkSpawner;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemGogglesDark;
@@ -29,6 +30,7 @@ public class ItemsMN
 	public static Item sickleThaumium;
 	public static Item sickleElemental;
 	
+	public static Item biomeSampler;
 	public static Item biomeDevTool;
 	
 	public static void initItems()
@@ -44,7 +46,8 @@ public class ItemsMN
 		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
 		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
-	
+		
+		biomeSampler = new ItemBiomeSampler(); registerItem(biomeSampler, NameUtil.BIOME_SAMPLER);
 		biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
 	}
 
