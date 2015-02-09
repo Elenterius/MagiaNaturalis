@@ -45,15 +45,20 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 		if(this.ownerName != null && !this.ownerName.equals(""))
 			return this.ownerName;
 		
-		GameProfile profile = Platform.findGameProfileByUUID(this.owner);
-		if(profile != null)
+		if(Platform.isServer() && this.owner != null)
 		{
-			return this.ownerName = profile.getName();
+			GameProfile profile = Platform.findGameProfileByUUID(this.owner);
+			if(profile != null)
+			{
+				return this.ownerName = profile.getName();
+			}
+			else
+			{
+				return this.ownerName = "Only UUID Available";
+			}
 		}
-		else
-		{
-			return this.ownerName = "Only UUID Available";
-		}
+		
+		return "Unknown";		
 	}
 	
 	@Override

@@ -33,7 +33,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	int morphZ = 0;
 	public BiomeGenBase cachedBiome = null;
 	BiomeGenBase lastBiome = null;
-	AspectList morphCost = null;
+	AspectList morphCost = new AspectList();
 	AspectList realCost = new AspectList();	
 	public boolean idle = false;
 
@@ -107,7 +107,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 				int posY = this.worldObj.getTopSolidOrLiquidBlock(posX, posZ);
 				WorldUtil.setBiomeAt(this.worldObj, posX, posZ, newBiome);
 				this.worldObj.getChunkFromBlockCoords(this.xCoord, this.zCoord).setChunkModified();
-				Minecraft.getMinecraft().theWorld.markBlockForUpdate(posX, posY, posZ); //Will only work in SSP
+				if(Platform.isClient()) Minecraft.getMinecraft().theWorld.markBlockForUpdate(posX, posY, posZ); //Will only work in SSP
 				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.xCoord, this.yCoord, this.zCoord, 0xC0C0FF), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0D));
 			}
 		}
@@ -195,7 +195,9 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	{
 		this.realCost.readFromNBT(data);
 		this.idle = data.getBoolean("idle");
-		this.cachedBiome = BiomeGenBase.getBiome(data.getInteger("biomeID"));
+		
+		int id = data.getInteger("biomeID");
+		this.cachedBiome = id >= 0 ? BiomeGenBase.getBiome(id) : null;
 	}
 
 	@Override
@@ -203,7 +205,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	{
 		this.realCost.writeToNBT(data);
 		data.setBoolean("idle", this.idle);
-		data.setInteger("biomeID", cachedBiome.biomeID);
+		data.setInteger("biomeID", cachedBiome != null ? cachedBiome.biomeID : -1);
 	}
 
 	@Override
