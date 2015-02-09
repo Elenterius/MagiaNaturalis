@@ -110,6 +110,9 @@ public class Research
 		research = new CustomResearchItem("SICKLE_ABUNDANCE", new AspectList().add(Aspect.TOOL, 3).add(Aspect.CROP, 3).add(Aspect.HARVEST, 3).add(Aspect.GREED, 6), -5, 5, 2, new ItemStack(ItemsMN.sickleElemental, 1, 0));
 		research.setPages(new ResearchPage("mn.research_page.SICKLE_ABUNDANCE.1"), new ResearchPage((InfusionRecipe)Recipes.recipes.get("SickleElemental"))).setParents("SICKLE_THAUM").setParentsHidden("INFUSION").registerResearchItem();
 
+		research = new CustomResearchItem("GEO_OCCULTISM", 0, -5, 0, new ItemStack(BlocksMN.geoMorpher));
+		research.setPages(new ResearchPage("mn.research_page.GEO_OCCULTISM.1"), new ResearchPage((InfusionRecipe)Recipes.recipes.get("GeoPylon")), new ResearchPage("mn.research_page.GEO_OCCULTISM.2"), new ResearchPage((IArcaneRecipe)Recipes.recipes.get("BiomeReport"))).setParentsHidden("INFUSION", "STONE_PHENO").registerResearchItem();
+		
 		research = null;
 
 		//==============================================================================================================================
@@ -122,8 +125,5 @@ public class Research
 		//		research.setPages(new ResearchPage[] { new ResearchPage("mn.research_page.MINERALOGY.1") });
 		//		research.setRound().setAutoUnlock().registerResearchItem();
 		//		
-		//		research = new CustomResearchItem("GEOCCULTISM", 2, 3, 0, new ItemStack(Blocks.grass, 1, 0));
-		//		research.setPages(new ResearchPage[] { new ResearchPage("mn.research_page.GEOCCULTISM.1") });
-		//		research.setRound().setAutoUnlock().registerResearchItem();
 	}
 }

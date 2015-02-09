@@ -1,4 +1,4 @@
-package trinarybrain.magia.naturalis.common.item.artifact;
+package trinarybrain.magia.naturalis.common.item;
 
 import java.io.File;
 import java.util.List;
@@ -28,7 +28,7 @@ import thaumcraft.common.entities.monster.EntityWatcher;
 import thaumcraft.common.tiles.TileBanner;
 import thaumcraft.common.tiles.TileOwned;
 import trinarybrain.magia.naturalis.common.core.Log;
-import trinarybrain.magia.naturalis.common.item.BaseItem;
+import trinarybrain.magia.naturalis.common.item.artifact.ItemResearchLog;
 import trinarybrain.magia.naturalis.common.tile.TileArcaneChest;
 import trinarybrain.magia.naturalis.common.tile.TileTranscribingTable;
 import trinarybrain.magia.naturalis.common.util.Platform;

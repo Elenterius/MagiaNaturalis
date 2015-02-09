@@ -78,6 +78,14 @@ public class Recipes
 	{
 		AspectList aspects = null;
 		Object[] recipe = null;
+		
+		aspects = new AspectList().add(Aspect.ORDER, 4).add(Aspect.ENTROPY, 2).add(Aspect.AIR, 2).add(Aspect.EARTH, 4).add(Aspect.FIRE, 2).add(Aspect.WATER, 2);
+		recipe = new Object[] {" L ", "TBS", " L ",
+				'S', ConfigItems.itemInkwell,
+				'T', ConfigItems.itemThaumometer,
+				'L', Items.string,
+				'B', Items.book};
+		recipes.put("BiomeReport", ThaumcraftApi.addArcaneCraftingRecipe("GEO_OCCULTISM", new ItemStack(ItemsMN.biomeReport, 1), aspects, recipe));
 
 		aspects = new AspectList().add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 20).add(Aspect.AIR, 20).add(Aspect.EARTH, 20).add(Aspect.FIRE, 20).add(Aspect.WATER, 20);
 		recipe = new Object[] {"ALI", "TBW", "OLE",
@@ -147,6 +155,19 @@ public class Recipes
 	{
 		AspectList aspects = null;
 		ItemStack[] recipe = null;
+		
+		aspects = new AspectList().add(Aspect.WEATHER, 9).add(Aspect.AURA, 16).add(Aspect.EXCHANGE, 8).add(Aspect.MECHANISM, 12);
+		recipe = new ItemStack[] {
+				new ItemStack(ConfigItems.itemFocusTrade),
+				new ItemStack(ItemsMN.alchemicalStone, 1, 0),
+				new ItemStack(ConfigItems.itemShard, 1, 0),
+				new ItemStack(ConfigItems.itemShard, 1, 1),
+				new ItemStack(ConfigItems.itemShard, 1, 2),
+				new ItemStack(ConfigItems.itemShard, 1, 3),
+				new ItemStack(ConfigItems.itemShard, 1, 4),
+				new ItemStack(ConfigItems.itemShard, 1, 5)
+		};
+		recipes.put("GeoPylon", ThaumcraftApi.addInfusionCraftingRecipe("GEO_OCCULTISM", new ItemStack(BlocksMN.geoMorpher), 8, aspects, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 14), recipe));
 
 		aspects = new AspectList().add(Aspect.SENSES, 32).add(Aspect.ARMOR, 16).add(Aspect.DARKNESS, 32);
 		recipe = new ItemStack[] {

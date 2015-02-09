@@ -18,7 +18,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemsMN
 {
-//	public static Item devTool;
+	//public static Item devTool;
+	//public static Item biomeDevTool;
+
 	public static Item researchLog;
 	public static Item alchemicalStone;
 	public static Item key;
@@ -29,13 +31,13 @@ public class ItemsMN
 	public static Item focusPouchEnder;
 	public static Item sickleThaumium;
 	public static Item sickleElemental;
-	
-	public static Item biomeSampler;
-	public static Item biomeDevTool;
-	
+	public static Item biomeReport;
+
 	public static void initItems()
 	{
-//		devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
+		//devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
+		//biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
+
 		researchLog = new ItemResearchLog(); registerItem(researchLog, NameUtil.RESEARCH_LOG);
 		alchemicalStone = new ItemAlchemicalStone(); registerItem(alchemicalStone, NameUtil.ALCHEMICAL_STONE);
 		key = new ItemKey(); registerItem(key, NameUtil.KEY);
@@ -46,9 +48,7 @@ public class ItemsMN
 		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, NameUtil.ENDER_FOCUS_POUCH);
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
 		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
-		
-		biomeSampler = new ItemBiomeSampler(); registerItem(biomeSampler, NameUtil.BIOME_SAMPLER);
-		biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
+		biomeReport = new ItemBiomeSampler(); registerItem(biomeReport, NameUtil.BIOME_SAMPLER);
 	}
 
 	private static void registerItem(Item item, String str)
