@@ -1,13 +1,12 @@
 package trinarybrain.magia.naturalis.common.item.artifact;
 
-import java.util.List;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import trinarybrain.magia.naturalis.common.item.BaseItem;
@@ -20,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBiomeSampler extends BaseItem
 {
-	private byte modes;
+	IIcon icon_overlay;
 
 	public ItemBiomeSampler()
 	{
@@ -29,33 +28,52 @@ public class ItemBiomeSampler extends BaseItem
 		this.setMaxDamage(0);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
+	@Override
+	public String getItemStackDisplayName(ItemStack stack)
 	{
-		super.addInformation(stack, player, list, par4);
 		String name = NBTUtil.openNbtData(stack).getString("biomeName");
-		name = name.equals("") ? "None" : name;
-		list.add(EnumChatFormatting.DARK_GRAY + "Sampled Biome: " + name);
+		return (name + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name")).trim();
 	}
 
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "crystal_0");
+		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "report_base");
+		this.icon_overlay = icon.registerIcon(ResourceUtil.PREFIX + "report_overlay");
+	}
+
+	@Override @SideOnly(Side.CLIENT)
+	public IIcon getIconFromDamageForRenderPass(int damage, int renderPass)
+	{
+		return renderPass == 0 ?  this.itemIcon : this.icon_overlay;
+	}
+
+	@Override @SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack stack, int i)
+	{
+		int color = NBTUtil.openNbtData(stack).getInteger("color");
+		color = i == 0 ? 0xFFFFFF : color;
+		return color;
+	}
+
+	@Override @SideOnly(Side.CLIENT)
+	public boolean requiresMultipleRenderPasses()
+	{
+		return true;
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
 	{
 		if(Platform.isClient()) return false;
-		
+
 		if(player.isSneaking())
 		{
 			BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
 			if(biome != null)
 			{
 				NBTTagCompound data = NBTUtil.openNbtData(stack);
-				data.setString("biomeName", biome.biomeName);
+				data.setString("biomeName", biome.biomeName + " ");
 				data.setInteger("biomeID", biome.biomeID);
 				data.setInteger("color", biome.color);
 				return true;
@@ -72,15 +90,7 @@ public class ItemBiomeSampler extends BaseItem
 				return true;
 			}
 		}
-		
-		return false;
-	}
 
-	@SideOnly(Side.CLIENT)
-	public int getColorFromItemStack(ItemStack stack, int i)
-	{
-		int color = NBTUtil.openNbtData(stack).getInteger("color");
-		color = color == 0 ? 0xFFFFFF : color;
-		return color;
+		return false;
 	}
 }
