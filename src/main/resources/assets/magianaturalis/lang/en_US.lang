@@ -53,6 +53,17 @@ item.magianaturalis:sickleThaumium.name=Thaumium Sickle
 item.magianaturalis:sickleElemental.name=Sickle of Abundance
 item.magianaturalis:biomeSampler.name=Biome Report
 
+item.magianaturalis:belt.absorb.name=Dilligent Belt
+item.magianaturalis:belt.reverse.name=Belt of Gravity Reversal
+item.magianaturalis:belt.anchor.name=Y-Dimensional Anchor Belt
+item.magianaturalis:belt.thorn.name=Thorny Belt
+item.magianaturalis:belt.vileThorn.name=Belt of Vile Thorns
+item.magianaturalis:beltHealth.0.name=Belt of Health
+item.magianaturalis:beltHealth.1.name=Belt of Sanis
+item.magianaturalis:beltHealth.2.name=Belt of Verdant
+item.magianaturalis:beltHealth.3.name=Belt of Vitality
+item.magianaturalis:beltHealth.4.name=Belt of Victus
+
 # TILE NAMES
 tile.magianaturalis:transcribingTable.name=Transcribing Table
 tile.magianaturalis:arcaneChest.unknown.name=Unknown Chest

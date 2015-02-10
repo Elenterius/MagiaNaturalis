@@ -10,6 +10,8 @@ import trinarybrain.magia.naturalis.common.item.artifact.ItemKey;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemResearchLog;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemSpectacles;
 import trinarybrain.magia.naturalis.common.item.artifact.ItemThaumiumSickle;
+import trinarybrain.magia.naturalis.common.item.baubles.ItemBelt;
+import trinarybrain.magia.naturalis.common.item.baubles.ItemBeltHealth;
 import trinarybrain.magia.naturalis.common.item.baubles.ItemFocusPouchEnder;
 import trinarybrain.magia.naturalis.common.item.focus.ItemFocusBuild;
 import trinarybrain.magia.naturalis.common.util.NameUtil;
@@ -33,6 +35,9 @@ public class ItemsMN
 	public static Item sickleElemental;
 	public static Item biomeReport;
 
+	public static Item beltSpecial;
+	public static Item beltHealth;
+
 	public static void initItems()
 	{
 		//devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
@@ -49,6 +54,9 @@ public class ItemsMN
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
 		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
 		biomeReport = new ItemBiomeSampler(); registerItem(biomeReport, NameUtil.BIOME_SAMPLER);
+
+		beltSpecial = new ItemBelt(); registerItem(beltSpecial, "belt");
+		beltHealth = new ItemBeltHealth(); registerItem(beltHealth, "beltHealth");
 	}
 
 	private static void registerItem(Item item, String str)
