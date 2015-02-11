@@ -11,8 +11,9 @@ public class PacketBiomeChange extends PacketBase
 	
 	public PacketBiomeChange() {}
 
-	public PacketBiomeChange(int x, int z, short biomeID)
+	public PacketBiomeChange(int packetID, int x, int z, short biomeID)
 	{
+		this.packetID = packetID;
 		this.x = x;
 		this.z = z;
 		this.biomeID = biomeID;

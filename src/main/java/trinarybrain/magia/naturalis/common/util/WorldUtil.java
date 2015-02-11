@@ -25,6 +25,7 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import trinarybrain.magia.naturalis.common.network.NetworkHandler;
 import trinarybrain.magia.naturalis.common.network.PacketHandler;
 import trinarybrain.magia.naturalis.common.network.packet.PacketBiomeChange;
+import trinarybrain.magia.naturalis.common.network.packet.PacketID;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
 
@@ -284,7 +285,7 @@ public class WorldUtil
 		chunk.setBiomeArray(biomeArray);
 		
 		if(Platform.isServer())
-		      NetworkHandler.instance.sendToPlayers(new PacketBiomeChange(x, z, (short)biome.biomeID), world, x, world.getHeightValue(x, z), z, 32); // TODO: validate if it works
+		      NetworkHandler.instance.sendToPlayers(new PacketBiomeChange(PacketID.PACKET_BIOME_CHANGE, x, z, (short)biome.biomeID), world, x, world.getHeightValue(x, z), z, 32); // TODO: validate if it works
 	}
 
 	public static boolean resetBiomeAt(World world, int x, int z)

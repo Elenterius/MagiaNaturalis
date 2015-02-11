@@ -18,9 +18,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemsMN
 {
-	//public static Item devTool;
-	//public static Item biomeDevTool;
-
 	public static Item researchLog;
 	public static Item alchemicalStone;
 	public static Item key;
@@ -33,11 +30,11 @@ public class ItemsMN
 	public static Item sickleElemental;
 	public static Item biomeReport;
 
+	//public static Item devTool;
+	//public static Item biomeDevTool;
+
 	public static void initItems()
 	{
-		//devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
-		//biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
-
 		researchLog = new ItemResearchLog(); registerItem(researchLog, NameUtil.RESEARCH_LOG);
 		alchemicalStone = new ItemAlchemicalStone(); registerItem(alchemicalStone, NameUtil.ALCHEMICAL_STONE);
 		key = new ItemKey(); registerItem(key, NameUtil.KEY);
@@ -49,6 +46,9 @@ public class ItemsMN
 		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, NameUtil.SICKLE_THAUMIUM);
 		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, NameUtil.SICKLE_ELEMENTAL);
 		biomeReport = new ItemBiomeSampler(); registerItem(biomeReport, NameUtil.BIOME_SAMPLER);
+
+		//devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
+		//biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
 	}
 
 	private static void registerItem(Item item, String str)
