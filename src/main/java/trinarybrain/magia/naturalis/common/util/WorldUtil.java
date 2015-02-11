@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,11 +18,8 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.common.Thaumcraft;
-import thaumcraft.common.config.Config;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import trinarybrain.magia.naturalis.common.network.NetworkHandler;
-import trinarybrain.magia.naturalis.common.network.PacketHandler;
 import trinarybrain.magia.naturalis.common.network.packet.PacketBiomeChange;
 import trinarybrain.magia.naturalis.common.network.packet.PacketID;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
@@ -283,9 +279,9 @@ public class WorldUtil
 		byte[] biomeArray = chunk.getBiomeArray();
 		biomeArray[((z & 0xF) << 4 | x & 0xF)] = ((byte)(biome.biomeID & 0xFF));
 		chunk.setBiomeArray(biomeArray);
-		
+
 		if(Platform.isServer())
-		      NetworkHandler.instance.sendToPlayers(new PacketBiomeChange(PacketID.PACKET_BIOME_CHANGE, x, z, (short)biome.biomeID), world, x, world.getHeightValue(x, z), z, 32); // TODO: validate if it works
+			NetworkHandler.instance.sendToPlayers(new PacketBiomeChange(PacketID.PACKET_BIOME_CHANGE, x, z, (short)biome.biomeID), world, x, world.getHeightValue(x, z), z, 32);
 	}
 
 	public static boolean resetBiomeAt(World world, int x, int z)

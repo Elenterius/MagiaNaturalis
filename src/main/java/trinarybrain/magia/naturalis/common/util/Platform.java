@@ -2,14 +2,14 @@ package trinarybrain.magia.naturalis.common.util;
 
 import java.util.UUID;
 
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
+import trinarybrain.magia.naturalis.common.MagiaNaturalis;
 
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public final class Platform
@@ -18,15 +18,15 @@ public final class Platform
 	{
 		return FMLCommonHandler.instance().getEffectiveSide().isClient();
 	}
-	
-	public static WorldClient getClientWorld()
-	{
-		return FMLClientHandler.instance().getClient().theWorld;
-	}
 
 	public static boolean isServer()
 	{
 		return FMLCommonHandler.instance().getEffectiveSide().isServer();
+	}
+
+	public static World getClientWorld()
+	{
+		return MagiaNaturalis.proxyTC4.getClientWorld();
 	}
 
 	public static String translate(String str)

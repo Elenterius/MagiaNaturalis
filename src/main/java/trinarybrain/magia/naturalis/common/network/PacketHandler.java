@@ -7,7 +7,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetHandler;
@@ -23,10 +22,10 @@ import trinarybrain.magia.naturalis.common.network.packet.PacketID;
 import trinarybrain.magia.naturalis.common.network.packet.PacketKey;
 import trinarybrain.magia.naturalis.common.network.packet.PacketPickedBlock;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper;
-import trinarybrain.magia.naturalis.common.util.Platform;
-import trinarybrain.magia.naturalis.common.util.WorldUtil;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
+import trinarybrain.magia.naturalis.common.util.Platform;
+import trinarybrain.magia.naturalis.common.util.WorldUtil;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Sharable
@@ -44,23 +43,23 @@ public class PacketHandler extends SimpleChannelInboundHandler<PacketBase>
 
 			switch(packetID)
 			{
-				case PacketID.PACKET_KEY:
-				{
-					this.handleCustomKeyID(player, (PacketKey) packet);
-					break;
-				}
-	
-				case PacketID.PACKET_PICKED_BLOCK:
-				{
-					this.handlePickedBlock(player, (PacketPickedBlock) packet);
-					break;
-				}
+			case PacketID.PACKET_KEY:
+			{
+				this.handleCustomKeyID(player, (PacketKey) packet);
+				break;
+			}
 
-				case PacketID.PACKET_BIOME_CHANGE:
-				{
-					this.handleBiomeChange(player, (PacketBiomeChange) packet);
-					break;
-				}
+			case PacketID.PACKET_PICKED_BLOCK:
+			{
+				this.handlePickedBlock(player, (PacketPickedBlock) packet);
+				break;
+			}
+
+			case PacketID.PACKET_BIOME_CHANGE:
+			{
+				this.handleBiomeChange(player, (PacketBiomeChange) packet);
+				break;
+			}
 			}
 		}
 		catch (Exception ex)
@@ -68,7 +67,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<PacketBase>
 			ex.printStackTrace();
 		}
 	}
-	
+
 	private void handleBiomeChange(EntityPlayer player, PacketBiomeChange packet)
 	{
 		if(Platform.isClient())

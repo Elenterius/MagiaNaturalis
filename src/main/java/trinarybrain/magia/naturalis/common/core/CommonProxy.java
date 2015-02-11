@@ -56,7 +56,7 @@ public class CommonProxy implements IGuiHandler
 		case 2:
 			return new ContainerArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
 		case 3:
-		      return new ContainerEvilTrunk(player.inventory, world, (EntityEvilTrunk) ((WorldServer)world).getEntityByID(x));
+			return new ContainerEvilTrunk(player.inventory, world, (EntityEvilTrunk) ((WorldServer)world).getEntityByID(x));
 		default:
 			return null;
 		}

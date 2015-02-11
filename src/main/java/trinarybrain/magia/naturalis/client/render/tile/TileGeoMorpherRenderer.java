@@ -22,7 +22,8 @@ public class TileGeoMorpherRenderer extends TileEntitySpecialRenderer
 	private IModelCustom imodel;
 	private static final ResourceLocation relay = new ResourceLocation("thaumcraft", "textures/models/vis_relay.obj");
 	private ResourceLocation rl = new ResourceLocation("thaumcraft", "textures/models/vis_relay.png");
-
+	int ticks = 0;
+	
 	public TileGeoMorpherRenderer()
 	{
 		this.color = new Color(0.5F, 0.5F, 0.5F);
@@ -37,7 +38,7 @@ public class TileGeoMorpherRenderer extends TileEntitySpecialRenderer
 
 	public void renderCrystalPylon(TileGeoMorpher tile, double x, double y, double z, float partialTicks, int color, Random rand)
 	{
-		int ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted;
+		if(!tile.idle) ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted;
 		float shade = MathHelper.sin((ticks + rand.nextInt(10)) / (10.0F + rand.nextFloat())) * 0.05F + 0.95F;
 		float bob = MathHelper.sin(ticks / 14.0F) * 0.025F;
 
