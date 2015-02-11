@@ -35,7 +35,7 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 	BiomeGenBase lastBiome = null;
 	AspectList morphCost = new AspectList();
 	AspectList realCost = new AspectList();	
-	public boolean idle = false;
+	public boolean idle = true;
 
 	@Override
 	public void updateEntity()
@@ -106,9 +106,11 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 				int posZ = this.zCoord - radius + this.morphZ;
 				int posY = this.worldObj.getTopSolidOrLiquidBlock(posX, posZ);
 				WorldUtil.setBiomeAt(this.worldObj, posX, posZ, newBiome);
-				this.worldObj.getChunkFromBlockCoords(this.xCoord, this.zCoord).setChunkModified();
-				if(Platform.isClient()) Minecraft.getMinecraft().theWorld.markBlockForUpdate(posX, posY, posZ); //Will only work in SSP
-				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.xCoord, this.yCoord, this.zCoord, 0xC0C0FF), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0D));
+				
+				this.worldObj.getChunkFromBlockCoords(posX, posZ).setChunkModified();
+				this.worldObj.markBlockForUpdate(posX, posY, posZ);
+				
+				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockSparkle(this.xCoord, this.yCoord, this.zCoord, newBiome.color), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, this.xCoord, this.yCoord, this.zCoord, 32.0D));
 			}
 		}
 		else isComplete = true;

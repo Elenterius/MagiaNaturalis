@@ -22,8 +22,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.items.wands.ItemWandCasting;
-import thaumcraft.common.lib.network.PacketHandler;
-import thaumcraft.common.lib.network.misc.PacketBiomeChange;
+import trinarybrain.magia.naturalis.common.network.NetworkHandler;
+import trinarybrain.magia.naturalis.common.network.PacketHandler;
+import trinarybrain.magia.naturalis.common.network.packet.PacketBiomeChange;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Meta;
 import trinarybrain.magia.naturalis.common.util.FocusBuildHelper.Shape;
 
@@ -283,7 +284,7 @@ public class WorldUtil
 		chunk.setBiomeArray(biomeArray);
 		
 		if(Platform.isServer())
-		      PacketHandler.INSTANCE.sendToAllAround(new PacketBiomeChange(x, z, (short)biome.biomeID), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, world.getHeightValue(x, z), z, 32.0D));
+		      NetworkHandler.instance.sendToPlayers(new PacketBiomeChange(x, z, (short)biome.biomeID), world, x, world.getHeightValue(x, z), z, 32); // TODO: validate if it works
 	}
 
 	public static boolean resetBiomeAt(World world, int x, int z)
