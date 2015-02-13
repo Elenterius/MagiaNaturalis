@@ -29,7 +29,7 @@ public class KeyHandler
 	public KeyBinding keyMultSize = new KeyBinding("key.magianaturalis.size.add", Keyboard.KEY_ADD, "key.categories.magianaturalis");
 	public KeyBinding keySubSize = new KeyBinding("key.magianaturalis.size.sub", Keyboard.KEY_SUBTRACT, "key.categories.magianaturalis");
 	public KeyBinding keyMisc = new KeyBinding("key.magianaturalis.misc", Keyboard.KEY_V, "key.categories.magianaturalis");
-	public KeyBinding keyPickBlock = new KeyBinding("key.magianaturalis.pickBlock", Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode(), "key.categories.magianaturalis");
+	public KeyBinding keyPickBlock = new KeyBinding("key.magianaturalis.pickBlock", -98, "key.categories.magianaturalis");
 
 	public KeyHandler()
 	{

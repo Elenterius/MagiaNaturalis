@@ -8,10 +8,10 @@ enum.magianaturalis:plane=Plane
 enum.magianaturalis:plane.extend=Plane Extend
 enum.magianaturalis:sphere=Sphere
 key.categories.magianaturalis=Magia Naturalis
-key.magianaturalis:size.add=Increase Area Size
-key.magianaturalis:size.sub=Decrease Area Size
-key.magianaturalis:misc=Toggle Shape/Mode
-key.magianaturalis:pickBlock=Pick Block
+key.magianaturalis.size.add=Increase Area Size
+key.magianaturalis.size.sub=Decrease Area Size
+key.magianaturalis.misc=Toggle Shape/Mode
+key.magianaturalis.pickBlock=Pick Block
 
 # CHAT MSG
 chat.magianaturalis:key.access.door=The Arcane Door has been linked to your Soul.
