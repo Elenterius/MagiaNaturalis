@@ -3,9 +3,12 @@ package trinarybrain.magia.naturalis.client.model.entity;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
+
+import trinarybrain.magia.naturalis.common.core.Log;
 
 public class ModelTaintBreeder extends ModelBase
 {
@@ -126,31 +129,44 @@ public class ModelTaintBreeder extends ModelBase
 		this.setRotation(rearEnd1, 0.3490659F, 0F, 0F);
 	}
 
-	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+	@Override
+	public void render(Entity entity, float limbSwing, float prevLimbSwing, float rotationTicks, float rotationYaw, float rotationPitch, float scale)
 	{
-//		super.render(par1Entity, par2, par3, par4, par5, par6, par7);
 		GL11.glPushMatrix();
-		this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
+		this.setRotationAngles(limbSwing, prevLimbSwing, rotationTicks, rotationYaw, rotationPitch, scale, entity);
 		GL11.glTranslatef(0F, -0.25F, 0F);
-		this.head.render(par7);
-		this.body.render(par7);
-		this.leg8.render(par7);
-		this.leg6.render(par7);
-		this.leg4.render(par7);
-		this.leg2.render(par7);
-		this.leg7.render(par7);
-		this.leg5.render(par7);
-		this.leg3.render(par7);
-		this.leg1.render(par7);
-		this.headClaw.render(par7);
-		this.headClaw2.render(par7);
-		
+		this.head.render(scale);
+		this.body.render(scale);
+		this.leg8.render(scale);
+		this.leg6.render(scale);
+		this.leg4.render(scale);
+		this.leg2.render(scale);
+		this.leg7.render(scale);
+		this.leg5.render(scale);
+		this.leg3.render(scale);
+		this.leg1.render(scale);
+		this.headClaw.render(scale);
+		this.headClaw2.render(scale);
+
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		this.eye0.render(par7);
-		this.eye1.render(par7);
-		this.rearEnd0.render(par7);
-		this.rearEnd1.render(par7);
+		this.eye0.render(scale);
+		this.eye1.render(scale);
+
+		EntityLiving entityLiving = (EntityLiving) entity;
+		float health = Math.max(entityLiving.getMaxHealth() - entityLiving.getHealth(), 1) * 0.5F;
+		float bob = MathHelper.sin(rotationTicks)  * 0.0133F * health;
+		this.rearEnd0.rotateAngleY = bob;
+		this.rearEnd1.rotateAngleY = bob;
+		this.rearEnd0.rotateAngleX = 0.3490659F + bob;
+		this.rearEnd1.rotateAngleX = 0.3490659F + bob;
+		
+		this.headClaw.rotateAngleX = -0.0194155F + bob * 0.5F;
+		this.headClaw2.rotateAngleX = 0.0194155F - bob * 0.25F;
+				
+		this.rearEnd0.render(scale);
+		this.rearEnd1.render(scale);
+
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glPopMatrix();
 	}
@@ -162,9 +178,9 @@ public class ModelTaintBreeder extends ModelBase
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(float f1, float f2, float f3, float f4, float f5, float f6, Entity entity)
+	public void setRotationAngles(float limbSwing, float prevLimbSwing, float rotationTicks, float rotationYaw, float rotationPitch, float scale, Entity entity)
 	{
-		this.headClaw.rotateAngleY = this.headClaw2.rotateAngleY = this.eye0.rotateAngleY = this.eye1.rotateAngleY = this.head.rotateAngleY = f4 / (180F / (float)Math.PI);  
+		this.headClaw.rotateAngleY = this.headClaw2.rotateAngleY = this.eye0.rotateAngleY = this.eye1.rotateAngleY = this.head.rotateAngleY = rotationYaw / (180F / (float)Math.PI);  
 		float f7 = ((float)Math.PI / 4F);
 		this.leg1.rotateAngleZ = -f7;
 		this.leg2.rotateAngleZ = f7;
@@ -184,14 +200,14 @@ public class ModelTaintBreeder extends ModelBase
 		this.leg6.rotateAngleY = f9 * 1.0F - f8;
 		this.leg7.rotateAngleY = -f9 * 2.0F + f8;
 		this.leg8.rotateAngleY = f9 * 2.0F - f8;
-		float f10 = -(MathHelper.cos(f1 * 0.6662F * 2.0F + 0.0F) * 0.4F) * f2;
-		float f11 = -(MathHelper.cos(f1 * 0.6662F * 2.0F + (float)Math.PI) * 0.4F) * f2;
-		float f12 = -(MathHelper.cos(f1 * 0.6662F * 2.0F + ((float)Math.PI / 2F)) * 0.4F) * f2;
-		float f13 = -(MathHelper.cos(f1 * 0.6662F * 2.0F + ((float)Math.PI * 3F / 2F)) * 0.4F) * f2;
-		float f14 = Math.abs(MathHelper.sin(f1 * 0.6662F + 0.0F) * 0.4F) * f2;
-		float f15 = Math.abs(MathHelper.sin(f1 * 0.6662F + (float)Math.PI) * 0.4F) * f2;
-		float f16 = Math.abs(MathHelper.sin(f1 * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * f2;
-		float f17 = Math.abs(MathHelper.sin(f1 * 0.6662F + ((float)Math.PI * 3F / 2F)) * 0.4F) * f2;
+		float f10 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + 0.0F) * 0.4F) * prevLimbSwing;
+		float f11 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + (float)Math.PI) * 0.4F) * prevLimbSwing;
+		float f12 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float)Math.PI / 2F)) * 0.4F) * prevLimbSwing;
+		float f13 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float)Math.PI * 3F / 2F)) * 0.4F) * prevLimbSwing;
+		float f14 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + 0.0F) * 0.4F) * prevLimbSwing;
+		float f15 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + (float)Math.PI) * 0.4F) * prevLimbSwing;
+		float f16 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * prevLimbSwing;
+		float f17 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float)Math.PI * 3F / 2F)) * 0.4F) * prevLimbSwing;
 		this.leg1.rotateAngleY += f10;
 		this.leg2.rotateAngleY += -f10;
 		this.leg3.rotateAngleY += f11;
