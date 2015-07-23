@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
 /** 
- * Equipped head slot items that extend this class will reveal any Invisible LivingEntity to the player.
+ * Equipped head slot items that implement this class will reveal any Invisible LivingEntity to the player.
  *
  *@author TrinaryBrain
  */
