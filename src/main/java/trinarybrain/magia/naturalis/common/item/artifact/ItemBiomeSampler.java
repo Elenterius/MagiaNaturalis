@@ -58,7 +58,7 @@ public class ItemBiomeSampler extends BaseItem
 		if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown())
 		{
 			String[] aspects = getAspects(stack);
-			if(stack == null) return;
+			if(aspects == null) return;
 
 			for(int i = 0; i < aspects.length; i++)
 				if(aspects[i] != null)
