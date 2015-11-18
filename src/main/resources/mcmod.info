@@ -1,7 +1,7 @@
 [
 {
-  "modid": "MagiaNaturalis",
-  "name": "§2Magia Naturalis",
+  "modid": "magianaturalis",
+  "name": "Magia Naturalis",
   "description": "Explore the Philosophy of the Natural and discover new principles that broaden your expertise.",
   "version": "${version}",
   "mcversion": "${mcversion}",

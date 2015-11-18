@@ -22,7 +22,7 @@ group= "trinarybrain.magia.naturalis"
 archivesBaseName = "MagiaNaturalis"
 
 minecraft {
-    version = "1.7.10-10.13.2.1272"
+    version = "1.7.10-10.13.4.1566-1.7.10"
     runDir = "eclipse"
 }
 

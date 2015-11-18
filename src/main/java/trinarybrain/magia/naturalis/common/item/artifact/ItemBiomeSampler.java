@@ -40,8 +40,8 @@ public class ItemBiomeSampler extends BaseItem
 	public ItemBiomeSampler()
 	{
 		super();
-		this.maxStackSize = 1;
-		this.setMaxDamage(0);
+		setMaxStackSize(1);
+		setMaxDamage(0);
 	}
 
 	@Override
@@ -50,19 +50,19 @@ public class ItemBiomeSampler extends BaseItem
 		String name = NBTUtil.openNbtData(stack).getString("biomeName");
 		return (name + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name")).trim();
 	}
-	
+
 	@Override @SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
 		super.addInformation(stack, player, list, par4);
 		if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown())
 		{
-			String[] aspects = this.getAspects(stack);
+			String[] aspects = getAspects(stack);
+			if(stack == null) return;
+
 			for(int i = 0; i < aspects.length; i++)
-			{
 				if(aspects[i] != null)
 					list.add(aspects[i]);
-			}
 		}
 		else
 		{
@@ -117,7 +117,7 @@ public class ItemBiomeSampler extends BaseItem
 				NBTTagCompound tempData = new NBTTagCompound();
 
 				for(int i = 0; i < newTypes.length; i++)
-				{	
+				{
 					if(newTypes[i] != null)
 					{
 						if(newTypes[i] != Type.MAGICAL) // Because Thaumcraft adds null aspect for magical biome type
@@ -137,7 +137,7 @@ public class ItemBiomeSampler extends BaseItem
 						}
 					}
 				}
-				
+
 				data.setTag("aspects", nbttaglist);
 				return true;
 			}
@@ -164,12 +164,12 @@ public class ItemBiomeSampler extends BaseItem
 			NBTTagCompound data = NBTUtil.openNbtData(stack);
 			if(!data.hasKey("aspects")) return null;
 			NBTTagList nbttaglist = data.getTagList("aspects", NBT.TAG_COMPOUND);
-			
+
 			String[] aspects = new String[nbttaglist.tagCount()];
 			for(int i = 0; i < nbttaglist.tagCount(); ++i)
 			{
 				NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
-				
+
 				Set keys = tempData.func_150296_c();
 				int j = 0;
 				for(Object ob : keys)
