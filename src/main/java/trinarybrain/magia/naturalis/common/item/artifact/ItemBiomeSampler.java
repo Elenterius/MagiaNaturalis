@@ -169,7 +169,6 @@ public class ItemBiomeSampler extends BaseItem
 			for(int i = 0; i < nbttaglist.tagCount(); ++i)
 			{
 				NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
-
 				Set keys = tempData.func_150296_c();
 				int j = 0;
 				for(Object ob : keys)
@@ -178,7 +177,10 @@ public class ItemBiomeSampler extends BaseItem
 					{
 						if(j >= nbttaglist.tagCount()) break;
 						String aspectTag = (String) ob;
-						aspects[j++] = String.format("%dx %s", tempData.getShort(aspectTag), WordUtils.capitalizeFully(aspectTag));
+
+						String color = Aspect.getAspect(aspectTag).getChatcolor();
+						if(color == null) color = "5";
+						aspects[j++] = String.format("%dx %s%s", tempData.getShort(aspectTag), String.valueOf('\u00a7') + color, WordUtils.capitalizeFully(aspectTag));
 					}
 				}
 			}
