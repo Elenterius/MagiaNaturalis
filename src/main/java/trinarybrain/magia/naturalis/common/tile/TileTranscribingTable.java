@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants.NBT;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
@@ -30,68 +31,61 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 	@Override
 	public ItemStack getStackInSlot(int index)
 	{
-		return this.inventory[index];
+		return inventory[index];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int amount)
 	{
-		if(this.inventory[index] == null) return null;
+		if(inventory[index] == null) return null;
 
-		if(this.inventory[index].stackSize <= amount)
+		if(inventory[index].stackSize <= amount)
 		{
-			ItemStack stack = this.inventory[index];
-			this.inventory[index] = null;
-			this.markDirty();
+			ItemStack stack = inventory[index];
+			inventory[index] = null;
 			return stack;
 		}
 
-		ItemStack stack = this.inventory[index].splitStack(amount);
-		if(this.inventory[index].stackSize == 0)
-		{
-			this.inventory[index] = null;
-		}
-		this.markDirty();
+		ItemStack stack = inventory[index].splitStack(amount);
+		if(inventory[index].stackSize == 0)
+			inventory[index] = null;
+
 		return stack;
 	}
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int index)
 	{
-		if(this.inventory[index] == null) return null;
+		if(inventory[index] == null) return null;
 
-		ItemStack stack = this.inventory[index];
-		this.inventory[index] = null;
-		this.markDirty();
+		ItemStack stack = inventory[index];
+		inventory[index] = null;
 		return stack;
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
-		this.inventory[index] = stack;
-		if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-		{
-			stack.stackSize = this.getInventoryStackLimit();
-		}
-		this.markDirty();
+		inventory[index] = stack;
+		if(stack != null && stack.stackSize > getInventoryStackLimit())
+			stack.stackSize = getInventoryStackLimit();
 	}
 
 	@Override
 	public String getInventoryName()
 	{
-		return this.hasCustomInventoryName() ? this.customName : "container.transtable";
+		return hasCustomInventoryName() ? customName : "container.transtable";
 	}
 
 	@Override
 	public boolean hasCustomInventoryName()
 	{
-		return this.customName != null && this.customName.length() > 0;
+		return customName != null && customName.length() > 0;
 	}
 
 	public void setCustomInventoryNamee(String name)
 	{
-		this.customName = name;
+		customName = name;
 	}
 
 	public void readFromNBT(NBTTagCompound data)
@@ -99,7 +93,7 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 		super.readFromNBT(data);
 		if(data.hasKey("CustomName", 8))
 		{
-			this.customName = data.getString("CustomName");
+			customName = data.getString("CustomName");
 		}
 	}
 
@@ -108,23 +102,23 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 		super.writeToNBT(data);
 		if(hasCustomInventoryName())
 		{
-			data.setString("CustomName", this.customName);
+			data.setString("CustomName", customName);
 		}
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound data)
 	{
-		NBTTagList nbttaglist = data.getTagList("Items", 10);
-		this.inventory = new ItemStack[this.getSizeInventory()];
+		NBTTagList nbttaglist = data.getTagList("Items", NBT.TAG_COMPOUND);
+		inventory = new ItemStack[getSizeInventory()];
 
 		for(int i = 0; i < nbttaglist.tagCount(); ++i)
 		{
 			NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
-			byte j = tempData.getByte("Slot");
-			if (j >= 0 && j < this.inventory.length)
+			byte b = tempData.getByte("Slot");
+			if(b >= 0 && b < inventory.length)
 			{
-				this.inventory[j] = ItemStack.loadItemStackFromNBT(tempData);
+				inventory[b] = ItemStack.loadItemStackFromNBT(tempData);
 			}
 		}
 	}
@@ -133,13 +127,13 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 	public void writeCustomNBT(NBTTagCompound data)
 	{
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < this.inventory.length; i++)
+		for (int i = 0; i < inventory.length; i++)
 		{
-			if (this.inventory[i] != null)
+			if (inventory[i] != null)
 			{
 				NBTTagCompound tempData = new NBTTagCompound();
 				tempData.setByte("Slot", (byte)i);
-				this.inventory[i].writeToNBT(tempData);
+				inventory[i].writeToNBT(tempData);
 				nbttaglist.appendTag(tempData);
 			}
 		}
@@ -155,7 +149,7 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player)
 	{
-		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
 	}
 
 	@Override
@@ -167,7 +161,7 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
 	{
-		return index != 0 ? false : stack.getItem() instanceof ItemResearchLog;
+		return index == 1 ? false : index == 0 ? stack.getItem() instanceof ItemResearchLog : true;
 	}
 
 	@Override
@@ -195,26 +189,26 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 		boolean update = false;
 		if(Platform.isServer())
 		{
-			if(this.getStackInSlot(0) != null && this.getStackInSlot(0).getItem() instanceof ItemResearchLog)
-				if(--this.timer <= 0) {update = this.handleKnowledgeHarvest(update); timer = 40;}
-			if(update) this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+			if(getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof ItemResearchLog)
+				if(--timer <= 0) {update = handleKnowledgeHarvest(update); timer = 40;}
+			if(update) worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 
 	private boolean handleKnowledgeHarvest(boolean update)
 	{
-		if(this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) != BlocksMN.transcribingTable) return update;
+		if(worldObj.getBlock(xCoord, yCoord, zCoord) != BlocksMN.transcribingTable) return update;
 
-		ItemStack stack = this.getStackInSlot(0);		
+		ItemStack stack = getStackInSlot(0);
 
-		int x = this.worldObj.rand.nextInt(2) - this.worldObj.rand.nextInt(2);
-		int z = this.worldObj.rand.nextInt(2) - this.worldObj.rand.nextInt(2);
+		int x = worldObj.rand.nextInt(2) - worldObj.rand.nextInt(2);
+		int z = worldObj.rand.nextInt(2) - worldObj.rand.nextInt(2);
 		x += x; z += z;
 
 		if(x != 0 || z != 0)
 		{
-			TileEntity tile = this.worldObj.getTileEntity(this.xCoord + x, this.yCoord, this.zCoord + z);			
-			if(tile != null && tile instanceof TileDeconstructionTable && this.worldObj.getBlock(this.xCoord + x, this.yCoord, this.zCoord + z) == ConfigBlocks.blockTable)
+			TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord, zCoord + z);
+			if(tile != null && tile instanceof TileDeconstructionTable && worldObj.getBlock(xCoord + x, yCoord, zCoord + z) == ConfigBlocks.blockTable)
 			{
 				TileDeconstructionTable tileDT = (TileDeconstructionTable) tile;
 				Aspect aspect = tileDT.aspect;
@@ -225,19 +219,19 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
 					if(log.addResearchPoint(stack, aspect, (short) 1))
 					{
 						tileDT.aspect = null;
-						this.worldObj.markBlockForUpdate(this.xCoord + x, this.yCoord, this.zCoord + z);
+						worldObj.markBlockForUpdate(xCoord + x, yCoord, zCoord + z);
 						update = true;
 					}
 					else
 					{
 						//Check if Book is full & put it into the appropriate slot if necessary
-						if(log.getResearchPoint(stack, Aspect.AIR) == 64 && log.getResearchPoint(stack, Aspect.EARTH) == 64 && log.getResearchPoint(stack, Aspect.WATER) == 64 && log.getResearchPoint(stack, Aspect.FIRE) == 64 && log.getResearchPoint(stack, Aspect.ORDER) == 64 && log.getResearchPoint(stack, Aspect.ENTROPY) == 64) 
+						if(log.getResearchPoint(stack, Aspect.AIR) == 64 && log.getResearchPoint(stack, Aspect.EARTH) == 64 && log.getResearchPoint(stack, Aspect.WATER) == 64 && log.getResearchPoint(stack, Aspect.FIRE) == 64 && log.getResearchPoint(stack, Aspect.ORDER) == 64 && log.getResearchPoint(stack, Aspect.ENTROPY) == 64)
 						{
-							if(this.getStackInSlot(1) == null)
+							if(getStackInSlot(1) == null)
 							{
 								ItemStack stack2 = stack.copy();
-								this.setInventorySlotContents(0, null);
-								this.setInventorySlotContents(1, stack2);
+								setInventorySlotContents(0, null);
+								setInventorySlotContents(1, stack2);
 							}
 						}
 					}
