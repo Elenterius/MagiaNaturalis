@@ -4,16 +4,15 @@ import java.util.Map;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
-@IFMLLoadingPlugin.Name(value = "MNCoremod")
+@IFMLLoadingPlugin.Name(value = "MN-COREMOD")
 @IFMLLoadingPlugin.MCVersion(value = "1.7.10")
 @IFMLLoadingPlugin.TransformerExclusions(value = "trinarybrain.magia.naturalis.coremod")
-@IFMLLoadingPlugin.SortingIndex(value = 990)
-public class MNPlugin implements IFMLLoadingPlugin
+public class Plugin implements IFMLLoadingPlugin
 {
 	@Override
 	public String[] getASMTransformerClass()
 	{
-		return new String[]{"trinarybrain.magia.naturalis.coremod.Agent"};
+		return new String[] {"trinarybrain.magia.naturalis.coremod.ClassTransformer"};
 	}
 
 	@Override
@@ -29,10 +28,7 @@ public class MNPlugin implements IFMLLoadingPlugin
 	}
 
 	@Override
-	public void injectData(Map<String, Object> data)
-	{
-		
-	}
+	public void injectData(Map<String, Object> data) {}
 
 	@Override
 	public String getAccessTransformerClass()
