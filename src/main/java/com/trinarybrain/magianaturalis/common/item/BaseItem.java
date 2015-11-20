@@ -7,6 +7,6 @@ public class BaseItem extends Item
 {
 	public BaseItem()
 	{
-		this.setCreativeTab(MagiaNaturalis.creativeTab);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 }

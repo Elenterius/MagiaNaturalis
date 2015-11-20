@@ -34,7 +34,7 @@ public class BiomeDevTool extends BaseItem
 	public BiomeDevTool()
 	{
 		super();
-		this.maxStackSize = 1;
+		maxStackSize = 1;
 	}
 
 	@SideOnly(Side.CLIENT)

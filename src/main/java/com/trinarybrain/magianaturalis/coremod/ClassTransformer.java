@@ -25,11 +25,8 @@ public class ClassTransformer implements IClassTransformer, Opcodes
 	public byte[] transform(String className, String transformedName, byte[] classfileBuffer)
 	{
 		int isObfuscated = !className.equals(transformedName) ? 1 : 0;
-		return transformedName.equals(classToBeTransformed) ? transform(classfileBuffer, isObfuscated) : classfileBuffer;
-	}
+		if(!transformedName.equals(classToBeTransformed)) return classfileBuffer;
 
-	private static byte[] transform(byte[] classfileBuffer, int isObfuscated)
-	{
 		Log.logger.info("Transforming: " + classToBeTransformed);
 
 		try

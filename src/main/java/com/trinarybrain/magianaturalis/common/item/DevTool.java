@@ -43,8 +43,8 @@ public class DevTool extends BaseItem
 	public DevTool()
 	{
 		super();
-		this.modes = 2;
-		this.maxStackSize = 1;
+		modes = 2;
+		maxStackSize = 1;
 	}
 
 	@SideOnly(Side.CLIENT)
