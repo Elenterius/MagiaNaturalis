@@ -30,9 +30,8 @@ project.sourceCompatibility = 1.7
 project.targetCompatibility = 1.7
 
 jar {
-        manifest {
-        attributes 'FMLCorePlugin': 'com.trinarybrain.magianaturalis.coremod.MNPlugin',
-                        'FMLCorePluginContainsFMLMod': 'true'
+    manifest {
+        attributes 'FMLCorePlugin': 'com.trinarybrain.magianaturalis.coremod.MNPlugin', 'FMLCorePluginContainsFMLMod': 'true'
     }
 }
 
