@@ -64,7 +64,7 @@ public class DevTool extends BaseItem
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "book_ouroboros");
+		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "book_magia_natura");
 	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)

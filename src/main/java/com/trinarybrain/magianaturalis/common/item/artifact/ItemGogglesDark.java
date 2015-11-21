@@ -33,8 +33,8 @@ public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDisco
 	public ItemGogglesDark()
 	{
 		super(ThaumcraftApi.armorMatSpecial, 4, 0);
-		this.setMaxDamage(350);
-		this.setCreativeTab(MagiaNaturalis.creativeTab);
+		setMaxDamage(350);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -48,7 +48,7 @@ public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDisco
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.itemIcon = ir.registerIcon(ResourceUtil.PREFIX + NameUtil.GOGGLES_DARK_CRYSTAL);
+		itemIcon = ir.registerIcon(ResourceUtil.PREFIX + NameUtil.GOGGLES_DARK_CRYSTAL);
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)

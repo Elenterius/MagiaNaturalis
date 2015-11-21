@@ -15,16 +15,16 @@ public class ItemElementalSickle extends ItemSickle implements IRepairable
 	public ItemElementalSickle()
 	{
 		super(ThaumcraftApi.toolMatElemental);
-		this.areaSize = 9;
-		this.collectLoot = true;
-		this.colorLoot = 0;
-		this.abundanceLevel = 2;
+		areaSize = 9;
+		collectLoot = true;
+		colorLoot = 0;
+		abundanceLevel = 2;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "sickle_abundance_wood");
+		itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "sickle_abundance");
 	}
 
 	public EnumRarity getRarity(ItemStack itemstack)

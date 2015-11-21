@@ -24,14 +24,14 @@ public class ItemEvilTrunkSpawner extends BaseItem
 
 	public ItemEvilTrunkSpawner()
 	{
-		this.setMaxStackSize(1);
-		this.setHasSubtypes(true);
+		setMaxStackSize(1);
+		setHasSubtypes(true);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.itemIcon = ir.registerIcon(ResourceUtil.PREFIX + ResourceUtil.EMTPY_TEXTURE);
+		itemIcon = ir.registerIcon(ResourceUtil.PREFIX + ResourceUtil.EMTPY_TEXTURE);
 	}
 
 	@SideOnly(Side.CLIENT)

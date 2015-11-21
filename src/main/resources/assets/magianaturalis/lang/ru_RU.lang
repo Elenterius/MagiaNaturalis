@@ -1,0 +1,146 @@
+﻿# MISC
+itemGroup.magianaturalis=Magia Naturalis
+enum.magianaturalis:none=Не выбрано
+enum.magianaturalis:unknown=Неизвестно
+enum.magianaturalis:uniform=Форма
+enum.magianaturalis:cube=Куб
+enum.magianaturalis:plane=Плоскость
+enum.magianaturalis:plane.extend=Продвинутая плоскость
+enum.magianaturalis:sphere=Сфера
+key.categories.magianaturalis=Magia Naturalis
+key.magianaturalis.size.add=Увеличить размер области
+key.magianaturalis.size.sub=Уменьшить размер области
+key.magianaturalis.misc=Включить Форму/Режим
+key.magianaturalis.pickBlock=Выбор блока
+
+# CHAT MSG
+chat.magianaturalis:key.access.door=Магическая дверь была связана с вашей душой.
+chat.magianaturalis:key.access.chest=The Arcane Chest seems to like You.
+chat.magianaturalis:key.access.misc=Магическое устройство теперь связано с вашей душой.
+chat.magianaturalis:key.boundplayer=Ключ был связан с душой %s.
+chat.magianaturalis:key.boundplayer.1=Вы привязали ключ к вашей душе.
+chat.magianaturalis:key.owner=You are now the Forger of the Key.
+chat.magianaturalis:key.accesslist=%s был добавлен в список ключей доступа.
+chat.magianaturalis:chest.access.denied=The Arcane Chest doesn't seem to like You.
+chat.magianaturalis:chest.resist=Сундук сопротивляется Вашей попытке миниатюризации.
+
+# Flavor Text & Tool Hint & Misc 
+flavor.magianaturalis:key.0=Один для всех...
+flavor.magianaturalis:key.1=Один, чтобы предоставить доступ другим...
+flavor.magianaturalis:banner=Баннер в честь нашего присутствия.
+hint.magianaturalis:ctrl=<Нажмите Ctrl>
+hint.magianaturalis:chest.items=Содержит сокровище
+hint.magianaturalis:chest.access=Имеет список доступа
+hint.magianaturalis:horizontal=Горизонтальные
+hint.magianaturalis:vertical=Вертикальные
+
+# ITEM NAMES
+item.magianaturalis:researchLog.name=Журнал исследований
+item.magianaturalis:alchemicalStone.1.name=Ртутный алхимический камень
+item.magianaturalis:alchemicalStone.0.name=Феноморфный камень-катализатор
+item.magianaturalis:devTool.name=Остальные инструменты разработчика
+item.magianaturalis:key.0.name=Ключ разгадки
+item.magianaturalis:key.1.name=Ключ поддержки
+item.magianaturalis:gogglesDarkCrystal.name=Темные кристальные очки
+item.magianaturalis:spectacles.name=Очки
+item.magianaturalis:focusBuild.name=Набалдашник: Строительство
+item.magianaturalis:evilTrunk.tainted.name=Заражённый сундук
+item.magianaturalis:evilTrunk.demonic.name=Демонический сундук
+item.magianaturalis:evilTrunk.sinister.name=Зловещий сундук
+item.magianaturalis:evilTrunk.corrupted.name=Повреждённый сундук
+item.magianaturalis:focusPouchEnder.name=Эндер-сумка для набалдашников
+item.magianaturalis:sickleThaumium.name=Таум-серп
+item.magianaturalis:sickleElemental.name=Серп изобилия
+item.magianaturalis:biomeSampler.name=Biome Report
+
+# TILE NAMES
+tile.magianaturalis:transcribingTable.name=Стол конвертации
+tile.magianaturalis:arcaneChest.unknown.name=Неизвестный сундук
+tile.magianaturalis:arcaneChest.gw.name=Сундук из великого дерева
+tile.magianaturalis:arcaneChest.sw.name=Сундук из серебряного дерева
+tile.magianaturalis:jarPrison.name=Сущность в банке
+tile.magianaturalis:arcaneWood.gwPlanks.name=Доски из великого дерева
+tile.magianaturalis:arcaneWood.gwOrn.name=Великодревесный орнамента
+tile.magianaturalis:arcaneWood.swPlanks.name=Доски из серебряного дерева
+tile.magianaturalis:arcaneWood.gwGoldOrn.0.name=Украшенные золотом доски из великого дерева
+tile.magianaturalis:arcaneWood.gwGoldOrn.1.name=Украшенные золотом доски из великого дерева
+tile.magianaturalis:arcaneWood.gwGoldTrim.name=Окантованные золотом доски из великого дерева
+tile.magianaturalis:banner.name=Вымпел "Естественная магия"
+tile.magianaturalis:geoMorpher.name=Гео-пилон
+
+# ENTITIY NAMES
+entity.taintBreeder.name=Taint Breeder
+entity.magia_naturalis.evilTrunk.name=Злой сундук
+
+# RESEARCH
+tc.research_category.magianaturalis=Естественная магия
+
+mn.research_name.INTRO=Неотъемлемый закон
+mn.research_text.INTRO=Познание природы вещей, для того, чтобы понять характер, и их существование
+mn.research_page.INTRO.1=Все Таумотурги могут манипулировать магическими эссенциями, которые мы называем Вис, но лишь немногим удалось смотреть сквозь коррупцию и тьму. Ваша глубокая связь с естественным флаксом и его изначальной находкой привели Вас к познаниям настоящей красоты этого материального мира.<BR>Натуралисты утверждают, что есть возможность манипулировать тканями жизни, природы и существ. Они считают, что обнаружили нашу природу существования....
+
+mn.research_name.CARPENTRY=Деревья
+mn.research_text.CARPENTRY=Строительные блоки
+mn.research_page.CARPENTRY.1=Устав от постоянного использования волшебных деревьев в строительстве, Вы решили украсить их, просто вырезав узоры на них. Несколько гравюр и немного золота сделают это. Склеив плиты результат оказался лучшим, чем все, что Вы когда-либо представляли.
+
+mn.research_name.TRANSCRIBINGTABLE=Расшифровка исследований
+mn.research_text.TRANSCRIBINGTABLE=Часть фундаментальных знаний
+mn.research_page.TRANSCRIBINGTABLE.1="Магия пера танцует по столешнице стола. Эти провалы в памяти об эфирных знаниях образованы деконструкцией материи. Построчно буквы образуют расшифровку забытых знаний в физической форме." - Неизвестный поэт
+
+mn.research_name.RESEARCH_LOG=Журнал исследований
+mn.research_text.RESEARCH_LOG=Коллекционирование знаний для всех
+mn.research_page.RESEARCH_LOG.1=This thick Tome can store Research Points as Words written down with magical Scribing Tools. If Anyone reads this Book they gain all Research Points contained within. The words disappear from the pages leaving behind a blank Research Log.
+
+mn.research_name.KEY_SPECIAL=Таум-ключ
+mn.research_text.KEY_SPECIAL=Одно правило для всех...
+mn.research_page.KEY_SPECIAL.1=This Key grants Access for the Bound Player to any Tile owned by the Key Forger.
+mn.research_page.KEY_SPECIAL.2=This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger.
+
+mn.research_name.ARCANE_CHEST=Магический сундук
+mn.research_text.ARCANE_CHEST=Упрямый и дискриминационный, защищает её сокровища
+mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcane Chest holds and protects its content against almost anything. On the other Hand the Chest has a Brain which allows to add People to a Access List.<BR>Carefully use your Wand to shrink the Chest in order to retain all stored Items and its Access List.
+
+mn.research_name.GOGGLES_DARK=Темные кристальные очки
+mn.research_text.GOGGLES_DARK=Я вижу Ваши пылающие красные глаза
+mn.research_page.GOGGLES_DARK.1=Crafted from Spider Eyes and Dark Crystals, these Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings.
+
+mn.research_name.SPECTACLES=Очки
+mn.research_text.SPECTACLES=Четче зрения
+mn.research_page.SPECTACLES.1=Оценивают тип узла ауры и модификаторы без Таумометра. Узнайте, кто владеет магической дверью, стеклом или сундуком.
+
+mn.research_name.FOCUS_BUILD=Набалдашник: Строительство
+mn.research_text.FOCUS_BUILD=Великая архитектура
+mn.research_page.FOCUS_BUILD.1=While the Shovel of the Earthmover already possessed a slight potential at building in a bigger manner, you have refined and expanded the shear Potential to its maximum. This Masterpiece of Focus etching has brought forth a Tool befitting a Grand Architect.<BR>'V' или 'Ctrl + V' -> переключить режим/форму<BR> '+' или '-' -> увеличить/уменьшить размер области<BR>'Кнопка выбора блока' -> выбрать блок для режима по умолчанию<BR>Проверьте википедию для более точного и лучшего объяснения
+
+mn.research_name.JAR_PRISON=Сущность в банке
+mn.research_text.JAR_PRISON=Мини питомцы
+mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in this Warded Jar. Watch them in their minimized form always hovering inside and turning towards you, as if they wanted to tell you something.<BR>Carefully tap the Jar with a Wand to break the Warded Glass and release the trapped Being.
+
+mn.research_name.STONE_PHENO=Феноморфный камень
+mn.research_text.STONE_PHENO=Визуальный морфинг
+mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks. All phenomorphable block are highlighted when looking at them simply click the block to swap it appearance. Sneak to rotate Logs & Stairs.
+
+mn.research_name.STONE_QUICKSILVER=Ртутный камень
+mn.research_text.STONE_QUICKSILVER=Животворящие эффекты зелий
+mn.research_page.STONE_QUICKSILVER.1=Сокращает и конденсирует эффекты зелий. Делает эффекты мощнее, но последний короче. Для работы нужна светящаяся пыль.
+
+mn.research_name.EVIL_TRUNK=Жестокие ходячие сундуки
+mn.research_text.EVIL_TRUNK=Обогащая объекты душой
+mn.research_page.EVIL_TRUNK.1=The more warped the Mind is, the more obscure Thoughts surface and such one was to give your cute Traveling Trunk a Soul. Undoubtedly the Trunk got more lively, but it seems to reflect the warped Mind of the Creator.
+
+mn.research_name.ENDER_POUCH=Эндер-сумка
+mn.research_text.ENDER_POUCH=Экстра-мерное хранилище
+mn.research_page.ENDER_POUCH.1=Эта заряженная сумка предоставляет обладателю доступ к его личному хранилищу в любом месте где он захочет. Все набалдашники хранящиеся внутри полностью доступны с жезлом.
+
+mn.research_name.SICKLE_THAUM=Таум-серп
+mn.research_text.SICKLE_THAUM=Жатва зерновых
+mn.research_page.SICKLE_THAUM.1=Собирает семена и растения в небольшом радиусе около 3x3x3 блоков. Может собирать любые растения, семена, листья, паутину и подстригать существ, таких как овец.
+
+mn.research_name.SICKLE_ABUNDANCE=Серп изобилия
+mn.research_text.SICKLE_ABUNDANCE=Урожай - праздник
+mn.research_page.SICKLE_ABUNDANCE.1=Эволюция таум-серпа позволяет обладателю собирать растения в еще большем радиусе с присущим обилием, сопоставимым со вторым уровнем удачи, который включает в себя повышенные шансы на выпадения саженцев великого и серебряного дерева. Все собранные предметы летят по направлению к игроку.
+
+mn.research_name.GEO_OCCULTISM=Гео оккультизм
+mn.research_text.GEO_OCCULTISM=Преобразование регионов через обсидиановых тотемов
+mn.research_page.GEO_OCCULTISM.1=Observing and studying geographic Regions and the ancient Totems found in them you have discovered that Biomes can be transformed. The Ancients seemed to use Obsidian Totems to create artificial Geo-Poles that slowly converted the Region around them. You invented a Geo-Pylon which is attuned to a specific Region and placed on top of a 3 Block tall Obsidian Totem. Fueling it with Essentia you are able to bend the Region to your will.<BR>The max Range of the Pole seems to be a radius of 8 Blocks. A black color indicates that the Device is Idle, use your wand to activate/deactivate.
+mn.research_page.GEO_OCCULTISM.2=In order to attune the Geo-Pylon to a specific Region a Detailed Report of a Biome and its Attributes is needed. Simply travel to a desired Biome and carefully write down the Data while bending down in order to examine the present Soil. Once the report is finished the Ribbon Color will change than simply touch the Geo-Pylon with your Report to attune it. The stain of the Geo-Pylon will change in accordance with the Ribbon, should the old Essentia Cost Remain carefully use your wand to reset the Cost.

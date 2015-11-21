@@ -52,7 +52,6 @@ public class BlocksMN
 		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 0));
 		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 1));
 		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 2));
-		OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 3));
 	}
 
 	private static void registerBlock(Block block, String str)

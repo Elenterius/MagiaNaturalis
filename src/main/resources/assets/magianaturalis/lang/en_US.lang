@@ -61,8 +61,7 @@ tile.magianaturalis:arcaneChest.sw.name=Silverwood Chest
 tile.magianaturalis:jarPrison.name=Entity in a Jar
 tile.magianaturalis:arcaneWood.gwPlanks.name=Greatwood Planks
 tile.magianaturalis:arcaneWood.gwOrn.name=Greatwood Ornament
-tile.magianaturalis:arcaneWood.swPlanks.0.name=Silverwood Planks
-tile.magianaturalis:arcaneWood.swPlanks.1.name=Silverwood Planks
+tile.magianaturalis:arcaneWood.swPlanks.name=Silverwood Planks
 tile.magianaturalis:arcaneWood.gwGoldOrn.0.name=Greatwood Gold Ornament
 tile.magianaturalis:arcaneWood.gwGoldOrn.1.name=Greatwood Gold Ornament
 tile.magianaturalis:arcaneWood.gwGoldTrim.name=Greatwood Gold Trim
@@ -74,7 +73,7 @@ entity.taintBreeder.name=Taint Breeder
 entity.magia_naturalis.evilTrunk.name=Evil Trunk
 
 # RESEARCH
-tc.research_category.MagiaNaturalis=Magia Naturalis
+tc.research_category.magianaturalis=Magia Naturalis
 
 mn.research_name.INTRO=Inherent Law
 mn.research_text.INTRO=Knowing the Nature of Things in order to comprehend the Nature of Their existence

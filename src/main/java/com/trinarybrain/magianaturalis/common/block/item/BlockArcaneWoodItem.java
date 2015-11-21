@@ -14,24 +14,14 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class BlockArcaneWoodItem extends ItemBlock
 {
-	final String unlocal[] = { "gwPlanks", "gwOrn", "swPlanks.0", "swPlanks.1", "gwGoldOrn.0", "gwGoldOrn.1", "gwGoldTrim" };
+	final String unlocal[] = {"gwPlanks", "gwOrn", "swPlanks", "gwGoldOrn.0", "gwGoldOrn.1", "gwGoldTrim" };
 
 	public BlockArcaneWoodItem(Block block)
 	{
 		super(block);
-		this.setMaxDamage(0);
-		this.setHasSubtypes(true);
-		this.setCreativeTab(MagiaNaturalis.creativeTab);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		super.addInformation(stack, player, list, par4);
-		if(stack.getItemDamage() == 0 || stack.getItemDamage() == 2)
-			list.add(new StringBuilder().append(EnumChatFormatting.DARK_GRAY).append(Platform.translate("hint.magianaturalis:horizontal")).toString());
-		else if(stack.getItemDamage() == 3)
-			list.add(new StringBuilder().append(EnumChatFormatting.DARK_GRAY).append(Platform.translate("hint.magianaturalis:vertical")).toString());
+		setMaxDamage(0);
+		setHasSubtypes(true);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	public int getMetadata(int meta)

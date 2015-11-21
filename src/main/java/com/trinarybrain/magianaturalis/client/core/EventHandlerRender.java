@@ -49,7 +49,7 @@ public class EventHandlerRender
 	ItemStack lastItem = null;
 	int lastCount = 0;
 	private static final ResourceLocation rlSilk = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
-	private static final ResourceLocation rlHudFrame = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MISC + "frame-9-2-gold.png");
+	private static final ResourceLocation rlHudFrame = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MISC + "frame-gold.png");
 
 	public static void register()
 	{
