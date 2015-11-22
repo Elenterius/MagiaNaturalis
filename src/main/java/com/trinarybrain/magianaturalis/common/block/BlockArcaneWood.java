@@ -3,7 +3,7 @@ package com.trinarybrain.magianaturalis.common.block;
 import java.util.List;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
+import com.trinarybrain.magianaturalis.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class BlockArcaneWood extends Block
 {
 	//TODO: FANCY GREATWOOD & SILVERWOOD SIGN?
-	private IIcon[] icon = new IIcon[6];
+	private IIcon[] icon = new IIcon[7];
 
 	public BlockArcaneWood()
 	{
@@ -34,21 +34,22 @@ public class BlockArcaneWood extends Block
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		icon[0] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_planks");
-		icon[1] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_orn");
-		icon[2] = ir.registerIcon(ResourceUtil.PREFIX + "silverwood_planks");
-		icon[3] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_gold_orn");
-		icon[4] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_gold_orn2");
-		icon[5] = ir.registerIcon(ResourceUtil.PREFIX + "greatwood_gold_trim");
+		icon[0] = ir.registerIcon(Reference.ID + ":greatwood_planks");
+		icon[1] = ir.registerIcon(Reference.ID + ":greatwood_orn");
+		icon[2] = ir.registerIcon(Reference.ID + ":silverwood_planks_1");
+		icon[3] = ir.registerIcon(Reference.ID + ":silverwood_planks_2");
+		icon[4] = ir.registerIcon(Reference.ID + ":greatwood_gold_orn");
+		icon[5] = ir.registerIcon(Reference.ID + ":greatwood_gold_orn2");
+		icon[6] = ir.registerIcon(Reference.ID + ":greatwood_gold_trim");
 	}
 
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
-		if(meta < 0 || meta > 5)
+		if(meta < 0 || meta > 6)
 			meta = 0;
 
-		if(meta == 5)
+		if(meta == 6)
 			return side == 1 || side == 0 ? icon[0] : icon[meta];
 
 			return icon[meta];
@@ -64,6 +65,7 @@ public class BlockArcaneWood extends Block
 		list.add(new ItemStack(item, 1, 3));
 		list.add(new ItemStack(item, 1, 4));
 		list.add(new ItemStack(item, 1, 5));
+		list.add(new ItemStack(item, 1, 6));
 	}
 
 	public int damageDropped(int meta)
@@ -75,7 +77,7 @@ public class BlockArcaneWood extends Block
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
 	{
 		int meta = stack.getItemDamage();
-		if(meta < 0 || meta > 5)
+		if(meta < 0 || meta > 6)
 		{
 			meta = 0;
 		}

@@ -11,57 +11,54 @@ import net.minecraft.item.ItemStack;
 public class ContainerArcaneChest extends Container
 {
 	private TileArcaneChest chest;
+	int type;
 
 	public ContainerArcaneChest(InventoryPlayer inventoryPlayer, TileArcaneChest tile)
 	{
-		this.chest = tile;
-		this.chest.openInventory();
+		chest = tile;
+		chest.openInventory();
+		type = chest.getChestType();
+
 		int tempIndex = 0;
-		for(int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 9; j++)
-			{
-				this.addSlotToContainer(new Slot(tile, tempIndex++ , 8 + j * 18, 18 + i * 18));
-			}
-		}
+		int offset = ((type-1)*18);
+
+		for(int i = 0; i < 6-1+type; i++)
+			for (int j = 0; j < 9 + ((type-1)*2); j++)
+				addSlotToContainer(new Slot(tile, tempIndex++ , 8 + j * 18, 18 + i * 18));
 
 		for(int i = 0; i < 3; i++)
-		{
 			for (int j = 0; j < 9; j++)
-			{
-				this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
-			}
-		}
+				addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18 + offset, 140 + i * 18 + offset));
 
 		for(int i = 0; i < 9; i++)
-		{
-			this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 198));
-		}
+			addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18 + offset, 198 + offset));
 	}
 
 	public boolean canInteractWith(EntityPlayer player)
 	{
-		return this.chest.isUseableByPlayer(player);
+		return chest.isUseableByPlayer(player);
 	}
 
 	public ItemStack transferStackInSlot(EntityPlayer player, int index)
 	{
 		ItemStack stack = null;
-		Slot slot = (Slot) this.inventorySlots.get(index);
+		Slot slot = (Slot) inventorySlots.get(index);
 
 		if((slot != null) && (slot.getHasStack()))
 		{
 			ItemStack tempStack = slot.getStack();
 			stack = tempStack.copy();
 
-			if(index < 55)
+			int inv = 54 + ((type-1)*23);
+
+			if(index < inv + 1)
 			{
-				if(!this.mergeItemStack(tempStack, 54, this.inventorySlots.size(), true))
+				if(!mergeItemStack(tempStack, inv, inventorySlots.size(), true))
 				{
 					return null;
 				}
 			}
-			else if(!this.mergeItemStack(tempStack, 0, 54, false))
+			else if(!mergeItemStack(tempStack, 0, inv, false))
 			{
 				return null;
 			}
@@ -81,6 +78,6 @@ public class ContainerArcaneChest extends Container
 	public void onContainerClosed(EntityPlayer player)
 	{
 		super.onContainerClosed(player);
-		this.chest.closeInventory();
+		chest.closeInventory();
 	}
 }

@@ -45,27 +45,27 @@ public class BlockArcaneChest extends BlockContainer
 	public BlockArcaneChest()
 	{
 		super(Material.wood);
-		this.setResistance(999.0F);
-		this.setHardness(8.0F);
-		this.setStepSound(this.soundTypeWood);
-		this.setCreativeTab(MagiaNaturalis.creativeTab);
+		setResistance(999.0F);
+		setHardness(8.0F);
+		setStepSound(soundTypeWood);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list)
 	{
 		ItemStack stack = new ItemStack(item, 1, 1);
-		this.setChestType(stack, (byte) 1);
+		setChestType(stack, (byte) 1);
 		list.add(stack);
 		stack = new ItemStack(item, 1, 2);
-		this.setChestType(stack, (byte) 2);
+		setChestType(stack, (byte) 2);
 		list.add(stack);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		this.blockIcon = ir.registerIcon("thaumcraft:woodplain");
+		blockIcon = ir.registerIcon("thaumcraft:woodplain");
 	}
 
 	public boolean isOpaqueCube() {return false;}
@@ -138,10 +138,11 @@ public class BlockArcaneChest extends BlockContainer
 		{
 			EntityPlayer player = (EntityPlayer)entity;
 			chest.owner = player.getUniqueID();
-			chest.setChestType((byte) this.getChestType(stack));
+			chest.setChestType((byte) getChestType(stack));
 
 			ItemStack[] items = NBTUtil.loadInventoryFromNBT(stack, chest.getSizeInventory());
 			if(items != null && items.length == chest.getSizeInventory()) chest.setInvetory(items);
+			else if(chest.getChestType() == 2) chest.setInvetory(new ItemStack[77]);
 
 			ArrayList<UserAccess> users = NBTUtil.loadUserAccesFromNBT(stack);
 			if(!users.isEmpty()) chest.accessList = users;
@@ -324,7 +325,7 @@ public class BlockArcaneChest extends BlockContainer
 		TileArcaneChest chest = (TileArcaneChest) world.getTileEntity(x, y, z);
 		if(chest != null)
 		{
-			this.CacheChestType = (byte) chest.getChestType();
+			CacheChestType = (byte) chest.getChestType();
 		}
 
 		InventoryUtils.dropItems(world, x, y, z);
@@ -356,7 +357,7 @@ public class BlockArcaneChest extends BlockContainer
 
 	public void setBlockBoundsBasedOnState(IBlockAccess iBAccess, int x, int y, int z)
 	{
-		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
 
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)

@@ -2,19 +2,18 @@ package com.trinarybrain.magianaturalis.common.block.item;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.util.Constants.NBT;
 
 public class BlockArcaneChestItem  extends ItemBlock
 {
@@ -23,9 +22,9 @@ public class BlockArcaneChestItem  extends ItemBlock
 	public BlockArcaneChestItem(Block block)
 	{
 		super(block);
-		this.setMaxDamage(0);
-		this.setHasSubtypes(true);
-		this.setCreativeTab(MagiaNaturalis.creativeTab);
+		setMaxDamage(0);
+		setHasSubtypes(true);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)

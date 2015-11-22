@@ -3,6 +3,14 @@ package com.trinarybrain.magianaturalis.common.tile;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.mojang.authlib.GameProfile;
+import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
+import com.trinarybrain.magianaturalis.common.block.BlocksMN;
+import com.trinarybrain.magianaturalis.common.util.NBTUtil;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
+import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,14 +22,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.wands.IWandable;
-import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
-import com.trinarybrain.magianaturalis.common.util.NBTUtil;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
-
-import com.mojang.authlib.GameProfile;
 
 public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, IWandable
 {
@@ -42,19 +42,19 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 
 	public String getOwnerName()
 	{
-		if(this.ownerName != null && !this.ownerName.equals(""))
-			return this.ownerName;
+		if(ownerName != null && !ownerName.equals(""))
+			return ownerName;
 
-		if(Platform.isServer() && this.owner != null)
+		if(Platform.isServer() && owner != null)
 		{
-			GameProfile profile = Platform.findGameProfileByUUID(this.owner);
+			GameProfile profile = Platform.findGameProfileByUUID(owner);
 			if(profile != null)
 			{
-				return this.ownerName = profile.getName();
+				return ownerName = profile.getName();
 			}
 			else
 			{
-				return this.ownerName = "Only UUID Available";
+				return ownerName = "Only UUID Available";
 			}
 		}
 
@@ -64,57 +64,53 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	@Override
 	public int getSizeInventory()
 	{
-		return 54;
+		return getChestType() == 2 ? 77 : 54;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index)
 	{
-		return this.inventory[index];
+		return inventory[index];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int amount)
 	{
-		if(this.inventory[index] == null) return null;
+		if(inventory[index] == null) return null;
 
-		if(this.inventory[index].stackSize <= amount)
+		if(inventory[index].stackSize <= amount)
 		{
-			ItemStack stack = this.inventory[index];
-			this.inventory[index] = null;
-			this.markDirty();
+			ItemStack stack = inventory[index];
+			inventory[index] = null;
 			return stack;
 		}
 
-		ItemStack stack = this.inventory[index].splitStack(amount);
-		if(this.inventory[index].stackSize == 0)
+		ItemStack stack = inventory[index].splitStack(amount);
+		if(inventory[index].stackSize == 0)
 		{
-			this.inventory[index] = null;
+			inventory[index] = null;
 		}
-		this.markDirty();
 		return stack;
 	}
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int index)
 	{
-		if(this.inventory[index] == null) return null;
+		if(inventory[index] == null) return null;
 
-		ItemStack stack = this.inventory[index];
-		this.inventory[index] = null;
-		this.markDirty();
+		ItemStack stack = inventory[index];
+		inventory[index] = null;
 		return stack;
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
-		this.inventory[index] = stack;
-		if(stack != null && stack.stackSize > this.getInventoryStackLimit())
+		inventory[index] = stack;
+		if(stack != null && stack.stackSize > getInventoryStackLimit())
 		{
-			stack.stackSize = this.getInventoryStackLimit();
+			stack.stackSize = getInventoryStackLimit();
 		}
-		this.markDirty();
 	}
 
 	public void setInvetory(ItemStack[] inventory)
@@ -125,64 +121,64 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	@Override
 	public String getInventoryName()
 	{
-		return this.hasCustomInventoryName() ? this.customName : Platform.translate("tile." + ResourceUtil.PREFIX + "arcaneChest." + name[this.getChestType()] + ".name");
+		return hasCustomInventoryName() ? customName : Platform.translate("tile." + ResourceUtil.PREFIX + "arcaneChest." + name[getChestType()] + ".name");
 	}
 
 	@Override
 	public boolean hasCustomInventoryName()
 	{
-		return this.customName != null && this.customName.length() > 0;
+		return customName != null && customName.length() > 0;
 	}
 
 	public void setGuiName(String name)
 	{
-		this.customName = name;
+		customName = name;
 	}
 
 	public int getChestType()
 	{
-		return this.chestType;
+		return chestType;
 	}
 
 	public void setChestType(byte type)
 	{
-		this.chestType = type;
+		chestType = type;
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound data)
 	{
 		super.readFromNBT(data);
-		this.inventory = NBTUtil.loadInventoryFromNBT(data, this.getSizeInventory());
+		inventory = NBTUtil.loadInventoryFromNBT(data, getSizeInventory());
 		if(data.hasKey("CustomName"))
 		{
-			this.customName = data.getString("CustomName");
+			customName = data.getString("CustomName");
 		}
 	}
 
 	public void readCustomNBT(NBTTagCompound data)
     {
-		this.owner = UUID.fromString(data.getString("owner"));
-		this.chestType = data.getByte("Type");
-		this.accessList = NBTUtil.loadUserAccesFromNBT(data);
+		owner = UUID.fromString(data.getString("owner"));
+		chestType = data.getByte("Type");
+		accessList = NBTUtil.loadUserAccesFromNBT(data);
     }
 
 	@Override
 	public void writeToNBT(NBTTagCompound data)
 	{
 		super.writeToNBT(data);
-		NBTUtil.saveInventoryToNBT(data, this.inventory);
-		if(this.hasCustomInventoryName())
+		NBTUtil.saveInventoryToNBT(data, inventory);
+		if(hasCustomInventoryName())
 		{
-			data.setString("CustomName", this.customName);
+			data.setString("CustomName", customName);
 		}
 	}
 
 	public void writeCustomNBT(NBTTagCompound data)
     {
-		data.setString("owner", this.owner.toString());
-		data.setByte("Type", this.chestType);
-		NBTUtil.saveUserAccesToNBT(data, this.accessList);
+		data.setString("owner", owner.toString());
+		data.setByte("Type", chestType);
+		NBTUtil.saveUserAccesToNBT(data, accessList);
     }
 
 	@Override
@@ -194,25 +190,24 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player)
 	{
-		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
 	}
 
 	@Override
 	public void openInventory()
 	{
-		if(this.numUsingPlayers < 0)
-		{
-			this.numUsingPlayers = 0;
-		}
-		this.numUsingPlayers += 1;
-		this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, BlocksMN.arcaneChest, 1, this.numUsingPlayers);
+		if(numUsingPlayers < 0)
+			numUsingPlayers = 0;
+
+		numUsingPlayers += 1;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, BlocksMN.arcaneChest, 1, numUsingPlayers);
 	}
 
 	@Override
 	public void closeInventory()
 	{
-		this.numUsingPlayers -= 1;
-		this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, BlocksMN.arcaneChest, 1, this.numUsingPlayers);
+		numUsingPlayers -= 1;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, BlocksMN.arcaneChest, 1, numUsingPlayers);
 	}
 
 	@Override
@@ -243,29 +238,29 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	public void updateEntity()
 	{
 		super.updateEntity();
-		this.prevLidAngle = this.lidAngle;
+		prevLidAngle = lidAngle;
 		float angle = 0.1F;
 
-		if(this.numUsingPlayers > 0 && this.lidAngle == 0.0F)
-			this.worldObj.playSoundEffect(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D, "random.chestopen", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+		if(numUsingPlayers > 0 && lidAngle == 0.0F)
+			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
-		if((this.numUsingPlayers == 0 && this.lidAngle > 0.0F) || (this.numUsingPlayers > 0 && this.lidAngle < 1.0F))
+		if((numUsingPlayers == 0 && lidAngle > 0.0F) || (numUsingPlayers > 0 && lidAngle < 1.0F))
 		{
-			float currAngle = this.lidAngle;
+			float currAngle = lidAngle;
 
-			if(this.numUsingPlayers > 0)
-				this.lidAngle += angle;
+			if(numUsingPlayers > 0)
+				lidAngle += angle;
 			else
-				this.lidAngle -= angle;
+				lidAngle -= angle;
 
-			if(this.lidAngle > 1.0F)
-				this.lidAngle = 1.0F;
+			if(lidAngle > 1.0F)
+				lidAngle = 1.0F;
 
-			if(this.lidAngle < 0.5F && currAngle >= 0.5F)
-				this.worldObj.playSoundEffect(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D, "random.chestclosed", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			if(lidAngle < 0.5F && currAngle >= 0.5F)
+				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
-			if(this.lidAngle < 0.0F)
-				this.lidAngle = 0.0F;
+			if(lidAngle < 0.0F)
+				lidAngle = 0.0F;
 		}
 	}
 
@@ -274,16 +269,16 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	{
 		if(eventID == 1)
 		{
-			this.numUsingPlayers = arg;
+			numUsingPlayers = arg;
 			return true;
 		}
 
 		if(eventID == 2)
 		{
-			if(this.lidAngle < arg / 10.0F) this.lidAngle = (arg / 10.0F);
+			if(lidAngle < arg / 10.0F) lidAngle = (arg / 10.0F);
 			return true;
 		}
-		return this.tileEntityInvalid;
+		return tileEntityInvalid;
 	}
 
 	@Override
@@ -298,13 +293,13 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 		if(Platform.isServer() && !world.restoringBlockSnapshots)
 		{
 			boolean hasAccess = false;
-			if(player.capabilities.isCreativeMode || this.owner.equals(player.getGameProfile().getId()))
+			if(player.capabilities.isCreativeMode || owner.equals(player.getGameProfile().getId()))
 			{
 				hasAccess = true;
 			}
 			else
 			{
-				hasAccess = this.accessList.contains(new UserAccess(player.getGameProfile().getId(), (byte) 2));
+				hasAccess = accessList.contains(new UserAccess(player.getGameProfile().getId(), (byte) 2));
 			}
 			if(!hasAccess)
 			{
@@ -312,22 +307,22 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 				return stack;
 			}
 
-			Block block = world.getBlock(this.xCoord, this.yCoord, this.zCoord);
+			Block block = world.getBlock(xCoord, yCoord, zCoord);
 			if(block == null) return stack;
-			ItemStack stack1 = new ItemStack(BlocksMN.arcaneChest, 1, this.chestType);
-			BlockArcaneChest.setChestType(stack1, this.chestType);
-			NBTUtil.saveInventoryToNBT(stack1, this.inventory);
-			if(!this.accessList.isEmpty()) NBTUtil.saveUserAccesToNBT(stack1, this.accessList);
+			ItemStack stack1 = new ItemStack(BlocksMN.arcaneChest, 1, chestType);
+			BlockArcaneChest.setChestType(stack1, chestType);
+			NBTUtil.saveInventoryToNBT(stack1, inventory);
+			if(!accessList.isEmpty()) NBTUtil.saveUserAccesToNBT(stack1, accessList);
 
-			//chest.breakBlock(world, this.xCoord, this.yCoord, this.zCoord, chest, this.blockMetadata);
-			world.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
-			world.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
+			//chest.breakBlock(world, xCoord, yCoord, zCoord, chest, blockMetadata);
+			world.removeTileEntity(xCoord, yCoord, zCoord);
+			world.setBlockToAir(xCoord, yCoord, zCoord);
 
 			float f = 0.7F;
 			double d0 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
 			double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
 			double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-			EntityItem entityitem = new EntityItem(world, (double)this.xCoord + d0, (double)this.yCoord + d1, (double)this.zCoord + d2, stack1);
+			EntityItem entityitem = new EntityItem(world, (double)xCoord + d0, (double)yCoord + d1, (double)zCoord + d2, stack1);
 			entityitem.delayBeforeCanPickup = 10;
 			world.spawnEntityInWorld(entityitem);
 		}
