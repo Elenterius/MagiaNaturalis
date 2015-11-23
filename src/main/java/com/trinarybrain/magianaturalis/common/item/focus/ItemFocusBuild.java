@@ -40,7 +40,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	public ItemFocusBuild()
 	{
 		super();
-		this.setCreativeTab(MagiaNaturalis.creativeTab);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	public void getSubItems(Item item, CreativeTabs creativeTabs, List list)
 	{
 		ItemStack stack = new ItemStack(item, 1, 0);
-		this.applyUpgrade(stack, FocusUpgradeType.architect, 1);
+		applyUpgrade(stack, FocusUpgradeType.architect, 1);
 		FocusBuildHelper.setSize(stack, 1);
 		FocusBuildHelper.setShape(stack, Shape.CUBE);
 		list.add(stack);
@@ -65,7 +65,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_build");
+		icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_build");
 	}
 
 	@Override
@@ -79,10 +79,10 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		return new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
 	}
-	
+
 	public int getMaxAreaSize(ItemStack focusstack)
 	{
-		return 3 + this.getUpgradeLevel(focusstack, FocusUpgradeType.enlarge) * 3 + 1;
+		return 3 + getUpgradeLevel(focusstack, FocusUpgradeType.enlarge) * 3 + 1;
 	}
 
 	@Override
@@ -90,17 +90,17 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		return new FocusUpgradeType[] {FocusUpgradeType.enlarge, FocusUpgradeType.frugal};
 	}
-	
+
 	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition)
 	{
 		player.swingItem();
 		if(Platform.isClient()) return wandstack;
-		
+
 		MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
 
 		if(target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
-			int x = target.blockX; 
+			int x = target.blockX;
 			int y = target.blockY;
 			int z = target.blockZ;
 
@@ -109,7 +109,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 //			if(player.isSneaking())
 //			{
 //				FocusBuildHelper.setpickedBlock(focusStack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
-//				wand.setFocus(wandstack, focusStack); //update focus with new NBT data in wand 
+//				wand.setFocus(wandstack, focusStack); //update focus with new NBT data in wand
 //				return wandstack;
 //			}
 
@@ -121,7 +121,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 			hitY = Math.abs(hitY); //Wasted Operation since blocks can't be placed below y=0 in "default" Minecraft!
 			hitZ = Math.abs(hitZ);
 
-			if(!this.onFocusUse(wandstack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ))
+			if(!onFocusUse(wandstack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ))
 				world.playSoundAtEntity(player, "thaumcraft:wandfail", 0.5F, 0.8F + world.rand.nextFloat() * 0.1F);
 		}
 
@@ -134,9 +134,9 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 
 		ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
 		ItemStack focusStack = wand.getFocusItem(wandStack);
-		
+
 		int size = FocusBuildHelper.getSize(focusStack);
-		if(size < 1 || size > this.getMaxAreaSize(focusStack)) return false;
+		if(size < 1 || size > getMaxAreaSize(focusStack)) return false;
 
 		Shape shape = FocusBuildHelper.getShape(focusStack);
 		if(shape == Shape.NONE) return false;
@@ -159,7 +159,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 		if(pblock == null || pblock == Blocks.air) return false;
 		if(pbdata < 0 || pbdata > 15) return false;
 
-		return this.buildAction(wandStack, player, world, x, y, z, side, hitX, hitY, hitZ, size, pblock, pbdata);
+		return buildAction(wandStack, player, world, x, y, z, side, hitX, hitY, hitZ, size, pblock, pbdata);
 	}
 
 	private boolean buildAction(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size, Block pickedblock, int pbData)
@@ -239,7 +239,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 
 					for(int j = 0; j < ls; j++)
 					{
-						player.inventory.consumeInventoryItem(tempStack.getItem());	
+						player.inventory.consumeInventoryItem(tempStack.getItem());
 					}
 
 					player.inventoryContainer.detectAndSendChanges();
@@ -273,7 +273,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	{
 		//TODO: render not working with extendeed reach distance
 		MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true); //have to call it here for hitVec
-		
+
 		if(target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
 			x = target.blockX;
@@ -302,7 +302,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 				{
 					return null;
 				}
-				
+
 				float hitX = (float) (target.hitVec.xCoord - x);
 				float hitY = (float) (target.hitVec.yCoord - y);
 				float hitZ = (float) (target.hitVec.zCoord - z);
@@ -312,11 +312,11 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 				hitZ = Math.abs(hitZ);
 
 				ForgeDirection face = ForgeDirection.getOrientation(target.sideHit);
-				
+
 				ArrayList blocks = null;
 				int size = FocusBuildHelper.getSize(stackFocus);
-				if(size < 1 || size > this.getMaxAreaSize(stackFocus)) return null;
-				
+				if(size < 1 || size > getMaxAreaSize(stackFocus)) return null;
+
 				switch(FocusBuildHelper.getShape(stackFocus))
 				{
 				case CUBE:

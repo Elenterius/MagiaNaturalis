@@ -16,6 +16,7 @@ import com.trinarybrain.magianaturalis.client.render.tile.TileTranscribingTableR
 import com.trinarybrain.magianaturalis.common.core.CommonProxy;
 import com.trinarybrain.magianaturalis.common.core.KeyHandler;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
+import com.trinarybrain.magianaturalis.common.entity.EntityZombieExtended;
 import com.trinarybrain.magianaturalis.common.entity.taint.EntityTaintBreeder;
 import com.trinarybrain.magianaturalis.common.item.ItemsMN;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
@@ -30,6 +31,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -41,25 +43,26 @@ public class ClientProxy extends CommonProxy
 	public void init(FMLInitializationEvent event)
 	{
 		super.init(event);
-		this.registerRenderer();
+		registerRenderer();
 		EventHandlerRender.register();
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
 	}
 
 	public void registerRenderer()
 	{
-		this.registerBlockRenderer(new BlockRenderer());
-		this.registerTileEntitySpecialRenderer(TileTranscribingTable.class, new TileTranscribingTableRenderer());
-		this.registerTileEntitySpecialRenderer(TileArcaneChest.class, new TileArcaneChestRenderer());
-		this.registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
-		this.registerBlockRenderer(new BlockJarRenderer());
-		this.registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
-		this.registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileGeoMorpherRenderer());
+		registerBlockRenderer(new BlockRenderer());
+		registerTileEntitySpecialRenderer(TileTranscribingTable.class, new TileTranscribingTableRenderer());
+		registerTileEntitySpecialRenderer(TileArcaneChest.class, new TileArcaneChestRenderer());
+		registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
+		registerBlockRenderer(new BlockJarRenderer());
+		registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
+		registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileGeoMorpherRenderer());
 
 		MinecraftForgeClient.registerItemRenderer(ItemsMN.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
 		RenderingRegistry.registerEntityRenderingHandler(EntityEvilTrunk.class, new RenderEvilTrunk());
+		RenderingRegistry.registerEntityRenderingHandler(EntityZombieExtended.class, new RenderZombie());
 	}
 
 	public void registerTileEntitySpecialRenderer(Class clazz, TileEntitySpecialRenderer tESR)

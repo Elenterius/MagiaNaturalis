@@ -14,14 +14,14 @@ public class AIOwnerHurtTarget extends EntityAITarget
 	public AIOwnerHurtTarget(EntityOwnableCreature entity)
 	{
 		super(entity, false);
-		this.taskOwner = entity;
-		this.setMutexBits(1);
+		taskOwner = entity;
+		setMutexBits(1);
 	}
 
 	@Override
 	public boolean shouldExecute()
 	{
-		EntityLivingBase entityOwner = this.taskOwner.getOwner();
+		EntityLivingBase entityOwner = taskOwner.getOwner();
 
         if (entityOwner == null)
         {
@@ -29,21 +29,21 @@ public class AIOwnerHurtTarget extends EntityAITarget
         }
         else
         {
-            this.ownerTarget = entityOwner.getLastAttacker();
+            ownerTarget = entityOwner.getLastAttacker();
             int i = entityOwner.getLastAttackerTime();
-            return i != this.lastAttackTimer && this.isSuitableTarget(this.ownerTarget, false) && this.taskOwner.canAttack(this.ownerTarget, entityOwner);
+            return i != lastAttackTimer && isSuitableTarget(ownerTarget, false) && taskOwner.canAttack(ownerTarget, entityOwner);
         }
 	}
 
 	@Override
 	public void startExecuting()
     {
-        this.taskOwner.setAttackTarget(this.ownerTarget);
-        EntityLivingBase owner = this.taskOwner.getOwner();
+        taskOwner.setAttackTarget(ownerTarget);
+        EntityLivingBase owner = taskOwner.getOwner();
 
         if (owner != null)
         {
-            this.lastAttackTimer = owner.getLastAttackerTime();
+            lastAttackTimer = owner.getLastAttackerTime();
         }
 
         super.startExecuting();
