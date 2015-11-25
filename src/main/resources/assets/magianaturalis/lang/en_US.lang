@@ -31,8 +31,6 @@ flavor.magianaturalis:banner=A Banner to mark our Presence.
 hint.magianaturalis:ctrl=<Press Ctrl>
 hint.magianaturalis:chest.items=Contains Treasure
 hint.magianaturalis:chest.access=Has Access List
-hint.magianaturalis:horizontal=Horizontal
-hint.magianaturalis:vertical=Vertical
 
 # ITEM NAMES
 item.magianaturalis:researchLog.name=Research Log
@@ -44,6 +42,7 @@ item.magianaturalis:key.1.name=Key of Endorsing
 item.magianaturalis:gogglesDarkCrystal.name=Dark Crystal Goggles
 item.magianaturalis:spectacles.name=Spectacles
 item.magianaturalis:focusBuild.name=Wand Focus: Construction
+item.magianaturalis:focusRevenant.name=Wand Focus: Baby Revenant
 item.magianaturalis:evilTrunk.tainted.name=Tainted Trunk
 item.magianaturalis:evilTrunk.demonic.name=Demonic Trunk
 item.magianaturalis:evilTrunk.sinister.name=Sinister Trunk
@@ -86,7 +85,7 @@ mn.research_page.CARPENTRY.1=Tired of always using the same magical Wood for bui
 
 mn.research_name.TRANSCRIBINGTABLE=Transcribing Research
 mn.research_text.TRANSCRIBINGTABLE=Of Logging Fundamental Knowledge
-mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Table's counter top. It dips its head in the ethereal knowledge formed by Matter Deconstruction. Line by line letters form transcribing the lingering knowledge into physical form." - Unknown Poet
+mn.research_page.TRANSCRIBINGTABLE.1="A magic feather dances across the Table's counter top. It dips its head in the knowledge formed by Matter Deconstruction. Line by line letters form, transcribing the lingering knowledge into physical form." - Unknown Poet
 
 mn.research_name.RESEARCH_LOG=Research Log
 mn.research_text.RESEARCH_LOG=Collecting Knowledge for Anyone
@@ -103,7 +102,7 @@ mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcan
 
 mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
 mn.research_text.GOGGLES_DARK=I see Your glowing Red Eyes
-mn.research_page.GOGGLES_DARK.1=Crafted from Spider Eyes and Dark Crystals, these Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings.
+mn.research_page.GOGGLES_DARK.1=You have always wondered how some entities could stay unseen to your eyes. Even though you have mastered the revealing of aura nodes you can't see invisible beings. During your travels you have started to notice that spiders often appear invisible. Through the dissection of a spider body you figured out that darkness is somehow involved in cloaking the entities. Luckily you also discovered that Spider Eyes have the ability detect it.<BR>Crafted from Spider Eyes and Dark Crystals, these Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings. Finally the times are over being surprised by the unseen.
 
 mn.research_name.SPECTACLES=Spectacles
 mn.research_text.SPECTACLES=Sharper Sight

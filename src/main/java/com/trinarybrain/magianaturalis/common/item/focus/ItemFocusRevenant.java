@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -38,19 +39,19 @@ public class ItemFocusRevenant extends ItemFocusBasic
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_build");
+		icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_revenant");
 	}
 
 	@Override
 	public int getFocusColor(ItemStack focusstack)
 	{
-		return 0xFFB200;
+		return 0x385226;
 	}
 
 	@Override
 	public AspectList getVisCost(ItemStack focusstack)
 	{
-		return new AspectList().add(Aspect.EARTH, 400).add(Aspect.ENTROPY, 200).add(Aspect.WATER, 200);
+		return new AspectList().add(Aspect.EARTH, 450).add(Aspect.ENTROPY, 350).add(Aspect.WATER, 200);
 	}
 
 	@Override
@@ -82,23 +83,24 @@ public class ItemFocusRevenant extends ItemFocusBasic
 				EntityZombieExtended zombie = new EntityZombieExtended(world);
 				zombie.setOwner(player.getCommandSenderName());
 				zombie.setChild(true);
+
 				if(world.rand.nextBoolean())
-				{
 					zombie.setVillager(true);
-				}
-				zombie.setLocationAndAngles(px, py + 0.25, pz, player.rotationYaw, 0.0F);
+
+				zombie.setLocationAndAngles(px, py + 0.1, pz, player.rotationYaw, 0.0F);
 				zombie.setExperienceValue(0);
 
 				zombie.setTarget(pointedEntity);
 				zombie.setAttackTarget((EntityLivingBase) pointedEntity);
+//				player.setRevengeTarget((EntityLivingBase) pointedEntity); TODO: Use this for Bone Flute
 
 				ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
-				final int potency =  EnchantmentHelper.getEnchantmentLevel(ThaumcraftApi.enchantPotency, wand.getFocusItem(wandstack));
-				zombie.damBonus = 0.5 * potency;
+				int potency =  EnchantmentHelper.getEnchantmentLevel(ThaumcraftApi.enchantPotency, wand.getFocusItem(wandstack));
+				zombie.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D + 0.5 * potency);
 
-				if ((ThaumcraftApiHelper.consumeVisFromWand(wandstack, player, getVisCost(wand.getFocusItem(wandstack)), true, false)) && (world.spawnEntityInWorld(zombie)))
+				if(ThaumcraftApiHelper.consumeVisFromWand(wandstack, player, getVisCost(wand.getFocusItem(wandstack)), true, false) && world.spawnEntityInWorld(zombie))
 				{
-					world.playAuxSFX(2004, (int)px, (int)py, (int)pz, 0);
+					world.playAuxSFXAtEntity(null, 1016, (int)px, (int)py, (int)pz, 0);
 					world.playSoundAtEntity(zombie, "thaumcraft:ice", 0.2F, 0.95F + world.rand.nextFloat() * 0.1F);
 				}else
 				{

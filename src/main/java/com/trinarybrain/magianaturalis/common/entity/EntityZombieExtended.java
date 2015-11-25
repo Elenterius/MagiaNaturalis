@@ -1,41 +1,43 @@
 package com.trinarybrain.magianaturalis.common.entity;
 
+import com.trinarybrain.magianaturalis.common.entity.ai.AIBreakDoor;
 import com.trinarybrain.magianaturalis.common.entity.ai.EntityAIOwnerTarget;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class EntityZombieExtended extends EntityZombie implements IEntityOwnable
 {
-	public double damBonus = 0;
-
-	public EntityZombieExtended(World par1World)
+	public EntityZombieExtended(World world)
 	{
-		super(par1World);
-		getNavigator().setBreakDoors(true);
+		super(world);
+		tasks.taskEntries.clear();
+		getNavigator().setAvoidSun(false);
+//		getNavigator().setBreakDoors(true);
 		tasks.addTask(0, new EntityAISwimming(this));
-		tasks.addTask(1, new EntityAIBreakDoor(this));
+		tasks.addTask(1, new AIBreakDoor(this));
 		tasks.addTask(2, new EntityAILeapAtTarget(this, 0.4F));
-		//tasks.addTask(2, new EntityAIAttackExclude(this, getOwnerName(), 1.0D, true));
-		tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 1.0D, true));
+		tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityLiving.class, 1.0D, true));
 		tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 1.0D));
 		tasks.addTask(5, new EntityAIMoveThroughVillage(this, 1.0D, false));
 		tasks.addTask(6, new EntityAIWander(this, 1.0D));
@@ -43,7 +45,6 @@ public class EntityZombieExtended extends EntityZombie implements IEntityOwnable
 		tasks.addTask(7, new EntityAILookIdle(this));
 		targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 		targetTasks.addTask(2, new EntityAIOwnerTarget(this, false));
-		targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityVillager.class, 0, false));
 	}
 
 	protected void entityInit()
@@ -52,79 +53,88 @@ public class EntityZombieExtended extends EntityZombie implements IEntityOwnable
 		dataWatcher.addObject(17, "");
 	}
 
-	protected void applyEntityAttributes()
-	{
-		super.applyEntityAttributes();
-		getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
-		getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
-		getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D + damBonus);
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(6.0D);
-	}
-
 	protected boolean isAIEnabled()
 	{
 		return true;
 	}
 
+	protected void applyEntityAttributes()
+	{
+		super.applyEntityAttributes();
+		getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
+		getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(6.0D);
+		getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(new AttributeModifier("Random Knockback Resistance", this.rand.nextDouble() * 0.05000000074505806D, 0));
+	}
+
 	public void onUpdate()
 	{
 		super.onUpdate();
-		if(!worldObj.isRemote && (getAttackTarget() == null || (getAttackTarget() == null && ticksExisted > 100)))
+
+		if(!worldObj.isRemote && (getAttackTarget() == null || getAttackTarget().isDead || ticksExisted > 300))
 		{
-			if(worldObj.isRemote)
-				spawnExplosionParticle();
-			setDead();
+			attackEntityFrom(DamageSource.outOfWorld, 10.0F);
 		}
 	}
 
 	@Override
-	public void onKillEntity(EntityLivingBase par1EntityLivingBase)
+	public void onKillEntity(EntityLivingBase entity)
 	{
-		super.onKillEntity(par1EntityLivingBase);
+		super.onKillEntity(entity);
 
-		if (par1EntityLivingBase instanceof EntityVillager)
+		if (entity instanceof EntityVillager)
 		{
-			if (rand.nextBoolean())
-			{
+			if(rand.nextBoolean())
 				return;
-			}
 
 			EntityZombieExtended entityZombie = new EntityZombieExtended(worldObj);
-			entityZombie.copyLocationAndAnglesFrom(par1EntityLivingBase);
-			worldObj.removeEntity(par1EntityLivingBase);
+			entityZombie.copyLocationAndAnglesFrom(entity);
+			worldObj.removeEntity(entity);
 			entityZombie.setVillager(true);
 			worldObj.spawnEntityInWorld(entityZombie);
-			worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1016, (int)posX, (int)posY, (int)posZ, 0);
+			worldObj.playAuxSFXAtEntity(null, 1016, (int)posX, (int)posY, (int)posZ, 0);
 		}
 	}
 
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+	public void writeEntityToNBT(NBTTagCompound data)
 	{
-		super.writeEntityToNBT(nbttagcompound);
+		super.writeEntityToNBT(data);
 		if(func_152113_b() == null)
-		{
-			nbttagcompound.setString("Owner", "");
-		}
+			data.setString("Owner", "");
 		else
-		{
-			nbttagcompound.setString("Owner", func_152113_b());
-		}
+			data.setString("Owner", func_152113_b());
 	}
 
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	public void readEntityFromNBT(NBTTagCompound data)
 	{
-		super.readEntityFromNBT(nbttagcompound);
-		String name = nbttagcompound.getString("Owner");
+		super.readEntityFromNBT(data);
+		String name = data.getString("Owner");
 
-		if (name.length() > 0)
-		{
+		if(name.length() > 0)
 			setOwner(name);
-		}
 	}
 
-	public void setOwner(String par1Str)
+	@Override
+	protected Item getDropItem()
 	{
-		dataWatcher.updateObject(17, par1Str);
+		return null;
+	}
+
+	@Override
+	protected void dropRareDrop(int n)
+	{
+		// Removes Drops
+	}
+
+	@Override
+	public boolean interact(EntityPlayer player)
+	{
+		return false;
+	}
+
+	public void setOwner(String name)
+	{
+		dataWatcher.updateObject(17, name);
 	}
 
 	public EntityLivingBase getOwnerEntity()
@@ -138,9 +148,9 @@ public class EntityZombieExtended extends EntityZombie implements IEntityOwnable
 		return getOwnerEntity();
 	}
 
-	public void setExperienceValue(int i)
+	public void setExperienceValue(int n)
 	{
-		experienceValue = i;
+		experienceValue = n;
 	}
 
 	@Override
