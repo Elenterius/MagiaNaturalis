@@ -59,5 +59,6 @@ public class ItemsMN
 	{
 		item.setUnlocalizedName(Reference.ID + ":" + str);
 		GameRegistry.registerItem(item, "item." + str);
+		//TODO: Remove "item." prefix for compatibility with 1.8 port?
 	}
 }

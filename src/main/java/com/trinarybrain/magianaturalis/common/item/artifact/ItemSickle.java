@@ -45,11 +45,11 @@ public class ItemSickle extends BaseItem
 	public ItemSickle(ToolMaterial material)
 	{
 		super();
-		this.theToolMaterial = material;
-		this.efficiencyOnProperMaterial += material.getEfficiencyOnProperMaterial();
-		this.maxStackSize = 1;
-		this.setMaxDamage(material.getMaxUses());
-		this.damageVsEntity += material.getDamageVsEntity();
+		theToolMaterial = material;
+		efficiencyOnProperMaterial += material.getEfficiencyOnProperMaterial();
+		maxStackSize = 1;
+		setMaxDamage(material.getMaxUses());
+		damageVsEntity += material.getDamageVsEntity();
 	}
 
 	// Can Harvest Block in Adventure Mode?
@@ -61,7 +61,7 @@ public class ItemSickle extends BaseItem
 	// Get Dig Speed
 	public float func_150893_a(ItemStack stack, Block block)
 	{
-		return block != Blocks.web && block.getMaterial() != Material.leaves && !(block instanceof IPlantable) ? (block == Blocks.wool ? this.efficiencyOnProperMaterial - 10.0F : 1.0F) : this.efficiencyOnProperMaterial;
+		return block != Blocks.web && block.getMaterial() != Material.leaves && !(block instanceof IPlantable) ? (block == Blocks.wool ? efficiencyOnProperMaterial - 10.0F : 1.0F) : efficiencyOnProperMaterial;
 	}
 
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity)
@@ -75,7 +75,7 @@ public class ItemSickle extends BaseItem
 			{
 				ArrayList<ItemStack> drops = target.onSheared(stack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
 
-				for(int i = 0; i < this.abundanceLevel; i++)
+				for(int i = 0; i < abundanceLevel; i++)
 					drops.addAll(target.onSheared(stack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack)));
 
 				Random rand = new Random();
@@ -110,7 +110,7 @@ public class ItemSickle extends BaseItem
 
 	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity)
 	{
-		if(!this.isEffectiveVsBlock(block))
+		if(!isEffectiveVsBlock(block))
 		{
 			stack.damageItem(1, entity);
 			return false;
@@ -120,7 +120,7 @@ public class ItemSickle extends BaseItem
 			boolean success = false;
 			if(world.canMineBlock((EntityPlayer)entity, x, y, z))
 			{
-				success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, x, y, z, this.collectLoot, this.abundanceLevel, this.colorLoot);
+				success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, x, y, z, collectLoot, abundanceLevel, colorLoot);
 				if(success) stack.damageItem(1, entity);
 			}
 			return success;
@@ -129,19 +129,22 @@ public class ItemSickle extends BaseItem
 		{
 			if(Platform.isServer() && entity instanceof EntityPlayer)
 			{
-				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, this.areaSize);
+				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, areaSize);
 				boolean success = false;
 				for(WorldCoord coord : blocks)
 				{
-					if(stack.getItemDamage() <= (stack.getMaxDamage() - this.abundanceLevel))
+					if(stack.getItemDamage() <= (stack.getMaxDamage() - abundanceLevel))
 					{
 						if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
 						{
 							Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
-							if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && this.isEffectiveVsBlock(tempBlock))
+							if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && isEffectiveVsBlock(tempBlock))
 							{
-								success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, this.collectLoot, this.abundanceLevel, this.colorLoot);
-								if(success) stack.damageItem(1 + this.abundanceLevel, entity);
+								success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, collectLoot, abundanceLevel, colorLoot);
+								if(success)
+								{
+									stack.damageItem(1 + abundanceLevel, entity);
+								}
 							}
 						}
 					}
@@ -171,13 +174,13 @@ public class ItemSickle extends BaseItem
 
 	public String getToolMaterialName()
 	{
-		return this.theToolMaterial.toString();
+		return theToolMaterial.toString();
 	}
 
 	public Multimap getItemAttributeModifiers()
 	{
 		Multimap multimap = super.getItemAttributeModifiers();
-		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", this.damageVsEntity, 0));
+		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", damageVsEntity, 0));
 		return multimap;
 	}
 }

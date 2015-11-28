@@ -23,8 +23,6 @@ public class PacketKeyInput implements IMessageHandler<KeyInputMessage, IMessage
 	{
 		if(ctx.side.isServer())
 		{
-			System.out.println(String.format("Received %s from %s", message.keyID, ctx.getServerHandler().playerEntity.getDisplayName()));
-
 			ItemStack stack = ctx.getServerHandler().playerEntity.inventory.getCurrentItem();
 			if(stack != null && stack.getItem() instanceof ItemWandCasting)
 			{

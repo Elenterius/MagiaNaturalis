@@ -58,6 +58,7 @@ public class BlocksMN
 	{
 		block.setBlockName(Reference.ID + ":" + str);
 		GameRegistry.registerBlock(block, "block." + str);
+		//TODO: Remove "block." prefix for compatibility with 1.8 port?
 	}
 
 	public static void initTileEntities()
@@ -67,5 +68,6 @@ public class BlocksMN
 		GameRegistry.registerTileEntity(TileJarPrison.class, "tile." + NameUtil.JAR_PRISON);
 		GameRegistry.registerTileEntity(TileBannerCustom.class, "tile." + NameUtil.BANNER);
 		GameRegistry.registerTileEntity(TileGeoMorpher.class, "tile." + NameUtil.GEO_MORPHER);
+		//TODO: Remove "tile." prefix for compatibility with 1.8 port?
 	}
 }

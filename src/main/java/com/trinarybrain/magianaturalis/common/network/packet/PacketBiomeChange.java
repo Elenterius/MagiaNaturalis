@@ -20,8 +20,6 @@ public class PacketBiomeChange implements IMessageHandler<BiomeChangeMessage, IM
 	{
 		if(ctx.side.isClient())
 		{
-			System.out.println(String.format("Received %s for [%s%s] %s from Server", message.biomeID, message.posX, message.posZ, Minecraft.getMinecraft().theWorld));
-
 			//Update biome
 			WorldUtil.setBiomeAt(Minecraft.getMinecraft().theWorld, message.posX, message.posZ, BiomeGenBase.getBiome(message.biomeID));
 

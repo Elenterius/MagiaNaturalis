@@ -33,8 +33,8 @@ public class ItemElementalSickle extends ItemSickle implements IRepairable
 		return EnumRarity.rare;
 	}
 
-	public boolean getIsRepairable(ItemStack stack, ItemStack stack2)
+	public boolean getIsRepairable(ItemStack stack, ItemStack stackMaterial)
 	{
-		return stack2.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true : super.getIsRepairable(stack, stack2);
+		return stackMaterial.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 2)) ? true : super.getIsRepairable(stack, stackMaterial);
 	}
 }

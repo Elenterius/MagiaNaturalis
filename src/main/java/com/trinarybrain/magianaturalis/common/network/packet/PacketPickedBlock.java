@@ -21,8 +21,6 @@ public class PacketPickedBlock implements IMessageHandler<PickedBlockMessage, IM
 	{
 		if(ctx.side.isServer())
 		{
-			System.out.println(String.format("Received %s:%s from %s", message.blockID, message.blockMeta, ctx.getServerHandler().playerEntity.getDisplayName()));
-
 			ItemStack stack = ctx.getServerHandler().playerEntity.inventory.getCurrentItem();
 			if(stack != null && stack.getItem() instanceof ItemWandCasting)
 			{
