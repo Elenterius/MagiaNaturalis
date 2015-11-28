@@ -28,7 +28,7 @@ public class ItemElementalSickle extends ItemSickle implements IRepairable
 		itemIcon = icon.registerIcon(Reference.ID + ":" + "sickle_abundance");
 	}
 
-	public EnumRarity getRarity(ItemStack itemstack)
+	public EnumRarity getRarity(ItemStack stack)
 	{
 		return EnumRarity.rare;
 	}

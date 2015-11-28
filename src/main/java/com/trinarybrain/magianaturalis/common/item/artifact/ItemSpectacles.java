@@ -5,7 +5,6 @@ import java.util.List;
 import com.trinarybrain.api.ISpectacles;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.util.NameUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
 import cpw.mods.fml.relauncher.Side;
@@ -44,7 +43,7 @@ public class ItemSpectacles extends ItemArmor implements IRepairable, IVisDiscou
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.itemIcon = ir.registerIcon(Reference.ID + ":" + NameUtil.SPECTACLES);
+		this.itemIcon = ir.registerIcon(Reference.ID + ":" + "spectacles");
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)

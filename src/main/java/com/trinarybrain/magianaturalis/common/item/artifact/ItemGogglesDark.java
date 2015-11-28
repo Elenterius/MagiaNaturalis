@@ -5,7 +5,6 @@ import java.util.List;
 import com.trinarybrain.api.IRevealInvisible;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.util.NameUtil;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -48,7 +47,7 @@ public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDisco
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(Reference.ID + ":" + NameUtil.GOGGLES_DARK_CRYSTAL);
+		itemIcon = ir.registerIcon(Reference.ID + ":" + "gogglesDarkCrystal");
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)

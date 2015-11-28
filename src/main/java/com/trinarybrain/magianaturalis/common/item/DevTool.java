@@ -2,6 +2,7 @@ package com.trinarybrain.magianaturalis.common.item;
 
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.core.Log;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
@@ -13,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
@@ -26,7 +28,7 @@ import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.tiles.TileBanner;
 import thaumcraft.common.tiles.TileOwned;
 
-public class DevTool extends BaseItem
+public class DevTool extends Item
 {
 	private byte modes;
 
@@ -35,6 +37,7 @@ public class DevTool extends BaseItem
 		super();
 		modes = 2;
 		maxStackSize = 1;
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)

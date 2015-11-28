@@ -5,8 +5,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
 import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -31,7 +32,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
-public class ItemBiomeSampler extends BaseItem
+public class ItemBiomeSampler extends Item
 {
 	IIcon icon_overlay;
 
@@ -40,6 +41,7 @@ public class ItemBiomeSampler extends BaseItem
 		super();
 		setMaxStackSize(1);
 		setMaxDamage(0);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@Override

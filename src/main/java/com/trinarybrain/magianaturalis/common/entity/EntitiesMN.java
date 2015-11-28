@@ -1,17 +1,22 @@
 package com.trinarybrain.magianaturalis.common.entity;
 
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.BiomeGenBase;
-import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.core.Log;
 import com.trinarybrain.magianaturalis.common.entity.taint.EntityTaintBreeder;
-import com.trinarybrain.magianaturalis.common.util.NameUtil;
+
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.biome.BiomeGenBase;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
 public class EntitiesMN
 {
+	//  Entity Names
+	//	public static final String WRATHGAZER = "wrathgazer";
+	//	public static final String SNAPJAW = "snapjaw";
+	//	public static final String DOG_ONYX = "dogOnyx";
+
 	public static void registerEntities()
 	{
 		int id = 0;

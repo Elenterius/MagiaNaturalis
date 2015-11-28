@@ -10,7 +10,6 @@ import com.trinarybrain.magianaturalis.common.tile.TileBannerCustom;
 import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
 import com.trinarybrain.magianaturalis.common.tile.TileJarPrison;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-import com.trinarybrain.magianaturalis.common.util.NameUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -28,21 +27,21 @@ public class BlocksMN
 
 	public static void initBlocks()
 	{
-		transcribingTable = new BlockTranscribingTable(); registerBlock(transcribingTable, NameUtil.TRANS_TABLE);
+		transcribingTable = new BlockTranscribingTable(); registerBlock(transcribingTable, "transcribingTable");
 
-		arcaneChest = new BlockArcaneChest(); arcaneChest.setBlockName(Reference.ID + ":" + NameUtil.ARCANE_CHEST);
-		GameRegistry.registerBlock(arcaneChest, BlockArcaneChestItem.class, "block." + NameUtil.ARCANE_CHEST);
+		arcaneChest = new BlockArcaneChest(); arcaneChest.setBlockName(Reference.ID + ":" + "arcaneChest");
+		GameRegistry.registerBlock(arcaneChest, BlockArcaneChestItem.class, "block." + "arcaneChest");
 
-		jarPrison = new BlockJarPrison(); jarPrison.setBlockName(Reference.ID + ":" + NameUtil.JAR_PRISON);
-		GameRegistry.registerBlock(jarPrison, BlockJarPrisonItem.class, "block." + NameUtil.JAR_PRISON);
+		jarPrison = new BlockJarPrison(); jarPrison.setBlockName(Reference.ID + ":" + "jarPrison");
+		GameRegistry.registerBlock(jarPrison, BlockJarPrisonItem.class, "block." + "jarPrison");
 
-		arcaneWood = new BlockArcaneWood(); arcaneWood.setBlockName(Reference.ID + ":" + NameUtil.ARCANE_WOOD);
-		GameRegistry.registerBlock(arcaneWood, BlockArcaneWoodItem.class, "block." + NameUtil.ARCANE_WOOD);
+		arcaneWood = new BlockArcaneWood(); arcaneWood.setBlockName(Reference.ID + ":" + "arcaneWood");
+		GameRegistry.registerBlock(arcaneWood, BlockArcaneWoodItem.class, "block." + "arcaneWood");
 
-		banner = new BlockBanner(); banner.setBlockName(Reference.ID + ":" + NameUtil.BANNER);
-		GameRegistry.registerBlock(banner, BlockBannerItem.class, "block." + NameUtil.BANNER);
+		banner = new BlockBanner(); banner.setBlockName(Reference.ID + ":" + "banner");
+		GameRegistry.registerBlock(banner, BlockBannerItem.class, "block." + "banner");
 
-		geoMorpher = new BlockGeoMorpher(); registerBlock(geoMorpher, NameUtil.GEO_MORPHER);
+		geoMorpher = new BlockGeoMorpher(); registerBlock(geoMorpher, "geoMorpher");
 
 		registerOreDict();
 	}
@@ -63,11 +62,11 @@ public class BlocksMN
 
 	public static void initTileEntities()
 	{
-		GameRegistry.registerTileEntity(TileTranscribingTable.class, "tile." + NameUtil.TRANS_TABLE);
-		GameRegistry.registerTileEntity(TileArcaneChest.class, "tile." + NameUtil.ARCANE_CHEST);
-		GameRegistry.registerTileEntity(TileJarPrison.class, "tile." + NameUtil.JAR_PRISON);
-		GameRegistry.registerTileEntity(TileBannerCustom.class, "tile." + NameUtil.BANNER);
-		GameRegistry.registerTileEntity(TileGeoMorpher.class, "tile." + NameUtil.GEO_MORPHER);
+		GameRegistry.registerTileEntity(TileTranscribingTable.class, "tile." + "transcribingTable");
+		GameRegistry.registerTileEntity(TileArcaneChest.class, "tile." + "arcaneChest");
+		GameRegistry.registerTileEntity(TileJarPrison.class, "tile." + "jarPrison");
+		GameRegistry.registerTileEntity(TileBannerCustom.class, "tile." + "banner");
+		GameRegistry.registerTileEntity(TileGeoMorpher.class, "tile." + "geoMorpher");
 		//TODO: Remove "tile." prefix for compatibility with 1.8 port?
 	}
 }

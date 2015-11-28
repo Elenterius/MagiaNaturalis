@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
@@ -14,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
@@ -25,18 +25,19 @@ import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.tiles.TileDeconstructionTable;
 
-public class ItemResearchLog extends BaseItem
+public class ItemResearchLog extends Item
 {
 	public ItemResearchLog()
 	{
 		super();
-		this.maxStackSize = 1;
+		maxStackSize = 1;
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(Reference.ID + ":" + "book_magia_natura");
+		itemIcon = icon.registerIcon(Reference.ID + ":" + "book_magia_natura");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -45,12 +46,12 @@ public class ItemResearchLog extends BaseItem
 		super.addInformation(stack, player, list, par4);
 		if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown())
 		{
-			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.AIR), EnumChatFormatting.YELLOW, Aspect.AIR.getName()));
-			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.EARTH), EnumChatFormatting.GREEN, Aspect.EARTH.getName()));
-			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.WATER), EnumChatFormatting.AQUA, Aspect.WATER.getName()));
-			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.FIRE), EnumChatFormatting.RED, Aspect.FIRE.getName()));
-			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.ORDER), EnumChatFormatting.WHITE, Aspect.ORDER.getName()));
-			list.add(String.format("%dx %s%s", this.getResearchPoint(stack, Aspect.ENTROPY), EnumChatFormatting.DARK_GRAY, Aspect.ENTROPY.getName()));
+			list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.AIR), EnumChatFormatting.YELLOW, Aspect.AIR.getName()));
+			list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.EARTH), EnumChatFormatting.GREEN, Aspect.EARTH.getName()));
+			list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.WATER), EnumChatFormatting.AQUA, Aspect.WATER.getName()));
+			list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.FIRE), EnumChatFormatting.RED, Aspect.FIRE.getName()));
+			list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.ORDER), EnumChatFormatting.WHITE, Aspect.ORDER.getName()));
+			list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.ENTROPY), EnumChatFormatting.DARK_GRAY, Aspect.ENTROPY.getName()));
 		}
 		else
 		{
@@ -72,7 +73,7 @@ public class ItemResearchLog extends BaseItem
 			{
 				ResearchManager.scheduleSave(player);
 				PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), amount, Short.valueOf(Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect))), (EntityPlayerMP)player);
-				this.setResearchPoint(stack, aspect, (short) 0);
+				setResearchPoint(stack, aspect, (short) 0);
 			}
 		}
 		return stack;
@@ -87,7 +88,7 @@ public class ItemResearchLog extends BaseItem
 		if(tile instanceof TileDeconstructionTable)
 		{
 			TileDeconstructionTable table = (TileDeconstructionTable) tile;
-			boolean bool = this.addResearchPoint(stack, table.aspect, (short) 1);
+			boolean bool = addResearchPoint(stack, table.aspect, (short) 1);
 			if(bool)
 			{
 				table.aspect = null;

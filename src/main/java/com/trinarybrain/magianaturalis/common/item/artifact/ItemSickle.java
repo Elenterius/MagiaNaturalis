@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Multimap;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.util.BlockUtil;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.common.util.WorldCoord;
+import com.trinarybrain.magianaturalis.common.util.WorldUtil;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
@@ -16,22 +25,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
-import com.trinarybrain.magianaturalis.common.util.BlockUtil;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.WorldCoord;
-import com.trinarybrain.magianaturalis.common.util.WorldUtil;
 
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-public class ItemSickle extends BaseItem
+public class ItemSickle extends Item
 {
 	protected ToolMaterial theToolMaterial;
 	protected float efficiencyOnProperMaterial = 8.0F;
@@ -50,6 +50,7 @@ public class ItemSickle extends BaseItem
 		maxStackSize = 1;
 		setMaxDamage(material.getMaxUses());
 		damageVsEntity += material.getDamageVsEntity();
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	// Can Harvest Block in Adventure Mode?

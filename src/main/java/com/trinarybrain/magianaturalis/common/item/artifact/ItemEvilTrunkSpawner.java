@@ -2,9 +2,9 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
 import cpw.mods.fml.relauncher.Side;
@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemEvilTrunkSpawner extends BaseItem
+public class ItemEvilTrunkSpawner extends Item
 {
 	public String name[] = new String[] {"corrupted", "sinister", "demonic", "tainted"};
 
@@ -27,6 +27,7 @@ public class ItemEvilTrunkSpawner extends BaseItem
 	{
 		setMaxStackSize(1);
 		setHasSubtypes(true);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)

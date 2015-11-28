@@ -30,7 +30,7 @@ public class ItemThaumiumSickle extends ItemSickle implements IRepairable
 		return 5;
 	}
 
-	public EnumRarity getRarity(ItemStack itemstack)
+	public EnumRarity getRarity(ItemStack stack)
 	{
 		return EnumRarity.uncommon;
 	}

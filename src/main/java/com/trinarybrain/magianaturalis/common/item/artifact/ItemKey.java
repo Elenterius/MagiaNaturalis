@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
@@ -30,15 +30,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 import thaumcraft.common.tiles.TileOwned;
 
-public class ItemKey extends BaseItem
+public class ItemKey extends Item
 {
 	//TODO: IMPLEMENT OFFLINE PLAYER ADDING - WITH ANVIL? HOW WILL THAT WORK?
 	public ItemKey()
 	{
 		super();
-		this.setMaxStackSize(1);
-		this.setHasSubtypes(true);
-		this.setMaxDamage(0);
+		setMaxStackSize(1);
+		setHasSubtypes(true);
+		setMaxDamage(0);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -65,7 +66,7 @@ public class ItemKey extends BaseItem
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(Reference.ID + ":" + "key_thaumium");
+		itemIcon = icon.registerIcon(Reference.ID + ":" + "key_thaumium");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -136,7 +137,7 @@ public class ItemKey extends BaseItem
 
 	public void onCreated(ItemStack stack, World world, EntityPlayer player)
 	{
-		this.setKeyForger(stack, player.getGameProfile());
+		setKeyForger(stack, player.getGameProfile());
 	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
@@ -146,12 +147,12 @@ public class ItemKey extends BaseItem
 			NBTTagCompound data = NBTUtil.openNbtData(stack);
 			if(!data.hasKey("forger"))
 			{
-				this.setKeyForger(stack, player.getGameProfile());
+				setKeyForger(stack, player.getGameProfile());
 				player.addChatMessage(new ChatComponentText(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(String.format(Platform.translate("chat.magianaturalis:key.owner"), player.getGameProfile().getName())).toString()));
 			}
 			else if(!data.hasKey("owner"))
 			{
-				this.setBoundPlayer(stack, player.getGameProfile());
+				setBoundPlayer(stack, player.getGameProfile());
 				player.addChatMessage(new ChatComponentText(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(String.format(Platform.translate("chat.magianaturalis:key.boundplayer.1"), player.getGameProfile().getName())).toString()));
 			}
 			return stack;
@@ -168,13 +169,13 @@ public class ItemKey extends BaseItem
 				NBTTagCompound data = NBTUtil.openNbtData(stack);
 				if(!data.hasKey("forger"))
 				{
-					//					this.setKeyForger(stack, player.getGameProfile());
+					//					setKeyForger(stack, player.getGameProfile());
 					return false;
 				}
 
 				if(data.hasKey("owner"))
 				{
-					if(!(UUID.fromString(data.getString("owner")).equals(this.getBoundPlayer(stack))))
+					if(!(UUID.fromString(data.getString("owner")).equals(getBoundPlayer(stack))))
 					{
 						return false;
 					}
@@ -186,7 +187,7 @@ public class ItemKey extends BaseItem
 				boolean bool = false;
 				if(tile instanceof TileArcaneChest)
 				{
-					bool = ((TileArcaneChest) tile).owner.equals(this.getKeyForger(stack));
+					bool = ((TileArcaneChest) tile).owner.equals(getKeyForger(stack));
 				}
 				else if(tile instanceof TileOwned)
 				{
@@ -194,7 +195,7 @@ public class ItemKey extends BaseItem
 					bool = ((TileOwned) tile).owner.equals(stack.getTagCompound().getString("forgerNick"));
 				}
 
-				if(bool) TileAccess.addPlayerToAccesList(player, this.getAccessLevel(stack), world, x, y, z);
+				if(bool) TileAccess.addPlayerToAccesList(player, getAccessLevel(stack), world, x, y, z);
 				return bool;
 			}
 			else if(stack.getItemDamage() == 1) //This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger
@@ -204,7 +205,7 @@ public class ItemKey extends BaseItem
 
 				if(data.hasKey("owner"))
 				{
-					if(!(UUID.fromString(data.getString("owner")).equals(this.getBoundPlayer(stack))))
+					if(!(UUID.fromString(data.getString("owner")).equals(getBoundPlayer(stack))))
 					{
 						hasAccess = false;
 					}
@@ -259,7 +260,7 @@ public class ItemKey extends BaseItem
 			if(!(entity instanceof EntityPlayer)) return false;
 			EntityPlayer player2 = (EntityPlayer) entity;
 
-			boolean bool = this.setBoundPlayer(stack, player2.getGameProfile());
+			boolean bool = setBoundPlayer(stack, player2.getGameProfile());
 			if(bool) player.addChatMessage(new ChatComponentText(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(String.format(Platform.translate("chat.magianaturalis:key.boundplayer"), player2.getGameProfile().getName())).toString()));
 		}
 		else if(stack.getItemDamage() == 1)

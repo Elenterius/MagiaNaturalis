@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.alchemy.BlockMorpher;
 
@@ -33,7 +32,7 @@ import thaumcraft.api.IArchitect;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
 
-public class ItemAlchemicalStone extends BaseItem implements IArchitect
+public class ItemAlchemicalStone extends Item implements IArchitect
 {
 	IIcon[] icons = new IIcon[2];
 
@@ -43,6 +42,7 @@ public class ItemAlchemicalStone extends BaseItem implements IArchitect
 		this.maxStackSize = 1;
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@Override @SideOnly(Side.CLIENT)

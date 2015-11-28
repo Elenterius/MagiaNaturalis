@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.core.Log;
 import com.trinarybrain.magianaturalis.common.util.Platform;
@@ -16,6 +17,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
@@ -24,12 +26,13 @@ import net.minecraftforge.common.BiomeDictionary;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
-public class BiomeDevTool extends BaseItem
+public class BiomeDevTool extends Item
 {
 	public BiomeDevTool()
 	{
 		super();
 		maxStackSize = 1;
+		setCreativeTab(MagiaNaturalis.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)
