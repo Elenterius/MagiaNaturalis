@@ -27,6 +27,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
@@ -326,7 +327,7 @@ public class EventHandlerRender
 				else if(tile instanceof TileOwned)
 				{
 					TileOwned owned = (TileOwned) tile;
-					String owner = new StringBuilder().append("§5Owner§r ").append(owned.owner).toString();
+					String owner = new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append("Owner").append(EnumChatFormatting.RESET + " ").append(owned.owner).toString();
 					FontRenderer fontRenderer = mc.fontRenderer;
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
@@ -336,7 +337,7 @@ public class EventHandlerRender
 				else if(tile instanceof TileArcaneChest)
 				{
 					TileArcaneChest chest = (TileArcaneChest) tile;
-					String name = new StringBuilder().append("§5Owner§r ").append(chest.getOwnerName()).toString();
+					String name = new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append("Owner").append(EnumChatFormatting.RESET + " ").append(chest.getOwnerName()).toString();
 					GL11.glPushMatrix();
 					GL11.glTranslatef(w / 2, h / 2, 0F);
 					fontRenderer.drawStringWithShadow(name, -(fontRenderer.getStringWidth(name)-4) / 2, 25, 0xFFFFFF);
