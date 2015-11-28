@@ -66,7 +66,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
 		RenderingRegistry.registerEntityRenderingHandler(EntityEvilTrunk.class, new RenderEvilTrunk());
 		RenderingRegistry.registerEntityRenderingHandler(EntityZombieExtended.class, new RenderZombie());
-		RenderingRegistry.registerEntityRenderingHandler(EntityTaintman.class, new RenderTaintman());
+//		RenderingRegistry.registerEntityRenderingHandler(EntityTaintman.class, new RenderTaintman());
 	}
 
 	public void registerTileEntitySpecialRenderer(Class clazz, TileEntitySpecialRenderer tESR)

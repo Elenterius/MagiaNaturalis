@@ -144,7 +144,7 @@ public class ItemSickle extends Item
 								success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, collectLoot, abundanceLevel, colorLoot);
 								if(success)
 								{
-									stack.damageItem(1 + abundanceLevel, entity);
+									stack.damageItem(1, entity);
 								}
 							}
 						}
