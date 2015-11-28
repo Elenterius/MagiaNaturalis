@@ -1,5 +1,11 @@
 package com.trinarybrain.magianaturalis.common.research;
 
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
+import com.trinarybrain.magianaturalis.common.block.BlocksMN;
+import com.trinarybrain.magianaturalis.common.item.ItemsMN;
+import com.trinarybrain.magianaturalis.common.recipe.Recipes;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -12,12 +18,6 @@ import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigItems;
-import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
-import com.trinarybrain.magianaturalis.common.item.ItemsMN;
-import com.trinarybrain.magianaturalis.common.recipe.Recipes;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 public class Research
 {
@@ -40,7 +40,7 @@ public class Research
 
 	private static void initCategory()
 	{
-		ResearchCategories.registerCategory(Reference.ID, new ResourceLocation(ResourceUtil.DOMAIN, "textures/items/book_magia_natura.png"), new ResourceLocation(ResourceUtil.DOMAIN, "textures/gui/background.png"));
+		ResearchCategories.registerCategory(Reference.ID, new ResourceLocation(Reference.ID, "textures/items/book_magia_natura.png"), new ResourceLocation(Reference.ID, "textures/gui/background.png"));
 	}
 
 	private static void initEntry()

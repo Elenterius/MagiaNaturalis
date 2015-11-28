@@ -1,5 +1,6 @@
 package com.trinarybrain.magianaturalis.common.item;
 
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.item.alchemy.ItemAlchemicalStone;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemBiomeSampler;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemElementalSickle;
@@ -13,7 +14,6 @@ import com.trinarybrain.magianaturalis.common.item.baubles.ItemFocusPouchEnder;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusRevenant;
 import com.trinarybrain.magianaturalis.common.util.NameUtil;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
@@ -57,7 +57,7 @@ public class ItemsMN
 
 	private static void registerItem(Item item, String str)
 	{
-		item.setUnlocalizedName(ResourceUtil.PREFIX + str);
-		GameRegistry.registerItem(item, ResourceUtil.TAG_ITEM + str);
+		item.setUnlocalizedName(Reference.ID + ":" + str);
+		GameRegistry.registerItem(item, "item." + str);
 	}
 }

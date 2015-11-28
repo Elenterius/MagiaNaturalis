@@ -3,7 +3,7 @@ package com.trinarybrain.magianaturalis.common;
 import com.trinarybrain.magianaturalis.common.core.CommonProxy;
 import com.trinarybrain.magianaturalis.common.core.CreativeTab;
 import com.trinarybrain.magianaturalis.common.core.Log;
-import com.trinarybrain.magianaturalis.common.network.NetworkHandler;
+import com.trinarybrain.magianaturalis.common.network.PacketHandler;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -36,7 +36,7 @@ public class MagiaNaturalis
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		NetworkHandler.instance = new NetworkHandler("MagiaNaturC");
+		PacketHandler.initPackets();
 		proxy.init(event);
 	}
 

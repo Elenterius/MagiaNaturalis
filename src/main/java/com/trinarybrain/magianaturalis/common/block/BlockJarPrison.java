@@ -4,33 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import thaumcraft.common.blocks.CustomStepSound;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.tiles.TileDeconstructionTable;
 import com.trinarybrain.magianaturalis.client.util.RenderUtil;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.block.item.BlockJarPrisonItem;
-import com.trinarybrain.magianaturalis.common.core.Log;
-import com.trinarybrain.magianaturalis.common.item.ItemsMN;
-import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.tile.TileJarPrison;
-import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -38,6 +26,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thaumcraft.common.blocks.CustomStepSound;
 
 public class BlockJarPrison extends BlockContainer
 {
@@ -57,7 +46,7 @@ public class BlockJarPrison extends BlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		this.iconJarSide = ir.registerIcon(ResourceUtil.PREFIX + "jar_prison_side");
+		this.iconJarSide = ir.registerIcon(Reference.ID + ":" + "jar_prison_side");
 		this.iconJarTop = ir.registerIcon("thaumcraft:jar_top");
 		this.iconJarBottom = ir.registerIcon("thaumcraft:jar_bottom");
 	}

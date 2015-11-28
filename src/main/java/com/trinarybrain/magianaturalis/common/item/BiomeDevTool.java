@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.core.Log;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+
+import cpw.mods.fml.relauncher.FMLInjectionData;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,16 +21,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeManager.BiomeType;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
-import com.trinarybrain.magianaturalis.common.core.Log;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import cpw.mods.fml.relauncher.FMLInjectionData;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BiomeDevTool extends BaseItem
 {
@@ -47,7 +42,7 @@ public class BiomeDevTool extends BaseItem
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "book_magia_natura");
+		itemIcon = icon.registerIcon(Reference.ID + ":" + "book_magia_natura");
 	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)

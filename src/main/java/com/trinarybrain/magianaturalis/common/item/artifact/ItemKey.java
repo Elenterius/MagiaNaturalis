@@ -3,6 +3,17 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 import java.util.List;
 import java.util.UUID;
 
+import com.mojang.authlib.GameProfile;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.item.BaseItem;
+import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
+import com.trinarybrain.magianaturalis.common.util.NBTUtil;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.common.util.access.TileAccess;
+import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -18,18 +29,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 import thaumcraft.common.tiles.TileOwned;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
-import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
-import com.trinarybrain.magianaturalis.common.util.NBTUtil;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import com.trinarybrain.magianaturalis.common.util.access.TileAccess;
-import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
-
-import com.mojang.authlib.GameProfile;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemKey extends BaseItem
 {
@@ -66,7 +65,7 @@ public class ItemKey extends BaseItem
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "key_thaumium");
+		this.itemIcon = icon.registerIcon(Reference.ID + ":" + "key_thaumium");
 	}
 
 	@SideOnly(Side.CLIENT)

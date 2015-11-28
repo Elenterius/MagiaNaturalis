@@ -1,19 +1,19 @@
 package com.trinarybrain.magianaturalis.client.render.entity;
 
-import com.trinarybrain.magianaturalis.client.model.entity.ModelTaintBreeder;
+import com.trinarybrain.magianaturalis.client.model.entity.ModelTaintman;
 import com.trinarybrain.magianaturalis.common.Reference;
 
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderTaintBreeder extends RenderLiving
+public class RenderTaintman extends RenderLiving
 {
-	private static final ResourceLocation rl = new ResourceLocation(Reference.ID, "textures/models/" + "taint_breeder.png");
+	private static final ResourceLocation rl = new ResourceLocation(Reference.ID, "textures/models/" + "taintman.png");
 
-	public RenderTaintBreeder()
+	public RenderTaintman()
 	{
-		super(new ModelTaintBreeder(), 1.0F);
+		super(new ModelTaintman(), 0.5F);
 	}
 
 	@Override

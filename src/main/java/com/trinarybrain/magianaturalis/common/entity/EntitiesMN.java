@@ -19,8 +19,12 @@ public class EntitiesMN
 		// own spawn eggs
 		EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, "taintBreeder", EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
 		EntityRegistry.registerModEntity(EntityTaintBreeder.class, "taintBreeder", id++, MagiaNaturalis.instance, 64, 3, false);
+
 		EntityRegistry.registerModEntity(EntityEvilTrunk.class, "evilTrunk", id++, MagiaNaturalis.instance, 64, 3, false);
 		EntityRegistry.registerModEntity(EntityZombieExtended.class, "ferociousRevenant", id++, MagiaNaturalis.instance, 64, 3, false);
+
+		EntityRegistry.registerGlobalEntityID(EntityTaintman.class, "taintman", EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
+		EntityRegistry.registerModEntity(EntityTaintman.class, "taintman", id++, MagiaNaturalis.instance, 64, 3, false);
 	}
 
 	public static void addChampions()

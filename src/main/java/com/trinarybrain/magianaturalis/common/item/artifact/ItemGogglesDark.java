@@ -3,7 +3,12 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 import java.util.List;
 
 import com.trinarybrain.api.IRevealInvisible;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.util.NameUtil;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,11 +27,6 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.util.NameUtil;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDiscountGear, IRevealer, IGoggles, IRevealInvisible
 {
@@ -48,12 +48,12 @@ public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDisco
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(ResourceUtil.PREFIX + NameUtil.GOGGLES_DARK_CRYSTAL);
+		itemIcon = ir.registerIcon(Reference.ID + ":" + NameUtil.GOGGLES_DARK_CRYSTAL);
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return ResourceUtil.PREFIX + ResourceUtil.PATH_MODEL + "armorGogglesDark.png";
+		return Reference.ID + ":" + "textures/models/" + "armorGogglesDark.png";
 	}
 
 	public EnumRarity getRarity(ItemStack itemstack)

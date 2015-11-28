@@ -2,6 +2,13 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
+import com.trinarybrain.magianaturalis.common.item.BaseItem;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,12 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemEvilTrunkSpawner extends BaseItem
 {
@@ -31,7 +32,7 @@ public class ItemEvilTrunkSpawner extends BaseItem
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(ResourceUtil.PREFIX + ResourceUtil.EMTPY_TEXTURE);
+		itemIcon = ir.registerIcon(Reference.ID + ":" + "emptyTexture");
 	}
 
 	@SideOnly(Side.CLIENT)

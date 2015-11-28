@@ -1,9 +1,9 @@
 package com.trinarybrain.magianaturalis.common.item.focus;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.entity.EntityZombieExtended;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -39,7 +39,7 @@ public class ItemFocusRevenant extends ItemFocusBasic
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_revenant");
+		icon = ir.registerIcon(Reference.ID + ":" +  "focus_revenant");
 	}
 
 	@Override

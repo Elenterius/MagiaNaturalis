@@ -1,5 +1,6 @@
 package com.trinarybrain.magianaturalis.common.block;
 
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.block.item.BlockArcaneChestItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockArcaneWoodItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockBannerItem;
@@ -10,7 +11,6 @@ import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
 import com.trinarybrain.magianaturalis.common.tile.TileJarPrison;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
 import com.trinarybrain.magianaturalis.common.util.NameUtil;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -30,17 +30,17 @@ public class BlocksMN
 	{
 		transcribingTable = new BlockTranscribingTable(); registerBlock(transcribingTable, NameUtil.TRANS_TABLE);
 
-		arcaneChest = new BlockArcaneChest(); arcaneChest.setBlockName(ResourceUtil.PREFIX + NameUtil.ARCANE_CHEST);
-		GameRegistry.registerBlock(arcaneChest, BlockArcaneChestItem.class, ResourceUtil.TAG_BLOCK + NameUtil.ARCANE_CHEST);
+		arcaneChest = new BlockArcaneChest(); arcaneChest.setBlockName(Reference.ID + ":" + NameUtil.ARCANE_CHEST);
+		GameRegistry.registerBlock(arcaneChest, BlockArcaneChestItem.class, "block." + NameUtil.ARCANE_CHEST);
 
-		jarPrison = new BlockJarPrison(); jarPrison.setBlockName(ResourceUtil.PREFIX + NameUtil.JAR_PRISON);
-		GameRegistry.registerBlock(jarPrison, BlockJarPrisonItem.class, ResourceUtil.TAG_BLOCK + NameUtil.JAR_PRISON);
+		jarPrison = new BlockJarPrison(); jarPrison.setBlockName(Reference.ID + ":" + NameUtil.JAR_PRISON);
+		GameRegistry.registerBlock(jarPrison, BlockJarPrisonItem.class, "block." + NameUtil.JAR_PRISON);
 
-		arcaneWood = new BlockArcaneWood(); arcaneWood.setBlockName(ResourceUtil.PREFIX + NameUtil.ARCANE_WOOD);
-		GameRegistry.registerBlock(arcaneWood, BlockArcaneWoodItem.class, ResourceUtil.TAG_BLOCK + NameUtil.ARCANE_WOOD);
+		arcaneWood = new BlockArcaneWood(); arcaneWood.setBlockName(Reference.ID + ":" + NameUtil.ARCANE_WOOD);
+		GameRegistry.registerBlock(arcaneWood, BlockArcaneWoodItem.class, "block." + NameUtil.ARCANE_WOOD);
 
-		banner = new BlockBanner(); banner.setBlockName(ResourceUtil.PREFIX + NameUtil.BANNER);
-		GameRegistry.registerBlock(banner, BlockBannerItem.class, ResourceUtil.TAG_BLOCK + NameUtil.BANNER);
+		banner = new BlockBanner(); banner.setBlockName(Reference.ID + ":" + NameUtil.BANNER);
+		GameRegistry.registerBlock(banner, BlockBannerItem.class, "block." + NameUtil.BANNER);
 
 		geoMorpher = new BlockGeoMorpher(); registerBlock(geoMorpher, NameUtil.GEO_MORPHER);
 
@@ -56,16 +56,16 @@ public class BlocksMN
 
 	private static void registerBlock(Block block, String str)
 	{
-		block.setBlockName(ResourceUtil.PREFIX + str);
-		GameRegistry.registerBlock(block, ResourceUtil.TAG_BLOCK + str);
+		block.setBlockName(Reference.ID + ":" + str);
+		GameRegistry.registerBlock(block, "block." + str);
 	}
 
 	public static void initTileEntities()
 	{
-		GameRegistry.registerTileEntity(TileTranscribingTable.class, ResourceUtil.TAG_TILE + NameUtil.TRANS_TABLE);
-		GameRegistry.registerTileEntity(TileArcaneChest.class, ResourceUtil.TAG_TILE + NameUtil.ARCANE_CHEST);
-		GameRegistry.registerTileEntity(TileJarPrison.class, ResourceUtil.TAG_TILE + NameUtil.JAR_PRISON);
-		GameRegistry.registerTileEntity(TileBannerCustom.class, ResourceUtil.TAG_TILE + NameUtil.BANNER);
-		GameRegistry.registerTileEntity(TileGeoMorpher.class, ResourceUtil.TAG_TILE + NameUtil.GEO_MORPHER);
+		GameRegistry.registerTileEntity(TileTranscribingTable.class, "tile." + NameUtil.TRANS_TABLE);
+		GameRegistry.registerTileEntity(TileArcaneChest.class, "tile." + NameUtil.ARCANE_CHEST);
+		GameRegistry.registerTileEntity(TileJarPrison.class, "tile." + NameUtil.JAR_PRISON);
+		GameRegistry.registerTileEntity(TileBannerCustom.class, "tile." + NameUtil.BANNER);
+		GameRegistry.registerTileEntity(TileGeoMorpher.class, "tile." + NameUtil.GEO_MORPHER);
 	}
 }

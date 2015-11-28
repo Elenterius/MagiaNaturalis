@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.trinarybrain.magianaturalis.common.network.NetworkHandler;
+import com.trinarybrain.magianaturalis.common.network.PacketHandler;
 import com.trinarybrain.magianaturalis.common.network.packet.PacketBiomeChange;
-import com.trinarybrain.magianaturalis.common.network.packet.PacketID;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Shape;
 
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -282,7 +282,9 @@ public class WorldUtil
 		chunk.setBiomeArray(biomeArray);
 
 		if(Platform.isServer())
-			NetworkHandler.instance.sendToPlayers(new PacketBiomeChange(PacketID.PACKET_BIOME_CHANGE, x, z, (short)biome.biomeID), world, x, world.getHeightValue(x, z), z, 32);
+		{
+			PacketHandler.network.sendToAllAround(new PacketBiomeChange.BiomeChangeMessage(x, z, (short) biome.biomeID), new TargetPoint(0, x, world.getTopSolidOrLiquidBlock(x, z), z, 32D));
+		}
 	}
 
 	public static boolean resetBiomeAt(World world, int x, int z)
@@ -405,30 +407,20 @@ public class WorldUtil
 			switch(side)
 			{
 			case DOWN:
-				P1.add(minmax, 0, minmax);
-				P2.subtract(minmax, 0, minmax);
-				break;
-			case EAST:
-				P1.add(0, minmax, minmax);
-				P2.subtract(0, minmax, minmax);
-				break;
-			case NORTH:
-				P1.add(minmax, minmax, 0);
-				P2.subtract(minmax, minmax, 0);
-				break;
-			case SOUTH:
-				P1.add(minmax, minmax, 0);
-				P2.subtract(minmax, minmax, 0);
-				break;
-			case UNKNOWN:
-				break;
 			case UP:
 				P1.add(minmax, 0, minmax);
 				P2.subtract(minmax, 0, minmax);
 				break;
+			case EAST:
 			case WEST:
 				P1.add(0, minmax, minmax);
 				P2.subtract(0, minmax, minmax);
+				break;
+			case NORTH:
+			case SOUTH:
+				P1.add(minmax, minmax, 0);
+				P2.subtract(minmax, minmax, 0);
+				break;
 			default:
 				break;
 			}

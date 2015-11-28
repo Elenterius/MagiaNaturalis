@@ -3,7 +3,13 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 import java.util.List;
 
 import com.trinarybrain.api.ISpectacles;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.util.NameUtil;
+import com.trinarybrain.magianaturalis.common.util.Platform;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,12 +25,6 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.util.NameUtil;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemSpectacles extends ItemArmor implements IRepairable, IVisDiscountGear, IRevealer, IGoggles, ISpectacles
 {
@@ -44,12 +44,12 @@ public class ItemSpectacles extends ItemArmor implements IRepairable, IVisDiscou
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		this.itemIcon = ir.registerIcon(ResourceUtil.PREFIX + NameUtil.SPECTACLES);
+		this.itemIcon = ir.registerIcon(Reference.ID + ":" + NameUtil.SPECTACLES);
 	}
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return ResourceUtil.PREFIX + ResourceUtil.PATH_MODEL + "armorSpectacles.png";
+		return Reference.ID + ":" + "textures/models/" + "armorSpectacles.png";
 	}
 
 	public EnumRarity getRarity(ItemStack stack)

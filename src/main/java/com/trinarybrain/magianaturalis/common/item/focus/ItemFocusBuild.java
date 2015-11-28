@@ -3,6 +3,17 @@ package com.trinarybrain.magianaturalis.common.item.focus;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
+import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
+import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Shape;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.common.util.WorldCoord;
+import com.trinarybrain.magianaturalis.common.util.WorldUtil;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,16 +33,6 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
-import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
-import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Shape;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import com.trinarybrain.magianaturalis.common.util.WorldCoord;
-import com.trinarybrain.magianaturalis.common.util.WorldUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 {
@@ -65,7 +66,7 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		icon = ir.registerIcon(ResourceUtil.PREFIX +  "focus_build");
+		icon = ir.registerIcon(Reference.ID + ":" +  "focus_build");
 	}
 
 	@Override

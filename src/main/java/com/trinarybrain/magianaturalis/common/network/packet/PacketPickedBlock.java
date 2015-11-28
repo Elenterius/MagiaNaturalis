@@ -1,41 +1,73 @@
 package com.trinarybrain.magianaturalis.common.network.packet;
 
+import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
+import com.trinarybrain.magianaturalis.common.network.packet.PacketPickedBlock.PickedBlockMessage;
+import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
+
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import thaumcraft.api.wands.ItemFocusBasic;
+import thaumcraft.common.items.wands.ItemWandCasting;
 
-public class PacketPickedBlock extends PacketBase
+public class PacketPickedBlock implements IMessageHandler<PickedBlockMessage, IMessage>
 {
-	private int packetID;
-	public int blockID;
-	public int meta;
-
-	public PacketPickedBlock() {}
-
-	public PacketPickedBlock(int packetID, int blockID, int meta)
-	{
-		this.packetID = packetID;
-		this.blockID = blockID;
-		this.meta = meta;
-	}
 
 	@Override
-	public void writeData(ByteBuf data)
+	public IMessage onMessage(PickedBlockMessage message, MessageContext ctx)
 	{
-		data.writeByte(this.packetID);
-		data.writeInt(this.blockID);
-		data.writeInt(this.meta);
+		if(ctx.side.isServer())
+		{
+			System.out.println(String.format("Received %s:%s from %s", message.blockID, message.blockMeta, ctx.getServerHandler().playerEntity.getDisplayName()));
+
+			ItemStack stack = ctx.getServerHandler().playerEntity.inventory.getCurrentItem();
+			if(stack != null && stack.getItem() instanceof ItemWandCasting)
+			{
+				ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+				ItemFocusBasic focus = wand.getFocus(stack);
+				if(focus != null && focus instanceof ItemFocusBuild)
+				{
+					Block block = Block.getBlockById(message.blockID);
+					int meta = message.blockMeta;
+
+					if(block != null && meta >= 0 && meta <= 15)
+						FocusBuildHelper.setpickedBlock(wand.getFocusItem(stack), block, meta);
+				}
+			}
+		}
+
+		return null;
 	}
 
-	@Override
-	public void readData(ByteBuf data)
+	public static class PickedBlockMessage implements IMessage
 	{
-		this.packetID = data.readByte();
-		this.blockID = data.readInt();
-		this.meta = data.readInt();
+		private int blockID;
+		private byte blockMeta;
+
+		public PickedBlockMessage() {}
+
+		public PickedBlockMessage(int blockId, byte meta)
+		{
+			blockID = blockId;
+			blockMeta = meta;
+		}
+
+		@Override
+		public void fromBytes(ByteBuf buf)
+		{
+			blockID = buf.readInt();
+			blockMeta = buf.readByte();
+		}
+
+		@Override
+		public void toBytes(ByteBuf buf)
+		{
+			buf.writeInt(blockID);
+			buf.writeByte(blockMeta);
+		}
 	}
 
-	@Override
-	public int getPacketID()
-	{
-		return this.packetID;
-	}
 }

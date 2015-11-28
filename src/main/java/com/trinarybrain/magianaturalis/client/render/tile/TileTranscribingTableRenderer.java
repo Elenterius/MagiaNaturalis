@@ -1,5 +1,12 @@
 package com.trinarybrain.magianaturalis.client.render.tile;
 
+import org.lwjgl.opengl.GL11;
+
+import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
+import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,20 +18,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import thaumcraft.client.renderers.models.ModelArcaneWorkbench;
 import thaumcraft.common.blocks.BlockTable;
 import thaumcraft.common.config.ConfigBlocks;
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
-import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 public class TileTranscribingTableRenderer extends TileEntitySpecialRenderer
 {
-	private static final ResourceLocation rl = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "transcribing_table.png");
+	private static final ResourceLocation rl = new ResourceLocation(Reference.ID, "textures/models/" + "transcribing_table.png");
 	private ModelArcaneWorkbench tableModel = new ModelArcaneWorkbench();
 
 	@Override

@@ -4,13 +4,13 @@ import org.lwjgl.opengl.GL11;
 
 import com.trinarybrain.api.ISpectacles;
 import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemGogglesDark;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -49,7 +49,7 @@ public class EventHandlerRender
 	ItemStack lastItem = null;
 	int lastCount = 0;
 	private static final ResourceLocation rlSilk = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
-	private static final ResourceLocation rlHudFrame = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MISC + "frame-gold.png");
+	private static final ResourceLocation rlHudFrame = new ResourceLocation(Reference.ID, "textures/misc/" + "frame-gold.png");
 
 	public static void register()
 	{
@@ -89,7 +89,7 @@ public class EventHandlerRender
 		}
 	}
 
-	private static final ResourceLocation rlGlowingEyes = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "glowingEyes.png");
+	private static final ResourceLocation rlGlowingEyes = new ResourceLocation(Reference.ID, "textures/models/" + "glowingEyes.png");
 	private static ModelBiped modelOverlay = new ModelBiped();
 
 	@SubscribeEvent

@@ -7,6 +7,7 @@ import com.trinarybrain.magianaturalis.client.render.block.BlockJarRenderer;
 import com.trinarybrain.magianaturalis.client.render.block.BlockRenderer;
 import com.trinarybrain.magianaturalis.client.render.entity.RenderEvilTrunk;
 import com.trinarybrain.magianaturalis.client.render.entity.RenderTaintBreeder;
+import com.trinarybrain.magianaturalis.client.render.entity.RenderTaintman;
 import com.trinarybrain.magianaturalis.client.render.item.RenderItemEvilTrunkSpawner;
 import com.trinarybrain.magianaturalis.client.render.tile.TileArcaneChestRenderer;
 import com.trinarybrain.magianaturalis.client.render.tile.TileBannerCustomRenderer;
@@ -16,6 +17,7 @@ import com.trinarybrain.magianaturalis.client.render.tile.TileTranscribingTableR
 import com.trinarybrain.magianaturalis.common.core.CommonProxy;
 import com.trinarybrain.magianaturalis.common.core.KeyHandler;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
+import com.trinarybrain.magianaturalis.common.entity.EntityTaintman;
 import com.trinarybrain.magianaturalis.common.entity.EntityZombieExtended;
 import com.trinarybrain.magianaturalis.common.entity.taint.EntityTaintBreeder;
 import com.trinarybrain.magianaturalis.common.item.ItemsMN;
@@ -36,6 +38,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import thaumcraft.client.renderers.entity.RenderEldritchGuardian;
 
 public class ClientProxy extends CommonProxy
 {
@@ -63,6 +66,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
 		RenderingRegistry.registerEntityRenderingHandler(EntityEvilTrunk.class, new RenderEvilTrunk());
 		RenderingRegistry.registerEntityRenderingHandler(EntityZombieExtended.class, new RenderZombie());
+		RenderingRegistry.registerEntityRenderingHandler(EntityTaintman.class, new RenderTaintman());
 	}
 
 	public void registerTileEntitySpecialRenderer(Class clazz, TileEntitySpecialRenderer tESR)

@@ -1,40 +1,30 @@
 package com.trinarybrain.magianaturalis.common.item;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.Iterables;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.core.Log;
+import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
+import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
+import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
+import com.trinarybrain.magianaturalis.common.util.Platform;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
-import thaumcraft.common.entities.monster.EntityWatcher;
 import thaumcraft.common.tiles.TileBanner;
 import thaumcraft.common.tiles.TileOwned;
-import com.trinarybrain.magianaturalis.common.core.Log;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
-import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
-import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class DevTool extends BaseItem
 {
@@ -64,7 +54,7 @@ public class DevTool extends BaseItem
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "book_magia_natura");
+		this.itemIcon = icon.registerIcon(Reference.ID + ":" + "book_magia_natura");
 	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)

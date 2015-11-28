@@ -2,6 +2,14 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.item.BaseItem;
+import com.trinarybrain.magianaturalis.common.util.NBTUtil;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,13 +24,6 @@ import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.tiles.TileDeconstructionTable;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
-import com.trinarybrain.magianaturalis.common.util.NBTUtil;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemResearchLog extends BaseItem
 {
@@ -35,7 +36,7 @@ public class ItemResearchLog extends BaseItem
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.itemIcon = icon.registerIcon(ResourceUtil.PREFIX + "book_magia_natura");
+		this.itemIcon = icon.registerIcon(Reference.ID + ":" + "book_magia_natura");
 	}
 
 	@SideOnly(Side.CLIENT)

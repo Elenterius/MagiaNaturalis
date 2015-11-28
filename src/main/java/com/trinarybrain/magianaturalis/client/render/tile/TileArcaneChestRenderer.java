@@ -1,21 +1,21 @@
 package com.trinarybrain.magianaturalis.client.render.tile;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
+
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-
 public class TileArcaneChestRenderer extends TileEntitySpecialRenderer
 {
-	private static final ResourceLocation rl_gw = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "chest_greatwood.png");
-	private static final ResourceLocation rl_sw = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "chest_silverwood.png");
+	private static final ResourceLocation rl_gw = new ResourceLocation(Reference.ID, "textures/models/" + "chest_greatwood.png");
+	private static final ResourceLocation rl_sw = new ResourceLocation(Reference.ID, "textures/models/" + "chest_silverwood.png");
 	private final ModelChest chestModel = new ModelChest();
 
 	@Override

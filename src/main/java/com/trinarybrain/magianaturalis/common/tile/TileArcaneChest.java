@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
 import com.trinarybrain.magianaturalis.common.block.BlocksMN;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
 
 import net.minecraft.block.Block;
@@ -121,7 +121,7 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	@Override
 	public String getInventoryName()
 	{
-		return hasCustomInventoryName() ? customName : Platform.translate("tile." + ResourceUtil.PREFIX + "arcaneChest." + name[getChestType()] + ".name");
+		return hasCustomInventoryName() ? customName : Platform.translate("tile." + Reference.ID + ":" + "arcaneChest." + name[getChestType()] + ".name");
 	}
 
 	@Override
@@ -157,11 +157,11 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	}
 
 	public void readCustomNBT(NBTTagCompound data)
-    {
+	{
 		owner = UUID.fromString(data.getString("owner"));
 		chestType = data.getByte("Type");
 		accessList = NBTUtil.loadUserAccesFromNBT(data);
-    }
+	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound data)
@@ -175,11 +175,11 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 	}
 
 	public void writeCustomNBT(NBTTagCompound data)
-    {
+	{
 		data.setString("owner", owner.toString());
 		data.setByte("Type", chestType);
 		NBTUtil.saveUserAccesToNBT(data, accessList);
-    }
+	}
 
 	@Override
 	public int getInventoryStackLimit()

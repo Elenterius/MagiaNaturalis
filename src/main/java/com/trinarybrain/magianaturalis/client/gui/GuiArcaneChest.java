@@ -1,12 +1,9 @@
 package com.trinarybrain.magianaturalis.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import com.trinarybrain.magianaturalis.client.util.RenderUtil;
 import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.container.ContainerArcaneChest;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;

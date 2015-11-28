@@ -1,19 +1,15 @@
 package com.trinarybrain.magianaturalis.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkCorrupted;
 import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkDemonic;
 import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkSinister;
 import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkTainted;
+import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import net.minecraft.client.model.ModelBase;
+
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEvilTrunk extends RenderLiving
@@ -23,10 +19,10 @@ public class RenderEvilTrunk extends RenderLiving
 	public ModelTrunkDemonic modelTD = new ModelTrunkDemonic();
 	public ModelTrunkTainted modelTT = new ModelTrunkTainted();
 
-	public static final ResourceLocation rlTC = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "trunk_corrupted.png");
-	public static final ResourceLocation rlTD = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "trunk_demonic_wings.png");
-	public static final ResourceLocation rlTS = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "trunk_sinister.png");
-	public static final ResourceLocation rlTT = new ResourceLocation(ResourceUtil.DOMAIN, ResourceUtil.PATH_MODEL + "trunk_tainted.png");
+	public static final ResourceLocation rlTC = new ResourceLocation(Reference.ID, "textures/models/" + "trunk_corrupted.png");
+	public static final ResourceLocation rlTD = new ResourceLocation(Reference.ID, "textures/models/" + "trunk_demonic_wings.png");
+	public static final ResourceLocation rlTS = new ResourceLocation(Reference.ID, "textures/models/" + "trunk_sinister.png");
+	public static final ResourceLocation rlTT = new ResourceLocation(Reference.ID, "textures/models/" + "trunk_tainted.png");
 
 	public RenderEvilTrunk()
 	{

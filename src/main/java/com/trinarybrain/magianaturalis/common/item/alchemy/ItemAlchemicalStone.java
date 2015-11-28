@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.item.BaseItem;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.common.util.alchemy.BlockMorpher;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockSlab;
@@ -24,13 +32,6 @@ import thaumcraft.api.BlockCoordinates;
 import thaumcraft.api.IArchitect;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.item.BaseItem;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import com.trinarybrain.magianaturalis.common.util.ResourceUtil;
-import com.trinarybrain.magianaturalis.common.util.alchemy.BlockMorpher;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAlchemicalStone extends BaseItem implements IArchitect
 {
@@ -47,8 +48,8 @@ public class ItemAlchemicalStone extends BaseItem implements IArchitect
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon)
 	{
-		this.icons[0] = icon.registerIcon(ResourceUtil.PREFIX + "mutation_stone");
-		this.icons[1] = icon.registerIcon(ResourceUtil.PREFIX + "quicksilver_stone");
+		this.icons[0] = icon.registerIcon(Reference.ID + ":" + "mutation_stone");
+		this.icons[1] = icon.registerIcon(Reference.ID + ":" + "quicksilver_stone");
 	}
 
 	@SideOnly(Side.CLIENT)
