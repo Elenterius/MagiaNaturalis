@@ -283,7 +283,7 @@ public class WorldUtil
 
 		if(Platform.isServer())
 		{
-			PacketHandler.network.sendToAllAround(new PacketBiomeChange.BiomeChangeMessage(x, z, (short) biome.biomeID), new TargetPoint(0, x, world.getTopSolidOrLiquidBlock(x, z), z, 32D));
+			PacketHandler.network.sendToAllAround(new PacketBiomeChange.BiomeChangeMessage(x, z, (short) biome.biomeID), new TargetPoint(world.provider.dimensionId, x, world.getTopSolidOrLiquidBlock(x, z), z, 32D));
 		}
 	}
 

@@ -38,6 +38,7 @@ public class CommonProxy implements IGuiHandler
 		EntitiesMN.registerEntities();
 		EntitiesMN.addChampions();
 		NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
+		EventHandlerWorld.register();
 	}
 
 	public void postInit(FMLPostInitializationEvent event)
@@ -67,17 +68,5 @@ public class CommonProxy implements IGuiHandler
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
 		return null;
-	}
-
-	public EntityPlayer getPlayerFromNetHandler(INetHandler handler)
-	{
-		if(handler instanceof NetHandlerPlayServer)
-		{
-			return ((NetHandlerPlayServer) handler).playerEntity;
-		}
-		else
-		{
-			return null;
-		}
 	}
 }
