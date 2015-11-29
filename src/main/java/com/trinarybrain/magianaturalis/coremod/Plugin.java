@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name(value = "MN-COREMOD")
 @IFMLLoadingPlugin.MCVersion(value = "1.7.10")
-@IFMLLoadingPlugin.TransformerExclusions(value = "com.trinarybrain.magia.naturalis.coremod")
+@IFMLLoadingPlugin.TransformerExclusions(value = "com.trinarybrain.magianaturalis.coremod")
 public class Plugin implements IFMLLoadingPlugin
 {
 	@Override
