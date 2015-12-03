@@ -17,9 +17,9 @@ public class PacketHandler
 	public static void initPackets()
 	{
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.ID.toUpperCase());
-		registerMessage(PacketKeyInput.class, PacketKeyInput.KeyInputMessage.class);
-		registerMessage(PacketPickedBlock.class, PacketPickedBlock.PickedBlockMessage.class);
-		registerMessage(PacketBiomeChange.class, PacketBiomeChange.BiomeChangeMessage.class);
+		network.registerMessage(PacketKeyInput.class, PacketKeyInput.KeyInputMessage.class, nextPacketID++, Side.SERVER);
+		network.registerMessage(PacketPickedBlock.class, PacketPickedBlock.PickedBlockMessage.class, nextPacketID++, Side.SERVER);
+		network.registerMessage(PacketBiomeChange.class, PacketBiomeChange.BiomeChangeMessage.class, nextPacketID++, Side.CLIENT);
 	}
 
 	private static void registerMessage(Class packet, Class message)

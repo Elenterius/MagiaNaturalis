@@ -1,8 +1,5 @@
 package com.trinarybrain.magianaturalis.coremod;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -13,9 +10,9 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import net.minecraft.launchwrapper.IClassTransformer;
-import scala.actors.threadpool.Arrays;
 import com.trinarybrain.magianaturalis.common.core.Log;
+
+import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ClassTransformer implements IClassTransformer, Opcodes
 {

@@ -1,12 +1,8 @@
 package com.trinarybrain.magianaturalis.coremod;
 
-import org.lwjgl.opengl.GL11;
-
 import com.trinarybrain.api.IRevealInvisible;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
