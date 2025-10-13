@@ -221,13 +221,13 @@ public class BlockArcaneChest extends BlockContainer
 						String loc = new StringBuilder().append(x).append(",").append(y).append(",").append(z).toString();
 						if(!loc.equals(curStack.stackTagCompound.getString("location")))
 						{
-							player.addChatMessage(new ChatComponentText(new StringBuilder().append("ง5งo").append(Platform.translate("tc.key7")).toString()));
+							player.addChatMessage(new ChatComponentText(new StringBuilder().append("ยง5ยงo").append(Platform.translate("tc.key7")).toString()));
 						}
 						else if(loc.equals(curStack.stackTagCompound.getString("location")))
 						{
 							if(isKeyAdmin > 0)
 							{
-								player.addChatMessage(new ChatComponentText(new StringBuilder().append("ง5งo").append(Platform.translate("tc.key8")).toString()));
+								player.addChatMessage(new ChatComponentText(new StringBuilder().append("ยง5ยงo").append(Platform.translate("tc.key8")).toString()));
 							}
 							else if(isKeyAdmin == 0)
 							{
@@ -238,7 +238,7 @@ public class BlockArcaneChest extends BlockContainer
 									if(--curStack.stackSize <= 0)
 										player.inventory.mainInventory[player.inventory.currentItem] = null;
 
-								player.addChatMessage(new ChatComponentText(new StringBuilder().append("ง5งo").append(Platform.translate("chat.magianaturalis:key.access.chest")).toString()));
+								player.addChatMessage(new ChatComponentText(new StringBuilder().append("ยง5ยงo").append(Platform.translate("chat.magianaturalis:key.access.chest")).toString()));
 								world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
 							}
 						}
@@ -262,7 +262,7 @@ public class BlockArcaneChest extends BlockContainer
 						}
 						else
 						{
-							player.addChatMessage(new ChatComponentText(new StringBuilder().append("ง5งo").append(Platform.translate("chat.magianaturalis:chest.access.denied")).toString()));
+							player.addChatMessage(new ChatComponentText("ยง5ยงo" + Platform.translate("chat.magianaturalis:chest.access.denied")));
 							world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
 						}
 					}

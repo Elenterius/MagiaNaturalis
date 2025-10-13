@@ -1,4 +1,29 @@
-Copyright (c) 2014-2015
+Copyright (c) 2014-2025 Elenterius
 
-This Minecraft Modification (Magia Naturalis), by the terms of http://minecraft.net/terms is the sole property of 
-the Mod author (TrinaryBrain, henceforth "Owner" or "The Owner"). By default only Minecraftforum.net and curseforge.com are able to host any of The Owner's material without the consent of The Owner. It may not be distributed on any other web site or otherwise distributed publicly without advance written permission. This is a closed source mod, you are not allowed to distribute any binary or source version (original & modified) of this mod under any circumstances. It may be included in any mod-pack with other mods, as long as it does not attempt to make money of The Owner's Mods.
+All code is licensed under the MIT License.
+
+Note my former username on minecraftforum.net was TrinaryBrain.
+
+All artwork is currently ARR because I don't remember if they are all mine and several textures are either based on or modified Thaumcraft textures.
+
+=================================================================================
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
