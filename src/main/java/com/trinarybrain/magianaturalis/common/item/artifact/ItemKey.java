@@ -1,8 +1,5 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
@@ -10,7 +7,6 @@ import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.access.TileAccess;
 import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,6 +25,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 import thaumcraft.common.tiles.TileOwned;
 
+import java.util.List;
+import java.util.UUID;
+
 public class ItemKey extends Item {
 
     //TODO: IMPLEMENT OFFLINE PLAYER ADDING - WITH ANVIL? HOW WILL THAT WORK?
@@ -43,7 +42,7 @@ public class ItemKey extends Item {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         super.addInformation(stack, player, list, par4);
-        list.add(EnumChatFormatting.DARK_PURPLE + Platform.translate("flavor.magianaturalis:key." + stack.getItemDamage()));
+        list.add(EnumChatFormatting.DARK_PURPLE + Platform.translate("flavor.magianaturalis.key." + stack.getItemDamage()));
 
         NBTTagCompound data = NBTUtil.openNbtData(stack);
 
@@ -134,11 +133,11 @@ public class ItemKey extends Item {
             NBTTagCompound data = NBTUtil.openNbtData(stack);
             if (!data.hasKey("forger")) {
                 setKeyForger(stack, player.getGameProfile());
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis:key.owner"), player.getGameProfile().getName())));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis.key.owner"), player.getGameProfile().getName())));
             }
             else if (!data.hasKey("owner")) {
                 setBoundPlayer(stack, player.getGameProfile());
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis:key.boundplayer.1"), player.getGameProfile().getName())));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis.key.boundplayer.1"), player.getGameProfile().getName())));
             }
             return stack;
         }
@@ -230,7 +229,7 @@ public class ItemKey extends Item {
 
             boolean bool = setBoundPlayer(stack, player2.getGameProfile());
             if (bool)
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis:key.boundplayer"), player2.getGameProfile().getName())));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis.key.boundplayer"), player2.getGameProfile().getName())));
         }
         else if (stack.getItemDamage() == 1) {
             if (!(entity instanceof EntityPlayer)) return false;
@@ -251,7 +250,7 @@ public class ItemKey extends Item {
             accessList.appendTag(tempData);
             data.setTag("AccessList", accessList);
 
-            player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis:key.accesslist"), player2.getGameProfile().getName())));
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis.key.accesslist"), player2.getGameProfile().getName())));
         }
         return false;
     }

@@ -1,76 +1,77 @@
 # MISC
 itemGroup.magianaturalis=Magia Naturalis
-enum.magianaturalis:none=None
-enum.magianaturalis:unknown=Unknown
-enum.magianaturalis:uniform=Uniform
-enum.magianaturalis:cube=Cube
-enum.magianaturalis:plane=Plane
-enum.magianaturalis:plane.extend=Plane Extend
-enum.magianaturalis:sphere=Sphere
+
+enum.magianaturalis.none=None
+enum.magianaturalis.unknown=Unknown
+enum.magianaturalis.meta.uniform=Uniform
+enum.magianaturalis.shape.cube=Cube
+enum.magianaturalis.shape.plane=Plane
+enum.magianaturalis.shape.plane.extend=Plane Extend
+enum.magianaturalis.shape.sphere=Sphere
 
 # KEY BINDINGS
 key.categories.magianaturalis=Magia Naturalis
-key.magianaturalis.size.add=Increase Area Size
-key.magianaturalis.size.sub=Decrease Area Size
+key.magianaturalis.increase_size=Increase Area Size
+key.magianaturalis.decrease_size=Decrease Area Size
 key.magianaturalis.misc=Toggle Shape/Mode
-key.magianaturalis.pickBlock=Pick Block
+key.magianaturalis.pick_block=Pick Block
 
 # CHAT MSG
-chat.magianaturalis:key.access.door=The Arcane Door has been linked to your Soul.
-chat.magianaturalis:key.access.chest=The Arcane Chest seems to like You.
-chat.magianaturalis:key.access.misc=The Arcane Device is now bound to your Soul.
-chat.magianaturalis:key.boundplayer=The Key was bound to the Soul of %s.
-chat.magianaturalis:key.boundplayer.1=You bound the Key to your Soul.
-chat.magianaturalis:key.owner=You are now the Forger of the Key.
-chat.magianaturalis:key.accesslist=%s was added to the Keys Access List.
-chat.magianaturalis:chest.access.denied=The Arcane Chest doesn't seem to like You.
-chat.magianaturalis:chest.resist=The Chest resists Your Attempt of Miniaturization.
+chat.magianaturalis.key.access.door=The Arcane Door has been linked to your Soul.
+chat.magianaturalis.key.access.chest=The Arcane Chest seems to like You.
+chat.magianaturalis.key.access.misc=The Arcane Device is now bound to your Soul.
+chat.magianaturalis.key.boundplayer=The Key was bound to the Soul of %s.
+chat.magianaturalis.key.boundplayer.1=You bound the Key to your Soul.
+chat.magianaturalis.key.owner=You are now the Forger of the Key.
+chat.magianaturalis.key.accesslist=%s was added to the Keys Access List.
+chat.magianaturalis.chest.access.denied=The Arcane Chest doesn't seem to like You.
+chat.magianaturalis.chest.resist=The Chest resists Your Attempt of Miniaturization.
 
 # Flavor Text & Tool Hint & Misc 
-flavor.magianaturalis:key.0=One to Open Them All...
-flavor.magianaturalis:key.1=One to Grant Access for Others...
-flavor.magianaturalis:banner=A Banner to mark our Presence.
-hint.magianaturalis:ctrl=<Press Ctrl>
-hint.magianaturalis:chest.items=Contains Treasure
-hint.magianaturalis:chest.access=Has Access List
+flavor.magianaturalis.key.0=One to Open Them All...
+flavor.magianaturalis.key.1=One to Grant Access for Others...
+flavor.magianaturalis.banner=A Banner to mark our Presence.
+hint.magianaturalis.ctrl=<Press Ctrl>
+hint.magianaturalis.chest.items=Contains Treasure
+hint.magianaturalis.chest.access=Has Access List
 
 # ITEM NAMES
-item.magianaturalis:researchLog.name=Research Log
-item.magianaturalis:alchemicalStone.1.name=Quicksilver Alchemist Stone
-item.magianaturalis:alchemicalStone.0.name=Phenomorphous Catalyst Stone
-item.magianaturalis:devTool.name=Misc Dev Tool
-item.magianaturalis:biomeDevTool.name=Biome Dev Tool
-item.magianaturalis:key.0.name=Key of Unraveling
-item.magianaturalis:key.1.name=Key of Endorsing
-item.magianaturalis:gogglesDarkCrystal.name=Dark Crystal Goggles
-item.magianaturalis:spectacles.name=Spectacles
-item.magianaturalis:focusBuild.name=Wand Focus: Construction
-item.magianaturalis:focusRevenant.name=Wand Focus: Baby Revenant
-item.magianaturalis:evilTrunk.tainted.name=Tainted Trunk
-item.magianaturalis:evilTrunk.demonic.name=Demonic Trunk
-item.magianaturalis:evilTrunk.sinister.name=Sinister Trunk
-item.magianaturalis:evilTrunk.corrupted.name=Corrupted Trunk
-item.magianaturalis:focusPouchEnder.name=Focus Enderpouch
-item.magianaturalis:sickleThaumium.name=Thaumium Sickle
-item.magianaturalis:voidSickle.name=Void Sickle
-item.magianaturalis:sickleElemental.name=Sickle of Abundance
-item.magianaturalis:biomeSampler.name=Biome Report
+item.magianaturalis.researchLog.name=Research Log
+item.magianaturalis.alchemicalStone.1.name=Quicksilver Alchemist Stone
+item.magianaturalis.alchemicalStone.0.name=Phenomorphous Catalyst Stone
+item.magianaturalis.devTool.name=Misc Dev Tool
+item.magianaturalis.biomeDevTool.name=Biome Dev Tool
+item.magianaturalis.key.0.name=Key of Unraveling
+item.magianaturalis.key.1.name=Key of Endorsing
+item.magianaturalis.gogglesDarkCrystal.name=Dark Crystal Goggles
+item.magianaturalis.spectacles.name=Spectacles
+item.magianaturalis.focusBuild.name=Wand Focus: Construction
+item.magianaturalis.focusRevenant.name=Wand Focus: Baby Revenant
+item.magianaturalis.evilTrunk.tainted.name=Tainted Trunk
+item.magianaturalis.evilTrunk.demonic.name=Demonic Trunk
+item.magianaturalis.evilTrunk.sinister.name=Sinister Trunk
+item.magianaturalis.evilTrunk.corrupted.name=Corrupted Trunk
+item.magianaturalis.focusPouchEnder.name=Focus Enderpouch
+item.magianaturalis.sickleThaumium.name=Thaumium Sickle
+item.magianaturalis.voidSickle.name=Void Sickle
+item.magianaturalis.sickleElemental.name=Sickle of Abundance
+item.magianaturalis.biomeSampler.name=Biome Report
 
 # TILE NAMES
-tile.magianaturalis:transcribingTable.name=Transcribing Table
-tile.magianaturalis:arcaneChest.unknown.name=Unknown Chest
-tile.magianaturalis:arcaneChest.gw.name=Greatwood Chest
-tile.magianaturalis:arcaneChest.sw.name=Silverwood Chest
-tile.magianaturalis:jarPrison.name=Entity in a Jar
-tile.magianaturalis:arcaneWood.gwPlanks.name=Horizontal Greatwood Planks
-tile.magianaturalis:arcaneWood.gwOrn.name=Greatwood Ornament
-tile.magianaturalis:arcaneWood.swPlanks.0.name=Horizontal Silverwood Planks
-tile.magianaturalis:arcaneWood.swPlanks.1.name=Vertical Silverwood Planks
-tile.magianaturalis:arcaneWood.gwGoldOrn.0.name=Greatwood Gold Ornament
-tile.magianaturalis:arcaneWood.gwGoldOrn.1.name=Greatwood Gold Ornament
-tile.magianaturalis:arcaneWood.gwGoldTrim.name=Greatwood Gold Trim
-tile.magianaturalis:banner.name=Magia Naturalis Banner
-tile.magianaturalis:geoMorpher.name=Geo-Pylon
+tile.magianaturalis.transcribingTable.name=Transcribing Table
+tile.magianaturalis.arcaneChest.unknown.name=Unknown Chest
+tile.magianaturalis.arcaneChest.gw.name=Greatwood Chest
+tile.magianaturalis.arcaneChest.sw.name=Silverwood Chest
+tile.magianaturalis.jarPrison.name=Entity in a Jar
+tile.magianaturalis.arcaneWood.gwPlanks.name=Horizontal Greatwood Planks
+tile.magianaturalis.arcaneWood.gwOrn.name=Greatwood Ornament
+tile.magianaturalis.arcaneWood.swPlanks.0.name=Horizontal Silverwood Planks
+tile.magianaturalis.arcaneWood.swPlanks.1.name=Vertical Silverwood Planks
+tile.magianaturalis.arcaneWood.gwGoldOrn.0.name=Greatwood Gold Ornament
+tile.magianaturalis.arcaneWood.gwGoldOrn.1.name=Greatwood Gold Ornament
+tile.magianaturalis.arcaneWood.gwGoldTrim.name=Greatwood Gold Trim
+tile.magianaturalis.banner.name=Magia Naturalis Banner
+tile.magianaturalis.geoMorpher.name=Geo-Pylon
 
 # ENTITIY NAMES
 entity.taintBreeder.name=Taint Breeder

@@ -30,11 +30,11 @@ public class BlockArcaneChestItem extends ItemBlock {
         if (data != null) {
             if (data.hasKey("Items")) {
                 list.add("");
-                list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis:chest.items"));
+                list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.chest.items"));
             }
             if (data.hasKey("AccessList")) {
                 if (!data.hasKey("Items")) list.add("");
-                list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis:chest.access"));
+                list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.chest.access"));
             }
         }
     }

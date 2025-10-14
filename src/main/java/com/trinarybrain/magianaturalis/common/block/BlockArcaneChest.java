@@ -171,7 +171,7 @@ public class BlockArcaneChest extends BlockContainer {
             }
             else {
                 world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + Platform.translate("chat.magianaturalis:chest.access.denied")));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + Platform.translate("chat.magianaturalis.chest.access.denied")));
             }
             return true;
         }
@@ -214,7 +214,7 @@ public class BlockArcaneChest extends BlockContainer {
 
                                 if (!player.capabilities.isCreativeMode) if (--curStack.stackSize <= 0) player.inventory.mainInventory[player.inventory.currentItem] = null;
 
-                                player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis:key.access.chest")));
+                                player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis.key.access.chest")));
                                 world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
                             }
                         }
@@ -233,7 +233,7 @@ public class BlockArcaneChest extends BlockContainer {
                             world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
                         }
                         else {
-                            player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis:chest.access.denied")));
+                            player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis.chest.access.denied")));
                             world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
                         }
                     }

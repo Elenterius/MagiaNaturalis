@@ -1,8 +1,5 @@
 package com.trinarybrain.magianaturalis.common.tile;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
@@ -10,7 +7,6 @@ import com.trinarybrain.magianaturalis.common.block.BlocksMN;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +18,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.wands.IWandable;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, IWandable {
 
@@ -260,7 +259,7 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
                 hasAccess = accessList.contains(new UserAccess(player.getGameProfile().getId(), (byte) 2));
             }
             if (!hasAccess) {
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + Platform.translate("chat.magianaturalis:chest.resist")));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + Platform.translate("chat.magianaturalis.chest.resist")));
                 return stack;
             }
 

@@ -24,9 +24,9 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 public class KeyHandler {
 
     public static final KeyBinding MISC_KEY = new KeyBinding("key.magianaturalis.misc", Keyboard.KEY_V, "key.categories.magianaturalis");
-    public static final KeyBinding INCREASE_SIZE_KEY = new KeyBinding("key.magianaturalis.size.add", Keyboard.KEY_ADD, "key.categories.magianaturalis");
-    public static final KeyBinding DECREASE_SIZE_KEY = new KeyBinding("key.magianaturalis.size.sub", Keyboard.KEY_SUBTRACT, "key.categories.magianaturalis");
-    public static final KeyBinding PICK_BLOCK_KEY = new KeyBinding("key.magianaturalis.pickBlock", -98, "key.categories.magianaturalis");
+    public static final KeyBinding INCREASE_SIZE_KEY = new KeyBinding("key.magianaturalis.increase_size", Keyboard.KEY_ADD, "key.categories.magianaturalis");
+    public static final KeyBinding DECREASE_SIZE_KEY = new KeyBinding("key.magianaturalis.decrease_size", Keyboard.KEY_SUBTRACT, "key.categories.magianaturalis");
+    public static final KeyBinding PICK_BLOCK_KEY = new KeyBinding("key.magianaturalis.pick_block", -98, "key.categories.magianaturalis");
 
     public KeyHandler() {
         ClientRegistry.registerKeyBinding(INCREASE_SIZE_KEY);

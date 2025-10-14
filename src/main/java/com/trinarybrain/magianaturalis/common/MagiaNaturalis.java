@@ -51,6 +51,10 @@ public class MagiaNaturalis {
         proxy.postInit(event);
     }
 
+    public static String translationKey(String name) {
+        return MagiaNaturalis.MOD_ID + "." + name;
+    }
+
     public static String rlString(String path) {
         return MagiaNaturalis.MOD_ID + ":" + path;
     }

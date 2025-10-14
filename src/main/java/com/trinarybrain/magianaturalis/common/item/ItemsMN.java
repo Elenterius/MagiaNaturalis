@@ -2,19 +2,10 @@ package com.trinarybrain.magianaturalis.common.item;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.alchemy.ItemAlchemicalStone;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemBiomeSampler;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemElementalSickle;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemEvilTrunkSpawner;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemGogglesDark;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemKey;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemSpectacles;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemThaumiumSickle;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemVoidSickle;
+import com.trinarybrain.magianaturalis.common.item.artifact.*;
 import com.trinarybrain.magianaturalis.common.item.baubles.ItemFocusPouchEnder;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusRevenant;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 
@@ -62,10 +53,10 @@ public class ItemsMN {
 
     private static <T extends Item> T registerItem(String name, Supplier<T> factory) {
         T item = factory.get();
-        item.setUnlocalizedName(MagiaNaturalis.MOD_ID + ":" + name);
+        item.setUnlocalizedName(MagiaNaturalis.translationKey(name));
         item.setCreativeTab(MagiaNaturalis.CREATIVE_TAB);
 
-        GameRegistry.registerItem(item, "item." + name);
+        GameRegistry.registerItem(item, name);
 
         return item;
     }

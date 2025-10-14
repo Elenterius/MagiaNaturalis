@@ -1,20 +1,18 @@
 package com.trinarybrain.magianaturalis.common.util.access;
 
 import com.mojang.authlib.GameProfile;
-
+import com.trinarybrain.magianaturalis.common.block.BlocksMN;
+import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
+import com.trinarybrain.magianaturalis.common.util.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import thaumcraft.common.blocks.BlockArcaneDoor;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileOwned;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
-import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
-import com.trinarybrain.magianaturalis.common.util.Platform;
 
 public final class TileAccess {
 
@@ -101,7 +99,7 @@ public final class TileAccess {
         if (result-- > 0) {
             world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
             String[] word = {"chest", "door", "misc"};
-            player.addChatMessage(new ChatComponentText(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(Platform.translate("chat.magianaturalis:key.access." + word[result])).toString()));
+            player.addChatMessage(new ChatComponentText(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(Platform.translate("chat.magianaturalis.key.access." + word[result])).toString()));
             return true;
         }
         return false;

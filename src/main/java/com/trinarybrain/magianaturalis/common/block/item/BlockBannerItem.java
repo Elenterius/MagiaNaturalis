@@ -1,6 +1,5 @@
 package com.trinarybrain.magianaturalis.common.block.item;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.tile.TileBannerCustom;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import cpw.mods.fml.relauncher.Side;
@@ -25,7 +24,7 @@ public class BlockBannerItem extends ItemBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool) {
-        list.add(new StringBuilder().append(EnumChatFormatting.DARK_PURPLE).append(Platform.translate("flavor.magianaturalis:banner")).toString());
+        list.add(EnumChatFormatting.DARK_PURPLE + Platform.translate("flavor.magianaturalis.banner"));
     }
 
     @Override

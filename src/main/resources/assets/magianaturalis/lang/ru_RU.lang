@@ -1,72 +1,73 @@
 # MISC
 itemGroup.magianaturalis=Magia Naturalis
-enum.magianaturalis:none=Не выбрано
-enum.magianaturalis:unknown=Неизвестно
-enum.magianaturalis:uniform=Форма
-enum.magianaturalis:cube=Куб
-enum.magianaturalis:plane=Плоскость
-enum.magianaturalis:plane.extend=Продвинутая плоскость
-enum.magianaturalis:sphere=Сфера
+
+enum.magianaturalis.none=Не выбрано
+enum.magianaturalis.unknown=Неизвестно
+enum.magianaturalis.meta.uniform=Форма
+enum.magianaturalis.shape.cube=Куб
+enum.magianaturalis.shape.plane=Плоскость
+enum.magianaturalis.shape.plane.extend=Продвинутая плоскость
+enum.magianaturalis.shape.sphere=Сфера
+
 key.categories.magianaturalis=Magia Naturalis
-key.magianaturalis.size.add=Увеличить размер области
-key.magianaturalis.size.sub=Уменьшить размер области
+key.magianaturalis.increase_size=Увеличить размер области
+key.magianaturalis.decrease_size=Уменьшить размер области
 key.magianaturalis.misc=Включить Форму/Режим
-key.magianaturalis.pickBlock=Выбор блока
+key.magianaturalis.pick_block=Выбор блока
 
 # CHAT MSG
-chat.magianaturalis:key.access.door=Магическая дверь была связана с вашей душой.
-chat.magianaturalis:key.access.chest=The Arcane Chest seems to like You.
-chat.magianaturalis:key.access.misc=Магическое устройство теперь связано с вашей душой.
-chat.magianaturalis:key.boundplayer=Ключ был связан с душой %s.
-chat.magianaturalis:key.boundplayer.1=Вы привязали ключ к вашей душе.
-chat.magianaturalis:key.owner=You are now the Forger of the Key.
-chat.magianaturalis:key.accesslist=%s был добавлен в список ключей доступа.
-chat.magianaturalis:chest.access.denied=The Arcane Chest doesn't seem to like You.
-chat.magianaturalis:chest.resist=Сундук сопротивляется Вашей попытке миниатюризации.
+chat.magianaturalis.key.access.door=Магическая дверь была связана с вашей душой.
+chat.magianaturalis.key.access.chest=The Arcane Chest seems to like You.
+chat.magianaturalis.key.access.misc=Магическое устройство теперь связано с вашей душой.
+chat.magianaturalis.key.boundplayer=Ключ был связан с душой %s.
+chat.magianaturalis.key.boundplayer.1=Вы привязали ключ к вашей душе.
+chat.magianaturalis.key.owner=You are now the Forger of the Key.
+chat.magianaturalis.key.accesslist=%s был добавлен в список ключей доступа.
+chat.magianaturalis.chest.access.denied=The Arcane Chest doesn't seem to like You.
+chat.magianaturalis.chest.resist=Сундук сопротивляется Вашей попытке миниатюризации.
 
 # Flavor Text & Tool Hint & Misc 
-flavor.magianaturalis:key.0=Один для всех...
-flavor.magianaturalis:key.1=Один, чтобы предоставить доступ другим...
-flavor.magianaturalis:banner=Баннер в честь нашего присутствия.
-hint.magianaturalis:ctrl=<Нажмите Ctrl>
-hint.magianaturalis:chest.items=Содержит сокровище
-hint.magianaturalis:chest.access=Имеет список доступа
-hint.magianaturalis:horizontal=Горизонтальные
-hint.magianaturalis:vertical=Вертикальные
+flavor.magianaturalis.key.0=Один для всех...
+flavor.magianaturalis.key.1=Один, чтобы предоставить доступ другим...
+flavor.magianaturalis.banner=Баннер в честь нашего присутствия.
+hint.magianaturalis.ctrl=<Нажмите Ctrl>
+hint.magianaturalis.chest.items=Содержит сокровище
+hint.magianaturalis.chest.access=Имеет список доступа
 
 # ITEM NAMES
-item.magianaturalis:researchLog.name=Журнал исследований
-item.magianaturalis:alchemicalStone.1.name=Ртутный алхимический камень
-item.magianaturalis:alchemicalStone.0.name=Феноморфный камень-катализатор
-item.magianaturalis:devTool.name=Остальные инструменты разработчика
-item.magianaturalis:key.0.name=Ключ разгадки
-item.magianaturalis:key.1.name=Ключ поддержки
-item.magianaturalis:gogglesDarkCrystal.name=Темные кристальные очки
-item.magianaturalis:spectacles.name=Очки
-item.magianaturalis:focusBuild.name=Набалдашник: Строительство
-item.magianaturalis:evilTrunk.tainted.name=Заражённый сундук
-item.magianaturalis:evilTrunk.demonic.name=Демонический сундук
-item.magianaturalis:evilTrunk.sinister.name=Зловещий сундук
-item.magianaturalis:evilTrunk.corrupted.name=Повреждённый сундук
-item.magianaturalis:focusPouchEnder.name=Эндер-сумка для набалдашников
-item.magianaturalis:sickleThaumium.name=Таум-серп
-item.magianaturalis:sickleElemental.name=Серп изобилия
-item.magianaturalis:biomeSampler.name=Biome Report
+item.magianaturalis.researchLog.name=Журнал исследований
+item.magianaturalis.alchemicalStone.1.name=Ртутный алхимический камень
+item.magianaturalis.alchemicalStone.0.name=Феноморфный камень-катализатор
+item.magianaturalis.devTool.name=Остальные инструменты разработчика
+item.magianaturalis.key.0.name=Ключ разгадки
+item.magianaturalis.key.1.name=Ключ поддержки
+item.magianaturalis.gogglesDarkCrystal.name=Темные кристальные очки
+item.magianaturalis.spectacles.name=Очки
+item.magianaturalis.focusBuild.name=Набалдашник: Строительство
+item.magianaturalis.evilTrunk.tainted.name=Заражённый сундук
+item.magianaturalis.evilTrunk.demonic.name=Демонический сундук
+item.magianaturalis.evilTrunk.sinister.name=Зловещий сундук
+item.magianaturalis.evilTrunk.corrupted.name=Повреждённый сундук
+item.magianaturalis.focusPouchEnder.name=Эндер-сумка для набалдашников
+item.magianaturalis.sickleThaumium.name=Таум-серп
+item.magianaturalis.sickleElemental.name=Серп изобилия
+item.magianaturalis.biomeSampler.name=Biome Report
 
 # TILE NAMES
-tile.magianaturalis:transcribingTable.name=Стол конвертации
-tile.magianaturalis:arcaneChest.unknown.name=Неизвестный сундук
-tile.magianaturalis:arcaneChest.gw.name=Сундук из великого дерева
-tile.magianaturalis:arcaneChest.sw.name=Сундук из серебряного дерева
-tile.magianaturalis:jarPrison.name=Сущность в банке
-tile.magianaturalis:arcaneWood.gwPlanks.name=Доски из великого дерева
-tile.magianaturalis:arcaneWood.gwOrn.name=Великодревесный орнамента
-tile.magianaturalis:arcaneWood.swPlanks.name=Доски из серебряного дерева
-tile.magianaturalis:arcaneWood.gwGoldOrn.0.name=Украшенные золотом доски из великого дерева
-tile.magianaturalis:arcaneWood.gwGoldOrn.1.name=Украшенные золотом доски из великого дерева
-tile.magianaturalis:arcaneWood.gwGoldTrim.name=Окантованные золотом доски из великого дерева
-tile.magianaturalis:banner.name=Вымпел "Естественная магия"
-tile.magianaturalis:geoMorpher.name=Гео-пилон
+tile.magianaturalis.transcribingTable.name=Стол конвертации
+tile.magianaturalis.arcaneChest.unknown.name=Неизвестный сундук
+tile.magianaturalis.arcaneChest.gw.name=Сундук из великого дерева
+tile.magianaturalis.arcaneChest.sw.name=Сундук из серебряного дерева
+tile.magianaturalis.jarPrison.name=Сущность в банке
+tile.magianaturalis.arcaneWood.gwPlanks.name=Доски из великого дерева
+tile.magianaturalis.arcaneWood.gwOrn.name=Великодревесный орнамента
+tile.magianaturalis.arcaneWood.swPlanks.0.name=Доски из серебряного дерева
+tile.magianaturalis.arcaneWood.swPlanks.1.name=Доски из серебряного дерева
+tile.magianaturalis.arcaneWood.gwGoldOrn.0.name=Украшенные золотом доски из великого дерева
+tile.magianaturalis.arcaneWood.gwGoldOrn.1.name=Украшенные золотом доски из великого дерева
+tile.magianaturalis.arcaneWood.gwGoldTrim.name=Окантованные золотом доски из великого дерева
+tile.magianaturalis.banner.name=Вымпел "Естественная магия"
+tile.magianaturalis.geoMorpher.name=Гео-пилон
 
 # ENTITIY NAMES
 entity.taintBreeder.name=Taint Breeder

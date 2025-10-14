@@ -172,13 +172,13 @@ public final class FocusBuildHelper {
         public String toString() {
             switch (this) {
                 case NONE:
-                    return Platform.translate("enum.magianaturalis:none");
+                    return Platform.translate("enum.magianaturalis.none");
                 case UNIFORM:
-                    return Platform.translate("enum.magianaturalis:uniform");
+                    return Platform.translate("enum.magianaturalis.meta.uniform");
                 default:
                     break;
             }
-            return Platform.translate("enum.magianaturalis:unknown");
+            return Platform.translate("enum.magianaturalis.unknown");
         }
     }
 
@@ -188,17 +188,17 @@ public final class FocusBuildHelper {
         public String toString() {
             switch (this) {
                 case CUBE:
-                    return Platform.translate("enum.magianaturalis:cube");
+                    return Platform.translate("enum.magianaturalis.shape.cube");
                 case NONE:
-                    return Platform.translate("enum.magianaturalis:none");
+                    return Platform.translate("enum.magianaturalis.none");
                 case PLANE:
-                    return Platform.translate("enum.magianaturalis:plane");
+                    return Platform.translate("enum.magianaturalis.shape.plane");
                 case PLANE_EXTEND:
-                    return Platform.translate("enum.magianaturalis:plane.extend");
+                    return Platform.translate("enum.magianaturalis.shape.plane.extend");
                 case SPHERE:
-                    return Platform.translate("enum.magianaturalis:sphere");
+                    return Platform.translate("enum.magianaturalis.shape.sphere");
                 default:
-                    return Platform.translate("enum.magianaturalis:unknown");
+                    return Platform.translate("enum.magianaturalis.unknown");
             }
         }
     }

@@ -5,15 +5,9 @@ import com.trinarybrain.magianaturalis.common.block.item.BlockArcaneChestItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockArcaneWoodItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockBannerItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockJarPrisonItem;
-import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
-import com.trinarybrain.magianaturalis.common.tile.TileBannerCustom;
-import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
-import com.trinarybrain.magianaturalis.common.tile.TileJarPrison;
-import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-
+import com.trinarybrain.magianaturalis.common.tile.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -40,22 +34,22 @@ public class BlocksMN {
         registerOreDict();
     }
 
-    private static <T extends Block, V extends ItemBlock> T registerBlock(String name, Class<V> itemClazz, Supplier<T> factory) {
+    private static <T extends Block, V extends ItemBlock> T registerBlock(String name, Class<V> blockItem, Supplier<T> factory) {
         T block = factory.get();
-        block.setBlockName(MagiaNaturalis.MOD_ID + ":" + name);
+        block.setBlockName(MagiaNaturalis.translationKey(name));
         block.setCreativeTab(MagiaNaturalis.CREATIVE_TAB);
 
-        GameRegistry.registerBlock(block, itemClazz, "block." + name);
+        GameRegistry.registerBlock(block, blockItem, name);
 
         return block;
     }
 
     private static <T extends Block> T registerBlock(String name, Supplier<T> factory) {
         T block = factory.get();
-        block.setBlockName(MagiaNaturalis.MOD_ID + ":" + name);
+        block.setBlockName(MagiaNaturalis.translationKey(name));
         block.setCreativeTab(MagiaNaturalis.CREATIVE_TAB);
 
-        GameRegistry.registerBlock(block, "block." + name);
+        GameRegistry.registerBlock(block, name);
 
         return block;
     }
@@ -67,11 +61,11 @@ public class BlocksMN {
     }
 
     public static void initTileEntities() {
-        GameRegistry.registerTileEntity(TileTranscribingTable.class, "tile." + "transcribingTable");
-        GameRegistry.registerTileEntity(TileArcaneChest.class, "tile." + "arcaneChest");
-        GameRegistry.registerTileEntity(TileJarPrison.class, "tile." + "jarPrison");
-        GameRegistry.registerTileEntity(TileBannerCustom.class, "tile." + "banner");
-        GameRegistry.registerTileEntity(TileGeoMorpher.class, "tile." + "geoMorpher");
+        GameRegistry.registerTileEntity(TileTranscribingTable.class, MagiaNaturalis.rlString("transcribingTable"));
+        GameRegistry.registerTileEntity(TileArcaneChest.class, MagiaNaturalis.rlString("arcaneChest"));
+        GameRegistry.registerTileEntity(TileJarPrison.class, MagiaNaturalis.rlString("jarPrison"));
+        GameRegistry.registerTileEntity(TileBannerCustom.class, MagiaNaturalis.rlString("banner"));
+        GameRegistry.registerTileEntity(TileGeoMorpher.class, MagiaNaturalis.rlString("geoMorpher"));
     }
 
 }

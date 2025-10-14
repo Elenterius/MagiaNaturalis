@@ -1,19 +1,12 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import java.util.List;
-import java.util.Set;
-
-import net.minecraft.client.gui.GuiScreen;
-import org.apache.commons.lang3.text.WordUtils;
-
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -29,8 +22,12 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.util.Constants.NBT;
+import org.apache.commons.lang3.text.WordUtils;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
+
+import java.util.List;
+import java.util.Set;
 
 public class ItemBiomeSampler extends Item {
 
@@ -62,7 +59,7 @@ public class ItemBiomeSampler extends Item {
             }
         }
         else {
-            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis:ctrl"));
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.ctrl"));
         }
     }
 

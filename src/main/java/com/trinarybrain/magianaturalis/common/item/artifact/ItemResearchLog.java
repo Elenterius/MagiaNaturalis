@@ -1,11 +1,8 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import java.util.List;
-
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,6 +20,8 @@ import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.tiles.TileDeconstructionTable;
+
+import java.util.List;
 
 public class ItemResearchLog extends Item {
 
@@ -50,7 +49,7 @@ public class ItemResearchLog extends Item {
             list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.ENTROPY), EnumChatFormatting.DARK_GRAY, Aspect.ENTROPY.getName()));
         }
         else {
-            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis:ctrl"));
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.ctrl"));
         }
     }
 
