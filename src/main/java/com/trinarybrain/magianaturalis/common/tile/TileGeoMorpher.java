@@ -3,6 +3,7 @@ package com.trinarybrain.magianaturalis.common.tile;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.WorldUtil;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,38 +37,44 @@ public class TileGeoMorpher extends TileThaumcraft implements IAspectContainer, 
 
     @Override
     public void updateEntity() {
+        if (!Platform.isServer()) return;
+
         boolean update = false;
-        if (Platform.isServer()) {
-            if (++ticks % 5 == 0)
-                if (!idle) {
-                    if (validateStructure()) update = handleBiomeMorphing(8, cachedBiome);
-                    else {
-                        idle = true;
-                        realCost = new AspectList();
-                        update = true;
 
-                        if (morphX == 0) {
-                            morphZ--;
-                            morphX = 1024;
-                        }
-                        else morphX--;
-                    }
-                }
-
-            if (update) {
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                markDirty();
+        if (!idle && ++ticks % 5 == 0) {
+            if (validateStructure()) {
+                update = handleBiomeMorphing(8, cachedBiome);
             }
+            else {
+                idle = true;
+                realCost = new AspectList();
+                update = true;
+
+                if (morphX == 0) {
+                    morphZ--;
+                    morphX = 1024;
+                }
+                else morphX--;
+            }
+        }
+
+        if (update) {
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            markDirty();
         }
     }
 
     public boolean validateStructure() {
-        boolean valid = worldObj.getBlock(xCoord, yCoord - 1, zCoord) instanceof BlockAir;
+        if (!worldObj.isAirBlock(xCoord, yCoord - 1, zCoord)) return false;
+
         for (int i = 1; i <= 3; i++) {
-            if (!valid) return false;
-            valid = worldObj.getBlock(xCoord, yCoord - 1 - i, zCoord) instanceof BlockCosmeticSolid && worldObj.getBlockMetadata(xCoord, yCoord - 1 - i, zCoord) == 0;
+            Block block = worldObj.getBlock(xCoord, yCoord - 1 - i, zCoord);
+            if (!(block instanceof BlockCosmeticSolid && worldObj.getBlockMetadata(xCoord, yCoord - 1 - i, zCoord) == 0)) {
+                return false;
+            }
         }
-        return valid;
+
+        return true;
     }
 
     public boolean handleBiomeMorphing(int radius, BiomeGenBase newBiome) {
