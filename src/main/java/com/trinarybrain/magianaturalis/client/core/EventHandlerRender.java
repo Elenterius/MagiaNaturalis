@@ -1,17 +1,14 @@
 package com.trinarybrain.magianaturalis.client.core;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import org.lwjgl.opengl.GL11;
-
 import com.trinarybrain.magianaturalis.api.ISpectacles;
 import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemGogglesDark;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -34,6 +31,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.config.ConfigItems;
@@ -106,7 +104,7 @@ public class EventHandlerRender {
             char c0 = 61680;
             int j = c0 % 65536;
             int k = c0 / 65536;
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j / 1.0F, (float) k / 1.0F);
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             OVERLAY_MODEL.bipedHead.render(f6);
             GL11.glDisable(GL11.GL_BLEND);
@@ -210,8 +208,9 @@ public class EventHandlerRender {
             GL11.glTranslatef(49F, 44F, 0F);
             GL11.glScalef(1.5F, 1.5F, 1.5F);
 
-            if (itemRender != null && fontRenderer != null)
+            if (itemRender != null && fontRenderer != null) {
                 RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
+            }
             GL11.glEnable(GL11.GL_BLEND); //TODO: REMOVE this Hack when TC4 fixes its shaders issues
 
             GL11.glPushMatrix();
@@ -226,7 +225,7 @@ public class EventHandlerRender {
                     }
                 }
             }
-            mc.fontRenderer.drawString(am, 16 - sw, 24, 16777215);
+            mc.fontRenderer.drawString(am, 16 - sw, 24, 0xffffff);
 
             if (meta == Meta.UNIFORM) {
                 GL11.glPushMatrix();
@@ -235,6 +234,28 @@ public class EventHandlerRender {
                 RenderUtil.drawTextureQuad(SILKTOUCH_TEXTURE, 16, 16);
                 GL11.glPopMatrix();
             }
+
+            GL11.glPopMatrix();
+            GL11.glPopMatrix();
+        }
+        else if (meta != Meta.UNIFORM) {
+            GL11.glPushMatrix();
+            GL11.glTranslatef(49F, 44F, 0F);
+            GL11.glScalef(1.5F, 1.5F, 1.5F);
+
+            GL11.glPushMatrix();
+            String amount = "?";
+            int width = fontRenderer.getStringWidth(amount);
+            GL11.glTranslatef(0.0F, -fontRenderer.FONT_HEIGHT, 500.0F);
+            GL11.glScalef(0.5F, 0.5F, 0.5F);
+            for (int a = -1; a <= 1; a++) {
+                for (int b = -1; b <= 1; b++) {
+                    if ((a == 0 || b == 0) && (a != 0 || b != 0)) {
+                        mc.fontRenderer.drawString(amount, a + 16 - width, b + 24, 0);
+                    }
+                }
+            }
+            mc.fontRenderer.drawString(amount, 16 - width, 24, 0xffffff);
 
             GL11.glPopMatrix();
             GL11.glPopMatrix();
@@ -312,4 +333,5 @@ public class EventHandlerRender {
             }
         }
     }
+
 }
