@@ -5,44 +5,38 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 
-public class AIOwnerHurtTarget extends EntityAITarget
-{
-	EntityOwnableCreature taskOwner;
+public class AIOwnerHurtTarget extends EntityAITarget {
+
+    EntityOwnableCreature taskOwner;
     EntityLivingBase ownerTarget;
     private int lastAttackTimer;
 
-	public AIOwnerHurtTarget(EntityOwnableCreature entity)
-	{
-		super(entity, false);
-		taskOwner = entity;
-		setMutexBits(1);
-	}
+    public AIOwnerHurtTarget(EntityOwnableCreature entity) {
+        super(entity, false);
+        taskOwner = entity;
+        setMutexBits(1);
+    }
 
-	@Override
-	public boolean shouldExecute()
-	{
-		EntityLivingBase entityOwner = taskOwner.getOwner();
+    @Override
+    public boolean shouldExecute() {
+        EntityLivingBase entityOwner = taskOwner.getOwner();
 
-        if (entityOwner == null)
-        {
+        if (entityOwner == null) {
             return false;
         }
-        else
-        {
+        else {
             ownerTarget = entityOwner.getLastAttacker();
             int i = entityOwner.getLastAttackerTime();
             return i != lastAttackTimer && isSuitableTarget(ownerTarget, false) && taskOwner.canAttack(ownerTarget, entityOwner);
         }
-	}
+    }
 
-	@Override
-	public void startExecuting()
-    {
+    @Override
+    public void startExecuting() {
         taskOwner.setAttackTarget(ownerTarget);
         EntityLivingBase owner = taskOwner.getOwner();
 
-        if (owner != null)
-        {
+        if (owner != null) {
             lastAttackTimer = owner.getLastAttackerTime();
         }
 

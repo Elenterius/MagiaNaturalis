@@ -1,5 +1,6 @@
 package com.trinarybrain.magianaturalis.common.core;
 
+import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
@@ -54,7 +55,7 @@ public class KeyHandler
 			{
 				id = 3;
 			}
-			else if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown() && this.keyMisc.isPressed())
+			else if(GuiScreen.isCtrlKeyDown() && this.keyMisc.isPressed())
 			{
 				id = 4; //Meta
 			}
@@ -69,7 +70,7 @@ public class KeyHandler
 				{
 					ItemWandCasting wand = (ItemWandCasting) player.getCurrentEquippedItem().getItem();
 					ItemFocusBasic focus = wand.getFocus(player.getCurrentEquippedItem());
-					if(focus != null && focus instanceof ItemFocusBuild)
+					if(focus instanceof ItemFocusBuild)
 					{
 						MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, ItemFocusBuild.reachDistance, true);
 						if(target != null)
@@ -99,7 +100,7 @@ public class KeyHandler
 				{
 					ItemWandCasting wand = (ItemWandCasting) player.getCurrentEquippedItem().getItem();
 					ItemFocusBasic focus = wand.getFocus(player.getCurrentEquippedItem());
-					if(focus != null && focus instanceof ItemFocusBuild)
+					if(focus instanceof ItemFocusBuild)
 					{
 						PacketHandler.network.sendToServer(new PacketKeyInput.KeyInputMessage(id));
 					}

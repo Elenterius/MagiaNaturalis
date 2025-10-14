@@ -7,17 +7,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-public class CreativeTab extends CreativeTabs
-{
-	public CreativeTab(int id, String name)
-	{
-		super(id, name);
-	}
+public class CreativeTab extends CreativeTabs {
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem()
-	{
-		return ItemsMN.researchLog;
-	}
+    public CreativeTab(int id, String name) {
+        super(id, name);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Item getTabIconItem() {
+        return ItemsMN.researchLog;
+    }
+
 }

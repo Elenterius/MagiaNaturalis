@@ -3,72 +3,64 @@ package com.trinarybrain.magianaturalis.common.entity.ai;
 import java.util.List;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import com.trinarybrain.magianaturalis.common.entity.EntityPechCustom;
 
-public class AIFollowCreature extends EntityAIBase
-{
-    private EntityPechCustom taskOwner;
-    private Class targetEntityClass;
-	private EntityLiving closestLivingEntity;
-	private int followTime;
+public class AIFollowCreature extends EntityAIBase {
 
-    public AIFollowCreature(EntityPechCustom entityPech, Class par2Class)
-    {
-        this.taskOwner = entityPech;
-        this.targetEntityClass = par2Class;
+    private final EntityPechCustom taskOwner;
+    private final Class<? extends EntityLivingBase> targetEntityClass;
+
+    private EntityLiving closestLivingEntity;
+    private int followTime;
+
+    public AIFollowCreature(EntityPechCustom entityPech, Class<? extends EntityLivingBase> clazz) {
+        taskOwner = entityPech;
+        targetEntityClass = clazz;
 
         // TODO: set correct mute value
-        this.setMutexBits(1);
+        setMutexBits(1);
     }
 
-    public boolean shouldExecute()
-    {
-    	if (this.taskOwner.getRNG().nextInt(400) != 0)
-        {
+    public boolean shouldExecute() {
+        if (taskOwner.getRNG().nextInt(400) != 0) {
             return false;
         }
 
-    	List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.targetEntityClass, this.taskOwner.boundingBox.expand(6.0D, 3.0D, 6.0D));
+        List<?> list = taskOwner.worldObj.getEntitiesWithinAABB(targetEntityClass, taskOwner.boundingBox.expand(6.0D, 3.0D, 6.0D));
 
-    	if (list.isEmpty())
-    	{
-    		return false;
-    	}
+        if (list.isEmpty()) {
+            return false;
+        }
 
-    	this.closestLivingEntity = (EntityLiving)list.get(0);
-		return true;
+        closestLivingEntity = (EntityLiving) list.get(0);
+        return true;
     }
 
-    public boolean continueExecuting()
-    {
-        return this.followTime > 0;
+    public boolean continueExecuting() {
+        return followTime > 0;
     }
 
-    public void startExecuting()
-    {
-    	this.followTime = 1000;
+    public void startExecuting() {
+        followTime = 1000;
     }
 
-    public void resetTask()
-    {
-        this.closestLivingEntity = null;
-        this.taskOwner.getNavigator().clearPathEntity();
+    public void resetTask() {
+        closestLivingEntity = null;
+        taskOwner.getNavigator().clearPathEntity();
     }
 
-    public void updateTask()
-    {
-    	--this.followTime;
+    public void updateTask() {
+        --followTime;
 
-        if (this.closestLivingEntity != null)
-        {
-        	this.taskOwner.getLookHelper().setLookPositionWithEntity(this.closestLivingEntity, 30.0F, 30.0F);
-            if (this.taskOwner.getDistanceSqToEntity(this.closestLivingEntity) > 4.0D)
-            {
-                this.taskOwner.getNavigator().tryMoveToEntityLiving(this.closestLivingEntity, 0.5D);
-            }else
-            {
-            	this.taskOwner.getNavigator().clearPathEntity();
+        if (closestLivingEntity != null) {
+            taskOwner.getLookHelper().setLookPositionWithEntity(closestLivingEntity, 30.0F, 30.0F);
+            if (taskOwner.getDistanceSqToEntity(closestLivingEntity) > 4.0D) {
+                taskOwner.getNavigator().tryMoveToEntityLiving(closestLivingEntity, 0.5D);
+            }
+            else {
+                taskOwner.getNavigator().clearPathEntity();
             }
         }
     }

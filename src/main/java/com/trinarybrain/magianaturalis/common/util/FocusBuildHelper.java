@@ -5,249 +5,218 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public final class FocusBuildHelper
-{
-	public static Meta getMeta(ItemStack stack)
-	{
-		if(stack == null) return Meta.NONE;
-		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
-		if(nbttaglist == null) return Meta.NONE;
+public final class FocusBuildHelper {
 
-		int i = nbttaglist.getCompoundTagAt(0).getByte("meta");
-		switch(i)
-		{
-		case 0:
-			return Meta.NONE;
-		case 1:
-			return Meta.UNIFORM;
-		default:
-			return Meta.NONE;
-		}
-	}
+    public static Meta getMeta(ItemStack stack) {
+        if (stack == null) return Meta.NONE;
+        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+        if (nbttaglist == null) return Meta.NONE;
 
-	public static boolean setMeta(ItemStack stack, Meta meta)
-	{
-		if(stack == null) return false;
+        int i = nbttaglist.getCompoundTagAt(0).getByte("meta");
+        switch (i) {
+            case 0:
+                return Meta.NONE;
+            case 1:
+                return Meta.UNIFORM;
+            default:
+                return Meta.NONE;
+        }
+    }
 
-		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
-		NBTTagCompound tempData;
+    public static boolean setMeta(ItemStack stack, Meta meta) {
+        if (stack == null) return false;
 
-		if(nbttaglist == null)
-		{
-			nbttaglist = new NBTTagList();
-			tempData = new NBTTagCompound();
-		}
-		else
-		{
-			tempData = nbttaglist.getCompoundTagAt(0);
-		}
+        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
+        NBTTagCompound tempData;
 
-		tempData.setByte("meta", (byte) meta.ordinal());
-		nbttaglist.appendTag(tempData);
+        if (nbttaglist == null) {
+            nbttaglist = new NBTTagList();
+            tempData = new NBTTagCompound();
+        }
+        else {
+            tempData = nbttaglist.getCompoundTagAt(0);
+        }
 
-		if(nbttaglist.tagCount() > 0)
-		{
-			data.setTag("magia_naturalis", nbttaglist);
-			return true;
-		}
+        tempData.setByte("meta", (byte) meta.ordinal());
+        nbttaglist.appendTag(tempData);
 
-		return false;
-	}
+        if (nbttaglist.tagCount() > 0) {
+            data.setTag("magia_naturalis", nbttaglist);
+            return true;
+        }
 
-	public static Shape getShape(ItemStack stack)
-	{
-		if(stack == null) return Shape.NONE;
+        return false;
+    }
 
-		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
-		if(nbttaglist == null) return Shape.NONE;
+    public static Shape getShape(ItemStack stack) {
+        if (stack == null) return Shape.NONE;
 
-		return getShapeByID(nbttaglist.getCompoundTagAt(0).getByte("shape"));
-	}
+        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+        if (nbttaglist == null) return Shape.NONE;
 
-	public static boolean setShape(ItemStack stack, Shape shape)
-	{
-		if(stack == null) return false;
+        return getShapeByID(nbttaglist.getCompoundTagAt(0).getByte("shape"));
+    }
 
-		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
-		NBTTagCompound tempData;
+    public static boolean setShape(ItemStack stack, Shape shape) {
+        if (stack == null) return false;
 
-		if(nbttaglist == null)
-		{
-			nbttaglist = new NBTTagList();
-			tempData = new NBTTagCompound();
-		}
-		else
-		{
-			tempData = nbttaglist.getCompoundTagAt(0);
-		}
+        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
+        NBTTagCompound tempData;
 
-		tempData.setByte("shape", (byte) shape.ordinal());
-		nbttaglist.appendTag(tempData);
+        if (nbttaglist == null) {
+            nbttaglist = new NBTTagList();
+            tempData = new NBTTagCompound();
+        }
+        else {
+            tempData = nbttaglist.getCompoundTagAt(0);
+        }
 
-		if(nbttaglist.tagCount() > 0)
-		{
-			stack.setTagInfo("magia_naturalis", nbttaglist);
-			return true;
-		}
+        tempData.setByte("shape", (byte) shape.ordinal());
+        nbttaglist.appendTag(tempData);
 
-		return false;
-	}
+        if (nbttaglist.tagCount() > 0) {
+            stack.setTagInfo("magia_naturalis", nbttaglist);
+            return true;
+        }
 
-	public static int getSize(ItemStack stack)
-	{
-		if(stack == null) return 1;
+        return false;
+    }
 
-		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
-		if(nbttaglist == null) return 1;
+    public static int getSize(ItemStack stack) {
+        if (stack == null) return 1;
 
-		return nbttaglist.getCompoundTagAt(0).getByte("size");
-	}
+        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+        if (nbttaglist == null) return 1;
 
-	public static boolean setSize(ItemStack stack, int size)
-	{
-		if(stack == null) return false;
+        return nbttaglist.getCompoundTagAt(0).getByte("size");
+    }
 
-		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
-		NBTTagCompound tempData;
+    public static boolean setSize(ItemStack stack, int size) {
+        if (stack == null) return false;
 
-		if(nbttaglist == null)
-		{
-			nbttaglist = new NBTTagList();
-			tempData = new NBTTagCompound();
-		}
-		else
-		{
-			tempData = nbttaglist.getCompoundTagAt(0);
-		}
+        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
+        NBTTagCompound tempData;
 
-		tempData.setByte("size", (byte) size);
-		nbttaglist.appendTag(tempData);
+        if (nbttaglist == null) {
+            nbttaglist = new NBTTagList();
+            tempData = new NBTTagCompound();
+        }
+        else {
+            tempData = nbttaglist.getCompoundTagAt(0);
+        }
 
-		if(nbttaglist.tagCount() > 0)
-		{
-			stack.setTagInfo("magia_naturalis", nbttaglist);
-			return true;
-		}
+        tempData.setByte("size", (byte) size);
+        nbttaglist.appendTag(tempData);
 
-		return false;
-	}
+        if (nbttaglist.tagCount() > 0) {
+            stack.setTagInfo("magia_naturalis", nbttaglist);
+            return true;
+        }
 
-	public static boolean setpickedBlock(ItemStack stack, Block block, int metadata)
-	{
-		if(stack == null) return false;
+        return false;
+    }
 
-		int bid = Block.getIdFromBlock(block);
-		if(metadata < 0 || metadata > 15) metadata = 0;
+    public static boolean setpickedBlock(ItemStack stack, Block block, int metadata) {
+        if (stack == null) return false;
 
-		NBTTagCompound data = NBTUtil.openNbtData(stack);
-		NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
-		NBTTagCompound nbttagcompound;
+        int bid = Block.getIdFromBlock(block);
+        if (metadata < 0 || metadata > 15) metadata = 0;
 
-		if(nbttaglist == null)
-		{
-			nbttaglist = new NBTTagList();
-			nbttagcompound = new NBTTagCompound();
-		}
-		else
-		{
-			nbttagcompound = nbttaglist.getCompoundTagAt(0);
-		}
+        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagList nbttaglist = data.getTagList("magia_naturalis", 10);
+        NBTTagCompound nbttagcompound;
 
-		nbttagcompound.setInteger("bid", bid);
-		nbttagcompound.setByte("bdata", (byte) metadata);
+        if (nbttaglist == null) {
+            nbttaglist = new NBTTagList();
+            nbttagcompound = new NBTTagCompound();
+        }
+        else {
+            nbttagcompound = nbttaglist.getCompoundTagAt(0);
+        }
 
-		nbttaglist.appendTag(nbttagcompound);
+        nbttagcompound.setInteger("bid", bid);
+        nbttagcompound.setByte("bdata", (byte) metadata);
 
-		if(nbttaglist.tagCount() > 0)
-		{
+        nbttaglist.appendTag(nbttagcompound);
 
-			stack.setTagInfo("magia_naturalis", nbttaglist);
-			return true;
+        if (nbttaglist.tagCount() > 0) {
 
-		}
-		return false;
-	}
+            stack.setTagInfo("magia_naturalis", nbttaglist);
+            return true;
 
-	public static int[] getPickedBlock(ItemStack stack)
-	{
-		int[] i = { 0, 0 };
-		if(stack == null) return i;
+        }
+        return false;
+    }
 
-		NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
-		if(nbttaglist == null)
-		{
-			return i;
-		}
-		else
-		{
-			i[0] = nbttaglist.getCompoundTagAt(0).getInteger("bid");
-			i[1] = nbttaglist.getCompoundTagAt(0).getByte("bdata");
-			return i;
-		}
-	}
+    public static int[] getPickedBlock(ItemStack stack) {
+        int[] i = {0, 0};
+        if (stack == null) return i;
 
-	public enum Meta
-	{
-		NONE, UNIFORM;
+        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList("magia_naturalis", 10);
+        if (nbttaglist == null) {
+            return i;
+        }
+        else {
+            i[0] = nbttaglist.getCompoundTagAt(0).getInteger("bid");
+            i[1] = nbttaglist.getCompoundTagAt(0).getByte("bdata");
+            return i;
+        }
+    }
 
-		public String toString()
-		{
-			switch(this)
-			{
-			case NONE:
-				return Platform.translate("enum.magianaturalis:none");
-			case UNIFORM:
-				return Platform.translate("enum.magianaturalis:uniform");
-			default:
-				break;
-			}
-			return Platform.translate("enum.magianaturalis:unknown");
-		}
-	}
+    public enum Meta {
+        NONE, UNIFORM;
 
-	public enum Shape
-	{
-		NONE, PLANE, CUBE, PLANE_EXTEND, SPHERE;
+        public String toString() {
+            switch (this) {
+                case NONE:
+                    return Platform.translate("enum.magianaturalis:none");
+                case UNIFORM:
+                    return Platform.translate("enum.magianaturalis:uniform");
+                default:
+                    break;
+            }
+            return Platform.translate("enum.magianaturalis:unknown");
+        }
+    }
 
-		public String toString()
-		{
-			switch(this)
-			{
-			case CUBE:
-				return Platform.translate("enum.magianaturalis:cube");
-			case NONE:
-				return Platform.translate("enum.magianaturalis:none");
-			case PLANE:
-				return Platform.translate("enum.magianaturalis:plane");
-			case PLANE_EXTEND:
-				return Platform.translate("enum.magianaturalis:plane.extend");
-			case SPHERE:
-				return Platform.translate("enum.magianaturalis:sphere");
-			default:
-				return Platform.translate("enum.magianaturalis:unknown");
-			}
-		}
-	}
+    public enum Shape {
+        NONE, PLANE, CUBE, PLANE_EXTEND, SPHERE;
 
-	public static Shape getShapeByID(int i)
-	{
-		switch(i)
-		{
-		case 0:
-			return Shape.NONE;
-		case 1:
-			return Shape.PLANE;
-		case 2:
-			return Shape.CUBE;
-		case 3:
-			return Shape.PLANE_EXTEND;
-		case 4:
-			return Shape.SPHERE;
-		default:
-			return Shape.NONE;
-		}
-	}
+        public String toString() {
+            switch (this) {
+                case CUBE:
+                    return Platform.translate("enum.magianaturalis:cube");
+                case NONE:
+                    return Platform.translate("enum.magianaturalis:none");
+                case PLANE:
+                    return Platform.translate("enum.magianaturalis:plane");
+                case PLANE_EXTEND:
+                    return Platform.translate("enum.magianaturalis:plane.extend");
+                case SPHERE:
+                    return Platform.translate("enum.magianaturalis:sphere");
+                default:
+                    return Platform.translate("enum.magianaturalis:unknown");
+            }
+        }
+    }
+
+    public static Shape getShapeByID(int i) {
+        switch (i) {
+            case 1:
+                return Shape.PLANE;
+            case 2:
+                return Shape.CUBE;
+            case 3:
+                return Shape.PLANE_EXTEND;
+            case 4:
+                return Shape.SPHERE;
+            case 0:
+            default:
+                return Shape.NONE;
+        }
+    }
+
 }

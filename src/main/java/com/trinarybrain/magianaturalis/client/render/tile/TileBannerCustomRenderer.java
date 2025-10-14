@@ -1,9 +1,9 @@
 package com.trinarybrain.magianaturalis.client.render.tile;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import org.lwjgl.opengl.GL11;
 
 import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.tile.TileBannerCustom;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -15,7 +15,7 @@ import thaumcraft.client.renderers.models.ModelBanner;
 public class TileBannerCustomRenderer extends TileEntitySpecialRenderer
 {
 	private ModelBanner model = new ModelBanner();
-	private static final ResourceLocation rlBanner = new ResourceLocation(Reference.ID, "textures/models/" + "banner_mn.png");
+	private static final ResourceLocation rlBanner = new ResourceLocation(MagiaNaturalis.MOD_ID, "textures/models/" + "banner_mn.png");
 
 	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f1)

@@ -3,10 +3,10 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 import java.util.List;
 import java.util.Set;
 
+import net.minecraft.client.gui.GuiScreen;
 import org.apache.commons.lang3.text.WordUtils;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
@@ -32,160 +32,143 @@ import net.minecraftforge.common.util.Constants.NBT;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
-public class ItemBiomeSampler extends Item
-{
-	IIcon icon_overlay;
+public class ItemBiomeSampler extends Item {
 
-	public ItemBiomeSampler()
-	{
-		super();
-		setMaxStackSize(1);
-		setMaxDamage(0);
-		setCreativeTab(MagiaNaturalis.creativeTab);
-	}
+    IIcon icon_overlay;
 
-	@Override
-	public String getItemStackDisplayName(ItemStack stack)
-	{
-		String name = NBTUtil.openNbtData(stack).getString("biomeName");
-		return (name + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name")).trim();
-	}
+    public ItemBiomeSampler() {
+        super();
+        setMaxStackSize(1);
+        setMaxDamage(0);
+    }
 
-	@Override @SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		super.addInformation(stack, player, list, par4);
-		if(Minecraft.getMinecraft().currentScreen.isCtrlKeyDown())
-		{
-			String[] aspects = getAspects(stack);
-			if(aspects == null) return;
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        String name = NBTUtil.openNbtData(stack).getString("biomeName");
+        return (name + StatCollector.translateToLocal(getUnlocalizedNameInefficiently(stack) + ".name")).trim();
+    }
 
-			for(int i = 0; i < aspects.length; i++)
-				if(aspects[i] != null)
-					list.add(aspects[i]);
-		}
-		else
-		{
-			list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis:ctrl"));
-		}
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
+        super.addInformation(stack, player, list, par4);
 
-	@Override @SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister icon)
-	{
-		this.itemIcon = icon.registerIcon(Reference.ID + ":" + "report_base");
-		this.icon_overlay = icon.registerIcon(Reference.ID + ":" + "report_overlay");
-	}
+        if (GuiScreen.isCtrlKeyDown()) {
+            String[] aspects = getAspects(stack);
+            if (aspects == null) return;
 
-	@Override @SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamageForRenderPass(int damage, int renderPass)
-	{
-		return renderPass == 0 ?  this.itemIcon : this.icon_overlay;
-	}
+            for (String aspect : aspects) {
+                if (aspect != null) list.add(aspect);
+            }
+        }
+        else {
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis:ctrl"));
+        }
+    }
 
-	@Override @SideOnly(Side.CLIENT)
-	public int getColorFromItemStack(ItemStack stack, int i)
-	{
-		int color = NBTUtil.openNbtData(stack).getInteger("color");
-		color = i == 0 ? 0xFFFFFF : color;
-		return color;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister icon) {
+        itemIcon = icon.registerIcon(MagiaNaturalis.MOD_ID + ":" + "report_base");
+        icon_overlay = icon.registerIcon(MagiaNaturalis.MOD_ID + ":" + "report_overlay");
+    }
 
-	@Override @SideOnly(Side.CLIENT)
-	public boolean requiresMultipleRenderPasses()
-	{
-		return true;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamageForRenderPass(int damage, int renderPass) {
+        return renderPass == 0 ? itemIcon : icon_overlay;
+    }
 
-	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
-	{
-		if(Platform.isClient()) return false;
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack stack, int i) {
+        int color = NBTUtil.openNbtData(stack).getInteger("color");
+        color = i == 0 ? 0xFFFFFF : color;
+        return color;
+    }
 
-		if(player.isSneaking())
-		{
-			BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
-			if(biome != null)
-			{
-				NBTTagCompound data = NBTUtil.openNbtData(stack);
-				data.setString("biomeName", biome.biomeName + " ");
-				data.setInteger("biomeID", biome.biomeID);
-				data.setInteger("color", biome.color);
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean requiresMultipleRenderPasses() {
+        return true;
+    }
 
-				BiomeDictionary.Type[] newTypes = BiomeDictionary.getTypesForBiome(biome);
-				NBTTagList nbttaglist = new NBTTagList();
-				NBTTagCompound tempData = new NBTTagCompound();
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+        if (Platform.isClient()) return false;
 
-				for(int i = 0; i < newTypes.length; i++)
-				{
-					if(newTypes[i] != null)
-					{
-						if(newTypes[i] != Type.MAGICAL) // Because Thaumcraft adds null aspect for magical biome type
-						{
-							Aspect aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(newTypes[i])).get(1);
-							if(aspect != null)
-							{
-								int aura = (int)((List)BiomeHandler.biomeInfo.get(newTypes[i])).get(0);
-								tempData.setShort(aspect.getTag(), (short) Math.round(aura * 2F / 100F));
-								nbttaglist.appendTag(tempData);
-							}
-						}
-						else
-						{
-							tempData.setShort(Aspect.MAGIC.getTag(), (short) 2);
-							nbttaglist.appendTag(tempData);
-						}
-					}
-				}
+        if (player.isSneaking()) {
+            BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
+            if (biome != null) {
+                NBTTagCompound data = NBTUtil.openNbtData(stack);
+                data.setString("biomeName", biome.biomeName + " ");
+                data.setInteger("biomeID", biome.biomeID);
+                data.setInteger("color", biome.color);
 
-				data.setTag("aspects", nbttaglist);
-				return true;
-			}
-		}
-		else
-		{
-			TileEntity tile = world.getTileEntity(x, y, z);
-			if(tile instanceof TileGeoMorpher)
-			{
-				TileGeoMorpher geo = (TileGeoMorpher) tile;
-				geo.cachedBiome = BiomeGenBase.getBiome(NBTUtil.openNbtData(stack).getInteger("biomeID"));
-				world.markBlockForUpdate(x, y, z);
-				return true;
-			}
-		}
+                BiomeDictionary.Type[] newTypes = BiomeDictionary.getTypesForBiome(biome);
+                NBTTagList nbttaglist = new NBTTagList();
+                NBTTagCompound tempData = new NBTTagCompound();
 
-		return false;
-	}
+                for (Type newType : newTypes) {
+                    if (newType != null) {
+                        if (newType != Type.MAGICAL) // Because Thaumcraft adds null aspect for magical biome type
+                        {
+                            Aspect aspect = (Aspect) BiomeHandler.biomeInfo.get(newType).get(1);
+                            if (aspect != null) {
+                                int aura = (int) BiomeHandler.biomeInfo.get(newType).get(0);
+                                tempData.setShort(aspect.getTag(), (short) Math.round(aura * 2F / 100F));
+                                nbttaglist.appendTag(tempData);
+                            }
+                        }
+                        else {
+                            tempData.setShort(Aspect.MAGIC.getTag(), (short) 2);
+                            nbttaglist.appendTag(tempData);
+                        }
+                    }
+                }
 
-	public String[] getAspects(ItemStack stack)
-	{
-		if(stack != null)
-		{
-			NBTTagCompound data = NBTUtil.openNbtData(stack);
-			if(!data.hasKey("aspects")) return null;
-			NBTTagList nbttaglist = data.getTagList("aspects", NBT.TAG_COMPOUND);
+                data.setTag("aspects", nbttaglist);
+                return true;
+            }
+        }
+        else {
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if (tile instanceof TileGeoMorpher) {
+                TileGeoMorpher geo = (TileGeoMorpher) tile;
+                geo.cachedBiome = BiomeGenBase.getBiome(NBTUtil.openNbtData(stack).getInteger("biomeID"));
+                world.markBlockForUpdate(x, y, z);
+                return true;
+            }
+        }
 
-			String[] aspects = new String[nbttaglist.tagCount()];
-			for(int i = 0; i < nbttaglist.tagCount(); ++i)
-			{
-				NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
-				Set keys = tempData.func_150296_c();
-				int j = 0;
-				for(Object ob : keys)
-				{
-					if(ob != null && ob instanceof String)
-					{
-						if(j >= nbttaglist.tagCount()) break;
-						String aspectTag = (String) ob;
+        return false;
+    }
 
-						String color = Aspect.getAspect(aspectTag).getChatcolor();
-						if(color == null) color = "5";
-						aspects[j++] = String.format("%dx %s%s", tempData.getShort(aspectTag), String.valueOf('\u00a7') + color, WordUtils.capitalizeFully(aspectTag));
-					}
-				}
-			}
-			return aspects;
-		}
-		return null;
-	}
+    public String[] getAspects(ItemStack stack) {
+        if (stack != null) {
+            NBTTagCompound data = NBTUtil.openNbtData(stack);
+            if (!data.hasKey("aspects")) return null;
+            NBTTagList nbttaglist = data.getTagList("aspects", NBT.TAG_COMPOUND);
+
+            String[] aspects = new String[nbttaglist.tagCount()];
+            for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+                NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
+                Set<?> keys = tempData.func_150296_c();
+                int j = 0;
+                for (Object ob : keys) {
+                    if (ob instanceof String) {
+                        if (j >= nbttaglist.tagCount()) break;
+                        String aspectTag = (String) ob;
+
+                        String color = Aspect.getAspect(aspectTag).getChatcolor();
+                        if (color == null) color = "5";
+                        aspects[j++] = String.format("%dx %s%s", tempData.getShort(aspectTag), '§' + color, WordUtils.capitalizeFully(aspectTag));
+                    }
+                }
+            }
+            return aspects;
+        }
+        return null;
+    }
+
 }

@@ -50,7 +50,7 @@ public class ItemSickle extends Item
 		maxStackSize = 1;
 		setMaxDamage(material.getMaxUses());
 		damageVsEntity += material.getDamageVsEntity();
-		setCreativeTab(MagiaNaturalis.creativeTab);
+		setCreativeTab(MagiaNaturalis.CREATIVE_TAB);
 	}
 
 	// Can Harvest Block in Adventure Mode?

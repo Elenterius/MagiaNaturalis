@@ -1,10 +1,6 @@
 package com.trinarybrain.magianaturalis.common.block;
 
-import java.util.List;
-
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.Reference;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -17,70 +13,67 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockArcaneWood extends Block
-{
-	//TODO: FANCY GREATWOOD & SILVERWOOD SIGN?
-	private IIcon[] icon = new IIcon[7];
+import java.util.List;
 
-	public BlockArcaneWood()
-	{
-		super(Material.wood);
-		setHardness(2.0F);
-		setResistance(5.0F);
-		setStepSound(soundTypeWood);
-		setCreativeTab(MagiaNaturalis.creativeTab);
-	}
+public class BlockArcaneWood extends Block {
 
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister ir)
-	{
-		icon[0] = ir.registerIcon(Reference.ID + ":greatwood_planks");
-		icon[1] = ir.registerIcon(Reference.ID + ":greatwood_orn");
-		icon[2] = ir.registerIcon(Reference.ID + ":silverwood_planks_1");
-		icon[3] = ir.registerIcon(Reference.ID + ":silverwood_planks_2");
-		icon[4] = ir.registerIcon(Reference.ID + ":greatwood_gold_orn");
-		icon[5] = ir.registerIcon(Reference.ID + ":greatwood_gold_orn2");
-		icon[6] = ir.registerIcon(Reference.ID + ":greatwood_gold_trim");
-	}
+    //TODO: FANCY GREATWOOD & SILVERWOOD SIGN?
+    private IIcon[] icon = new IIcon[7];
 
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta)
-	{
-		if(meta < 0 || meta > 6)
-			meta = 0;
+    public BlockArcaneWood() {
+        super(Material.wood);
+        setHardness(2.0F);
+        setResistance(5.0F);
+        setStepSound(soundTypeWood);
+    }
 
-		if(meta == 6)
-			return side == 1 || side == 0 ? icon[0] : icon[meta];
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister ir) {
+        icon[0] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_planks");
+        icon[1] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_orn");
+        icon[2] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":silverwood_planks_1");
+        icon[3] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":silverwood_planks_2");
+        icon[4] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_gold_orn");
+        icon[5] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_gold_orn2");
+        icon[6] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_gold_trim");
+    }
 
-			return icon[meta];
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int meta) {
+        if (meta < 0 || meta > 6)
+            meta = 0;
+
+        if (meta == 6)
+            return side == 1 || side == 0 ? icon[0] : icon[meta];
+
+        return icon[meta];
+    }
 
 
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs tab, List list)
-	{
-		list.add(new ItemStack(item, 1, 0));
-		list.add(new ItemStack(item, 1, 1));
-		list.add(new ItemStack(item, 1, 2));
-		list.add(new ItemStack(item, 1, 3));
-		list.add(new ItemStack(item, 1, 4));
-		list.add(new ItemStack(item, 1, 5));
-		list.add(new ItemStack(item, 1, 6));
-	}
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+        list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 1));
+        list.add(new ItemStack(item, 1, 2));
+        list.add(new ItemStack(item, 1, 3));
+        list.add(new ItemStack(item, 1, 4));
+        list.add(new ItemStack(item, 1, 5));
+        list.add(new ItemStack(item, 1, 6));
+    }
 
-	public int damageDropped(int meta)
-	{
-		return meta;
-	}
+    @Override
+    public int damageDropped(int meta) {
+        return meta;
+    }
 
-	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
-	{
-		int meta = stack.getItemDamage();
-		if(meta < 0 || meta > 6)
-		{
-			meta = 0;
-		}
-		world.setBlockMetadataWithNotify(x, y, z, meta, 2);
-	}
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+        int meta = stack.getItemDamage();
+        if (meta < 0 || meta > 6) {
+            meta = 0;
+        }
+        world.setBlockMetadataWithNotify(x, y, z, meta, 2);
+    }
 }

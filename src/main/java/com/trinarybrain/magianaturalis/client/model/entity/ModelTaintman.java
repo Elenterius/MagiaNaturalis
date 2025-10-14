@@ -9,8 +9,8 @@ import org.lwjgl.opengl.GL11;
  * ModelTaintman - TrinaryBrain
  * Created using Tabula 4.1.1
  */
-public class ModelTaintman extends ModelBase
-{
+public class ModelTaintman extends ModelBase {
+
     public ModelRenderer Body;
     public ModelRenderer Headwear;
     public ModelRenderer spore;
@@ -20,8 +20,7 @@ public class ModelTaintman extends ModelBase
     public ModelRenderer LeftLeg;
     public ModelRenderer Head;
 
-    public ModelTaintman()
-    {
+    public ModelTaintman() {
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.Body = new ModelRenderer(this, 32, 0);
@@ -62,8 +61,7 @@ public class ModelTaintman extends ModelBase
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    {
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         GL11.glPushMatrix();
         GL11.glTranslatef(this.Body.offsetX, this.Body.offsetY, this.Body.offsetZ);
         GL11.glTranslatef(this.Body.rotationPointX * f5, this.Body.rotationPointY * f5, this.Body.rotationPointZ * f5);
@@ -74,8 +72,7 @@ public class ModelTaintman extends ModelBase
         GL11.glPopMatrix();
     }
 
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
-    {
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;

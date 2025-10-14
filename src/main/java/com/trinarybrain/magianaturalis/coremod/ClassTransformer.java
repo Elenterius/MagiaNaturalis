@@ -1,5 +1,6 @@
 package com.trinarybrain.magianaturalis.coremod;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -9,8 +10,6 @@ import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
-
-import com.trinarybrain.magianaturalis.common.core.Log;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
@@ -24,7 +23,7 @@ public class ClassTransformer implements IClassTransformer, Opcodes
 		int isObfuscated = !className.equals(transformedName) ? 1 : 0;
 		if(!transformedName.equals(classToBeTransformed)) return classfileBuffer;
 
-		Log.logger.info("Transforming: " + classToBeTransformed);
+		MagiaNaturalis.LOGGER.info("Transforming: " + classToBeTransformed);
 
 		try
 		{
@@ -38,11 +37,11 @@ public class ClassTransformer implements IClassTransformer, Opcodes
 			classNode.accept(classWriter);
 			classfileBuffer = classWriter.toByteArray();
 
-			Log.logger.info("Successfully transformed class: " + classToBeTransformed);
+			MagiaNaturalis.LOGGER.info("Successfully transformed class: " + classToBeTransformed);
 		}
 		catch(Exception e)
 		{
-			Log.logger.catching(e);
+			MagiaNaturalis.LOGGER.catching(e);
 		}
 
 //		BYTECODE DUMP
@@ -116,7 +115,7 @@ public class ClassTransformer implements IClassTransformer, Opcodes
 				}
 				else
 				{
-					Log.logger.info("can't find place for byte injection");
+					MagiaNaturalis.LOGGER.info("can't find place for byte injection");
 				}
 				break;
 			}

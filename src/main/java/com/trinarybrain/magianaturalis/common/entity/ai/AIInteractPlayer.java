@@ -3,45 +3,37 @@ package com.trinarybrain.magianaturalis.common.entity.ai;
 import net.minecraft.entity.ai.EntityAIBase;
 import com.trinarybrain.magianaturalis.common.entity.EntityPechCustom;
 
-public class AIInteractPlayer extends EntityAIBase
-{
+public class AIInteractPlayer extends EntityAIBase {
     private EntityPechCustom pech;
 
-    public AIInteractPlayer(EntityPechCustom entityPech)
-    {
-        this.pech = entityPech;
-        this.setMutexBits(5);
+    public AIInteractPlayer(EntityPechCustom entityPech) {
+        pech = entityPech;
+        setMutexBits(5);
     }
 
-    public boolean shouldExecute()
-    {
-        if (!this.pech.isEntityAlive())
-        {
+    public boolean shouldExecute() {
+        if (!pech.isEntityAlive()) {
             return false;
         }
-        else if (this.pech.isInWater())
-        {
+        else if (pech.isInWater()) {
             return false;
         }
-        else if (!this.pech.onGround)
-        {
+        else if (!pech.onGround) {
             return false;
         }
-        else if (this.pech.velocityChanged)
-        {
+        else if (pech.velocityChanged) {
             return false;
         }
 
-        return this.pech.isInteracting;
+        return pech.isInteracting;
     }
 
-    public void startExecuting()
-    {
-        this.pech.getNavigator().clearPathEntity();
+    public void startExecuting() {
+        pech.getNavigator().clearPathEntity();
     }
 
-    public void resetTask()
-    {
-    	this.pech.isInteracting = false;
+    public void resetTask() {
+        pech.isInteracting = false;
     }
+
 }

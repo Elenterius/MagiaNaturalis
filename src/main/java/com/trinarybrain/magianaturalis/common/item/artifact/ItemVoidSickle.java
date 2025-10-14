@@ -1,6 +1,6 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
 import cpw.mods.fml.relauncher.Side;
@@ -20,60 +20,52 @@ import thaumcraft.api.IWarpingGear;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.common.config.ConfigItems;
 
-public class ItemVoidSickle extends ItemSickle implements IRepairable, IWarpingGear
-{
-	public ItemVoidSickle()
-	{
-		super(ThaumcraftApi.toolMatVoid);
-		areaSize = 4;
-	}
+public class ItemVoidSickle extends ItemSickle implements IRepairable, IWarpingGear {
 
-	@Override @SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister icon)
-	{
-		itemIcon = icon.registerIcon(Reference.ID + ":" + "sickle_void");
-	}
+    public ItemVoidSickle() {
+        super(ThaumcraftApi.toolMatVoid);
+        areaSize = 4;
+    }
 
-	@Override
-	public int getItemEnchantability()
-	{
-		return 5;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister icon) {
+        itemIcon = icon.registerIcon(MagiaNaturalis.MOD_ID + ":" + "sickle_void");
+    }
 
-	@Override
-	public EnumRarity getRarity(ItemStack stack)
-	{
-		return EnumRarity.uncommon;
-	}
+    @Override
+    public int getItemEnchantability() {
+        return 5;
+    }
 
-	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack stackMaterial)
-	{
-		return stackMaterial.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 15)) ? true : super.getIsRepairable(stack, stackMaterial);
-	}
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.uncommon;
+    }
 
-	@Override
-	public int getWarp(ItemStack itemstack, EntityPlayer player)
-	{
-		return 1;
-	}
+    @Override
+    public boolean getIsRepairable(ItemStack stack, ItemStack stackMaterial) {
+        return stackMaterial.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 15)) || super.getIsRepairable(stack, stackMaterial);
+    }
 
-	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int n, boolean bool)
-	{
-		if(stack.isItemDamaged() && entity != null && entity.ticksExisted % 20 == 0 && entity instanceof EntityLivingBase)
-		{
-			stack.damageItem(-1, (EntityLivingBase)entity);
-		}
-	}
+    @Override
+    public int getWarp(ItemStack itemstack, EntityPlayer player) {
+        return 1;
+    }
 
-	@Override
-	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
-	{
-		if(Platform.isServer() && entity instanceof EntityLivingBase && (!(entity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled()))
-		{
-			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.weakness.getId(), 80));
-		}
-		return false;
-	}
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int n, boolean bool) {
+        if (stack.isItemDamaged() && entity != null && entity.ticksExisted % 20 == 0 && entity instanceof EntityLivingBase) {
+            stack.damageItem(-1, (EntityLivingBase) entity);
+        }
+    }
+
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+        if (Platform.isServer() && entity instanceof EntityLivingBase && (!(entity instanceof EntityPlayer) || MinecraftServer.getServer().isPVPEnabled())) {
+            ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.getId(), 80));
+        }
+        return false;
+    }
+
 }

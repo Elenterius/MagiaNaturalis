@@ -8,8 +8,6 @@ import java.io.OutputStreamWriter;
 import java.util.List;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.Reference;
-import com.trinarybrain.magianaturalis.common.core.Log;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
 import cpw.mods.fml.relauncher.FMLInjectionData;
@@ -26,130 +24,113 @@ import net.minecraftforge.common.BiomeDictionary;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
-public class BiomeDevTool extends Item
-{
-	public BiomeDevTool()
-	{
-		super();
-		maxStackSize = 1;
-		setCreativeTab(MagiaNaturalis.creativeTab);
-	}
+public class BiomeDevTool extends Item {
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		super.addInformation(stack, player, list, par4);
-		list.add(EnumChatFormatting.DARK_PURPLE + "Last Biome: " + stack.getItemDamage());
-	}
+    public BiomeDevTool() {
+        super();
+        maxStackSize = 1;
+    }
 
-	@Override @SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister icon)
-	{
-		itemIcon = icon.registerIcon(Reference.ID + ":" + "book_magia_natura");
-	}
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
+        super.addInformation(stack, player, list, par4);
+        list.add(EnumChatFormatting.DARK_PURPLE + "Last Biome: " + stack.getItemDamage());
+    }
 
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
-	{
-		if(Platform.isClient()) return stack;
-		return stack;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister icon) {
+        itemIcon = icon.registerIcon(MagiaNaturalis.rlString("book_magia_natura"));
+    }
 
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
-	{
-		if(Platform.isClient()) return false;
-		boolean ignore = false;
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+        if (Platform.isClient()) return stack;
+        return stack;
+    }
 
-		if(ignore)
-		{
-			Log.logger.info(world.getBlock(x, y, z));
-			Log.logger.info(world.getBlockMetadata(x, y, z));
-		}
-		else
-		{
-			String divider = "----------------------------------------------------";
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+        if (Platform.isClient()) return false;
+        boolean ignore = false;
 
-			File mcDir = (File) FMLInjectionData.data()[6];
-			File modsDir = new File(mcDir, "magia_naturalis");
-			if (!modsDir.exists()) modsDir.mkdirs();
+        if (ignore) {
+            MagiaNaturalis.LOGGER.info(world.getBlock(x, y, z));
+            MagiaNaturalis.LOGGER.info(world.getBlockMetadata(x, y, z));
+            return false;
+        }
 
-			File mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Types-Aspects.txt");
+        String divider = "----------------------------------------------------";
 
-			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
-			{
-				String aspectName = "";
-				String types = "";
-				int aura = 0;
+        File mcDir = (File) FMLInjectionData.data()[6];
+        File modsDir = new File(mcDir, "magia_naturalis");
+        if (!modsDir.exists()) modsDir.mkdirs();
 
-				Aspect aspect;
-				for(BiomeDictionary.Type type : BiomeDictionary.Type.values())
-				{
-					types = "[" + type.toString() + "]";
-					aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
-					aura = (int)((List)BiomeHandler.biomeInfo.get(type)).get(0);
-					aura = Math.round(aura * 2F / 100F);
+        File exportFile = new File(mcDir, "magia_naturalis/" + "Biome_Types-Aspects.txt");
 
-					if(aspect != null)
-					{
-						aspectName = "[" + aspect.getName() + "]";
-					}
-					else
-					{
-						aspectName = type == type.MAGICAL ? "[" + Aspect.MAGIC.getName() + "]" : "[NULL]";
-					}
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(exportFile)))) {
+            String aspectName = "";
+            String types = "";
+            int aura = 0;
 
-					String info = String.format("%-16s :\t%dx\t%s%n", types, aura, aspectName);
-					writer.write(info);
-				}
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
+            Aspect aspect;
+            for (BiomeDictionary.Type type : BiomeDictionary.Type.values()) {
+                types = "[" + type.toString() + "]";
+                aspect = (Aspect) BiomeHandler.biomeInfo.get(type).get(1);
+                aura = (int) BiomeHandler.biomeInfo.get(type).get(0);
+                aura = Math.round(aura * 2F / 100F);
 
-			mnDir = new File(mcDir, "magia_naturalis/" + "Biome_Composition.txt");
+                if (aspect != null) {
+                    aspectName = "[" + aspect.getName() + "]";
+                }
+                else {
+                    aspectName = type == BiomeDictionary.Type.MAGICAL ? "[" + Aspect.MAGIC.getName() + "]" : "[NULL]";
+                }
 
-			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mnDir))))
-			{
-				BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
-				for(BiomeGenBase biome : biomes)
-				{
-					if(biome != null)
-					{
-						String aspectName = "";
-						String types = "";
-						int aura = 0;
-						String aspectCost = "";
+                String info = String.format("%-16s :\t%dx\t%s%n", types, aura, aspectName);
+                writer.write(info);
+            }
+        }
+        catch (IOException e) {
+            MagiaNaturalis.LOGGER.error("Failed to dump {}",  exportFile.getPath(), e);
+        }
 
-						Aspect aspect;
-						for(BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
-						{
-							types = "[" + type.toString() + "]";
-							aspect = (Aspect)((List)BiomeHandler.biomeInfo.get(type)).get(1);
-							aura = (int)((List)BiomeHandler.biomeInfo.get(type)).get(0);
-							aura = Math.round(aura * 2F / 100F);
+        exportFile = new File(mcDir, "magia_naturalis/" + "Biome_Composition.txt");
 
-							if(aspect != null)
-							{
-								aspectName = "[" + aspect.getName() + "]";
-							}
-							else
-							{
-								aspectName = type == type.MAGICAL ? "[" + Aspect.MAGIC.getName() + "]" : "[NULL]";
-							}
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(exportFile)))) {
+            BiomeGenBase[] biomes = BiomeGenBase.getBiomeGenArray();
+            for (BiomeGenBase biome : biomes) {
+                if (biome != null) {
+                    String aspectName = "";
+                    String types = "";
+                    int aura = 0;
+                    StringBuilder aspectCost = new StringBuilder();
 
-							aspectCost += String.format("%-16s :\t%dx\t%s%n", types, aura, aspectName);
-						}
+                    Aspect aspect;
+                    for (BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome)) {
+                        types = "[" + type.toString() + "]";
+                        aspect = (Aspect) BiomeHandler.biomeInfo.get(type).get(1);
+                        aura = (int) BiomeHandler.biomeInfo.get(type).get(0);
+                        aura = Math.round(aura * 2F / 100F);
 
-						String info = String.format(divider + "%nBiome: %s%n%s", biome.biomeName, aspectCost);
-						writer.write(info);
-					}
-				}
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
+                        if (aspect != null) {
+                            aspectName = "[" + aspect.getName() + "]";
+                        }
+                        else {
+                            aspectName = type == BiomeDictionary.Type.MAGICAL ? "[" + Aspect.MAGIC.getName() + "]" : "[NULL]";
+                        }
+
+                        aspectCost.append(String.format("%-16s :\t%dx\t%s%n", types, aura, aspectName));
+                    }
+
+                    String info = String.format(divider + "%nBiome: %s%n%s", biome.biomeName, aspectCost);
+                    writer.write(info);
+                }
+            }
+        }
+        catch (IOException e) {
+            MagiaNaturalis.LOGGER.error("Failed to dump {}",  exportFile.getPath(), e);
+        }
+
+        return false;
+    }
 }

@@ -2,9 +2,8 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 
 import java.util.List;
 
-import com.trinarybrain.api.IRevealInvisible;
+import com.trinarybrain.magianaturalis.api.IRevealInvisible;
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,77 +26,66 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
 
-public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDiscountGear, IRevealer, IGoggles, IRevealInvisible
-{
-	public ItemGogglesDark()
-	{
-		super(ThaumcraftApi.armorMatSpecial, 4, 0);
-		setMaxDamage(350);
-		setCreativeTab(MagiaNaturalis.creativeTab);
-	}
+public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDiscountGear, IRevealer, IGoggles, IRevealInvisible {
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		super.addInformation(stack, player, list, par4);
-		list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + getVisDiscount(stack, player, null) + "%");
-		list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + " (Perditio): " + getVisDiscount(stack, player, Aspect.ENTROPY) + "%");
-	}
+    public ItemGogglesDark() {
+        super(ThaumcraftApi.armorMatSpecial, 4, 0);
+        setMaxDamage(350);
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister ir)
-	{
-		itemIcon = ir.registerIcon(Reference.ID + ":" + "gogglesDarkCrystal");
-	}
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
+        super.addInformation(stack, player, list, par4);
+        list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": " + getVisDiscount(stack, player, null) + "%");
+        list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + " (Perditio): " + getVisDiscount(stack, player, Aspect.ENTROPY) + "%");
+    }
 
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-	{
-		return Reference.ID + ":" + "textures/models/" + "armorGogglesDark.png";
-	}
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister ir) {
+        itemIcon = ir.registerIcon(MagiaNaturalis.MOD_ID + ":" + "gogglesDarkCrystal");
+    }
 
-	public EnumRarity getRarity(ItemStack itemstack)
-	{
-		return EnumRarity.rare;
-	}
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+        return MagiaNaturalis.MOD_ID + ":" + "textures/models/armorGogglesDark.png";
+    }
 
-	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
-	{
-		if(player.isPotionActive(Potion.blindness))
-			player.removePotionEffect(Potion.blindness.id);
-	}
+    public EnumRarity getRarity(ItemStack itemstack) {
+        return EnumRarity.rare;
+    }
 
-	@Override
-	public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
-	{
-		return true;
-	}
+    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+        if (player.isPotionActive(Potion.blindness)) {
+            player.removePotionEffect(Potion.blindness.id);
+        }
+    }
 
-	@Override
-	public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
-	{
-		return true;
-	}
+    @Override
+    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player) {
+        return true;
+    }
 
-	@Override
-	public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect)
-	{
-		int i = 5;
-		if(aspect == Aspect.ENTROPY)
-		{
-			i = player.worldObj.isDaytime() ? 9 : 7;
-		}
-		return i;
-	}
+    @Override
+    public boolean showNodes(ItemStack itemstack, EntityLivingBase player) {
+        return true;
+    }
 
-	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack stack2)
-	{
-		return stack2.isItemEqual(new ItemStack(Items.gold_ingot)) ? true : super.getIsRepairable(stack, stack2);
-	}
+    @Override
+    public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) {
+        int i = 5;
+        if (aspect == Aspect.ENTROPY) {
+            i = player.worldObj.isDaytime() ? 9 : 7;
+        }
+        return i;
+    }
 
-	@Override
-	public boolean showInvisibleEntity(ItemStack itemstack, EntityLivingBase player, EntityLivingBase entityInvisible)
-	{
-		return true;
-	}
+    @Override
+    public boolean getIsRepairable(ItemStack stack, ItemStack stack2) {
+        return stack2.isItemEqual(new ItemStack(Items.gold_ingot)) || super.getIsRepairable(stack, stack2);
+    }
+
+    @Override
+    public boolean showInvisibleEntity(ItemStack itemStack, EntityLivingBase player, EntityLivingBase invisibleEntity) {
+        return true;
+    }
+
 }

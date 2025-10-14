@@ -1,6 +1,6 @@
 package com.trinarybrain.magianaturalis.common.item;
 
-import com.trinarybrain.magianaturalis.common.Reference;
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.alchemy.ItemAlchemicalStone;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemBiomeSampler;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemElementalSickle;
@@ -18,51 +18,56 @@ import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusRevenant;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 
-public class ItemsMN
-{
-	public static Item researchLog;
-	public static Item biomeReport;
-	public static Item alchemicalStone;
-	public static Item key;
-	public static Item gogglesDark;
-	public static Item spectacles;
-	public static Item focusBuild;
-	public static Item focusRevenant;
-	public static Item evilTrunkSpawner;
-	public static Item focusPouchEnder;
-	public static Item sickleThaumium;
-	public static Item sickleElemental;
-	public static Item voidSickle;
+import java.util.function.Supplier;
 
-	//public static Item devTool;
-	//public static Item biomeDevTool;
-	//  Item Names
-	//	public static final String MIXING_FLASK = "mixingFlask";
+public class ItemsMN {
 
-	public static void initItems()
-	{
-		researchLog = new ItemResearchLog(); registerItem(researchLog, "researchLog");
-		alchemicalStone = new ItemAlchemicalStone(); registerItem(alchemicalStone, "alchemicalStone");
-		key = new ItemKey(); registerItem(key, "key");
-		gogglesDark = new ItemGogglesDark(); registerItem(gogglesDark, "gogglesDarkCrystal");
-		spectacles = new ItemSpectacles(); registerItem(spectacles, "spectacles");
-		focusBuild = new ItemFocusBuild(); registerItem(focusBuild, "focusBuild");
-		evilTrunkSpawner = new ItemEvilTrunkSpawner(); registerItem(evilTrunkSpawner, "evilTrunk");
-		focusPouchEnder = new ItemFocusPouchEnder(); registerItem(focusPouchEnder, "focusPouchEnder");
-		sickleThaumium = new ItemThaumiumSickle(); registerItem(sickleThaumium, "sickleThaumium");
-		sickleElemental = new ItemElementalSickle(); registerItem(sickleElemental, "sickleElemental");
-		biomeReport = new ItemBiomeSampler(); registerItem(biomeReport, "biomeSampler");
-		focusRevenant = new ItemFocusRevenant(); registerItem(focusRevenant, "focusRevenant");
-		voidSickle = new ItemVoidSickle(); registerItem(voidSickle, "voidSickle");
+    public static Item researchLog;
+    public static Item biomeReport;
+    public static Item alchemicalStone;
+    public static Item key;
+    public static Item gogglesDark;
+    public static Item spectacles;
+    public static Item focusBuild;
+    public static Item focusRevenant;
+    public static Item evilTrunkSpawner;
+    public static Item focusPouchEnder;
+    public static Item sickleThaumium;
+    public static Item sickleElemental;
+    public static Item voidSickle;
 
-		//devTool = new DevTool(); registerItem(devTool, NameUtil.DEV_TOOL);
-		//biomeDevTool = new BiomeDevTool(); registerItem(biomeDevTool, "devTool");
-	}
+    //public static Item devTool;
+    //public static Item biomeDevTool;
 
-	private static void registerItem(Item item, String str)
-	{
-		item.setUnlocalizedName(Reference.ID + ":" + str);
-		GameRegistry.registerItem(item, "item." + str);
-		//TODO: Remove "item." prefix for compatibility with 1.8 port?
-	}
+    //public static final String MIXING_FLASK = "mixingFlask";
+
+    public static void initItems() {
+        researchLog = registerItem("researchLog", ItemResearchLog::new);
+        alchemicalStone = registerItem("alchemicalStone", ItemAlchemicalStone::new);
+        key = registerItem("key", ItemKey::new);
+        gogglesDark = registerItem("gogglesDarkCrystal", ItemGogglesDark::new);
+        spectacles = registerItem("spectacles", ItemSpectacles::new);
+        focusBuild = registerItem("focusBuild", ItemFocusBuild::new);
+        evilTrunkSpawner = registerItem("evilTrunk", ItemEvilTrunkSpawner::new);
+        focusPouchEnder = registerItem("focusPouchEnder", ItemFocusPouchEnder::new);
+        sickleThaumium = registerItem("sickleThaumium", ItemThaumiumSickle::new);
+        sickleElemental = registerItem("sickleElemental", ItemElementalSickle::new);
+        biomeReport = registerItem("biomeSampler", ItemBiomeSampler::new);
+        focusRevenant = registerItem("focusRevenant", ItemFocusRevenant::new);
+        voidSickle = registerItem("voidSickle", ItemVoidSickle::new);
+
+        //devTool = registerItem("devTool", DevTool::new);
+        //biomeDevTool = registerItem("biomeDevTool", BiomeDevTool::new);
+    }
+
+    private static <T extends Item> T registerItem(String name, Supplier<T> factory) {
+        T item = factory.get();
+        item.setUnlocalizedName(MagiaNaturalis.MOD_ID + ":" + name);
+        item.setCreativeTab(MagiaNaturalis.CREATIVE_TAB);
+
+        GameRegistry.registerItem(item, "item." + name);
+
+        return item;
+    }
+
 }

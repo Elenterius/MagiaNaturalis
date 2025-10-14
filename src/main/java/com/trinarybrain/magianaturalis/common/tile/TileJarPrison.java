@@ -17,128 +17,110 @@ import thaumcraft.common.tiles.TileJar;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
-public class TileJarPrison extends TileJar implements IWandable
-{
-	private NBTTagCompound entityData = new NBTTagCompound();
-	private Entity cachedEntity;
+public class TileJarPrison extends TileJar implements IWandable {
 
-	public Entity getCachedEntity()
-	{
-		return this.cachedEntity;
-	}
+    private NBTTagCompound entityData = new NBTTagCompound();
+    private Entity cachedEntity;
 
-	private void setEntityForCache(NBTTagCompound data)
-	{
-		this.cachedEntity = null;
-		if(data == null) return;
+    public Entity getCachedEntity() {
+        return this.cachedEntity;
+    }
 
-		if(data.hasKey("entity"))
-		{
-			this.cachedEntity = EntityList.createEntityFromNBT(data.getCompoundTag("entity"), this.getWorldObj());
+    private void setEntityForCache(NBTTagCompound data) {
+        this.cachedEntity = null;
+        if (data == null) return;
 
-			if(this.cachedEntity != null && this.cachedEntity instanceof EntityTaintacle)
-				this.cachedEntity.ticksExisted = 30;
+        if (data.hasKey("entity")) {
+            this.cachedEntity = EntityList.createEntityFromNBT(data.getCompoundTag("entity"), this.getWorldObj());
 
-			//			if(((EntityLiving) cachedEntity).hasCustomNameTag())
-			//			{
-			//				((EntityLiving) cachedEntity).setAlwaysRenderNameTag(true);
-			//			}
-		}
-	}
+            if (this.cachedEntity != null && this.cachedEntity instanceof EntityTaintacle)
+                this.cachedEntity.ticksExisted = 30;
 
-	public void writeCustomNBT(NBTTagCompound data)
-	{
-		data.setTag("entity", entityData);
-	}
+            //			if(((EntityLiving) cachedEntity).hasCustomNameTag())
+            //			{
+            //				((EntityLiving) cachedEntity).setAlwaysRenderNameTag(true);
+            //			}
+        }
+    }
 
-	public void readCustomNBT(NBTTagCompound data)
-	{
-		entityData = data.getCompoundTag("entity");
-		this.setEntityForCache(entityData);
-	}
+    @Override
+    public void writeCustomNBT(NBTTagCompound data) {
+        data.setTag("entity", entityData);
+    }
 
-	public void setEntityData(NBTTagCompound data)
-	{
-		this.entityData = data;
-		this.setEntityForCache(entityData);
-	}
+    @Override
+    public void readCustomNBT(NBTTagCompound data) {
+        entityData = data.getCompoundTag("entity");
+        this.setEntityForCache(entityData);
+    }
 
-	public boolean saveEntityToNBT(EntityLivingBase entity)
-	{
-		if(Platform.isClient()) return false;
+    public void setEntityData(NBTTagCompound data) {
+        this.entityData = data;
+        this.setEntityForCache(entityData);
+    }
 
-		if(entity == null || entity instanceof IBossDisplayData || entity instanceof EntityPlayer) return false;
-		if(!(entity instanceof EntityCreature)) return false;
+    public boolean saveEntityToNBT(EntityLivingBase entity) {
+        if (Platform.isClient()) return false;
 
-		if(!entity.writeMountToNBT(entityData)) return false;
-		entity.setDead();
-		this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-		return true;
-	}
+        if (entity == null || entity instanceof IBossDisplayData || entity instanceof EntityPlayer) return false;
+        if (!(entity instanceof EntityCreature)) return false;
 
-	public boolean hasEntityInside()
-	{
-		if(entityData != null && entityData.hasKey("entity")) return true;
-		return false;
-	}
+        if (!entity.writeMountToNBT(entityData)) return false;
+        entity.setDead();
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        return true;
+    }
 
-	public NBTTagCompound getEntityData()
-	{
-		return this.hasEntityInside() ? null : entityData.getCompoundTag("entity");
-	}
+    public boolean hasEntityInside() {
+        return entityData != null && entityData.hasKey("entity");
+    }
 
-	public NBTTagCompound getEntityDataPrimitive()
-	{
-		return this.entityData;
-	}
+    public NBTTagCompound getEntityData() {
+        return this.hasEntityInside() ? null : entityData.getCompoundTag("entity");
+    }
 
-	public void releaseFromContainer()
-	{
-		if(Platform.isServer())
-		{
-			if(NBTUtil.spawnEntityFromNBT(entityData.getCompoundTag("entity"), this.worldObj, this.xCoord + 0.5D, this.yCoord, this.zCoord  + 0.5D))
-			{
-				this.entityData = null;
-				this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-			}
-		}
-	}
+    public NBTTagCompound getEntityDataPrimitive() {
+        return this.entityData;
+    }
 
-	@Override
-	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md)
-	{
-		if(this.hasEntityInside())
-		{
-			if(Platform.isServer())
-			{
-				world.setBlockToAir(x, y, z);
-				this.releaseFromContainer();
-			}
+    public void releaseFromContainer() {
+        if (Platform.isServer()) {
+            if (NBTUtil.spawnEntityFromNBT(entityData.getCompoundTag("entity"), this.worldObj, this.xCoord + 0.5D, this.yCoord, this.zCoord + 0.5D)) {
+                this.entityData = null;
+                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+            }
+        }
+    }
 
-			this.worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(ConfigBlocks.blockJar) + 61440);
-			player.worldObj.playSound(x + 0.5D, y + 0.5D, z + 0.5D, "random.glass", 1.0F, 0.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
-			player.swingItem();
-			return 0;
-		}
-		return -1;
-	}
+    @Override
+    public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
+        if (this.hasEntityInside()) {
+            if (Platform.isServer()) {
+                world.setBlockToAir(x, y, z);
+                this.releaseFromContainer();
+            }
 
-	@Override
-	public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player)
-	{
-		return null;
-	}
+            this.worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(ConfigBlocks.blockJar) + 61440);
+            player.worldObj.playSound(x + 0.5D, y + 0.5D, z + 0.5D, "random.glass", 1.0F, 0.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
+            player.swingItem();
+            return 0;
+        }
+        return -1;
+    }
 
-	@Override
-	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count)
-	{
+    @Override
+    public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player) {
+        return null;
+    }
 
-	}
+    @Override
+    public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {
 
-	@Override
-	public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count)
-	{
+    }
 
-	}
+    @Override
+    public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {
+
+    }
 
 }

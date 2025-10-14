@@ -3,7 +3,6 @@ package com.trinarybrain.magianaturalis.common.item.artifact;
 import java.util.List;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
@@ -19,74 +18,73 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemEvilTrunkSpawner extends Item
-{
-	public String name[] = new String[] {"corrupted", "sinister", "demonic", "tainted"};
+public class ItemEvilTrunkSpawner extends Item {
 
-	public ItemEvilTrunkSpawner()
-	{
-		setMaxStackSize(1);
-		setHasSubtypes(true);
-		setCreativeTab(MagiaNaturalis.creativeTab);
-	}
+    public String[] name = new String[]{"corrupted", "sinister", "demonic", "tainted"};
 
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister ir)
-	{
-		itemIcon = ir.registerIcon(Reference.ID + ":" + "emptyTexture");
-	}
+    public ItemEvilTrunkSpawner() {
+        setMaxStackSize(1);
+        setHasSubtypes(true);
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item item, CreativeTabs tab, List list)
-	{
-		list.add(new ItemStack(item, 1, 0));
-		list.add(new ItemStack(item, 1, 1));
-		list.add(new ItemStack(item, 1, 2));
-		list.add(new ItemStack(item, 1, 3));
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister ir) {
+        itemIcon = ir.registerIcon(MagiaNaturalis.rlString("emptyTexture"));
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		if(stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory"))
-			list.add(Platform.translate("item.TrunkSpawner.text.1"));
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
+        list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 1));
+        list.add(new ItemStack(item, 1, 2));
+        list.add(new ItemStack(item, 1, 3));
+    }
 
-	public String getUnlocalizedName(ItemStack stack)
-	{
-		return super.getUnlocalizedName() + "." + name[stack.getItemDamage()];
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory")) {
+            list.add(Platform.translate("item.TrunkSpawner.text.1"));
+        }
+    }
 
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
-	{
-		if(Platform.isClient()) return false;
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        return super.getUnlocalizedName() + "." + name[stack.getItemDamage()];
+    }
 
-		Block block = world.getBlock(x, y, z);
-		x += net.minecraft.util.Facing.offsetsXForSide[side];
-		y += net.minecraft.util.Facing.offsetsYForSide[side];
-		z += net.minecraft.util.Facing.offsetsZForSide[side];
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+        if (Platform.isClient()) return false;
 
-		double d0 = 0.0D;
-		if(side == 1 && !block.isAir(world, x, y, z) && block.getRenderType() == 11) d0 = 0.5D;
-		EntityEvilTrunk entity = new EntityEvilTrunk(world, stack.getItemDamage());
+        Block block = world.getBlock(x, y, z);
+        x += net.minecraft.util.Facing.offsetsXForSide[side];
+        y += net.minecraft.util.Facing.offsetsYForSide[side];
+        z += net.minecraft.util.Facing.offsetsZForSide[side];
 
-		if(entity != null)
-		{
-			if(stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory"))
-			{
-				NBTTagList dataList = stack.stackTagCompound.getTagList("inventory", 10);
-				entity.inventory.readFromNBT(dataList);
-			}
+        double d0 = 0.0D;
+        if (side == 1 && !block.isAir(world, x, y, z) && block.getRenderType() == 11) d0 = 0.5D;
+        EntityEvilTrunk entity = new EntityEvilTrunk(world, stack.getItemDamage());
 
-			entity.setOwnerUUID(player.getGameProfile().getId().toString());
-			entity.setLocationAndAngles(x, y + d0, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
-			entity.rotationYawHead = entity.rotationYaw;
-			entity.renderYawOffset = entity.rotationYaw;
-			if(stack.hasDisplayName()) entity.setCustomNameTag(stack.getDisplayName());
-			world.spawnEntityInWorld(entity);
-			entity.playLivingSound();
-			if(!player.capabilities.isCreativeMode) stack.stackSize -= 1;
-		}
-		return true;
-	}
+        if (entity != null) {
+            if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory")) {
+                NBTTagList dataList = stack.stackTagCompound.getTagList("inventory", 10);
+                entity.inventory.readFromNBT(dataList);
+            }
+
+            entity.setOwnerUUID(player.getGameProfile().getId().toString());
+            entity.setLocationAndAngles(x, y + d0, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+            entity.rotationYawHead = entity.rotationYaw;
+            entity.renderYawOffset = entity.rotationYaw;
+            if (stack.hasDisplayName()) entity.setCustomNameTag(stack.getDisplayName());
+            world.spawnEntityInWorld(entity);
+            entity.playLivingSound();
+            if (!player.capabilities.isCreativeMode) stack.stackSize -= 1;
+        }
+
+        return true;
+    }
+
 }

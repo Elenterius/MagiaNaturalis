@@ -8,151 +8,129 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class InventoryEvilTrunk implements IInventory
-{
-	public ItemStack[] inventory;
-	public EntityEvilTrunk entityTrunk;
-	public boolean inventoryChanged;
-	public int slotCount;
-	public int stacklimit = 64;
+public class InventoryEvilTrunk implements IInventory {
 
-	public InventoryEvilTrunk(EntityEvilTrunk entity, int slots)
-	{
-		this.slotCount = slots;
-		this.inventory = new ItemStack[36];
-		this.inventoryChanged = false;
-		this.entityTrunk = entity;
-	}
+    protected static final int STACK_LIMIT = 64;
 
-	@Override
-	public int getSizeInventory()
-	{
-		return this.slotCount;
-	}
+    public ItemStack[] inventory;
+    public EntityEvilTrunk entityTrunk;
+    public boolean inventoryChanged;
+    public int slotCount;
 
-	@Override
-	public ItemStack getStackInSlot(int index)
-	{
-		return this.inventory[index];
-	}
+    public InventoryEvilTrunk(EntityEvilTrunk entity, int slots) {
+        slotCount = slots;
+        inventory = new ItemStack[36];
+        inventoryChanged = false;
+        entityTrunk = entity;
+    }
 
-	@Override
-	public ItemStack decrStackSize(int index, int amount)
-	{
-		ItemStack[] inv = this.inventory;
-		if(inv[index] != null)
-		{
-			if(inv[index].stackSize <= amount)
-			{
-				ItemStack stack = inv[index];
-				inv[index] = null;
-				return stack;
-			}
+    @Override
+    public int getSizeInventory() {
+        return slotCount;
+    }
 
-			ItemStack stack = inv[index].splitStack(amount);
-			if(inv[index].stackSize == 0) inv[index] = null;
-			return stack;
-		}
-		return null;
-	}
+    @Override
+    public ItemStack getStackInSlot(int index) {
+        return inventory[index];
+    }
 
-	@Override
-	public ItemStack getStackInSlotOnClosing(int index)
-	{
-		return null;
-	}
+    @Override
+    public ItemStack decrStackSize(int index, int amount) {
+        if (inventory[index] == null) return null;
 
-	@Override
-	public void setInventorySlotContents(int index, ItemStack stack)
-	{
-		this.inventory[index] = stack;
-	}
+        if (inventory[index].stackSize <= amount) {
+            ItemStack stack = inventory[index];
+            inventory[index] = null;
+            return stack;
+        }
 
-	@Override
-	public String getInventoryName()
-	{
-		return "Inventory";
-	}
+        ItemStack stack = inventory[index].splitStack(amount);
+        if (inventory[index].stackSize == 0) inventory[index] = null;
+        return stack;
+    }
 
-	@Override
-	public boolean hasCustomInventoryName()
-	{
-		return false;
-	}
+    @Override
+    public ItemStack getStackInSlotOnClosing(int index) {
+        return null;
+    }
 
-	@Override
-	public int getInventoryStackLimit()
-	{
-		return this.stacklimit;
-	}
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        inventory[index] = stack;
+    }
 
-	@Override
-	public void markDirty()
-	{
-		this.inventoryChanged = true;
-	}
+    @Override
+    public String getInventoryName() {
+        return "Inventory";
+    }
 
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer player)
-	{
-		return false;
-	}
+    @Override
+    public boolean hasCustomInventoryName() {
+        return false;
+    }
 
-	@Override
-	public void openInventory()
-	{
-		this.entityTrunk.setOpen(true);
-	}
+    @Override
+    public int getInventoryStackLimit() {
+        return STACK_LIMIT;
+    }
 
-	@Override
-	public void closeInventory()
-	{
-		this.entityTrunk.setOpen(false);
-	}
+    @Override
+    public void markDirty() {
+        inventoryChanged = true;
+    }
 
-	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack)
-	{
-		return true;
-	}
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return false;
+    }
 
-	public void dropAllItems()
-	{
-		for(int index = 0; index < this.inventory.length; index++)
-			if(this.inventory[index] != null)
-			{
-				this.entityTrunk.entityDropItem(this.inventory[index], 0.0F);
-				this.inventory[index] = null;
-			}
-	}
+    @Override
+    public void openInventory() {
+        entityTrunk.setOpen(true);
+    }
 
-	public NBTBase writeToNBT(NBTTagList dataList)
-	{
-		for(int index = 0; index < this.inventory.length; index++)
-			if(this.inventory[index] != null)
-			{
-				NBTTagCompound data = new NBTTagCompound();
-				data.setByte("Slot", (byte)index);
-				this.inventory[index].writeToNBT(data);
-				dataList.appendTag(data);
-			}
-		return dataList;
-	}
+    @Override
+    public void closeInventory() {
+        entityTrunk.setOpen(false);
+    }
 
-	public void readFromNBT(NBTTagList dataList)
-	{
-		this.inventory = new ItemStack[this.inventory.length];
-		for(int i = 0; i < dataList.tagCount(); i++)
-		{
-			NBTTagCompound data = dataList.getCompoundTagAt(i);
-			byte index = data.getByte("Slot");
-			ItemStack stack = ItemStack.loadItemStackFromNBT(data);
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        return true;
+    }
 
-			if(stack.getItem() != null)
-			{
-				if(index >= 0 && index < this.inventory.length)
-					this.inventory[index] = stack;
-			}
-		}
-	}
+    public void dropAllItems() {
+        for (int index = 0; index < inventory.length; index++) {
+            if (inventory[index] != null) {
+                entityTrunk.entityDropItem(inventory[index], 0.0F);
+                inventory[index] = null;
+            }
+        }
+    }
+
+    public NBTBase writeToNBT(NBTTagList dataList) {
+        for (int index = 0; index < inventory.length; index++) {
+            if (inventory[index] != null) {
+                NBTTagCompound data = new NBTTagCompound();
+                data.setByte("Slot", (byte) index);
+                inventory[index].writeToNBT(data);
+                dataList.appendTag(data);
+            }
+        }
+        return dataList;
+    }
+
+    public void readFromNBT(NBTTagList dataList) {
+        inventory = new ItemStack[inventory.length];
+        for (int i = 0; i < dataList.tagCount(); i++) {
+            NBTTagCompound data = dataList.getCompoundTagAt(i);
+            byte index = data.getByte("Slot");
+            ItemStack stack = ItemStack.loadItemStackFromNBT(data);
+            if (stack != null) {
+                if (index >= 0 && index < inventory.length) {
+                    inventory[index] = stack;
+                }
+            }
+        }
+    }
 }

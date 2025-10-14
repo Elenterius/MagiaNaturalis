@@ -25,58 +25,50 @@ import com.trinarybrain.magianaturalis.common.tile.TileJarPrison;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BlockRenderer implements ISimpleBlockRenderingHandler
-{
-	@Override
-	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer)
-	{
-		GL11.glPushMatrix();
-		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+public class BlockRenderer implements ISimpleBlockRenderingHandler {
 
-		if(block instanceof BlockTranscribingTable)
-		{
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileTranscribingTable(), 0.0D, 0.0D, 0.0D, 0.0F);
-		}
-		else if(block instanceof BlockArcaneChest)
-		{
-			TileArcaneChest tile = new TileArcaneChest();
-			tile.setChestType((byte) metadata);
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
-		}
-		else if(block instanceof BlockBanner)
-		{
-			GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
-			GL11.glTranslatef(-1.0F, -0.5F, 0.0F);
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBannerCustom(), 0.0D, 0.0D, 0.0D, 0.0F);
-		}
-		else if(block instanceof BlockGeoMorpher)
-		{
-			TileGeoMorpher tile = new TileGeoMorpher();
-			tile.idle = true;
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
-		}
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+        GL11.glPushMatrix();
+        GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glPopMatrix();
-	}
+        if (block instanceof BlockTranscribingTable) {
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileTranscribingTable(), 0.0D, 0.0D, 0.0D, 0.0F);
+        }
+        else if (block instanceof BlockArcaneChest) {
+            TileArcaneChest tile = new TileArcaneChest();
+            tile.setChestType((byte) metadata);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
+        }
+        else if (block instanceof BlockBanner) {
+            GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+            GL11.glTranslatef(-1.0F, -0.5F, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileBannerCustom(), 0.0D, 0.0D, 0.0D, 0.0F);
+        }
+        else if (block instanceof BlockGeoMorpher) {
+            TileGeoMorpher tile = new TileGeoMorpher();
+            tile.idle = true;
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
+        }
 
-	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
-	{
-		return false;
-	}
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glPopMatrix();
+    }
 
-	@Override
-	public boolean shouldRender3DInInventory(int modelId)
-	{
-		return true;
-	}
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        return false;
+    }
 
-	@Override
-	public int getRenderId()
-	{
-		return RenderUtil.RenderID;
-	}
+    @Override
+    public boolean shouldRender3DInInventory(int modelId) {
+        return true;
+    }
+
+    @Override
+    public int getRenderId() {
+        return RenderUtil.RenderID;
+    }
 
 }

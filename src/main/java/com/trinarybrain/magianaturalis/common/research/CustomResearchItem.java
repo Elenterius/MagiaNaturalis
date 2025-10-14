@@ -1,12 +1,12 @@
 package com.trinarybrain.magianaturalis.common.research;
 
+import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.research.ResearchItem;
-import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 
 public class CustomResearchItem extends ResearchItem
@@ -19,22 +19,22 @@ public class CustomResearchItem extends ResearchItem
 
 	public CustomResearchItem(String key, int col, int row, int complex, ResourceLocation icon)
 	{
-		super(key, Reference.ID, new AspectList(), col, row, complex, icon);
+		super(key, MagiaNaturalis.MOD_ID, new AspectList(), col, row, complex, icon);
 	}
 
 	public CustomResearchItem(String key, int col, int row, int complex, ItemStack icon)
 	{
-		super(key, Reference.ID, new AspectList(), col, row, complex, icon);
+		super(key, MagiaNaturalis.MOD_ID, new AspectList(), col, row, complex, icon);
 	}
 
 	public CustomResearchItem(String key, AspectList tags, int col, int row, int complex, ResourceLocation icon)
 	{
-		super(key, Reference.ID, tags, col, row, complex, icon);
+		super(key, MagiaNaturalis.MOD_ID, tags, col, row, complex, icon);
 	}
 
 	public CustomResearchItem(String key, AspectList tags, int col, int row, int complex, ItemStack icon)
 	{
-		super(key, Reference.ID, tags, col, row, complex, icon);
+		super(key, MagiaNaturalis.MOD_ID, tags, col, row, complex, icon);
 	}
 
 	@SideOnly(Side.CLIENT)

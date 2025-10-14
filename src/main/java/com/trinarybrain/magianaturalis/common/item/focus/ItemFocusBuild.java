@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.Reference;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Shape;
@@ -34,336 +33,308 @@ import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
-public class ItemFocusBuild extends ItemFocusBasic implements IArchitect
-{
-	public static double reachDistance = 5.0D;
+public class ItemFocusBuild extends ItemFocusBasic implements IArchitect {
 
-	public ItemFocusBuild()
-	{
-		super();
-		setCreativeTab(MagiaNaturalis.creativeTab);
-	}
+    protected static final AspectList VIS_COST = new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
 
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean advancedItemTooltips)
-	{
-		super.addInformation(stack, player, lines, advancedItemTooltips);
-		lines.add("");
-		lines.add(EnumChatFormatting.DARK_GRAY + "Meta: " + FocusBuildHelper.getMeta(stack));
-		lines.add(EnumChatFormatting.DARK_GRAY + "Shape: " + FocusBuildHelper.getShape(stack) + "  Size: "+FocusBuildHelper.getSize(stack));
-	}
+    public static double reachDistance = 5.0D;
 
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item item, CreativeTabs creativeTabs, List list)
-	{
-		ItemStack stack = new ItemStack(item, 1, 0);
-		applyUpgrade(stack, FocusUpgradeType.architect, 1);
-		FocusBuildHelper.setSize(stack, 1);
-		FocusBuildHelper.setShape(stack, Shape.CUBE);
-		list.add(stack);
-	}
+    public ItemFocusBuild() {
+        super();
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister ir)
-	{
-		icon = ir.registerIcon(Reference.ID + ":" +  "focus_build");
-	}
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean advancedItemTooltips) {
+        super.addInformation(stack, player, lines, advancedItemTooltips);
+        lines.add("");
+        lines.add(EnumChatFormatting.DARK_GRAY + "Meta: " + FocusBuildHelper.getMeta(stack));
+        lines.add(EnumChatFormatting.DARK_GRAY + "Shape: " + FocusBuildHelper.getShape(stack) + "  Size: " + FocusBuildHelper.getSize(stack));
+        lines.add("");
+        lines.add(EnumChatFormatting.GRAY + "Press +/- to change size of Shape");
+        lines.add(EnumChatFormatting.GRAY + "Press v to change Shape");
+        lines.add(EnumChatFormatting.GRAY + "Press [middle mouse]  button to pick block type.");
+    }
 
-	@Override
-	public int getFocusColor(ItemStack focusstack)
-	{
-		return 0x857B93;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
+        ItemStack stack = new ItemStack(item, 1, 0);
+        applyUpgrade(stack, FocusUpgradeType.architect, 1);
+        FocusBuildHelper.setSize(stack, 1);
+        FocusBuildHelper.setShape(stack, Shape.CUBE);
+        list.add(stack);
+    }
 
-	@Override
-	public AspectList getVisCost(ItemStack focusstack)
-	{
-		return new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister registry) {
+        icon = registry.registerIcon(MagiaNaturalis.rlString("focus_build"));
+    }
 
-	public int getMaxAreaSize(ItemStack focusstack)
-	{
-		return 3 + getUpgradeLevel(focusstack, FocusUpgradeType.enlarge) * 3 + 1;
-	}
+    @Override
+    public int getFocusColor(ItemStack focusStack) {
+        return 0x857B93;
+    }
 
-	@Override
-	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack, int rank)
-	{
-		return new FocusUpgradeType[] {FocusUpgradeType.enlarge, FocusUpgradeType.frugal};
-	}
+    @Override
+    public AspectList getVisCost(ItemStack focusStack) {
+        return VIS_COST;
+    }
 
-	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition)
-	{
-		player.swingItem();
-		if(Platform.isClient()) return wandstack;
+    @Override
+    public int getMaxAreaSize(ItemStack focusStack) {
+        return 3 + getUpgradeLevel(focusStack, FocusUpgradeType.enlarge) * 3 + 1;
+    }
 
-		MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
+    @Override
+    public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusStack, int rank) {
+        return new FocusUpgradeType[]{FocusUpgradeType.enlarge, FocusUpgradeType.frugal};
+    }
 
-		if(target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-		{
-			int x = target.blockX;
-			int y = target.blockY;
-			int z = target.blockZ;
+    @Override
+    public ItemStack onFocusRightClick(ItemStack wandStack, World world, EntityPlayer player, MovingObjectPosition movingObjectPosition) {
+        player.swingItem();
+        if (Platform.isClient()) return wandStack;
 
-			ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
+        MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
 
-//			if(player.isSneaking())
-//			{
-//				FocusBuildHelper.setpickedBlock(focusStack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
-//				wand.setFocus(wandstack, focusStack); //update focus with new NBT data in wand
-//				return wandstack;
-//			}
+        if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            int x = target.blockX;
+            int y = target.blockY;
+            int z = target.blockZ;
 
-			float hitX = (float) (target.hitVec.xCoord - x);
-			float hitY = (float) (target.hitVec.yCoord - y);
-			float hitZ = (float) (target.hitVec.zCoord - z);
+//            Item wandItem = wandStack.getItem();
+//            if (wandItem instanceof ItemWandCasting) {
+//                if (player.isSneaking()) {
+//                    ItemStack focusStack = ((ItemWandCasting) wandItem).getFocusItem(wandStack);
+//                    FocusBuildHelper.setpickedBlock(focusStack, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+//                    ((ItemWandCasting) wandItem).setFocus(wandStack, focusStack); //update focus with new NBT data in wand
+//                    return wandStack;
+//                }
+//            }
 
-			hitX = Math.abs(hitX);
-			hitY = Math.abs(hitY); //Wasted Operation since blocks can't be placed below y=0 in "default" Minecraft!
-			hitZ = Math.abs(hitZ);
+            float hitX = (float) (target.hitVec.xCoord - x);
+            float hitY = (float) (target.hitVec.yCoord - y);
+            float hitZ = (float) (target.hitVec.zCoord - z);
 
-			if(!onFocusUse(wandstack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ))
-				world.playSoundAtEntity(player, "thaumcraft:wandfail", 0.5F, 0.8F + world.rand.nextFloat() * 0.1F);
-		}
+            hitX = Math.abs(hitX);
+            hitY = Math.abs(hitY); //Wasted Operation since blocks can't be placed below y=0 in "default" Minecraft!
+            hitZ = Math.abs(hitZ);
 
-		return wandstack;
-	}
+            if (!onFocusUse(wandStack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ))
+                world.playSoundAtEntity(player, "thaumcraft:wandfail", 0.5F, 0.8F + world.rand.nextFloat() * 0.1F);
+        }
 
-	public boolean onFocusUse(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
-	{
-		if(!player.capabilities.allowEdit) return false;
+        return wandStack;
+    }
 
-		ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
-		ItemStack focusStack = wand.getFocusItem(wandStack);
+    public boolean onFocusUse(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+        if (!player.capabilities.allowEdit) return false;
 
-		int size = FocusBuildHelper.getSize(focusStack);
-		if(size < 1 || size > getMaxAreaSize(focusStack)) return false;
+        ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
+        ItemStack focusStack = wand.getFocusItem(wandStack);
 
-		Shape shape = FocusBuildHelper.getShape(focusStack);
-		if(shape == Shape.NONE) return false;
+        int size = FocusBuildHelper.getSize(focusStack);
+        if (size < 1 || size > getMaxAreaSize(focusStack)) return false;
 
-		Block pblock = null;
-		int pbdata = 0;
+        Shape shape = FocusBuildHelper.getShape(focusStack);
+        if (shape == Shape.NONE) return false;
 
-		if(FocusBuildHelper.getMeta(focusStack) == Meta.UNIFORM)
-		{
-			pblock = world.getBlock(x, y, z);
-			pbdata = world.getBlockMetadata(x, y, z);
-		}
-		else
-		{
-			int[] i = FocusBuildHelper.getPickedBlock(focusStack);
-			pblock = Block.getBlockById(i[0]);
-			pbdata = i[1];
-		}
+        Block pblock = null;
+        int pbdata = 0;
 
-		if(pblock == null || pblock == Blocks.air) return false;
-		if(pbdata < 0 || pbdata > 15) return false;
+        if (FocusBuildHelper.getMeta(focusStack) == Meta.UNIFORM) {
+            pblock = world.getBlock(x, y, z);
+            pbdata = world.getBlockMetadata(x, y, z);
+        }
+        else {
+            int[] i = FocusBuildHelper.getPickedBlock(focusStack);
+            pblock = Block.getBlockById(i[0]);
+            pbdata = i[1];
+        }
 
-		return buildAction(wandStack, player, world, x, y, z, side, hitX, hitY, hitZ, size, pblock, pbdata);
-	}
+        if (pblock == null || pblock == Blocks.air) return false;
+        if (pbdata < 0 || pbdata > 15) return false;
 
-	private boolean buildAction(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size, Block pickedblock, int pbData)
-	{
-		List blocks = null;
-		ForgeDirection face = ForgeDirection.getOrientation(side);
-		ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
+        return buildAction(wandStack, player, world, x, y, z, side, hitX, hitY, hitZ, size, pblock, pbdata);
+    }
 
-		switch(FocusBuildHelper.getShape(wand.getFocusItem(wandStack)))
-		{
-		case CUBE:
-			x += face.offsetX * size;
-			y += face.offsetY * size;
-			z += face.offsetZ * size;
-			blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
-			break;
+    private boolean buildAction(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size, Block pickedblock, int pbData) {
+        List<WorldCoord> blocks = null;
+        ForgeDirection face = ForgeDirection.getOrientation(side);
+        ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
 
-		case PLANE:
-			x += face.offsetX;
-			y += face.offsetY;
-			z += face.offsetZ;
-			blocks = WorldUtil.plot2DPlane(player, world, x, y, z, side, hitX, hitY, hitZ, size);
-			break;
+        switch (FocusBuildHelper.getShape(wand.getFocusItem(wandStack))) {
+            case CUBE:
+                x += face.offsetX * size;
+                y += face.offsetY * size;
+                z += face.offsetZ * size;
+                blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                break;
 
-		case PLANE_EXTEND:
-			x += face.offsetX*(size+1)/2;
-			y += face.offsetY*(size+1)/2;
-			z += face.offsetZ*(size+1)/2;
-			blocks = WorldUtil.plot2DPlaneExtension(player, world, x, y, z, side, hitX, hitY, hitZ, size);
-			break;
+            case PLANE:
+                x += face.offsetX;
+                y += face.offsetY;
+                z += face.offsetZ;
+                blocks = WorldUtil.plot2DPlane(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                break;
 
-		case SPHERE:
-			x += face.offsetX * size;
-			y += face.offsetY * size;
-			z += face.offsetZ * size;
-			blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
-			break;
+            case PLANE_EXTEND:
+                x += face.offsetX * (size + 1) / 2;
+                y += face.offsetY * (size + 1) / 2;
+                z += face.offsetZ * (size + 1) / 2;
+                blocks = WorldUtil.plot2DPlaneExtension(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                break;
 
-		case NONE:
-			break;
-		default:
-			break;
-		}
+            case SPHERE:
+                x += face.offsetX * size;
+                y += face.offsetY * size;
+                z += face.offsetZ * size;
+                blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                break;
 
-		if(blocks.size() == 0) return false;
+            case NONE:
+            default:
+                break;
+        }
 
-		if(blocks.size() > 0)
-		{
-			int ls = blocks.size();
-			if(!player.capabilities.isCreativeMode)
-			{
-				double costD = blocks.size() * 5;
-				if(costD > wand.getVis(wandStack, Aspect.ORDER))
-				{
-					int i = (int) (blocks.size() - (blocks.size() - wand.getVis(wandStack, Aspect.ORDER) / 5));
-					ls = i;
-				}
+        if (blocks == null || blocks.isEmpty()) return false;
 
-				if(ls == 0) return false;
+        int ls = blocks.size();
+        if (!player.capabilities.isCreativeMode) {
+            double costD = blocks.size() * 5;
+            if (costD > wand.getVis(wandStack, Aspect.ORDER)) {
+                int i = (int) (blocks.size() - (blocks.size() - wand.getVis(wandStack, Aspect.ORDER) / 5));
+                ls = i;
+            }
 
-				ItemStack tempStack = new ItemStack(pickedblock, 1, pbData);
-				if(tempStack.getItem() != null)
-				{
-					int itemAmount = 0;
-					for(int i = 0; i < player.inventory.mainInventory.length; ++i)
-					{
-						if(player.inventory.mainInventory[i] != null && player.inventory.mainInventory[i].isItemEqual(tempStack))
-						{
-							itemAmount += player.inventory.mainInventory[i].stackSize;
-						}
-					}
+            if (ls == 0) return false;
 
-					if(itemAmount < ls)
-						ls = itemAmount;
+            ItemStack tempStack = new ItemStack(pickedblock, 1, pbData);
+            if (tempStack.getItem() != null) {
+                int itemAmount = 0;
+                for (int i = 0; i < player.inventory.mainInventory.length; ++i) {
+                    if (player.inventory.mainInventory[i] != null && player.inventory.mainInventory[i].isItemEqual(tempStack)) {
+                        itemAmount += player.inventory.mainInventory[i].stackSize;
+                    }
+                }
 
-					if(ls == 0) return false;
+                if (itemAmount < ls)
+                    ls = itemAmount;
 
-					for(int j = 0; j < ls; j++)
-					{
-						player.inventory.consumeInventoryItem(tempStack.getItem());
-					}
+                if (ls == 0) return false;
 
-					player.inventoryContainer.detectAndSendChanges();
+                for (int j = 0; j < ls; j++) {
+                    player.inventory.consumeInventoryItem(tempStack.getItem());
+                }
 
-					int costN = 5 * ls;
-					if(!ThaumcraftApiHelper.consumeVisFromWand(wandStack, player, new AspectList().add(Aspect.ORDER, costN).add(Aspect.EARTH, costN), true, false))
-					{
-						return false;
-					}
-				}
-				else
-				{
-					ls = 0;
-				}
-			}
+                player.inventoryContainer.detectAndSendChanges();
 
-			if(ls == 0) return false;
+                int costN = 5 * ls;
+                if (!ThaumcraftApiHelper.consumeVisFromWand(wandStack, player, new AspectList().add(Aspect.ORDER, costN).add(Aspect.EARTH, costN), true, false)) {
+                    return false;
+                }
+            }
+            else {
+                ls = 0;
+            }
+        }
 
-			for(int i = 0; i < ls; i++)
-			{
-				WorldCoord temp = (WorldCoord)blocks.get(i);
-				world.setBlock(temp.x, temp.y, temp.z, pickedblock, pbData, 3);
-			}
-			return true;
-		}
-		return false;
-	}
+        if (ls == 0) return false;
 
-	@Override
-	public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player)
-	{
-		//TODO: render not working with extendeed reach distance
-		MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true); //have to call it here for hitVec
+        for (int i = 0; i < ls; i++) {
+            WorldCoord temp = blocks.get(i);
+            world.setBlock(temp.x, temp.y, temp.z, pickedblock, pbData, 3);
+        }
+        return true;
+    }
 
-		if(target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-		{
-			x = target.blockX;
-			y = target.blockY;
-			z = target.blockZ;
+    @Override
+    public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player) {
+        //TODO: render not working with extended reach distance
+        MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true); //have to call it here for hitVec
 
-			Block block1 = player.worldObj.getBlock(x, y, z);
-			if(block1 == null) return null;
+        if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            x = target.blockX;
+            y = target.blockY;
+            z = target.blockZ;
 
-			int b1damage = block1.getDamageValue(player.worldObj, x, y, z);
+            Block block1 = player.worldObj.getBlock(x, y, z);
+            if (block1 == null) return null;
 
-			if(stack != null)
-			{
-				ItemStack stackFocus = null;
+            int b1damage = block1.getDamageValue(player.worldObj, x, y, z);
 
-				if(stack.getItem() instanceof ItemWandCasting)
-				{
-					ItemWandCasting wand = ((ItemWandCasting) stack.getItem());
-					stackFocus = wand.getFocusItem(stack);
-				}
-				else if(stack.getItem() instanceof ItemFocusBuild)
-				{
-					stackFocus = stack;
-				}
-				else
-				{
-					return null;
-				}
+            if (stack != null) {
+                ItemStack stackFocus = null;
 
-				float hitX = (float) (target.hitVec.xCoord - x);
-				float hitY = (float) (target.hitVec.yCoord - y);
-				float hitZ = (float) (target.hitVec.zCoord - z);
+                if (stack.getItem() instanceof ItemWandCasting) {
+                    ItemWandCasting wand = ((ItemWandCasting) stack.getItem());
+                    stackFocus = wand.getFocusItem(stack);
+                }
+                else if (stack.getItem() instanceof ItemFocusBuild) {
+                    stackFocus = stack;
+                }
+                else {
+                    return null;
+                }
 
-				hitX = Math.abs(hitX);
-				hitY = Math.abs(hitY);
-				hitZ = Math.abs(hitZ);
+                float hitX = (float) (target.hitVec.xCoord - x);
+                float hitY = (float) (target.hitVec.yCoord - y);
+                float hitZ = (float) (target.hitVec.zCoord - z);
 
-				ForgeDirection face = ForgeDirection.getOrientation(target.sideHit);
+                hitX = Math.abs(hitX);
+                hitY = Math.abs(hitY);
+                hitZ = Math.abs(hitZ);
 
-				ArrayList blocks = null;
-				int size = FocusBuildHelper.getSize(stackFocus);
-				if(size < 1 || size > getMaxAreaSize(stackFocus)) return null;
+                ForgeDirection face = ForgeDirection.getOrientation(target.sideHit);
 
-				switch(FocusBuildHelper.getShape(stackFocus))
-				{
-				case CUBE:
-					x += face.offsetX * size;
-					y += face.offsetY * size;
-					z += face.offsetZ * size;
-					blocks = (ArrayList) WorldUtil.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
-					break;
+                ArrayList<BlockCoordinates> blocks = null;
+                int size = FocusBuildHelper.getSize(stackFocus);
+                if (size < 1 || size > getMaxAreaSize(stackFocus)) return null;
 
-				case PLANE:
-					x += face.offsetX;
-					y += face.offsetY;
-					z += face.offsetZ;
-					blocks = (ArrayList) WorldUtil.plot2DPlane(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
-					break;
+                switch (FocusBuildHelper.getShape(stackFocus)) {
+                    case CUBE:
+                        x += face.offsetX * size;
+                        y += face.offsetY * size;
+                        z += face.offsetZ * size;
+                        blocks = (ArrayList) WorldUtil.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+                        break;
 
-				case PLANE_EXTEND:
-					x += face.offsetX*(size+1)/2;
-					y += face.offsetY*(size+1)/2;
-					z += face.offsetZ*(size+1)/2;
-					blocks = (ArrayList) WorldUtil.plot2DPlaneExtension(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
-					break;
+                    case PLANE:
+                        x += face.offsetX;
+                        y += face.offsetY;
+                        z += face.offsetZ;
+                        blocks = (ArrayList) WorldUtil.plot2DPlane(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+                        break;
 
-				case SPHERE:
-					x += face.offsetX * size;
-					y += face.offsetY * size;
-					z += face.offsetZ * size;
-					blocks = (ArrayList) WorldUtil.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
-					break;
+                    case PLANE_EXTEND:
+                        x += face.offsetX * (size + 1) / 2;
+                        y += face.offsetY * (size + 1) / 2;
+                        z += face.offsetZ * (size + 1) / 2;
+                        blocks = (ArrayList) WorldUtil.plot2DPlaneExtension(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+                        break;
 
-				case NONE:
-					break;
-				default:
-					break;
-				}
+                    case SPHERE:
+                        x += face.offsetX * size;
+                        y += face.offsetY * size;
+                        z += face.offsetZ * size;
+                        blocks = (ArrayList) WorldUtil.plot3DCubeArea(player, player.worldObj, x, y, z, target.sideHit, hitX, hitY, hitZ, size);
+                        break;
 
-				if(blocks == null) return null;
-				return (ArrayList<BlockCoordinates>) blocks;
-			}
-		}
-		return null;
-	}
+                    case NONE:
+                    default:
+                        break;
+                }
 
-	@Override
-	public boolean showAxis(ItemStack stack, World world, EntityPlayer player, int side, EnumAxis axis)
-	{
-		return false;
-	}
+                return blocks;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean showAxis(ItemStack stack, World world, EntityPlayer player, int side, EnumAxis axis) {
+        return false;
+    }
+
 }

@@ -24,49 +24,44 @@ import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public class CommonProxy implements IGuiHandler
-{
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		ItemsMN.initItems();
-		BlocksMN.initBlocks();
-	}
+public class CommonProxy implements IGuiHandler {
 
-	public void init(FMLInitializationEvent event)
-	{
-		BlocksMN.initTileEntities();
-		EntitiesMN.registerEntities();
-		EntitiesMN.addChampions();
-		NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
-		EventHandlerWorld.register();
-	}
+    public void preInit(FMLPreInitializationEvent event) {
+        ItemsMN.initItems();
+        BlocksMN.initBlocks();
+    }
 
-	public void postInit(FMLPostInitializationEvent event)
-	{
-		EntitiesMN.addEntitySpawns();
-		Recipes.init();
-		Research.init();
-	}
+    public void init(FMLInitializationEvent event) {
+        BlocksMN.initTileEntities();
+        EntitiesMN.registerEntities();
+        EntitiesMN.addChampions();
+        NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
+        EventHandlerWorld.register();
+    }
 
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
-		switch(ID)
-		{
-		case 1:
-			return new ContainerTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
-		case 2:
-			return new ContainerArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
-		case 3:
-			return new ContainerEvilTrunk(player.inventory, world, (EntityEvilTrunk) ((WorldServer)world).getEntityByID(x));
-		default:
-			return null;
-		}
-	}
+    public void postInit(FMLPostInitializationEvent event) {
+        EntitiesMN.addEntitySpawns();
+        Recipes.init();
+        Research.init();
+    }
 
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
-		return null;
-	}
+    @Override
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        switch (ID) {
+            case 1:
+                return new ContainerTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
+            case 2:
+                return new ContainerArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
+            case 3:
+                return new ContainerEvilTrunk(player.inventory, world, (EntityEvilTrunk) ((WorldServer) world).getEntityByID(x));
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        return null;
+    }
+
 }

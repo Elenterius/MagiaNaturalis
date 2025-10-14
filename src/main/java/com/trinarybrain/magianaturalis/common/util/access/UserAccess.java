@@ -2,41 +2,46 @@ package com.trinarybrain.magianaturalis.common.util.access;
 
 import java.util.UUID;
 
-public class UserAccess
-{
-	private UUID id;
-	private byte accessLevel;
+public class UserAccess {
 
-	public UserAccess() {}
+    private UUID id;
+    private byte accessLevel;
 
-	public UserAccess(UUID id, byte accessType)
-	{
-		this.id = id;
-		this.accessLevel = accessType;
-	}
+    public UserAccess() {
+    }
 
-	public UUID getUUID() {return id;}
-	public void setUUID(UUID id)
-	{
-		this.id = id;
-	}
+    public UserAccess(UUID id, byte accessType) {
+        this.id = id;
+        this.accessLevel = accessType;
+    }
 
-	public byte getAccessLevel() {return this.accessLevel;}
-	public void setAccesLevel(byte accessType) {this.accessLevel = accessType;}
-	public boolean hasAccess()
-	{
-		return this.accessLevel >= 0;
-	}
+    public UUID getUUID() {
+        return id;
+    }
 
-	public boolean equals(Object obj)
-	{
-		if(obj == null || obj.getClass() != UserAccess.class) return false;
-		UserAccess user = (UserAccess)obj;
-		return this.id.equals(user.id) && this.accessLevel == user.accessLevel;
-	}
+    public void setUUID(UUID id) {
+        this.id = id;
+    }
 
-	public String toString()
-	{
-		return "("+this.id.toString()+","+this.accessLevel+")";
-	}
+    public byte getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccesLevel(byte accessType) {
+        accessLevel = accessType;
+    }
+
+    public boolean hasAccess() {
+        return accessLevel >= 0;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != UserAccess.class) return false;
+        UserAccess user = (UserAccess) obj;
+        return id.equals(user.id) && accessLevel == user.accessLevel;
+    }
+
+    public String toString() {
+        return "(" + id.toString() + "," + accessLevel + ")";
+    }
 }
