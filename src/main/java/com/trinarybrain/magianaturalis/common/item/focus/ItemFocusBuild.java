@@ -1,20 +1,18 @@
 package com.trinarybrain.magianaturalis.common.item.focus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.core.KeyHandler;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Shape;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.WorldCoord;
 import com.trinarybrain.magianaturalis.common.util.WorldUtil;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -33,6 +31,9 @@ import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemFocusBuild extends ItemFocusBasic implements IArchitect {
 
     protected static final AspectList VIS_COST = new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
@@ -44,15 +45,16 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean advancedItemTooltips) {
         super.addInformation(stack, player, lines, advancedItemTooltips);
         lines.add("");
         lines.add(EnumChatFormatting.DARK_GRAY + "Meta: " + FocusBuildHelper.getMeta(stack));
         lines.add(EnumChatFormatting.DARK_GRAY + "Shape: " + FocusBuildHelper.getShape(stack) + "  Size: " + FocusBuildHelper.getSize(stack));
         lines.add("");
-        lines.add(EnumChatFormatting.GRAY + "Press +/- to change size of Shape");
-        lines.add(EnumChatFormatting.GRAY + "Press v to change Shape");
-        lines.add(EnumChatFormatting.GRAY + "Press [middle mouse]  button to pick block type.");
+        lines.add(String.format("%sPress [%s] or [%s] to change size of Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyHandler.INCREASE_SIZE_KEY.getKeyCode()), GameSettings.getKeyDisplayString(KeyHandler.DECREASE_SIZE_KEY.getKeyCode())));
+        lines.add(String.format("%sPress [%s] to change Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyHandler.MISC_KEY.getKeyCode())));
+        lines.add(String.format("%sPress [%s] to pick block type.", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyHandler.PICK_BLOCK_KEY.getKeyCode())));
     }
 
     @Override
