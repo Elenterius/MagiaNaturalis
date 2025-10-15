@@ -1,14 +1,13 @@
-package com.trinarybrain.magianaturalis.client.model.entity;
-
-import org.lwjgl.opengl.GL11;
+package com.trinarybrain.magianaturalis.client.render.entity.trunk;
 
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
-public class ModelTrunkDemonic extends ModelBase {
+public class DemonicTrunkModel extends ModelBase {
 
     public ModelRenderer chestSkull;
     public ModelRenderer chestJaw;
@@ -29,7 +28,7 @@ public class ModelTrunkDemonic extends ModelBase {
     public ModelRenderer chestLeftWing;
     public ModelRenderer chestOuterLeftWing;
 
-    public ModelTrunkDemonic() {
+    public DemonicTrunkModel() {
         chestSkull = new ModelRenderer(this, 0, 19).setTextureSize(128, 64);
         chestSkull.addBox(0F, -10F, -14F, 14, 10, 14);
         chestSkull.setRotationPoint(1F, 11F, 15F);

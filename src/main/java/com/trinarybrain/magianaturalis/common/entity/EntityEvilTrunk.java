@@ -1,5 +1,15 @@
 package com.trinarybrain.magianaturalis.common.entity;
 
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.entity.ai.AIFollowJumpOwner;
+import com.trinarybrain.magianaturalis.common.entity.ai.AILeapAtTarget;
+import com.trinarybrain.magianaturalis.common.entity.ai.AIOwnerHurtByTarget;
+import com.trinarybrain.magianaturalis.common.entity.ai.AIOwnerHurtTarget;
+import com.trinarybrain.magianaturalis.common.inventory.InventoryEvilTrunk;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.init.MNItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
@@ -19,16 +29,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import thaumcraft.common.config.ConfigItems;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.entity.ai.AIFollowJumpOwner;
-import com.trinarybrain.magianaturalis.common.entity.ai.AILeapAtTarget;
-import com.trinarybrain.magianaturalis.common.entity.ai.AIOwnerHurtByTarget;
-import com.trinarybrain.magianaturalis.common.entity.ai.AIOwnerHurtTarget;
-import com.trinarybrain.magianaturalis.common.inventory.InventoryEvilTrunk;
-import com.trinarybrain.magianaturalis.common.item.ItemsMN;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityEvilTrunk extends EntityOwnableCreature {
 
@@ -198,7 +198,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
                     return true;
                 }
                 else if (Platform.isServer()) {
-                    ItemStack drop = new ItemStack(ItemsMN.evilTrunkSpawner, 1, getTrunkType());
+                    ItemStack drop = new ItemStack(MNItems.evilTrunkSpawner, 1, getTrunkType());
 
                     if (player.isSneaking())
                         drop.setTagInfo("inventory", inventory.writeToNBT(new NBTTagList()));

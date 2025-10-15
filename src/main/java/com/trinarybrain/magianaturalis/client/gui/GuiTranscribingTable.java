@@ -1,14 +1,12 @@
 package com.trinarybrain.magianaturalis.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
 import com.trinarybrain.magianaturalis.common.container.ContainerTranscribingTable;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class GuiTranscribingTable extends GuiContainer {
 

@@ -1,8 +1,7 @@
 package com.trinarybrain.magianaturalis.common.entity;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.entity.taint.EntityTaintBreeder;
-
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;

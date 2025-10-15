@@ -1,10 +1,7 @@
-package com.trinarybrain.magianaturalis.common.core;
-
-import java.util.UUID;
+package com.trinarybrain.magianaturalis.common.event;
 
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemKey;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,7 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 
-public class EventHandlerPlayer {
+import java.util.UUID;
+
+public final class PlayerEventHandler {
 
     @SubscribeEvent
     public void onAnvilRepair(AnvilRepairEvent event) {

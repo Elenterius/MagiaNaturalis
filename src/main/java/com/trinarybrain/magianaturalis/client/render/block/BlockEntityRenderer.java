@@ -1,31 +1,23 @@
 package com.trinarybrain.magianaturalis.client.render.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import thaumcraft.common.blocks.BlockJar;
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
 import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
 import com.trinarybrain.magianaturalis.common.block.BlockBanner;
 import com.trinarybrain.magianaturalis.common.block.BlockGeoMorpher;
-import com.trinarybrain.magianaturalis.common.block.BlockJarPrison;
 import com.trinarybrain.magianaturalis.common.block.BlockTranscribingTable;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.tile.TileBannerCustom;
 import com.trinarybrain.magianaturalis.common.tile.TileGeoMorpher;
-import com.trinarybrain.magianaturalis.common.tile.TileJarPrison;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.world.IBlockAccess;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
-public class BlockRenderer implements ISimpleBlockRenderingHandler {
+public class BlockEntityRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {

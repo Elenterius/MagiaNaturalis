@@ -1,4 +1,4 @@
-package com.trinarybrain.magianaturalis.client.model.entity;
+package com.trinarybrain.magianaturalis.client.render.entity.man;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
  * ModelTaintman - TrinaryBrain
  * Created using Tabula 4.1.1
  */
-public class ModelTaintman extends ModelBase {
+public class TaintmanModel extends ModelBase {
 
     public ModelRenderer Body;
     public ModelRenderer Headwear;
@@ -20,7 +20,7 @@ public class ModelTaintman extends ModelBase {
     public ModelRenderer LeftLeg;
     public ModelRenderer Head;
 
-    public ModelTaintman() {
+    public TaintmanModel() {
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.Body = new ModelRenderer(this, 32, 0);

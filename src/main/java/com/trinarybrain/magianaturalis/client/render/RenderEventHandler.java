@@ -1,8 +1,7 @@
-package com.trinarybrain.magianaturalis.client.core;
+package com.trinarybrain.magianaturalis.client.render;
 
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.api.ISpectacles;
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemGogglesDark;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
@@ -40,43 +39,46 @@ import thaumcraft.common.tiles.TileNodeEnergized;
 import thaumcraft.common.tiles.TileOwned;
 
 @SideOnly(Side.CLIENT)
-public class EventHandlerRender {
+public final class RenderEventHandler {
 
     private static final ResourceLocation SILKTOUCH_TEXTURE = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
     private static final ResourceLocation HUD_FRAME_TEXTURE = MagiaNaturalis.rl("textures/misc/frame-gold.png");
     private static final ResourceLocation GLOWING_EYES_TEXTURE = MagiaNaturalis.rl("textures/models/glowingEyes.png");
     private static final ModelBiped OVERLAY_MODEL = new ModelBiped();
 
-    public Minecraft mc = Minecraft.getMinecraft();
-    FontRenderer fontRenderer = mc.fontRenderer;
-    RenderItem itemRender = new RenderItem();
-    ItemStack lastItem = null;
-    int lastCount = 0;
+    private RenderItem itemRender = new RenderItem();
+    private ItemStack lastItem = null;
+    private int lastCount = 0;
+
+    private RenderEventHandler() {
+    }
 
     public static void register() {
-        MinecraftForge.EVENT_BUS.register(new EventHandlerRender());
+        MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
     }
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent event) {
-        if (event.type == RenderGameOverlayEvent.ElementType.HELMET) {
-            if (Minecraft.isGuiEnabled() && !mc.isGamePaused() && mc.currentScreen == null && !mc.gameSettings.showDebugInfo) {
-                if (mc.renderViewEntity != null && mc.renderViewEntity instanceof EntityPlayer) {
-                    EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
+        if (event.type != RenderGameOverlayEvent.ElementType.HELMET) return;
 
-                    ItemStack stack = player.inventory.armorItemInSlot(3);
-                    if (stack != null && stack.getItem() instanceof ISpectacles && ((ISpectacles) stack.getItem()).drawSpectacleHUD(stack, player)) {
-                        this.renderSpectaclesHUD(mc, player);
-                    }
+        Minecraft mc = Minecraft.getMinecraft();
 
-                    stack = player.inventory.getCurrentItem();
-                    if (stack != null && stack.getItem() instanceof ItemWandCasting) {
-                        ItemWandCasting wand = (ItemWandCasting) stack.getItem();
-                        ItemFocusBasic focus = wand.getFocus(stack);
-                        if (focus instanceof ItemFocusBuild) {
-                            ItemStack focusStack = wand.getFocusItem(stack);
-                            this.renderBuildFocusHUD(focusStack, player);
-                        }
+        if (Minecraft.isGuiEnabled() && !mc.isGamePaused() && mc.currentScreen == null && !mc.gameSettings.showDebugInfo) {
+            if (mc.renderViewEntity instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
+
+                ItemStack stack = player.inventory.armorItemInSlot(3);
+                if (stack != null && stack.getItem() instanceof ISpectacles && ((ISpectacles) stack.getItem()).drawSpectacleHUD(stack, player)) {
+                    renderSpectaclesHUD(mc, player);
+                }
+
+                stack = player.inventory.getCurrentItem();
+                if (stack != null && stack.getItem() instanceof ItemWandCasting) {
+                    ItemWandCasting wand = (ItemWandCasting) stack.getItem();
+                    ItemFocusBasic focus = wand.getFocus(stack);
+                    if (focus instanceof ItemFocusBuild) {
+                        ItemStack focusStack = wand.getFocusItem(stack);
+                        renderBuildFocusHUD(mc, focusStack, player);
                     }
                 }
             }
@@ -85,28 +87,30 @@ public class EventHandlerRender {
 
     @SubscribeEvent
     public void renderPlayerSpecial(RenderPlayerEvent.Specials.Pre event) {
-        ModelBiped model = event.renderer.modelBipedMain;
-        ItemStack itemstack = event.entityPlayer.inventory.armorItemInSlot(3);
-        if (event.renderHelmet && itemstack != null && itemstack.getItem() instanceof ItemGogglesDark) {
+        if (!event.renderHelmet) return;
+
+        ItemStack itemStack = event.entityPlayer.inventory.armorItemInSlot(3);
+
+        if (itemStack != null && itemStack.getItem() instanceof ItemGogglesDark) {
             GL11.glPushMatrix();
-            float f6 = 0.0625F;
+            float scale = 0.0625F;
 
-            model.bipedHead.postRender(f6);
-            mc.renderEngine.bindTexture(GLOWING_EYES_TEXTURE);
+            event.renderer.modelBipedMain.bipedHead.postRender(scale);
+            Minecraft.getMinecraft().renderEngine.bindTexture(GLOWING_EYES_TEXTURE);
 
-            GL11.glTranslatef(0.0F, f6, -0.01F);
+            GL11.glTranslatef(0.0F, scale, -0.01F);
             GL11.glScalef(1.25F, 1.25F, 1.25F);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
             GL11.glDepthMask(!event.entityPlayer.isInvisible());
 
-            char c0 = 61680;
-            int j = c0 % 65536;
-            int k = c0 / 65536;
+            char c0 = 0xf0f0;
+            int j = c0 % 0x10000;
+            int k = c0 / 0x10000;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            OVERLAY_MODEL.bipedHead.render(f6);
+            OVERLAY_MODEL.bipedHead.render(scale);
             GL11.glDisable(GL11.GL_BLEND);
 
             GL11.glPopMatrix();
@@ -137,7 +141,7 @@ public class EventHandlerRender {
     //		}
     //	}
 
-    protected void renderBuildFocusHUD(ItemStack focusStack, EntityPlayer player) {
+    private void renderBuildFocusHUD(Minecraft mc, ItemStack focusStack, EntityPlayer player) {
         GL11.glClear(GL11.GL_ACCUM);
 
         Meta meta = FocusBuildHelper.getMeta(focusStack);
@@ -190,19 +194,21 @@ public class EventHandlerRender {
         }
         GL11.glPopMatrix();
 
+        FontRenderer fontRenderer = mc.fontRenderer;
+
         if (pickedBlock != null) {
-            int amount = this.lastCount;
-            if (player.inventory.inventoryChanged || !pickedBlock.isItemEqual(this.lastItem)) {
+            int amount = lastCount;
+            if (player.inventory.inventoryChanged || !pickedBlock.isItemEqual(lastItem)) {
                 amount = 0;
                 for (ItemStack is : player.inventory.mainInventory) {
                     if (is != null && is.isItemEqual(pickedBlock)) {
                         amount += is.stackSize;
                     }
                 }
-                this.lastItem = pickedBlock;
+                lastItem = pickedBlock;
                 player.inventory.inventoryChanged = false;
             }
-            this.lastCount = amount;
+            lastCount = amount;
 
             GL11.glPushMatrix();
             GL11.glTranslatef(49F, 44F, 0F);
@@ -262,7 +268,7 @@ public class EventHandlerRender {
         }
     }
 
-    protected void renderSpectaclesHUD(Minecraft mc, EntityPlayer player) {
+    private void renderSpectaclesHUD(Minecraft mc, EntityPlayer player) {
         boolean meterEquiped = false;
         if (player.inventory.getCurrentItem() != null) {
             if (player.inventory.getCurrentItem().getItem() == ConfigItems.itemThaumometer) {
@@ -279,6 +285,8 @@ public class EventHandlerRender {
                 }
             }
 
+            FontRenderer fontRenderer = mc.fontRenderer;
+
             if (tile != null) {
                 ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
                 int w = scaledresolution.getScaledWidth();
@@ -291,7 +299,6 @@ public class EventHandlerRender {
                         meta = meta + ", " + Platform.translate("nodemod." + node.getNodeModifier() + ".name");
 
                     String name = Platform.translate("tile.blockAiry.0.name");
-                    FontRenderer fontRenderer = mc.fontRenderer;
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
@@ -306,7 +313,6 @@ public class EventHandlerRender {
                         meta = meta + ", " + Platform.translate("nodemod." + nodeEnergized.getNodeModifier() + ".name");
 
                     String name = Platform.translate("tile.blockAiry.5.name");
-                    FontRenderer fontRenderer = mc.fontRenderer;
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
@@ -316,7 +322,6 @@ public class EventHandlerRender {
                 else if (tile instanceof TileOwned) {
                     TileOwned owned = (TileOwned) tile;
                     String owner = EnumChatFormatting.DARK_PURPLE + "Owner" + EnumChatFormatting.RESET + " " + owned.owner;
-                    FontRenderer fontRenderer = mc.fontRenderer;
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(owner, -(fontRenderer.getStringWidth(owner) - 4) / 2, 25, 0xFFFFFF);

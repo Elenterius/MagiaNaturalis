@@ -1,13 +1,13 @@
 package com.trinarybrain.magianaturalis.common.item.focus;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.core.KeyHandler;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Meta;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper.Shape;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.WorldCoord;
 import com.trinarybrain.magianaturalis.common.util.WorldUtil;
+import com.trinarybrain.magianaturalis.init.client.KeyBindings;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -52,9 +52,9 @@ public class ItemFocusBuild extends ItemFocusBasic implements IArchitect {
         lines.add(EnumChatFormatting.DARK_GRAY + "Meta: " + FocusBuildHelper.getMeta(stack));
         lines.add(EnumChatFormatting.DARK_GRAY + "Shape: " + FocusBuildHelper.getShape(stack) + "  Size: " + FocusBuildHelper.getSize(stack));
         lines.add("");
-        lines.add(String.format("%sPress [%s] or [%s] to change size of Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyHandler.INCREASE_SIZE_KEY.getKeyCode()), GameSettings.getKeyDisplayString(KeyHandler.DECREASE_SIZE_KEY.getKeyCode())));
-        lines.add(String.format("%sPress [%s] to change Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyHandler.MISC_KEY.getKeyCode())));
-        lines.add(String.format("%sPress [%s] to pick block type.", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyHandler.PICK_BLOCK_KEY.getKeyCode())));
+        lines.add(String.format("%sPress [%s] or [%s] to change size of Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyBindings.INCREASE_SIZE_KEY.getKeyCode()), GameSettings.getKeyDisplayString(KeyBindings.DECREASE_SIZE_KEY.getKeyCode())));
+        lines.add(String.format("%sPress [%s] to change Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyBindings.MISC_KEY.getKeyCode())));
+        lines.add(String.format("%sPress [%s] to pick block type.", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(KeyBindings.PICK_BLOCK_KEY.getKeyCode())));
     }
 
     @Override

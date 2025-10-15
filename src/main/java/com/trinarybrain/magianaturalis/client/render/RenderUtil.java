@@ -1,9 +1,6 @@
-package com.trinarybrain.magianaturalis.client.util;
+package com.trinarybrain.magianaturalis.client.render;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -13,6 +10,8 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public final class RenderUtil {
 

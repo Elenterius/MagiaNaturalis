@@ -1,7 +1,7 @@
 package com.trinarybrain.magianaturalis.common.block;
 
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;

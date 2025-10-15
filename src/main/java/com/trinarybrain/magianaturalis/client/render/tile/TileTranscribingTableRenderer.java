@@ -1,12 +1,9 @@
 package com.trinarybrain.magianaturalis.client.render.tile;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import org.lwjgl.opengl.GL11;
-
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.client.renderers.models.ModelArcaneWorkbench;
 import thaumcraft.common.blocks.BlockTable;
 import thaumcraft.common.config.ConfigBlocks;

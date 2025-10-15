@@ -1,23 +1,18 @@
 package com.trinarybrain.magianaturalis.client.render.item;
 
-import org.lwjgl.opengl.GL11;
-
-import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkCorrupted;
-import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkDemonic;
-import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkSinister;
-import com.trinarybrain.magianaturalis.client.model.entity.ModelTrunkTainted;
-import com.trinarybrain.magianaturalis.client.render.entity.RenderEvilTrunk;
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
+import com.trinarybrain.magianaturalis.client.render.entity.trunk.*;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemEvilTrunkSpawner;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class RenderItemEvilTrunkSpawner implements IItemRenderer {
 
-    public ModelTrunkCorrupted modelTC = new ModelTrunkCorrupted();
-    public ModelTrunkSinister modelTS = new ModelTrunkSinister();
-    public ModelTrunkDemonic modelTD = new ModelTrunkDemonic();
-    public ModelTrunkTainted modelTT = new ModelTrunkTainted();
+    public CorruptedTrunkModel modelTC = new CorruptedTrunkModel();
+    public SinisterTrunkModel modelTS = new SinisterTrunkModel();
+    public DemonicTrunkModel modelTD = new DemonicTrunkModel();
+    public TaintedTrunkModel modelTT = new TaintedTrunkModel();
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -53,22 +48,22 @@ public class RenderItemEvilTrunkSpawner implements IItemRenderer {
         if (item.getItem() instanceof ItemEvilTrunkSpawner) {
             switch (item.getItemDamage()) {
                 case 0:
-                    RenderUtil.bindTexture(RenderEvilTrunk.rlTC);
+                    RenderUtil.bindTexture(EvilTrunkRenderer.CORRUPTED_TEXTURE);
                     this.modelTC.render(null, 0, 0, 0, 0, 0, 0);
                     break;
 
                 case 1:
-                    RenderUtil.bindTexture(RenderEvilTrunk.rlTS);
+                    RenderUtil.bindTexture(EvilTrunkRenderer.SINISTER_TEXTURE);
                     this.modelTS.render(null, 0, 0, 3, 0, 0, 0);
                     break;
 
                 case 2:
-                    RenderUtil.bindTexture(RenderEvilTrunk.rlTD);
+                    RenderUtil.bindTexture(EvilTrunkRenderer.DEMONIC_TEXTURE);
                     this.modelTD.render(null, 0, 0, 0, 0, 0, 0);
                     break;
 
                 case 3:
-                    RenderUtil.bindTexture(RenderEvilTrunk.rlTT);
+                    RenderUtil.bindTexture(EvilTrunkRenderer.TAINTED_TEXTURE);
                     this.modelTT.render(null, 0, 0, 0, 0, 0, 0);
                     break;
             }

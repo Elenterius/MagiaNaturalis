@@ -1,7 +1,6 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;

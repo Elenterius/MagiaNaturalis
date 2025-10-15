@@ -1,12 +1,12 @@
 package com.trinarybrain.magianaturalis.common.tile;
 
 import com.mojang.authlib.GameProfile;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.block.BlockArcaneChest;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.access.UserAccess;
+import com.trinarybrain.magianaturalis.init.MNBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -172,13 +172,13 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
             numUsingPlayers = 0;
 
         numUsingPlayers += 1;
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, BlocksMN.arcaneChest, 1, numUsingPlayers);
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, MNBlocks.arcaneChest, 1, numUsingPlayers);
     }
 
     @Override
     public void closeInventory() {
         numUsingPlayers -= 1;
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, BlocksMN.arcaneChest, 1, numUsingPlayers);
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, MNBlocks.arcaneChest, 1, numUsingPlayers);
     }
 
     @Override
@@ -265,7 +265,7 @@ public class TileArcaneChest extends TileThaumcraft implements ISidedInventory, 
 
             Block block = world.getBlock(xCoord, yCoord, zCoord);
             if (block == null) return stack;
-            ItemStack stack1 = new ItemStack(BlocksMN.arcaneChest, 1, chestType);
+            ItemStack stack1 = new ItemStack(MNBlocks.arcaneChest, 1, chestType);
             BlockArcaneChest.setChestType(stack1, chestType);
             NBTUtil.saveInventoryToNBT(stack1, inventory);
             if (!accessList.isEmpty()) NBTUtil.saveUserAccessToNBT(stack1, accessList);

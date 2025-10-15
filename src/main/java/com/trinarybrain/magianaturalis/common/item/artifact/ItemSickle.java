@@ -1,16 +1,11 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.util.BlockUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import com.trinarybrain.magianaturalis.common.util.WorldCoord;
 import com.trinarybrain.magianaturalis.common.util.WorldUtil;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -31,157 +26,149 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 
-public class ItemSickle extends Item
-{
-	protected ToolMaterial theToolMaterial;
-	protected float efficiencyOnProperMaterial = 8.0F;
-	private float damageVsEntity = 3.0F;
-	protected int abundanceLevel = 0;
-	protected int areaSize = 0;
-	protected int colorLoot = 3;
-	protected boolean collectLoot = false;
-	private static final Block[] isEffective = {Blocks.web, Blocks.tallgrass, Blocks.vine, Blocks.tripwire, Blocks.redstone_wire};
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-	public ItemSickle(ToolMaterial material)
-	{
-		super();
-		theToolMaterial = material;
-		efficiencyOnProperMaterial += material.getEfficiencyOnProperMaterial();
-		maxStackSize = 1;
-		setMaxDamage(material.getMaxUses());
-		damageVsEntity += material.getDamageVsEntity();
-		setCreativeTab(MagiaNaturalis.CREATIVE_TAB);
-	}
+public class ItemSickle extends Item {
 
-	// Can Harvest Block in Adventure Mode?
-	public boolean func_150897_b(Block block)
-	{
-		return block == Blocks.web || block == Blocks.redstone_wire || block == Blocks.tripwire;
-	}
+    private static final Block[] isEffective = {Blocks.web, Blocks.tallgrass, Blocks.vine, Blocks.tripwire, Blocks.redstone_wire};
 
-	// Get Dig Speed
-	public float func_150893_a(ItemStack stack, Block block)
-	{
-		return block != Blocks.web && block.getMaterial() != Material.leaves && !(block instanceof IPlantable) ? (block == Blocks.wool ? efficiencyOnProperMaterial - 10.0F : 1.0F) : efficiencyOnProperMaterial;
-	}
+    protected ToolMaterial theToolMaterial;
+    protected float efficiencyOnProperMaterial = 8.0F;
+    protected int abundanceLevel = 0;
+    protected int areaSize = 0;
+    protected int colorLoot = 3;
+    protected boolean collectLoot = false;
 
-	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity)
-	{
-		if(Platform.isClient()) return false;
+    protected final float attackDamage;
 
-		if(entity instanceof IShearable)
-		{
-			IShearable target = (IShearable)entity;
-			if(target.isShearable(stack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ))
-			{
-				ArrayList<ItemStack> drops = target.onSheared(stack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
+    public ItemSickle(ToolMaterial material) {
+        super();
+        theToolMaterial = material;
+        efficiencyOnProperMaterial += material.getEfficiencyOnProperMaterial();
+        maxStackSize = 1;
+        setMaxDamage(material.getMaxUses());
+        attackDamage = 3.0F + material.getDamageVsEntity();
+    }
 
-				for(int i = 0; i < abundanceLevel; i++)
-					drops.addAll(target.onSheared(stack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack)));
+    /**
+     * Can Harvest Block in Adventure Mode?
+     */
+    @Override
+    public boolean func_150897_b(Block block) {
+        return block == Blocks.web || block == Blocks.redstone_wire || block == Blocks.tripwire;
+    }
 
-				Random rand = new Random();
-				for(ItemStack drop : drops)
-				{
-					EntityItem ent = entity.entityDropItem(drop, 1.0F);
-					ent.motionY += rand.nextFloat() * 0.05F;
-					ent.motionX += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
-					ent.motionZ += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
-				}
-				stack.damageItem(1, entity);
-			}
-			return true;
-		}
-		return false;
-	}
+    /**
+     * Get Dig Speed
+     */
+    @Override
+    public float func_150893_a(ItemStack stack, Block block) {
+        return block != Blocks.web && block.getMaterial() != Material.leaves && !(block instanceof IPlantable) ? (block == Blocks.wool ? efficiencyOnProperMaterial - 10.0F : 1.0F) : efficiencyOnProperMaterial;
+    }
 
-	private boolean isEffectiveVsBlock(Block block)
-	{
-		if(block.getMaterial() == Material.leaves || block instanceof IShearable || block instanceof IPlantable || block instanceof IGrowable && !(block instanceof BlockGrass)) return true;
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity) {
+        if (Platform.isClient()) return false;
 
-		for(int index = 0; index < isEffective.length; index++)
-		{
-			if(isEffective[index] == block)
-			{
-				return true;
-			}
-		}
+        if (entity instanceof IShearable) {
+            IShearable target = (IShearable) entity;
+            if (target.isShearable(stack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ)) {
+                ArrayList<ItemStack> drops = target.onSheared(stack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
 
-		return false;
-	}
+                for (int i = 0; i < abundanceLevel; i++)
+                    drops.addAll(target.onSheared(stack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack)));
 
-	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity)
-	{
-		if(!isEffectiveVsBlock(block))
-		{
-			stack.damageItem(1, entity);
-			return false;
-		}
-		else if(entity.isSneaking())
-		{
-			boolean success = false;
-			if(world.canMineBlock((EntityPlayer)entity, x, y, z))
-			{
-				success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, x, y, z, collectLoot, abundanceLevel, colorLoot);
-				if(success) stack.damageItem(1, entity);
-			}
-			return success;
-		}
-		else
-		{
-			if(Platform.isServer() && entity instanceof EntityPlayer)
-			{
-				List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, areaSize);
-				boolean success = false;
-				for(WorldCoord coord : blocks)
-				{
-					if(stack.getItemDamage() <= (stack.getMaxDamage() - abundanceLevel))
-					{
-						if(world.canMineBlock((EntityPlayer)entity, coord.x, coord.y, coord.z))
-						{
-							Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
-							if(tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && isEffectiveVsBlock(tempBlock))
-							{
-								success = BlockUtil.harvestBlock(world, (EntityPlayer)entity, coord.x, coord.y, coord.z, collectLoot, abundanceLevel, colorLoot);
-								if(success)
-								{
-									stack.damageItem(1, entity);
-								}
-							}
-						}
-					}
-					else
-					{
-						break;
-					}
+                Random rand = new Random();
+                for (ItemStack drop : drops) {
+                    EntityItem ent = entity.entityDropItem(drop, 1.0F);
+                    ent.motionY += rand.nextFloat() * 0.05F;
+                    ent.motionX += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+                    ent.motionZ += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+                }
+                stack.damageItem(1, entity);
+            }
+            return true;
+        }
+        return false;
+    }
 
-				}
-				return success;
-			}
-		}
-		return false;
-	}
+    private boolean isEffectiveVsBlock(Block block) {
+        if (block.getMaterial() == Material.leaves || block instanceof IShearable || block instanceof IPlantable || block instanceof IGrowable && !(block instanceof BlockGrass))
+            return true;
 
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
-	{
-		stack.damageItem(2, attacker);
-		return true;
-	}
+        for (int index = 0; index < isEffective.length; index++) {
+            if (isEffective[index] == block) {
+                return true;
+            }
+        }
 
-	@SideOnly(Side.CLIENT)
-	public boolean isFull3D()
-	{
-		return true;
-	}
+        return false;
+    }
 
-	public String getToolMaterialName()
-	{
-		return theToolMaterial.toString();
-	}
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity) {
+        if (!isEffectiveVsBlock(block)) {
+            stack.damageItem(1, entity);
+            return false;
+        }
+        else if (entity.isSneaking()) {
+            boolean success = false;
+            if (world.canMineBlock((EntityPlayer) entity, x, y, z)) {
+                success = BlockUtil.harvestBlock(world, (EntityPlayer) entity, x, y, z, collectLoot, abundanceLevel, colorLoot);
+                if (success) stack.damageItem(1, entity);
+            }
+            return success;
+        }
+        else {
+            if (Platform.isServer() && entity instanceof EntityPlayer) {
+                List<WorldCoord> blocks = WorldUtil.plotVeinArea((EntityPlayer) entity, world, x, y, z, areaSize);
+                boolean success = false;
+                for (WorldCoord coord : blocks) {
+                    if (stack.getItemDamage() <= (stack.getMaxDamage() - abundanceLevel)) {
+                        if (world.canMineBlock((EntityPlayer) entity, coord.x, coord.y, coord.z)) {
+                            Block tempBlock = world.getBlock(coord.x, coord.y, coord.z);
+                            if (tempBlock.getBlockHardness(world, coord.x, coord.y, coord.z) >= 0.0F && isEffectiveVsBlock(tempBlock)) {
+                                success = BlockUtil.harvestBlock(world, (EntityPlayer) entity, coord.x, coord.y, coord.z, collectLoot, abundanceLevel, colorLoot);
+                                if (success) {
+                                    stack.damageItem(1, entity);
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        break;
+                    }
 
-	public Multimap getItemAttributeModifiers()
-	{
-		Multimap multimap = super.getItemAttributeModifiers();
-		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", damageVsEntity, 0));
-		return multimap;
-	}
+                }
+                return success;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        stack.damageItem(2, attacker);
+        return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean isFull3D() {
+        return true;
+    }
+
+    public String getToolMaterialName() {
+        return theToolMaterial.toString();
+    }
+
+    @Override
+    public Multimap getItemAttributeModifiers() {
+        Multimap multimap = HashMultimap.create();
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", attackDamage, 0));
+        return multimap;
+    }
+
 }

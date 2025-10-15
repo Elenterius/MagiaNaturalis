@@ -1,15 +1,14 @@
 package com.trinarybrain.magianaturalis.common.util;
 
-import java.util.UUID;
-
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public final class Platform {
 

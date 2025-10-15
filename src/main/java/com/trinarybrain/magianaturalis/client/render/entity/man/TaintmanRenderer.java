@@ -1,18 +1,16 @@
-package com.trinarybrain.magianaturalis.client.render.entity;
+package com.trinarybrain.magianaturalis.client.render.entity.man;
 
-import com.trinarybrain.magianaturalis.client.model.entity.ModelTaintman;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderTaintman extends RenderLiving {
+public class TaintmanRenderer extends RenderLiving {
 
     private static final ResourceLocation TEXTURE = MagiaNaturalis.rl( "textures/models/taintman.png");
 
-    public RenderTaintman() {
-        super(new ModelTaintman(), 0.5F);
+    public TaintmanRenderer() {
+        super(new TaintmanModel(), 0.5F);
     }
 
     @Override

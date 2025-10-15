@@ -1,15 +1,13 @@
 package com.trinarybrain.magianaturalis.client.render.tile;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import org.lwjgl.opengl.GL11;
-
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
 import com.trinarybrain.magianaturalis.common.tile.TileBannerCustom;
-
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 import thaumcraft.client.renderers.models.ModelBanner;
 
 public class TileBannerCustomRenderer extends TileEntitySpecialRenderer

@@ -1,6 +1,6 @@
 package com.trinarybrain.magianaturalis.common.network.packet;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.focus.ItemFocusBuild;
 import com.trinarybrain.magianaturalis.common.network.packet.PacketKeyInput.KeyInputMessage;
 import com.trinarybrain.magianaturalis.common.util.FocusBuildHelper;

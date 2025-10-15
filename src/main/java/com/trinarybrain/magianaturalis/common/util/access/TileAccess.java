@@ -1,9 +1,9 @@
 package com.trinarybrain.magianaturalis.common.util.access;
 
 import com.mojang.authlib.GameProfile;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.init.MNBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +25,7 @@ public final class TileAccess {
         if (block == null) return 0; // fail safe
         int metadata = world.getBlockMetadata(x, y, z);
 
-        if (block == BlocksMN.arcaneChest) {
+        if (block == MNBlocks.arcaneChest) {
             TileEntity tile = world.getTileEntity(x, y, z);
             if (tile == null) return 0;
             if (tile instanceof TileArcaneChest) {

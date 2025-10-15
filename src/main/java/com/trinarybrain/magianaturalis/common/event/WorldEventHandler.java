@@ -1,4 +1,4 @@
-package com.trinarybrain.magianaturalis.common.core;
+package com.trinarybrain.magianaturalis.common.event;
 
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -7,12 +7,13 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
-public final class EventHandlerWorld {
+public final class WorldEventHandler {
 
-    private EventHandlerWorld() {}
+    private WorldEventHandler() {
+    }
 
     public static void register() {
-        MinecraftForge.EVENT_BUS.register(new EventHandlerWorld());
+        MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
     }
 
     @SubscribeEvent

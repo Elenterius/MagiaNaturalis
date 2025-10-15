@@ -1,14 +1,12 @@
-package com.trinarybrain.magianaturalis.client.model.entity;
-
-import org.lwjgl.opengl.GL11;
+package com.trinarybrain.magianaturalis.client.render.entity.trunk;
 
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
-public class ModelTrunkCorrupted extends ModelBase {
+public class TaintedTrunkModel extends ModelBase {
 
     public ModelRenderer chestSkull;
     public ModelRenderer chestJaw;
@@ -20,12 +18,9 @@ public class ModelTrunkCorrupted extends ModelBase {
     public ModelRenderer chestTooth4;
     public ModelRenderer chestHorn1;
     public ModelRenderer chestHorn2;
-    public ModelRenderer chestHorn3;
-    public ModelRenderer chestHorn4;
-    public ModelRenderer chestHornTop1;
-    public ModelRenderer chestHornTop2;
+    public ModelRenderer chestHornTop;
 
-    public ModelTrunkCorrupted() {
+    public TaintedTrunkModel() {
         this.chestSkull = new ModelRenderer(this, 0, 19).setTextureSize(64, 64);
         this.chestSkull.addBox(0F, -10F, -14F, 14, 10, 14);
         this.chestSkull.setRotationPoint(1F, 11F, 15F);
@@ -59,28 +54,16 @@ public class ModelTrunkCorrupted extends ModelBase {
         this.chestTooth4.setRotationPoint(10F, 11F, 15F);
 
         this.chestHorn1 = new ModelRenderer(this, 0, 5).setTextureSize(64, 64);
-        this.chestHorn1.addBox(1F, -12F, -13F, 2, 2, 2);
+        this.chestHorn1.addBox(6F, -12F, -13F, 2, 2, 2);
         this.chestHorn1.setRotationPoint(1F, 11F, 15F);
 
         this.chestHorn2 = new ModelRenderer(this, 0, 5).setTextureSize(64, 64);
-        this.chestHorn2.addBox(2F, -14F, -13F, 2, 2, 2);
+        this.chestHorn2.addBox(6F, -14F, -13.4F, 2, 2, 2);
         this.chestHorn2.setRotationPoint(1F, 11F, 15F);
 
-        this.chestHorn3 = new ModelRenderer(this, 0, 5).setTextureSize(64, 64);
-        this.chestHorn3.addBox(11F, -12F, -13F, 2, 2, 2);
-        this.chestHorn3.setRotationPoint(1F, 11F, 15F);
-
-        this.chestHorn4 = new ModelRenderer(this, 0, 5).setTextureSize(64, 64);
-        this.chestHorn4.addBox(10F, -14F, -13F, 2, 2, 2);
-        this.chestHorn4.setRotationPoint(1F, 11F, 15F);
-
-        this.chestHornTop1 = new ModelRenderer(this, 3, 6).setTextureSize(64, 64);
-        this.chestHornTop1.addBox(10F, -15F, -12F, 1, 1, 1);
-        this.chestHornTop1.setRotationPoint(1F, 11F, 15F);
-
-        this.chestHornTop2 = new ModelRenderer(this, 3, 6).setTextureSize(64, 64);
-        this.chestHornTop2.addBox(3F, -15F, -12F, 1, 1, 1);
-        this.chestHornTop2.setRotationPoint(1F, 11F, 15F);
+        this.chestHornTop = new ModelRenderer(this, 3, 6).setTextureSize(64, 64);
+        this.chestHornTop.addBox(6.5F, -16F, -13.2F, 1, 2, 1);
+        this.chestHornTop.setRotationPoint(1F, 11F, 15F);
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
@@ -88,17 +71,10 @@ public class ModelTrunkCorrupted extends ModelBase {
         GL11.glTranslatef(-0.5F, 0.5F, -0.5F);
 
         if (entity != null) {
-            float f7 = 1.0F - ((EntityEvilTrunk) entity).skullrot;
-            f7 = 1.0F - f7 * f7 * f7;
-            f7 = (-(f7 * 3.141593F / 2.0F));
-
-            this.chestSkull.rotateAngleX = f7;
-            this.chestHorn1.rotateAngleX = f7;
-            this.chestHorn2.rotateAngleX = f7;
-            this.chestHorn3.rotateAngleX = f7;
-            this.chestHorn4.rotateAngleX = f7;
-            this.chestHornTop1.rotateAngleX = f7;
-            this.chestHornTop2.rotateAngleX = f7;
+            float f11 = 1.0F - ((EntityEvilTrunk) entity).skullrot;
+            f11 = 1.0F - f11 * f11 * f11;
+            this.chestSkull.rotateAngleX = (-(f11 * 3.141593F / 2.0F));
+            this.chestHornTop.rotateAngleX = this.chestHorn2.rotateAngleX = this.chestHorn1.rotateAngleX = this.chestSkull.rotateAngleX;
         }
 
         float f6 = 0.0625F;
@@ -112,11 +88,7 @@ public class ModelTrunkCorrupted extends ModelBase {
         chestTooth4.render(f6);
         chestHorn1.render(f6);
         chestHorn2.render(f6);
-        chestHorn3.render(f6);
-        chestHorn4.render(f6);
-        chestHornTop1.render(f6);
-        chestHornTop2.render(f6);
-
+        chestHornTop.render(f6);
         GL11.glPopMatrix();
     }
 }

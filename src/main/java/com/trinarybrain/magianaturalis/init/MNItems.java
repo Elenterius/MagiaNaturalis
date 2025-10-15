@@ -1,6 +1,6 @@
-package com.trinarybrain.magianaturalis.common.item;
+package com.trinarybrain.magianaturalis.init;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.alchemy.ItemAlchemicalStone;
 import com.trinarybrain.magianaturalis.common.item.artifact.*;
 import com.trinarybrain.magianaturalis.common.item.baubles.ItemFocusPouchEnder;
@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 
 import java.util.function.Supplier;
 
-public class ItemsMN {
+public class MNItems {
 
     public static Item researchLog;
     public static Item biomeReport;

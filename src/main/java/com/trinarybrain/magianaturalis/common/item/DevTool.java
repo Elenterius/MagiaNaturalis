@@ -1,13 +1,10 @@
 package com.trinarybrain.magianaturalis.common.item;
 
-import java.util.List;
-
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,6 +22,8 @@ import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.tiles.TileBanner;
 import thaumcraft.common.tiles.TileOwned;
+
+import java.util.List;
 
 public class DevTool extends Item {
 

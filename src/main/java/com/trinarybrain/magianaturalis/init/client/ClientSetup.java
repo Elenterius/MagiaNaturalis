@@ -1,21 +1,21 @@
-package com.trinarybrain.magianaturalis.client.core;
+package com.trinarybrain.magianaturalis.init.client;
 
 import com.trinarybrain.magianaturalis.client.gui.GuiArcaneChest;
 import com.trinarybrain.magianaturalis.client.gui.GuiEvilTrunk;
 import com.trinarybrain.magianaturalis.client.gui.GuiTranscribingTable;
+import com.trinarybrain.magianaturalis.client.render.RenderEventHandler;
+import com.trinarybrain.magianaturalis.client.render.block.BlockEntityRenderer;
 import com.trinarybrain.magianaturalis.client.render.block.BlockJarRenderer;
-import com.trinarybrain.magianaturalis.client.render.block.BlockRenderer;
-import com.trinarybrain.magianaturalis.client.render.entity.RenderEvilTrunk;
-import com.trinarybrain.magianaturalis.client.render.entity.RenderTaintBreeder;
+import com.trinarybrain.magianaturalis.client.render.entity.breeder.TaintBreederRenderer;
+import com.trinarybrain.magianaturalis.client.render.entity.trunk.EvilTrunkRenderer;
 import com.trinarybrain.magianaturalis.client.render.item.RenderItemEvilTrunkSpawner;
 import com.trinarybrain.magianaturalis.client.render.tile.*;
-import com.trinarybrain.magianaturalis.common.core.CommonProxy;
-import com.trinarybrain.magianaturalis.common.core.KeyHandler;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
 import com.trinarybrain.magianaturalis.common.entity.EntityZombieExtended;
 import com.trinarybrain.magianaturalis.common.entity.taint.EntityTaintBreeder;
-import com.trinarybrain.magianaturalis.common.item.ItemsMN;
 import com.trinarybrain.magianaturalis.common.tile.*;
+import com.trinarybrain.magianaturalis.init.CommonSetup;
+import com.trinarybrain.magianaturalis.init.MNItems;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -28,18 +28,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
-public class ClientProxy extends CommonProxy {
+public class ClientSetup extends CommonSetup {
 
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
         registerRenderer();
-        EventHandlerRender.register();
-        FMLCommonHandler.instance().bus().register(new KeyHandler());
+        RenderEventHandler.register();
+        FMLCommonHandler.instance().bus().register(new KeyEventHandler());
     }
 
     public void registerRenderer() {
-        registerBlockRenderer(new BlockRenderer());
+        registerBlockRenderer(new BlockEntityRenderer());
         registerTileEntitySpecialRenderer(TileTranscribingTable.class, new TileTranscribingTableRenderer());
         registerTileEntitySpecialRenderer(TileArcaneChest.class, new TileArcaneChestRenderer());
         registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
@@ -47,10 +47,10 @@ public class ClientProxy extends CommonProxy {
         registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
         registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileGeoMorpherRenderer());
 
-        MinecraftForgeClient.registerItemRenderer(ItemsMN.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
+        MinecraftForgeClient.registerItemRenderer(MNItems.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new RenderTaintBreeder());
-        RenderingRegistry.registerEntityRenderingHandler(EntityEvilTrunk.class, new RenderEvilTrunk());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTaintBreeder.class, new TaintBreederRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(EntityEvilTrunk.class, new EvilTrunkRenderer());
         RenderingRegistry.registerEntityRenderingHandler(EntityZombieExtended.class, new RenderZombie());
         //		RenderingRegistry.registerEntityRenderingHandler(EntityTaintman.class, new RenderTaintman());
     }

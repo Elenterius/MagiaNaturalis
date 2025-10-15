@@ -1,11 +1,10 @@
 package com.trinarybrain.magianaturalis.common.item.baubles;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.util.NBTUtil;
-import com.trinarybrain.magianaturalis.common.util.Platform;
-
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.util.NBTUtil;
+import com.trinarybrain.magianaturalis.common.util.Platform;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;

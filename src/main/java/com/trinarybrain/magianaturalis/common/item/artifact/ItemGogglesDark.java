@@ -1,10 +1,7 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import java.util.List;
-
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.api.IRevealInvisible;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,6 +22,8 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
+
+import java.util.List;
 
 public class ItemGogglesDark extends ItemArmor implements IRepairable, IVisDiscountGear, IRevealer, IGoggles, IRevealInvisible {
 

@@ -1,13 +1,13 @@
 package com.trinarybrain.magianaturalis.common.research;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.util.Platform;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.research.ResearchItem;
-import com.trinarybrain.magianaturalis.common.util.Platform;
 
 public class CustomResearchItem extends ResearchItem
 {

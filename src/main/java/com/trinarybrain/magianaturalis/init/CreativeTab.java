@@ -1,6 +1,4 @@
-package com.trinarybrain.magianaturalis.common.core;
-
-import com.trinarybrain.magianaturalis.common.item.ItemsMN;
+package com.trinarybrain.magianaturalis.init;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,7 +14,7 @@ public class CreativeTab extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem() {
-        return ItemsMN.researchLog;
+        return MNItems.researchLog;
     }
 
 }

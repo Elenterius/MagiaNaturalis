@@ -1,19 +1,16 @@
 package com.trinarybrain.magianaturalis.client.render.block;
 
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
+import com.trinarybrain.magianaturalis.common.block.BlockJarPrison;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-
 import org.lwjgl.opengl.GL11;
-
 import thaumcraft.client.renderers.block.BlockRenderer;
-import thaumcraft.common.blocks.BlockJar;
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.block.BlockJarPrison;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockJarRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 

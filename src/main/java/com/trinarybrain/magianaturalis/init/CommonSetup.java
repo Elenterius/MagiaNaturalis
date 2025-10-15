@@ -1,42 +1,38 @@
-package com.trinarybrain.magianaturalis.common.core;
+package com.trinarybrain.magianaturalis.init;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.container.ContainerArcaneChest;
 import com.trinarybrain.magianaturalis.common.container.ContainerEvilTrunk;
 import com.trinarybrain.magianaturalis.common.container.ContainerTranscribingTable;
 import com.trinarybrain.magianaturalis.common.entity.EntitiesMN;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
-import com.trinarybrain.magianaturalis.common.item.ItemsMN;
+import com.trinarybrain.magianaturalis.common.event.WorldEventHandler;
 import com.trinarybrain.magianaturalis.common.recipe.Recipes;
 import com.trinarybrain.magianaturalis.common.research.Research;
 import com.trinarybrain.magianaturalis.common.tile.TileArcaneChest;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public class CommonProxy implements IGuiHandler {
+public class CommonSetup implements IGuiHandler {
 
     public void preInit(FMLPreInitializationEvent event) {
-        ItemsMN.initItems();
-        BlocksMN.initBlocks();
+        MNItems.initItems();
+        MNBlocks.initBlocks();
     }
 
     public void init(FMLInitializationEvent event) {
-        BlocksMN.initTileEntities();
+        MNBlocks.initTileEntities();
         EntitiesMN.registerEntities();
         EntitiesMN.addChampions();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
-        EventHandlerWorld.register();
+        WorldEventHandler.register();
     }
 
     public void postInit(FMLPostInitializationEvent event) {

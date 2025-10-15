@@ -1,5 +1,8 @@
 package com.trinarybrain.magianaturalis.common.tile;
 
+import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
+import com.trinarybrain.magianaturalis.common.util.Platform;
+import com.trinarybrain.magianaturalis.init.MNBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -11,9 +14,6 @@ import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileDeconstructionTable;
-import com.trinarybrain.magianaturalis.common.block.BlocksMN;
-import com.trinarybrain.magianaturalis.common.item.artifact.ItemResearchLog;
-import com.trinarybrain.magianaturalis.common.util.Platform;
 
 public class TileTranscribingTable extends TileThaumcraft implements ISidedInventory {
 
@@ -176,7 +176,7 @@ public class TileTranscribingTable extends TileThaumcraft implements ISidedInven
     }
 
     private boolean handleKnowledgeHarvest(boolean update) {
-        if (worldObj.getBlock(xCoord, yCoord, zCoord) != BlocksMN.transcribingTable) return update;
+        if (worldObj.getBlock(xCoord, yCoord, zCoord) != MNBlocks.transcribingTable) return update;
 
         ItemStack stack = getStackInSlot(0);
 

@@ -1,6 +1,7 @@
-package com.trinarybrain.magianaturalis.common.block;
+package com.trinarybrain.magianaturalis.init;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.common.block.*;
 import com.trinarybrain.magianaturalis.common.block.item.BlockArcaneChestItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockArcaneWoodItem;
 import com.trinarybrain.magianaturalis.common.block.item.BlockBannerItem;
@@ -14,7 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.function.Supplier;
 
-public class BlocksMN {
+public class MNBlocks {
 
     public static Block transcribingTable;
     public static Block arcaneChest;
@@ -55,9 +56,9 @@ public class BlocksMN {
     }
 
     private static void registerOreDict() {
-        OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 0));
-        OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 1));
-        OreDictionary.registerOre("plankWood", new ItemStack(BlocksMN.arcaneWood, 1, 2));
+        OreDictionary.registerOre("plankWood", new ItemStack(MNBlocks.arcaneWood, 1, 0));
+        OreDictionary.registerOre("plankWood", new ItemStack(MNBlocks.arcaneWood, 1, 1));
+        OreDictionary.registerOre("plankWood", new ItemStack(MNBlocks.arcaneWood, 1, 2));
     }
 
     public static void initTileEntities() {

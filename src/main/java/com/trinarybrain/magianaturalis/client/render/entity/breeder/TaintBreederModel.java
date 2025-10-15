@@ -1,14 +1,13 @@
-package com.trinarybrain.magianaturalis.client.model.entity;
-
-import org.lwjgl.opengl.GL11;
+package com.trinarybrain.magianaturalis.client.render.entity.breeder;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
-public class ModelTaintBreeder extends ModelBase {
+public class TaintBreederModel extends ModelBase {
 
     public ModelRenderer head;
     public ModelRenderer body;
@@ -27,7 +26,7 @@ public class ModelTaintBreeder extends ModelBase {
     public ModelRenderer eye0;
     public ModelRenderer eye1;
 
-    public ModelTaintBreeder() {
+    public TaintBreederModel() {
         textureWidth = 64;
         textureHeight = 64;
 

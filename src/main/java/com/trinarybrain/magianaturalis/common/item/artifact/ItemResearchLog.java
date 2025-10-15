@@ -1,6 +1,6 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.util.NBTUtil;
 import com.trinarybrain.magianaturalis.common.util.Platform;
 import cpw.mods.fml.relauncher.Side;

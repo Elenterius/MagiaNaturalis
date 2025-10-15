@@ -1,11 +1,8 @@
 package com.trinarybrain.magianaturalis.common.item.artifact;
 
-import java.util.List;
-
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.entity.EntityEvilTrunk;
 import com.trinarybrain.magianaturalis.common.util.Platform;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -17,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemEvilTrunkSpawner extends Item {
 

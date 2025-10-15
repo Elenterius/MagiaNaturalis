@@ -1,11 +1,8 @@
 package com.trinarybrain.magianaturalis.common.block;
 
-import java.util.Random;
-
-import com.trinarybrain.magianaturalis.client.util.RenderUtil;
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.client.render.RenderUtil;
 import com.trinarybrain.magianaturalis.common.tile.TileTranscribingTable;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -20,9 +17,11 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import thaumcraft.common.tiles.TileDeconstructionTable;
 
+import java.util.Random;
+
 public class BlockTranscribingTable extends BlockContainer {
 
-    protected BlockTranscribingTable() {
+    public BlockTranscribingTable() {
         super(Material.wood);
         setHardness(2.5F);
         setResistance(10.0F);

@@ -1,6 +1,6 @@
 package com.trinarybrain.magianaturalis.common.network;
 
-import com.trinarybrain.magianaturalis.common.MagiaNaturalis;
+import com.trinarybrain.magianaturalis.MagiaNaturalis;
 import com.trinarybrain.magianaturalis.common.network.packet.PacketBiomeChange;
 import com.trinarybrain.magianaturalis.common.network.packet.PacketKeyInput;
 import com.trinarybrain.magianaturalis.common.network.packet.PacketPickedBlock;

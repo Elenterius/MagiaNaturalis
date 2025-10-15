@@ -1,9 +1,9 @@
-package com.trinarybrain.magianaturalis.common;
+package com.trinarybrain.magianaturalis;
 
 import com.github.elenterius.magianaturalis.Tags;
-import com.trinarybrain.magianaturalis.common.core.CommonProxy;
-import com.trinarybrain.magianaturalis.common.core.CreativeTab;
 import com.trinarybrain.magianaturalis.common.network.PacketHandler;
+import com.trinarybrain.magianaturalis.init.CommonSetup;
+import com.trinarybrain.magianaturalis.init.CreativeTab;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -29,7 +29,7 @@ public class MagiaNaturalis {
     public static MagiaNaturalis instance;
 
     @SidedProxy(clientSide = MagiaNaturalis.CLIENT_PROXY, serverSide = MagiaNaturalis.COMMON_PROXY)
-    public static CommonProxy proxy;
+    public static CommonSetup proxy;
     public static thaumcraft.common.CommonProxy proxyTC4;
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTab(CreativeTabs.getNextID(), MOD_ID);
