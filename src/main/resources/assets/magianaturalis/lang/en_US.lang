@@ -32,6 +32,7 @@ flavor.magianaturalis.key.0=One to Open Them All...
 flavor.magianaturalis.key.1=One to Grant Access for Others...
 flavor.magianaturalis.banner=A Banner to mark our Presence.
 hint.magianaturalis.ctrl=<Press Ctrl>
+hint.magianaturalis.empty=Empty
 hint.magianaturalis.chest.items=Contains Treasure
 hint.magianaturalis.chest.access=Has Access List
 

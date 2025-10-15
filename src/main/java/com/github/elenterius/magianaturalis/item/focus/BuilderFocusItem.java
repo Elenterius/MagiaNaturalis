@@ -37,7 +37,7 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
 
     protected static final AspectList VIS_COST = new AspectList().add(Aspect.ORDER, 5).add(Aspect.EARTH, 5);
 
-    public static double reachDistance = 5.0D;
+    public static double reachDistance = 8.0D;
 
     public BuilderFocusItem() {
         super();
@@ -53,12 +53,14 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
     public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean advancedItemTooltips) {
         super.addInformation(stack, player, lines, advancedItemTooltips);
         lines.add("");
-        lines.add(EnumChatFormatting.DARK_GRAY + "Meta: " + BuilderFocusUtil.getMeta(stack));
-        lines.add(EnumChatFormatting.DARK_GRAY + "Shape: " + BuilderFocusUtil.getShape(stack) + "  Size: " + BuilderFocusUtil.getSize(stack));
+        lines.add(EnumChatFormatting.GRAY + "Mode: " + BuilderFocusUtil.getMeta(stack));
+        lines.add(EnumChatFormatting.GRAY + "Shape: " + BuilderFocusUtil.getShape(stack));
+        lines.add(EnumChatFormatting.GRAY + "Size: " + BuilderFocusUtil.getSize(stack));
         lines.add("");
-        lines.add(String.format("%sPress [%s] or [%s] to change size of Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(MNKeyBindings.INCREASE_SIZE_KEY.getKeyCode()), GameSettings.getKeyDisplayString(MNKeyBindings.DECREASE_SIZE_KEY.getKeyCode())));
-        lines.add(String.format("%sPress [%s] to change Shape", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(MNKeyBindings.MISC_KEY.getKeyCode())));
-        lines.add(String.format("%sPress [%s] to pick block type.", EnumChatFormatting.DARK_GRAY, GameSettings.getKeyDisplayString(MNKeyBindings.PICK_BLOCK_KEY.getKeyCode())));
+        lines.add(String.format("§8Press §7[%s]§8 or §7[%s]§8 to change size of shape", GameSettings.getKeyDisplayString(MNKeyBindings.INCREASE_SIZE_KEY.getKeyCode()), GameSettings.getKeyDisplayString(MNKeyBindings.DECREASE_SIZE_KEY.getKeyCode())));
+        lines.add(String.format("§8Press §7[%s]§8 to change shape", GameSettings.getKeyDisplayString(MNKeyBindings.MISC_KEY.getKeyCode())));
+        lines.add(String.format("§8Press §7[ctrl + %s]§8 to change mode", GameSettings.getKeyDisplayString(MNKeyBindings.MISC_KEY.getKeyCode())));
+        lines.add(String.format("§8Press §7[%s]§8 to pick block type", GameSettings.getKeyDisplayString(MNKeyBindings.PICK_BLOCK_KEY.getKeyCode())));
     }
 
     @Override

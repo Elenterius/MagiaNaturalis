@@ -17,7 +17,7 @@ public final class BuilderFocusUtil {
 
     public static Meta getMeta(ItemStack stack) {
         if (stack == null) return Meta.NONE;
-        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
+        NBTTagList nbttaglist = NBTUtil.getOrCreate(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         if (nbttaglist == null) return Meta.NONE;
 
         int i = nbttaglist.getCompoundTagAt(0).getByte(META_TAG_KEY);
@@ -27,7 +27,7 @@ public final class BuilderFocusUtil {
     public static boolean setMeta(ItemStack stack, Meta meta) {
         if (stack == null) return false;
 
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         NBTTagList nbttaglist = data.getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         NBTTagCompound tempData;
 
@@ -53,7 +53,7 @@ public final class BuilderFocusUtil {
     public static Shape getShape(ItemStack stack) {
         if (stack == null) return Shape.NONE;
 
-        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
+        NBTTagList nbttaglist = NBTUtil.getOrCreate(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         if (nbttaglist == null) return Shape.NONE;
 
         return getShapeByID(nbttaglist.getCompoundTagAt(0).getByte(SHAPE_TAG_KEY));
@@ -62,7 +62,7 @@ public final class BuilderFocusUtil {
     public static boolean setShape(ItemStack stack, Shape shape) {
         if (stack == null) return false;
 
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         NBTTagList nbttaglist = data.getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         NBTTagCompound tempData;
 
@@ -88,7 +88,7 @@ public final class BuilderFocusUtil {
     public static int getSize(ItemStack stack) {
         if (stack == null) return 1;
 
-        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
+        NBTTagList nbttaglist = NBTUtil.getOrCreate(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         if (nbttaglist == null) return 1;
 
         return nbttaglist.getCompoundTagAt(0).getByte(SIZE_TAG_KEY);
@@ -97,7 +97,7 @@ public final class BuilderFocusUtil {
     public static boolean setSize(ItemStack stack, int size) {
         if (stack == null) return false;
 
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         NBTTagList list = data.getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         NBTTagCompound tempData;
 
@@ -126,7 +126,7 @@ public final class BuilderFocusUtil {
         int bid = Block.getIdFromBlock(block);
         if (metadata < 0 || metadata > 15) metadata = 0;
 
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         NBTTagList nbttaglist = data.getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         NBTTagCompound nbttagcompound;
 
@@ -156,7 +156,7 @@ public final class BuilderFocusUtil {
         int[] i = {0, 0};
         if (stack == null) return i;
 
-        NBTTagList nbttaglist = NBTUtil.openNbtData(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
+        NBTTagList nbttaglist = NBTUtil.getOrCreate(stack).getTagList(MOD_TAG_KEY, NBT.TAG_COMPOUND);
         if (nbttaglist == null) {
             return i;
         }

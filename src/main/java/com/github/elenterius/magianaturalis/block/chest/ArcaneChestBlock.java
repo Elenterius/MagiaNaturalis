@@ -53,7 +53,7 @@ public class ArcaneChestBlock extends BlockContainer {
     public static boolean setChestType(ItemStack stack, byte type) {
         if (stack != null && type > 0) {
             if (type > 2) return false;
-            NBTUtil.openNbtData(stack).setByte("chestType", type);
+            NBTUtil.getOrCreate(stack).setByte("chestType", type);
             return true;
         }
         return false;
@@ -115,7 +115,7 @@ public class ArcaneChestBlock extends BlockContainer {
     }
 
     public byte getChestType(ItemStack stack) {
-        if (stack != null) return NBTUtil.openNbtData(stack).getByte("chestType");
+        if (stack != null) return NBTUtil.getOrCreate(stack).getByte("chestType");
 
         return 0;
     }

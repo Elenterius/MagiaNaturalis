@@ -46,7 +46,7 @@ public class PrisonJarBlockItem extends ItemBlock {
     }
 
     public String getEntityLivingID(ItemStack stack) {
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         if (data.hasKey("entity")) {
             return data.getCompoundTag("entity").getString("id");
         }
@@ -55,7 +55,7 @@ public class PrisonJarBlockItem extends ItemBlock {
 
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity) {
         if (Platform.isClient()) return false;
-        if (NBTUtil.openNbtData(stack).hasKey("entity")) return false;
+        if (NBTUtil.getOrCreate(stack).hasKey("entity")) return false;
 
         ItemStack stack2 = stack.copy();
         stack2.stackSize = 1;
@@ -69,7 +69,7 @@ public class PrisonJarBlockItem extends ItemBlock {
     }
 
     public boolean releaseEntityLiving(ItemStack stack, World world, double x, double y, double z) {
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         if (data.hasKey("entity")) {
             return NBTUtil.spawnEntityFromNBT(data.getCompoundTag("entity"), world, x, y, z);
         }

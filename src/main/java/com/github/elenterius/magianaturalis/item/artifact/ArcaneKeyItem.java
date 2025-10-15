@@ -42,15 +42,16 @@ public class ArcaneKeyItem extends Item {
         super.addInformation(stack, player, list, par4);
         list.add(EnumChatFormatting.DARK_PURPLE + Platform.translate("flavor.magianaturalis.key." + stack.getItemDamage()));
 
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
 
         if (data.hasKey("owner") && data.hasKey("ownerNick")) {
             list.add("");
             list.add("Soulbound to " + data.getString("ownerNick"));
         }
         if (data.hasKey("forger") && data.hasKey("forgerNick")) {
-            if (!data.hasKey("owner") && !data.hasKey("ownerNick"))
+            if (!data.hasKey("owner") && !data.hasKey("ownerNick")) {
                 list.add("");
+            }
             list.add("Forged by " + data.getString("forgerNick"));
         }
     }
@@ -79,12 +80,12 @@ public class ArcaneKeyItem extends Item {
 
     public UUID getBoundPlayer(ItemStack stack) {
         if (stack == null) return null;
-        return UUID.fromString(NBTUtil.openNbtData(stack).getString("owner"));
+        return UUID.fromString(NBTUtil.getOrCreate(stack).getString("owner"));
     }
 
     public boolean setBoundPlayer(ItemStack stack, GameProfile gameprofile) {
         if (stack == null) return false;
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         data.setString("owner", gameprofile.getId().toString());
         data.setString("ownerNick", gameprofile.getName());
         return true;
@@ -92,12 +93,12 @@ public class ArcaneKeyItem extends Item {
 
     public UUID getKeyForger(ItemStack stack) {
         if (stack == null) return null;
-        return UUID.fromString(NBTUtil.openNbtData(stack).getString("forger"));
+        return UUID.fromString(NBTUtil.getOrCreate(stack).getString("forger"));
     }
 
     public boolean setKeyForger(ItemStack stack, GameProfile gameprofile) {
         if (stack == null) return false;
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         data.setString("forger", gameprofile.getId().toString());
         data.setString("forgerNick", gameprofile.getName());
         return true;
@@ -105,12 +106,12 @@ public class ArcaneKeyItem extends Item {
 
     public byte getAccessLevel(ItemStack stack) {
         if (stack == null) return 0;
-        return NBTUtil.openNbtData(stack).getByte("accessLevel");
+        return NBTUtil.getOrCreate(stack).getByte("accessLevel");
     }
 
     public boolean setAccessLevel(ItemStack stack, byte level) {
         if (stack == null) return false;
-        NBTUtil.openNbtData(stack).setByte("accessLevel", level);
+        NBTUtil.getOrCreate(stack).setByte("accessLevel", level);
         return true;
     }
 
@@ -122,7 +123,7 @@ public class ArcaneKeyItem extends Item {
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (Platform.isServer() && player.isSneaking()) {
-            NBTTagCompound data = NBTUtil.openNbtData(stack);
+            NBTTagCompound data = NBTUtil.getOrCreate(stack);
             if (!data.hasKey("forger")) {
                 setKeyForger(stack, player.getGameProfile());
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis.key.owner"), player.getGameProfile().getName())));
@@ -141,7 +142,7 @@ public class ArcaneKeyItem extends Item {
         if (Platform.isServer()) {
             if (stack.getItemDamage() == 0) // This Key grants Access for the Bound Player to any Tile owned by the Key Forger
             {
-                NBTTagCompound data = NBTUtil.openNbtData(stack);
+                NBTTagCompound data = NBTUtil.getOrCreate(stack);
                 if (!data.hasKey("forger")) {
                     //setKeyForger(stack, player.getGameProfile());
                     return false;
@@ -170,7 +171,7 @@ public class ArcaneKeyItem extends Item {
             }
             else if (stack.getItemDamage() == 1) //This Key adds a list of players to the access list of the Tile owned by the Bound Player or Key Forger
             {
-                NBTTagCompound data = NBTUtil.openNbtData(stack);
+                NBTTagCompound data = NBTUtil.getOrCreate(stack);
                 boolean hasAccess = false;
 
                 if (data.hasKey("owner")) {
@@ -227,7 +228,7 @@ public class ArcaneKeyItem extends Item {
             if (!(entity instanceof EntityPlayer)) return false;
             EntityPlayer player2 = (EntityPlayer) entity;
 
-            NBTTagCompound data = NBTUtil.openNbtData(stack);
+            NBTTagCompound data = NBTUtil.getOrCreate(stack);
             NBTTagList accessList;
 
             if (!data.hasKey("AccessList"))

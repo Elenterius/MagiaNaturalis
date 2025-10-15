@@ -54,7 +54,7 @@ public class ResearchLogItem extends Item {
 
         Aspect[] array = {Aspect.AIR, Aspect.EARTH, Aspect.WATER, Aspect.FIRE, Aspect.ORDER, Aspect.ENTROPY};
         for (Aspect aspect : array) {
-            short amount = NBTUtil.openNbtData(stack).getShort("rp:" + aspect.getTag());
+            short amount = NBTUtil.getOrCreate(stack).getShort("rp:" + aspect.getTag());
             if (amount > 0 && MagiaNaturalis.proxyTC4.playerKnowledge.addAspectPool(player.getCommandSenderName(), aspect, amount)) {
                 ResearchManager.scheduleSave(player);
                 PacketHandler.INSTANCE.sendTo(new PacketAspectPool(aspect.getTag(), amount, Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(player.getCommandSenderName(), aspect)), (EntityPlayerMP) player);
@@ -84,7 +84,7 @@ public class ResearchLogItem extends Item {
 
     public short getResearchPoint(ItemStack stack, Aspect aspect) {
         if (stack != null && aspect != null) {
-            return NBTUtil.openNbtData(stack).getShort("rp:" + aspect.getTag());
+            return NBTUtil.getOrCreate(stack).getShort("rp:" + aspect.getTag());
         }
         return 0;
     }
@@ -93,7 +93,7 @@ public class ResearchLogItem extends Item {
         if (stack != null && aspect != null) {
             if (size > 64) return false;
             if (size < 0) size = 0;
-            NBTUtil.openNbtData(stack).setShort("rp:" + aspect.getTag(), size);
+            NBTUtil.getOrCreate(stack).setShort("rp:" + aspect.getTag(), size);
             return true;
         }
         return false;
@@ -101,9 +101,9 @@ public class ResearchLogItem extends Item {
 
     public boolean addResearchPoint(ItemStack stack, Aspect aspect, short size) {
         if (stack != null && aspect != null && size > 0) {
-            size += NBTUtil.openNbtData(stack).getShort("rp:" + aspect.getTag());
+            size += NBTUtil.getOrCreate(stack).getShort("rp:" + aspect.getTag());
             if (size > 64) return false;
-            NBTUtil.openNbtData(stack).setShort("rp:" + aspect.getTag(), size);
+            NBTUtil.getOrCreate(stack).setShort("rp:" + aspect.getTag(), size);
             return true;
         }
         return false;

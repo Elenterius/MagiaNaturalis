@@ -15,7 +15,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -30,7 +29,12 @@ import java.util.Set;
 
 public class BiomeSamplerItem extends Item {
 
-    IIcon icon_overlay;
+    public static final String ASPECTS_TAG_KEY = "aspects";
+    public static final String BIOME_ID_TAG_KEY = "biome_id";
+    public static final String BIOME_NAME_TAG_KEY = "biome_name";
+    public static final String BIOME_COLOR_TAG_KEY = "biome_color";
+
+    protected IIcon iconOverlay;
 
     public BiomeSamplerItem() {
         super();
@@ -42,13 +46,19 @@ public class BiomeSamplerItem extends Item {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister icon) {
         itemIcon = icon.registerIcon(iconString + "_base");
-        icon_overlay = icon.registerIcon(iconString + "_overlay");
+        iconOverlay = icon.registerIcon(iconString + "_overlay");
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String name = NBTUtil.openNbtData(stack).getString("biomeName");
-        return (name + StatCollector.translateToLocal(getUnlocalizedNameInefficiently(stack) + ".name")).trim();
+        String translated = Platform.translate(getUnlocalizedName(stack) + ".name");
+
+        String biomeName = NBTUtil.getOrCreate(stack).getString(BIOME_NAME_TAG_KEY);
+        if (!biomeName.isEmpty()) {
+            return biomeName.trim() + " " + translated;
+        }
+
+        return translated;
     }
 
     @Override
@@ -56,10 +66,13 @@ public class BiomeSamplerItem extends Item {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         super.addInformation(stack, player, list, par4);
 
-        if (GuiScreen.isCtrlKeyDown()) {
-            String[] aspects = getAspects(stack);
-            if (aspects == null) return;
+        String[] aspects = getAspects(stack);
+        if (aspects == null) {
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.empty"));
+            return;
+        }
 
+        if (GuiScreen.isCtrlKeyDown()) {
             for (String aspect : aspects) {
                 if (aspect != null) list.add(aspect);
             }
@@ -72,15 +85,15 @@ public class BiomeSamplerItem extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamageForRenderPass(int damage, int renderPass) {
-        return renderPass == 0 ? itemIcon : icon_overlay;
+        return renderPass == 0 ? itemIcon : iconOverlay;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int i) {
-        int color = NBTUtil.openNbtData(stack).getInteger("color");
-        color = i == 0 ? 0xFFFFFF : color;
-        return color;
+        if (i == 0) return 0xFF_FFFFFF;
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
+        return data.hasKey(BIOME_COLOR_TAG_KEY) ? data.getInteger(BIOME_COLOR_TAG_KEY) : 0xFF_FFFFFF;
     }
 
     @Override
@@ -95,43 +108,43 @@ public class BiomeSamplerItem extends Item {
 
         if (player.isSneaking()) {
             BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
-            if (biome != null) {
-                NBTTagCompound data = NBTUtil.openNbtData(stack);
-                data.setString("biomeName", biome.biomeName + " ");
-                data.setInteger("biomeID", biome.biomeID);
-                data.setInteger("color", biome.color);
+            if (biome == null) return false;
 
-                BiomeDictionary.Type[] newTypes = BiomeDictionary.getTypesForBiome(biome);
-                NBTTagList nbttaglist = new NBTTagList();
-                NBTTagCompound tempData = new NBTTagCompound();
+            NBTTagCompound data = NBTUtil.getOrCreate(stack);
+            data.setString(BIOME_NAME_TAG_KEY, biome.biomeName + " ");
+            data.setInteger(BIOME_ID_TAG_KEY, biome.biomeID);
+            data.setInteger(BIOME_COLOR_TAG_KEY, biome.color);
 
-                for (Type newType : newTypes) {
-                    if (newType != null) {
-                        if (newType != Type.MAGICAL) // Because Thaumcraft adds null aspect for magical biome type
-                        {
-                            Aspect aspect = (Aspect) BiomeHandler.biomeInfo.get(newType).get(1);
-                            if (aspect != null) {
-                                int aura = (int) BiomeHandler.biomeInfo.get(newType).get(0);
-                                tempData.setShort(aspect.getTag(), (short) Math.round(aura * 2F / 100F));
-                                nbttaglist.appendTag(tempData);
-                            }
-                        }
-                        else {
-                            tempData.setShort(Aspect.MAGIC.getTag(), (short) 2);
+            BiomeDictionary.Type[] newTypes = BiomeDictionary.getTypesForBiome(biome);
+            NBTTagList nbttaglist = new NBTTagList();
+            NBTTagCompound tempData = new NBTTagCompound();
+
+            for (Type newType : newTypes) {
+                if (newType != null) {
+                    if (newType != Type.MAGICAL) // Because Thaumcraft adds null aspect for magical biome type
+                    {
+                        Aspect aspect = (Aspect) BiomeHandler.biomeInfo.get(newType).get(1);
+                        if (aspect != null) {
+                            int aura = (int) BiomeHandler.biomeInfo.get(newType).get(0);
+                            tempData.setShort(aspect.getTag(), (short) Math.round(aura * 2F / 100F));
                             nbttaglist.appendTag(tempData);
                         }
                     }
+                    else {
+                        tempData.setShort(Aspect.MAGIC.getTag(), (short) 2);
+                        nbttaglist.appendTag(tempData);
+                    }
                 }
-
-                data.setTag("aspects", nbttaglist);
-                return true;
             }
+
+            data.setTag(ASPECTS_TAG_KEY, nbttaglist);
+            return true;
         }
         else {
             TileEntity tile = world.getTileEntity(x, y, z);
             if (tile instanceof GeoPylonBlockEntity) {
                 GeoPylonBlockEntity geo = (GeoPylonBlockEntity) tile;
-                geo.cachedBiome = BiomeGenBase.getBiome(NBTUtil.openNbtData(stack).getInteger("biomeID"));
+                geo.cachedBiome = BiomeGenBase.getBiome(NBTUtil.getOrCreate(stack).getInteger(BIOME_ID_TAG_KEY));
                 world.markBlockForUpdate(x, y, z);
                 return true;
             }
@@ -141,30 +154,31 @@ public class BiomeSamplerItem extends Item {
     }
 
     public String[] getAspects(ItemStack stack) {
-        if (stack != null) {
-            NBTTagCompound data = NBTUtil.openNbtData(stack);
-            if (!data.hasKey("aspects")) return null;
-            NBTTagList nbttaglist = data.getTagList("aspects", NBT.TAG_COMPOUND);
+        if (stack == null) return null;
 
-            String[] aspects = new String[nbttaglist.tagCount()];
-            for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-                NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
-                Set<?> keys = tempData.func_150296_c();
-                int j = 0;
-                for (Object ob : keys) {
-                    if (ob instanceof String) {
-                        if (j >= nbttaglist.tagCount()) break;
-                        String aspectTag = (String) ob;
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
+        if (!data.hasKey(ASPECTS_TAG_KEY)) return null;
 
-                        String color = Aspect.getAspect(aspectTag).getChatcolor();
-                        if (color == null) color = "5";
-                        aspects[j++] = String.format("%dx %s%s", tempData.getShort(aspectTag), '§' + color, WordUtils.capitalizeFully(aspectTag));
-                    }
+        NBTTagList nbttaglist = data.getTagList(ASPECTS_TAG_KEY, NBT.TAG_COMPOUND);
+
+        String[] aspects = new String[nbttaglist.tagCount()];
+        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+            NBTTagCompound tempData = nbttaglist.getCompoundTagAt(i);
+            Set<?> keys = tempData.func_150296_c();
+            int j = 0;
+            for (Object ob : keys) {
+                if (ob instanceof String) {
+                    if (j >= nbttaglist.tagCount()) break;
+                    String aspectTag = (String) ob;
+
+                    String color = Aspect.getAspect(aspectTag).getChatcolor();
+                    if (color == null) color = "5";
+                    aspects[j++] = String.format("%dx %s%s", tempData.getShort(aspectTag), '§' + color, WordUtils.capitalizeFully(aspectTag));
                 }
             }
-            return aspects;
         }
-        return null;
+
+        return aspects;
     }
 
 }

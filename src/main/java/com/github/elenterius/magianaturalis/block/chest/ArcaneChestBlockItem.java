@@ -26,7 +26,7 @@ public class ArcaneChestBlockItem extends ItemBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         if (data != null) {
             if (data.hasKey("Items")) {
                 list.add("");

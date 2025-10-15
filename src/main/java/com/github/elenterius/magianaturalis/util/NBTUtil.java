@@ -15,9 +15,12 @@ import java.util.UUID;
 
 public final class NBTUtil {
 
-    public static NBTTagCompound openNbtData(ItemStack stack) {
+    public static NBTTagCompound getOrCreate(ItemStack stack) {
         NBTTagCompound data = stack.getTagCompound();
-        if (data == null) stack.setTagCompound(data = new NBTTagCompound());
+        if (data == null) {
+            data = new NBTTagCompound();
+            stack.setTagCompound(data);
+        }
         return data;
     }
 
@@ -30,7 +33,7 @@ public final class NBTUtil {
     }
 
     public static void saveInventoryToNBT(ItemStack stack, ItemStack[] inventory) {
-        NBTUtil.saveInventoryToNBT(NBTUtil.openNbtData(stack), inventory);
+        NBTUtil.saveInventoryToNBT(NBTUtil.getOrCreate(stack), inventory);
     }
 
     public static void saveInventoryToNBT(NBTTagCompound data, ItemStack[] inventory) {
@@ -47,7 +50,7 @@ public final class NBTUtil {
     }
 
     public static ArrayList<ItemStack> loadInventoryFromNBT(ItemStack stack) {
-        NBTTagCompound data = NBTUtil.openNbtData(stack);
+        NBTTagCompound data = NBTUtil.getOrCreate(stack);
         if (!data.hasKey("Items")) return null;
 
         NBTTagList items = data.getTagList("Items", NBT.TAG_COMPOUND);
@@ -63,7 +66,7 @@ public final class NBTUtil {
     }
 
     public static ItemStack[] loadInventoryFromNBT(ItemStack stack, int invSize) {
-        return NBTUtil.loadInventoryFromNBT(NBTUtil.openNbtData(stack), invSize);
+        return NBTUtil.loadInventoryFromNBT(NBTUtil.getOrCreate(stack), invSize);
     }
 
     public static ItemStack[] loadInventoryFromNBT(NBTTagCompound data, int invSize) {
@@ -82,11 +85,11 @@ public final class NBTUtil {
     }
 
     public static void saveUserAccessToNBT(ItemStack stack, ArrayList<UserAccess> users) {
-        NBTUtil.saveUserAccessToNBT(NBTUtil.openNbtData(stack), users);
+        NBTUtil.saveUserAccessToNBT(NBTUtil.getOrCreate(stack), users);
     }
 
     public static ArrayList<UserAccess> loadUserAccessFromNBT(ItemStack stack) {
-        return NBTUtil.loadUserAccessFromNBT(NBTUtil.openNbtData(stack));
+        return NBTUtil.loadUserAccessFromNBT(NBTUtil.getOrCreate(stack));
     }
 
     public static void saveUserAccessToNBT(NBTTagCompound data, ArrayList<UserAccess> users) {

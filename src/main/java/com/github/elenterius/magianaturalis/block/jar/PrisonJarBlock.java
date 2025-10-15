@@ -95,7 +95,7 @@ public class PrisonJarBlock extends BlockContainer {
         if (jar != null) {
             EntityPlayer player = (EntityPlayer) entity;
 
-            NBTTagCompound data = NBTUtil.openNbtData(stack);
+            NBTTagCompound data = NBTUtil.getOrCreate(stack);
             if (data.hasKey("entity"))
                 jar.setEntityData(data);
         }

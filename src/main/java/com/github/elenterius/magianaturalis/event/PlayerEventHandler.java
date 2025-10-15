@@ -21,7 +21,7 @@ public final class PlayerEventHandler {
         if (player == null || stack == null) return;
 
         if (stack.getItem() instanceof ArcaneKeyItem) {
-            NBTTagCompound data = NBTUtil.openNbtData(stack);
+            NBTTagCompound data = NBTUtil.getOrCreate(stack);
             boolean hasAccess = false;
             if (data.hasKey("forger") && UUID.fromString(data.getString("forger")).equals(player.getGameProfile().getId())) {
                 hasAccess = true;

@@ -52,7 +52,7 @@ public class FocusEnderPouchItem extends ItemFocusPouch implements IBauble {
         if (Platform.isServer() && entity instanceof EntityPlayer && entity.ticksExisted % 5 == 0) {
             InventoryEnderChest invEnderChest = ((EntityPlayer) entity).getInventoryEnderChest();
             if (invEnderChest != null) {
-                NBTTagCompound data = NBTUtil.openNbtData(stack);
+                NBTTagCompound data = NBTUtil.getOrCreate(stack);
                 boolean isInvDirty = data.getBoolean("isInvDirty");
 
                 if (isInvDirty) // Push InvPouch to InvEnderChest
