@@ -36,46 +36,46 @@ hint.magianaturalis.chest.items=Contains Treasure
 hint.magianaturalis.chest.access=Has Access List
 
 # ITEM NAMES
-item.magianaturalis.researchLog.name=Research Log
-item.magianaturalis.alchemicalStone.1.name=Quicksilver Alchemist Stone
-item.magianaturalis.alchemicalStone.0.name=Phenomorphous Catalyst Stone
-item.magianaturalis.devTool.name=Misc Dev Tool
-item.magianaturalis.biomeDevTool.name=Biome Dev Tool
-item.magianaturalis.key.0.name=Key of Unraveling
-item.magianaturalis.key.1.name=Key of Endorsing
-item.magianaturalis.gogglesDarkCrystal.name=Dark Crystal Goggles
+item.magianaturalis.research_log.name=Research Log
+item.magianaturalis.biome_sampler.name=Biome Report
+item.magianaturalis.alchemical_stone.1.name=Quicksilver Alchemist Stone
+item.magianaturalis.alchemical_stone.0.name=Phenomorphous Catalyst Stone
+item.magianaturalis.dev_tool.name=Misc Dev Tool
+item.magianaturalis.biome_dev_tool.name=Biome Dev Tool
+item.magianaturalis.thaumium_key.0.name=Key of Unraveling
+item.magianaturalis.thaumium_key.1.name=Key of Endorsing
+item.magianaturalis.dark_crystal_goggles.name=Dark Crystal Goggles
 item.magianaturalis.spectacles.name=Spectacles
-item.magianaturalis.focusBuild.name=Wand Focus: Construction
-item.magianaturalis.focusRevenant.name=Wand Focus: Baby Revenant
-item.magianaturalis.evilTrunk.tainted.name=Tainted Trunk
-item.magianaturalis.evilTrunk.demonic.name=Demonic Trunk
-item.magianaturalis.evilTrunk.sinister.name=Sinister Trunk
-item.magianaturalis.evilTrunk.corrupted.name=Corrupted Trunk
-item.magianaturalis.focusPouchEnder.name=Focus Enderpouch
-item.magianaturalis.sickleThaumium.name=Thaumium Sickle
-item.magianaturalis.voidSickle.name=Void Sickle
-item.magianaturalis.sickleElemental.name=Sickle of Abundance
-item.magianaturalis.biomeSampler.name=Biome Report
+item.magianaturalis.builder_focus.name=Wand Focus: Construction
+item.magianaturalis.revenant_focus.name=Wand Focus: Baby Revenant
+item.magianaturalis.evil_trunk.tainted.name=Tainted Trunk
+item.magianaturalis.evil_trunk.demonic.name=Demonic Trunk
+item.magianaturalis.evil_trunk.sinister.name=Sinister Trunk
+item.magianaturalis.evil_trunk.corrupted.name=Corrupted Trunk
+item.magianaturalis.focus_ender_pouch.name=Focus Enderpouch
+item.magianaturalis.thaumium_sickle.name=Thaumium Sickle
+item.magianaturalis.void_sickle.name=Void Sickle
+item.magianaturalis.elemental_sickle.name=Sickle of Abundance
 
 # TILE NAMES
-tile.magianaturalis.transcribingTable.name=Transcribing Table
-tile.magianaturalis.arcaneChest.unknown.name=Unknown Chest
-tile.magianaturalis.arcaneChest.gw.name=Greatwood Chest
-tile.magianaturalis.arcaneChest.sw.name=Silverwood Chest
-tile.magianaturalis.jarPrison.name=Entity in a Jar
-tile.magianaturalis.arcaneWood.gwPlanks.name=Horizontal Greatwood Planks
-tile.magianaturalis.arcaneWood.gwOrn.name=Greatwood Ornament
-tile.magianaturalis.arcaneWood.swPlanks.0.name=Horizontal Silverwood Planks
-tile.magianaturalis.arcaneWood.swPlanks.1.name=Vertical Silverwood Planks
-tile.magianaturalis.arcaneWood.gwGoldOrn.0.name=Greatwood Gold Ornament
-tile.magianaturalis.arcaneWood.gwGoldOrn.1.name=Greatwood Gold Ornament
-tile.magianaturalis.arcaneWood.gwGoldTrim.name=Greatwood Gold Trim
+tile.magianaturalis.transcribing_table.name=Transcribing Table
+tile.magianaturalis.arcane_chest.unknown.name=Unknown Chest
+tile.magianaturalis.arcane_chest.gw.name=Greatwood Chest
+tile.magianaturalis.arcane_chest.sw.name=Silverwood Chest
+tile.magianaturalis.prison_jar.name=Mob in a Jar
+tile.magianaturalis.arcane_wood.gw_planks.name=Horizontal Greatwood Planks
+tile.magianaturalis.arcane_wood.gw_orn.name=Greatwood Ornament
+tile.magianaturalis.arcane_wood.sw_planks.0.name=Horizontal Silverwood Planks
+tile.magianaturalis.arcane_wood.sw_planks.1.name=Vertical Silverwood Planks
+tile.magianaturalis.arcane_wood.gw_gold_orn.0.name=Greatwood Gold Ornament
+tile.magianaturalis.arcane_wood.gw_gold_orn.1.name=Greatwood Gold Ornament
+tile.magianaturalis.arcane_wood.gw_gold_trim.name=Greatwood Gold Trim
 tile.magianaturalis.banner.name=Magia Naturalis Banner
-tile.magianaturalis.geoMorpher.name=Geo-Pylon
+tile.magianaturalis.geo_morpher.name=Geo-Pylon
 
 # ENTITIY NAMES
-entity.taintBreeder.name=Taint Breeder
-entity.magia_naturalis.evilTrunk.name=Evil Trunk
+entity.magianaturalis.taint_breeder.name=Taint Breeder
+entity.magianaturalis.evil_trunk.name=Evil Trunk
 
 # RESEARCH
 tc.research_category.magianaturalis=Magia Naturalis
@@ -123,7 +123,7 @@ mn.research_page.JAR_PRISON.1=Shrink and Seal your lovable Friends and Foes in t
 
 mn.research_name.STONE_PHENO=Phenomorphous Stone
 mn.research_text.STONE_PHENO=Morphing the Visual
-mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks. All phenomorphable block are highlighted when looking at them simply click the block to swap it appearance. Sneak to rotate Logs & Stairs.
+mn.research_page.STONE_PHENO.1=Change the appearance of Blocks such as Wool, Hardened Clay, Wood, Logs and Stone Bricks. All pheno-morphable block are highlighted when looking at them simply click the block to swap it appearance. Sneak to rotate Logs & Stairs.
 
 mn.research_name.STONE_QUICKSILVER=Quicksilver Stone
 mn.research_text.STONE_QUICKSILVER=Quickening Potion Effects

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class BlockArcaneWoodItem extends ItemBlock {
 
-    final String[] unlocal = {"gwPlanks", "gwOrn", "swPlanks.0", "swPlanks.1", "gwGoldOrn.0", "gwGoldOrn.1", "gwGoldTrim"};
+    protected static final String[] translationKeys = {"gw_planks", "gw_orn", "sw_planks.0", "sw_planks.1", "gw_gold_orn.0", "gw_gold_orn.1", "gw_gold_trim"};
 
     public BlockArcaneWoodItem(Block block) {
         super(block);
@@ -21,7 +21,7 @@ public class BlockArcaneWoodItem extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName() + "." + unlocal[stack.getItemDamage()];
+        return super.getUnlocalizedName() + "." + translationKeys[stack.getItemDamage()];
     }
 
 }

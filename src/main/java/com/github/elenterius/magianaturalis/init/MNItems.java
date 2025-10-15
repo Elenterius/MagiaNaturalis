@@ -34,17 +34,17 @@ public class MNItems {
 
     public static void initItems() {
         researchLog = registerItem("research_log", ItemResearchLog::new);
+        biomeReport = registerItem("biome_sampler", ItemBiomeSampler::new);
         alchemicalStone = registerItem("alchemical_stone", ItemAlchemicalStone::new);
         key = registerItem("thaumium_key", ItemKey::new);
         gogglesDark = registerItem("dark_crystal_goggles", ItemGogglesDark::new);
         spectacles = registerItem("spectacles", ItemSpectacles::new);
         focusBuild = registerItem("builder_focus", ItemFocusBuild::new);
+        focusRevenant = registerItem("revenant_focus", ItemFocusRevenant::new);
         evilTrunkSpawner = registerItem("evil_trunk", ItemEvilTrunkSpawner::new);
         focusPouchEnder = registerItem("focus_ender_pouch", ItemFocusPouchEnder::new);
         sickleThaumium = registerItem("thaumium_sickle", ItemThaumiumSickle::new);
         sickleElemental = registerItem("elemental_sickle", ItemElementalSickle::new);
-        biomeReport = registerItem("biome_sampler", ItemBiomeSampler::new);
-        focusRevenant = registerItem("revenant_focus", ItemFocusRevenant::new);
         voidSickle = registerItem("void_sickle", ItemVoidSickle::new);
 
         //devTool = registerItem("devTool", DevTool::new);

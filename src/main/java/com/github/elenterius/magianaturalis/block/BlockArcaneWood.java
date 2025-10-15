@@ -18,7 +18,7 @@ import java.util.List;
 public class BlockArcaneWood extends Block {
 
     //TODO: FANCY GREATWOOD & SILVERWOOD SIGN?
-    private IIcon[] icon = new IIcon[7];
+    private final IIcon[] icon = new IIcon[7];
 
     public BlockArcaneWood() {
         super(Material.wood);
@@ -30,23 +30,25 @@ public class BlockArcaneWood extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister ir) {
-        icon[0] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_planks");
-        icon[1] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_orn");
-        icon[2] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":silverwood_planks_1");
-        icon[3] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":silverwood_planks_2");
-        icon[4] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_gold_orn");
-        icon[5] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_gold_orn2");
-        icon[6] = ir.registerIcon(MagiaNaturalis.MOD_ID + ":greatwood_gold_trim");
+        icon[0] = ir.registerIcon(MagiaNaturalis.rlString("greatwood_planks"));
+        icon[1] = ir.registerIcon(MagiaNaturalis.rlString("greatwood_orn"));
+        icon[2] = ir.registerIcon(MagiaNaturalis.rlString("silverwood_planks_1"));
+        icon[3] = ir.registerIcon(MagiaNaturalis.rlString("silverwood_planks_2"));
+        icon[4] = ir.registerIcon(MagiaNaturalis.rlString("greatwood_gold_orn"));
+        icon[5] = ir.registerIcon(MagiaNaturalis.rlString("greatwood_gold_orn2"));
+        icon[6] = ir.registerIcon(MagiaNaturalis.rlString("greatwood_gold_trim"));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        if (meta < 0 || meta > 6)
+        if (meta < 0 || meta > 6) {
             meta = 0;
+        }
 
-        if (meta == 6)
+        if (meta == 6) {
             return side == 1 || side == 0 ? icon[0] : icon[meta];
+        }
 
         return icon[meta];
     }
@@ -76,4 +78,5 @@ public class BlockArcaneWood extends Block {
         }
         world.setBlockMetadataWithNotify(x, y, z, meta, 2);
     }
+
 }
