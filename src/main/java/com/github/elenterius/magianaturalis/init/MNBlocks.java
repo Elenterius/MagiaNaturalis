@@ -25,12 +25,12 @@ public class MNBlocks {
     public static Block geoMorpher;
 
     public static void initBlocks() {
-        transcribingTable = registerBlock("transcribingTable", BlockTranscribingTable::new);
-        arcaneChest = registerBlock("arcaneChest", BlockArcaneChestItem.class, BlockArcaneChest::new);
-        jarPrison = registerBlock("jarPrison", BlockJarPrisonItem.class, BlockJarPrison::new);
-        arcaneWood = registerBlock("arcaneWood", BlockArcaneWoodItem.class, BlockArcaneWood::new);
+        transcribingTable = registerBlock("transcribing_table", BlockTranscribingTable::new);
+        arcaneChest = registerBlock("arcane_chest", BlockArcaneChestItem.class, BlockArcaneChest::new);
+        jarPrison = registerBlock("prison_jar", BlockJarPrisonItem.class, BlockJarPrison::new);
+        arcaneWood = registerBlock("arcane_wood", BlockArcaneWoodItem.class, BlockArcaneWood::new);
         banner = registerBlock("banner", BlockBannerItem.class, BlockBanner::new);
-        geoMorpher = registerBlock("geoMorpher", BlockGeoMorpher::new);
+        geoMorpher = registerBlock("geo_morpher", BlockGeoMorpher::new);
 
         registerOreDict();
     }
@@ -62,11 +62,11 @@ public class MNBlocks {
     }
 
     public static void initTileEntities() {
-        GameRegistry.registerTileEntity(TileTranscribingTable.class, MagiaNaturalis.rlString("transcribingTable"));
-        GameRegistry.registerTileEntity(TileArcaneChest.class, MagiaNaturalis.rlString("arcaneChest"));
-        GameRegistry.registerTileEntity(TileJarPrison.class, MagiaNaturalis.rlString("jarPrison"));
+        GameRegistry.registerTileEntity(TileTranscribingTable.class, MagiaNaturalis.rlString("transcribing_table"));
+        GameRegistry.registerTileEntity(TileArcaneChest.class, MagiaNaturalis.rlString("arcane_chest"));
+        GameRegistry.registerTileEntity(TileJarPrison.class, MagiaNaturalis.rlString("prison_jar"));
         GameRegistry.registerTileEntity(TileBannerCustom.class, MagiaNaturalis.rlString("banner"));
-        GameRegistry.registerTileEntity(TileGeoMorpher.class, MagiaNaturalis.rlString("geoMorpher"));
+        GameRegistry.registerTileEntity(TileGeoMorpher.class, MagiaNaturalis.rlString("geo_morpher"));
     }
 
 }

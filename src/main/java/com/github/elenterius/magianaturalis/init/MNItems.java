@@ -33,19 +33,19 @@ public class MNItems {
     //public static final String MIXING_FLASK = "mixingFlask";
 
     public static void initItems() {
-        researchLog = registerItem("researchLog", ItemResearchLog::new);
-        alchemicalStone = registerItem("alchemicalStone", ItemAlchemicalStone::new);
-        key = registerItem("key", ItemKey::new);
-        gogglesDark = registerItem("gogglesDarkCrystal", ItemGogglesDark::new);
+        researchLog = registerItem("research_log", ItemResearchLog::new);
+        alchemicalStone = registerItem("alchemical_stone", ItemAlchemicalStone::new);
+        key = registerItem("thaumium_key", ItemKey::new);
+        gogglesDark = registerItem("dark_crystal_goggles", ItemGogglesDark::new);
         spectacles = registerItem("spectacles", ItemSpectacles::new);
-        focusBuild = registerItem("focusBuild", ItemFocusBuild::new);
-        evilTrunkSpawner = registerItem("evilTrunk", ItemEvilTrunkSpawner::new);
-        focusPouchEnder = registerItem("focusPouchEnder", ItemFocusPouchEnder::new);
-        sickleThaumium = registerItem("sickleThaumium", ItemThaumiumSickle::new);
-        sickleElemental = registerItem("sickleElemental", ItemElementalSickle::new);
-        biomeReport = registerItem("biomeSampler", ItemBiomeSampler::new);
-        focusRevenant = registerItem("focusRevenant", ItemFocusRevenant::new);
-        voidSickle = registerItem("voidSickle", ItemVoidSickle::new);
+        focusBuild = registerItem("builder_focus", ItemFocusBuild::new);
+        evilTrunkSpawner = registerItem("evil_trunk", ItemEvilTrunkSpawner::new);
+        focusPouchEnder = registerItem("focus_ender_pouch", ItemFocusPouchEnder::new);
+        sickleThaumium = registerItem("thaumium_sickle", ItemThaumiumSickle::new);
+        sickleElemental = registerItem("elemental_sickle", ItemElementalSickle::new);
+        biomeReport = registerItem("biome_sampler", ItemBiomeSampler::new);
+        focusRevenant = registerItem("revenant_focus", ItemFocusRevenant::new);
+        voidSickle = registerItem("void_sickle", ItemVoidSickle::new);
 
         //devTool = registerItem("devTool", DevTool::new);
         //biomeDevTool = registerItem("biomeDevTool", BiomeDevTool::new);

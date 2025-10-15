@@ -20,18 +20,18 @@ public final class MNEntities {
     static void register() {
         int id = 0;
         // TODO: remove registerGlobalEntityID -> leading to major bug - make own spawn eggs
-        EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, "taintBreeder", EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
-        EntityRegistry.registerModEntity(EntityTaintBreeder.class, "taintBreeder", id++, MagiaNaturalis.instance, 64, 3, false);
+        EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, "taint_breeder", EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
+        EntityRegistry.registerModEntity(EntityTaintBreeder.class, "taint_breeder", id++, MagiaNaturalis.instance, 64, 3, false);
 
-        EntityRegistry.registerModEntity(EntityEvilTrunk.class, "evilTrunk", id++, MagiaNaturalis.instance, 64, 3, false);
-        EntityRegistry.registerModEntity(EntityZombieExtended.class, "ferociousRevenant", id++, MagiaNaturalis.instance, 64, 3, false);
+        EntityRegistry.registerModEntity(EntityEvilTrunk.class, "evil_trunk", id++, MagiaNaturalis.instance, 64, 3, false);
+        EntityRegistry.registerModEntity(EntityZombieExtended.class, "ferocious_revenant", id++, MagiaNaturalis.instance, 64, 3, false);
 
         //EntityRegistry.registerGlobalEntityID(EntityTaintman.class, "taintman", EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
         //EntityRegistry.registerModEntity(EntityTaintman.class, "taintman", id++, MagiaNaturalis.instance, 64, 3, false);
     }
 
     static void registerThaumcraftChampions() {
-        FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "taintBreeder:1");
+        FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "taint_breeder:1");
     }
 
     static void addMobSpawns() {
