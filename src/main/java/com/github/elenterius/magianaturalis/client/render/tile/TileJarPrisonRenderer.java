@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.client.render.tile;
 
-import com.github.elenterius.magianaturalis.tile.TileJarPrison;
+import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -16,10 +16,10 @@ public class TileJarPrisonRenderer extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
-        renderTileEntityAt((TileJarPrison) tile, x, y, z, f);
+        renderTileEntityAt((PrisonJarBlockEntity) tile, x, y, z, f);
     }
 
-    public void renderTileEntityAt(TileJarPrison tile, double x, double y, double z, float f) {
+    public void renderTileEntityAt(PrisonJarBlockEntity tile, double x, double y, double z, float f) {
         Entity entity = tile.getCachedEntity();
         if (entity == null) return;
 

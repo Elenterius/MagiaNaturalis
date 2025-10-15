@@ -1,11 +1,12 @@
 package com.github.elenterius.magianaturalis.init.client;
 
-import com.github.elenterius.magianaturalis.item.focus.ItemFocusBuild;
+import com.github.elenterius.magianaturalis.item.focus.BuilderFocusItem;
 import com.github.elenterius.magianaturalis.network.PacketHandler;
 import com.github.elenterius.magianaturalis.network.packet.PacketKeyInput;
 import com.github.elenterius.magianaturalis.network.packet.PacketPickedBlock;
 import com.github.elenterius.magianaturalis.util.WorldUtil;
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -18,15 +19,20 @@ import net.minecraft.util.MovingObjectPosition;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
-public class KeyEventHandler {
+public final class KeyEventHandler {
+
+    public static void register() {
+        FMLCommonHandler.instance().bus().register(new KeyEventHandler());
+    }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void playerTick(TickEvent.PlayerTickEvent event) {
         if (event.side == Side.SERVER) return;
 
-        if (event.phase == TickEvent.Phase.START) {
+        if (event.phase == TickEvent.Phase.START && FMLClientHandler.instance().getClient().inGameHasFocus) {
             byte id = 0;
+
             if (MNKeyBindings.DECREASE_SIZE_KEY.isPressed()) {
                 id = 2;
             }
@@ -44,8 +50,8 @@ public class KeyEventHandler {
                 if (player != null && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting) {
                     ItemWandCasting wand = (ItemWandCasting) player.getCurrentEquippedItem().getItem();
                     ItemFocusBasic focus = wand.getFocus(player.getCurrentEquippedItem());
-                    if (focus instanceof ItemFocusBuild) {
-                        MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, ItemFocusBuild.reachDistance, true);
+                    if (focus instanceof BuilderFocusItem) {
+                        MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(event.player.worldObj, event.player, BuilderFocusItem.reachDistance, true);
                         if (target != null) {
                             if (target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                                 int x = target.blockX;
@@ -64,12 +70,12 @@ public class KeyEventHandler {
                 }
             }
 
-            if (FMLClientHandler.instance().getClient().inGameHasFocus && id > 0) {
+            if (id > 0) {
                 EntityPlayer player = event.player;
                 if (player != null && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting) {
                     ItemWandCasting wand = (ItemWandCasting) player.getCurrentEquippedItem().getItem();
                     ItemFocusBasic focus = wand.getFocus(player.getCurrentEquippedItem());
-                    if (focus instanceof ItemFocusBuild) {
+                    if (focus instanceof BuilderFocusItem) {
                         PacketHandler.network.sendToServer(new PacketKeyInput.KeyInputMessage(id));
                     }
                 }

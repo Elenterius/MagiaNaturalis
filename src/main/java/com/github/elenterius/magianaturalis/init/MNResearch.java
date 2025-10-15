@@ -1,7 +1,7 @@
 package com.github.elenterius.magianaturalis.init;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
-import com.github.elenterius.magianaturalis.block.BlockArcaneChest;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlock;
 import com.github.elenterius.magianaturalis.research.CustomResearchItem;
 import com.github.elenterius.magianaturalis.research.FakeResearchItem;
 import net.minecraft.item.ItemStack;
@@ -61,12 +61,12 @@ public class MNResearch {
 
         research = new FakeResearchItem("MN_GOGGLES", MagiaNaturalis.MOD_ID, "GOGGLES", "ARTIFICE", -4, 1, ResearchCategories.getResearch("GOGGLES").icon_item).registerResearchItem();
 
-        research = new CustomResearchItem("KEY_SPECIAL", new AspectList().add(Aspect.TOOL, 4).add(Aspect.MIND, 3).add(Aspect.MECHANISM, 3), -4, -3, 3, new ItemStack(MNItems.key, 1, 0));
+        research = new CustomResearchItem("KEY_SPECIAL", new AspectList().add(Aspect.TOOL, 4).add(Aspect.MIND, 3).add(Aspect.MECHANISM, 3), -4, -3, 3, new ItemStack(MNItems.arcaneKey, 1, 0));
         research.setPages(new ResearchPage("mn.research_page.KEY_SPECIAL.1"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ThaumiumKey1")), new ResearchPage("mn.research_page.KEY_SPECIAL.2"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ThaumiumKey2")));
         research.setParents("MN_WARDEDARCANA").registerResearchItem();
 
         ItemStack chest = new ItemStack(MNBlocks.arcaneChest, 1, 1);
-        BlockArcaneChest.setChestType(chest, (byte) 1);
+        ArcaneChestBlock.setChestType(chest, (byte) 1);
         research = new CustomResearchItem("ARCANE_CHEST", new AspectList().add(Aspect.VOID, 4).add(Aspect.MIND, 3).add(Aspect.MECHANISM, 3).add(Aspect.ARMOR, 3), -7, -3, 3, chest);
         research.setPages(new ResearchPage("mn.research_page.ARCANE_CHEST.1"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ArcaneChest1")), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ArcaneChest2"))).setParents("MN_WARDEDARCANA").registerResearchItem();
 
@@ -103,7 +103,7 @@ public class MNResearch {
         research = new CustomResearchItem("SICKLE_ABUNDANCE", new AspectList().add(Aspect.TOOL, 3).add(Aspect.CROP, 3).add(Aspect.HARVEST, 3).add(Aspect.GREED, 6), -5, 5, 2, new ItemStack(MNItems.sickleElemental, 1, 0));
         research.setPages(new ResearchPage("mn.research_page.SICKLE_ABUNDANCE.1"), new ResearchPage((InfusionRecipe) MNRecipes.recipes.get("SickleElemental"))).setParents("SICKLE_THAUM").setParentsHidden("INFUSION").registerResearchItem();
 
-        research = new CustomResearchItem("GEO_OCCULTISM", new AspectList().add(Aspect.AURA, 4).add(Aspect.EXCHANGE, 3).add(Aspect.WEATHER, 3).add(Aspect.MAGIC, 6).add(Aspect.EARTH, 2).add(Aspect.AIR, 2), 0, -5, 0, new ItemStack(MNBlocks.geoMorpher));
+        research = new CustomResearchItem("GEO_OCCULTISM", new AspectList().add(Aspect.AURA, 4).add(Aspect.EXCHANGE, 3).add(Aspect.WEATHER, 3).add(Aspect.MAGIC, 6).add(Aspect.EARTH, 2).add(Aspect.AIR, 2), 0, -5, 0, new ItemStack(MNBlocks.geoPylon));
         research.setPages(new ResearchPage("mn.research_page.GEO_OCCULTISM.1"), new ResearchPage((InfusionRecipe) MNRecipes.recipes.get("GeoPylon")), new ResearchPage("mn.research_page.GEO_OCCULTISM.2"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("BiomeReport"))).setParentsHidden("INFUSION", "STONE_PHENO").registerResearchItem();
 
         research = null;

@@ -1,13 +1,13 @@
 package com.github.elenterius.magianaturalis.init;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
 import com.github.elenterius.magianaturalis.container.ContainerArcaneChest;
 import com.github.elenterius.magianaturalis.container.ContainerEvilTrunk;
 import com.github.elenterius.magianaturalis.container.ContainerTranscribingTable;
 import com.github.elenterius.magianaturalis.entity.EntityEvilTrunk;
 import com.github.elenterius.magianaturalis.event.WorldEventHandler;
-import com.github.elenterius.magianaturalis.tile.TileArcaneChest;
-import com.github.elenterius.magianaturalis.tile.TileTranscribingTable;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -42,9 +42,9 @@ public class CommonSetup implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case 1:
-                return new ContainerTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
+                return new ContainerTranscribingTable(player.inventory, (TranscribingTableBlockEntity) world.getTileEntity(x, y, z));
             case 2:
-                return new ContainerArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
+                return new ContainerArcaneChest(player.inventory, (ArcaneChestBlockEntity) world.getTileEntity(x, y, z));
             case 3:
                 return new ContainerEvilTrunk(player.inventory, world, (EntityEvilTrunk) ((WorldServer) world).getEntityByID(x));
             default:

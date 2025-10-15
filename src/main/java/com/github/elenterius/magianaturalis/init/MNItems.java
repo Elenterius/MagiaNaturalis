@@ -1,11 +1,11 @@
 package com.github.elenterius.magianaturalis.init;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
-import com.github.elenterius.magianaturalis.item.alchemy.ItemAlchemicalStone;
+import com.github.elenterius.magianaturalis.item.alchemy.AlchemicalStoneItem;
 import com.github.elenterius.magianaturalis.item.artifact.*;
-import com.github.elenterius.magianaturalis.item.baubles.ItemFocusPouchEnder;
-import com.github.elenterius.magianaturalis.item.focus.ItemFocusBuild;
-import com.github.elenterius.magianaturalis.item.focus.ItemFocusRevenant;
+import com.github.elenterius.magianaturalis.item.baubles.FocusEnderPouchItem;
+import com.github.elenterius.magianaturalis.item.focus.BuilderFocusItem;
+import com.github.elenterius.magianaturalis.item.focus.RevenantFocusItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 
@@ -16,7 +16,7 @@ public class MNItems {
     public static Item researchLog;
     public static Item biomeReport;
     public static Item alchemicalStone;
-    public static Item key;
+    public static Item arcaneKey;
     public static Item gogglesDark;
     public static Item spectacles;
     public static Item focusBuild;
@@ -33,19 +33,19 @@ public class MNItems {
     //public static final String MIXING_FLASK = "mixingFlask";
 
     public static void initItems() {
-        researchLog = registerItem("research_log", ItemResearchLog::new);
-        biomeReport = registerItem("biome_sampler", ItemBiomeSampler::new);
-        alchemicalStone = registerItem("alchemical_stone", ItemAlchemicalStone::new);
-        key = registerItem("thaumium_key", ItemKey::new);
-        gogglesDark = registerItem("dark_crystal_goggles", ItemGogglesDark::new);
-        spectacles = registerItem("spectacles", ItemSpectacles::new);
-        focusBuild = registerItem("builder_focus", ItemFocusBuild::new);
-        focusRevenant = registerItem("revenant_focus", ItemFocusRevenant::new);
-        evilTrunkSpawner = registerItem("evil_trunk", ItemEvilTrunkSpawner::new);
-        focusPouchEnder = registerItem("focus_ender_pouch", ItemFocusPouchEnder::new);
-        sickleThaumium = registerItem("thaumium_sickle", ItemThaumiumSickle::new);
-        sickleElemental = registerItem("elemental_sickle", ItemElementalSickle::new);
-        voidSickle = registerItem("void_sickle", ItemVoidSickle::new);
+        researchLog = registerItem("research_log", ResearchLogItem::new);
+        biomeReport = registerItem("biome_sampler", BiomeSamplerItem::new);
+        alchemicalStone = registerItem("alchemical_stone", AlchemicalStoneItem::new);
+        arcaneKey = registerItem("thaumium_key", ArcaneKeyItem::new);
+        gogglesDark = registerItem("dark_crystal_goggles", DarkCrystalGogglesItem::new);
+        spectacles = registerItem("spectacles", SpectaclesItem::new);
+        focusBuild = registerItem("builder_focus", BuilderFocusItem::new);
+        focusRevenant = registerItem("revenant_focus", RevenantFocusItem::new);
+        evilTrunkSpawner = registerItem("evil_trunk", EvilTrunkSpawnerItem::new);
+        focusPouchEnder = registerItem("focus_ender_pouch", FocusEnderPouchItem::new);
+        sickleThaumium = registerItem("thaumium_sickle", ThaumiumSickleItem::new);
+        sickleElemental = registerItem("elemental_sickle", ElementalSickleItem::new);
+        voidSickle = registerItem("void_sickle", VoidSickleItem::new);
 
         //devTool = registerItem("devTool", DevTool::new);
         //biomeDevTool = registerItem("biomeDevTool", BiomeDevTool::new);
@@ -54,6 +54,7 @@ public class MNItems {
     private static <T extends Item> T registerItem(String name, Supplier<T> factory) {
         T item = factory.get();
         item.setUnlocalizedName(MagiaNaturalis.translationKey(name));
+        item.setTextureName(MagiaNaturalis.rlString(name));
         item.setCreativeTab(MNCreativeTabs.MAIN);
 
         GameRegistry.registerItem(item, name);

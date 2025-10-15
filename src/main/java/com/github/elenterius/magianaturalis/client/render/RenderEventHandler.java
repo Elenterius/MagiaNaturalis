@@ -2,11 +2,11 @@ package com.github.elenterius.magianaturalis.client.render;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
 import com.github.elenterius.magianaturalis.api.ISpectacles;
-import com.github.elenterius.magianaturalis.item.artifact.ItemGogglesDark;
-import com.github.elenterius.magianaturalis.item.focus.ItemFocusBuild;
-import com.github.elenterius.magianaturalis.tile.TileArcaneChest;
-import com.github.elenterius.magianaturalis.util.FocusBuildHelper;
-import com.github.elenterius.magianaturalis.util.FocusBuildHelper.Meta;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
+import com.github.elenterius.magianaturalis.item.artifact.DarkCrystalGogglesItem;
+import com.github.elenterius.magianaturalis.item.focus.BuilderFocusItem;
+import com.github.elenterius.magianaturalis.util.BuilderFocusUtil;
+import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Meta;
 import com.github.elenterius.magianaturalis.util.Platform;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -76,7 +76,7 @@ public final class RenderEventHandler {
                 if (stack != null && stack.getItem() instanceof ItemWandCasting) {
                     ItemWandCasting wand = (ItemWandCasting) stack.getItem();
                     ItemFocusBasic focus = wand.getFocus(stack);
-                    if (focus instanceof ItemFocusBuild) {
+                    if (focus instanceof BuilderFocusItem) {
                         ItemStack focusStack = wand.getFocusItem(stack);
                         renderBuildFocusHUD(mc, focusStack, player);
                     }
@@ -91,7 +91,7 @@ public final class RenderEventHandler {
 
         ItemStack itemStack = event.entityPlayer.inventory.armorItemInSlot(3);
 
-        if (itemStack != null && itemStack.getItem() instanceof ItemGogglesDark) {
+        if (itemStack != null && itemStack.getItem() instanceof DarkCrystalGogglesItem) {
             GL11.glPushMatrix();
             float scale = 0.0625F;
 
@@ -144,7 +144,7 @@ public final class RenderEventHandler {
     private void renderBuildFocusHUD(Minecraft mc, ItemStack focusStack, EntityPlayer player) {
         GL11.glClear(GL11.GL_ACCUM);
 
-        Meta meta = FocusBuildHelper.getMeta(focusStack);
+        Meta meta = BuilderFocusUtil.getMeta(focusStack);
         Block pblock = null;
         int pbdata = 0;
         Item item = null;
@@ -172,7 +172,7 @@ public final class RenderEventHandler {
             }
         }
         else {
-            int[] i = FocusBuildHelper.getPickedBlock(focusStack);
+            int[] i = BuilderFocusUtil.getPickedBlock(focusStack);
             pblock = Block.getBlockById(i[0]);
             pbdata = i[1];
 
@@ -298,7 +298,7 @@ public final class RenderEventHandler {
                     if (node.getNodeModifier() != null)
                         meta = meta + ", " + Platform.translate("nodemod." + node.getNodeModifier() + ".name");
 
-                    String name = Platform.translate("tile.blockAiry.0.name");
+                    String name = Platform.translate("table.blockAiry.0.name");
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
@@ -312,7 +312,7 @@ public final class RenderEventHandler {
                     if (nodeEnergized.getNodeModifier() != null)
                         meta = meta + ", " + Platform.translate("nodemod." + nodeEnergized.getNodeModifier() + ".name");
 
-                    String name = Platform.translate("tile.blockAiry.5.name");
+                    String name = Platform.translate("table.blockAiry.5.name");
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
@@ -327,8 +327,8 @@ public final class RenderEventHandler {
                     fontRenderer.drawStringWithShadow(owner, -(fontRenderer.getStringWidth(owner) - 4) / 2, 25, 0xFFFFFF);
                     GL11.glPopMatrix();
                 }
-                else if (tile instanceof TileArcaneChest) {
-                    TileArcaneChest chest = (TileArcaneChest) tile;
+                else if (tile instanceof ArcaneChestBlockEntity) {
+                    ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
                     String name = EnumChatFormatting.DARK_PURPLE + "Owner" + EnumChatFormatting.RESET + " " + chest.getOwnerName();
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);

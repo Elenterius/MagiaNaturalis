@@ -2,8 +2,7 @@ package com.github.elenterius.magianaturalis.util;
 
 import com.github.elenterius.magianaturalis.network.PacketHandler;
 import com.github.elenterius.magianaturalis.network.packet.PacketBiomeChange;
-import com.github.elenterius.magianaturalis.util.FocusBuildHelper.Meta;
-import com.github.elenterius.magianaturalis.util.FocusBuildHelper.Shape;
+import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Shape;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -103,21 +102,20 @@ public class WorldUtil {
         Block block1 = world.getBlock(P1.x, P1.y, P1.z);
         Block block2 = world.getBlock(P2.x, P2.y, P2.z);
 
-        if (block1 == null || block2 == null)
-            return blocks;
+        if (block1 == null || block2 == null) return blocks;
+        if ((player == null) || player instanceof FakePlayer) return blocks;
 
-        if ((player == null) || player instanceof FakePlayer)
-            return blocks;
+        ItemStack equippedItemStack = player.getCurrentEquippedItem();
+        if (equippedItemStack != null && equippedItemStack.getItem() instanceof ItemWandCasting) {
+            ItemWandCasting wand = (ItemWandCasting) equippedItemStack.getItem();
+            ItemStack focusStack = wand.getFocusItem(equippedItemStack);
 
-        if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemWandCasting) {
-            ItemStack stack = player.getCurrentEquippedItem();
-            ItemWandCasting wand = (ItemWandCasting) stack.getItem();
-            Block oBlock = world.getBlock(ox, oy, oz);
-            int oBD = world.getBlockMetadata(ox, oy, oz);
+            //            Block oBlock = world.getBlock(ox, oy, oz);
+            //            int oBD = world.getBlockMetadata(ox, oy, oz);
 
-            Meta lmeta = FocusBuildHelper.getMeta(wand.getFocusItem(stack));
-            Shape lshape = FocusBuildHelper.getShape(wand.getFocusItem(stack));
-            int lsize = FocusBuildHelper.getSize(wand.getFocusItem(stack));
+            //            Meta lmeta = BuilderFocusUtil.getMeta(focusStack);
+            Shape lshape = BuilderFocusUtil.getShape(focusStack);
+            int lsize = BuilderFocusUtil.getSize(focusStack);
 
             int disX = Math.abs(P1.x - P2.x);
             int disY = Math.abs(P1.y - P2.y);
@@ -127,8 +125,8 @@ public class WorldUtil {
             int minY = Math.min(P1.y, P2.y);
             int minZ = Math.min(P1.z, P2.z);
 
-            for (int x = 0; x <= disX; x++)
-                for (int y = 0; y <= disY; y++)
+            for (int x = 0; x <= disX; x++) {
+                for (int y = 0; y <= disY; y++) {
                     for (int z = 0; z <= disZ; z++) {
                         int tempX = minX + x;
                         int tempY = minY + y;
@@ -150,6 +148,8 @@ public class WorldUtil {
                             }
                         }
                     }
+                }
+            }
         }
         return blocks;
     }

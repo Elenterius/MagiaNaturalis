@@ -1,9 +1,9 @@
 package com.github.elenterius.magianaturalis.client.gui;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
 import com.github.elenterius.magianaturalis.container.ContainerArcaneChest;
-import com.github.elenterius.magianaturalis.tile.TileArcaneChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,10 +14,10 @@ public class GuiArcaneChest extends GuiContainer {
     private static final ResourceLocation GREATWOOD_TEXTURE = MagiaNaturalis.rl("textures/gui/container/chest_greatwood.png");
     private static final ResourceLocation SILVERWOOD_TEXTURE = MagiaNaturalis.rl("textures/gui/container/chest_silverwood.png");
 
-    private final TileArcaneChest chest;
+    private final ArcaneChestBlockEntity chest;
     private final int type;
 
-    public GuiArcaneChest(InventoryPlayer invPlayer, TileArcaneChest tile) {
+    public GuiArcaneChest(InventoryPlayer invPlayer, ArcaneChestBlockEntity tile) {
         super(new ContainerArcaneChest(invPlayer, tile));
         chest = tile;
         type = tile.getChestType();

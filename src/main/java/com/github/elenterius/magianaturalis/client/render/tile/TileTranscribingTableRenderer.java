@@ -1,9 +1,9 @@
 package com.github.elenterius.magianaturalis.client.render.tile;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
-import com.github.elenterius.magianaturalis.item.artifact.ItemResearchLog;
-import com.github.elenterius.magianaturalis.tile.TileTranscribingTable;
+import com.github.elenterius.magianaturalis.item.artifact.ResearchLogItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -28,10 +28,10 @@ public class TileTranscribingTableRenderer extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
-        renderTileEntityAt((TileTranscribingTable) tile, x, y, z, f);
+        renderTileEntityAt((TranscribingTableBlockEntity) tile, x, y, z, f);
     }
 
-    public void renderTileEntityAt(TileTranscribingTable table, double x, double y, double z, float f) {
+    public void renderTileEntityAt(TranscribingTableBlockEntity table, double x, double y, double z, float f) {
         GL11.glPushMatrix();
         RenderUtil.bindTexture(TEXTURE);
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.0F, (float) z + 0.5F);
@@ -41,7 +41,7 @@ public class TileTranscribingTableRenderer extends TileEntitySpecialRenderer {
         GL11.glPopMatrix();
 
         if (table.getWorldObj() != null) {
-            if (table.getStackInSlot(0) != null && table.getStackInSlot(0).getItem() instanceof ItemResearchLog) {
+            if (table.getStackInSlot(0) != null && table.getStackInSlot(0).getItem() instanceof ResearchLogItem) {
                 GL11.glPushMatrix();
                 GL11.glTranslatef((float) x + 0.59F, (float) y + 1.02F, (float) z + 0.29F);
                 GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);

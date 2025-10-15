@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.client.render.block;
 
-import com.github.elenterius.magianaturalis.block.BlockJarPrison;
+import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlock;
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -20,15 +20,15 @@ public class BlockJarRenderer extends BlockRenderer implements ISimpleBlockRende
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-        IIcon i1 = ((BlockJarPrison) block).iconJarTop;
-        IIcon i2 = ((BlockJarPrison) block).iconJarSide;
+        IIcon i1 = ((PrisonJarBlock) block).iconJarTop;
+        IIcon i2 = ((PrisonJarBlock) block).iconJarSide;
 
         block.setBlockBounds(W3, 0.0F, W3, W13, W12, W13);
         renderer.setRenderBoundsFromBlock(block);
-        drawFaces(renderer, block, ((BlockJarPrison) block).iconJarBottom, i1, i2, i2, i2, i2, true);
+        drawFaces(renderer, block, ((PrisonJarBlock) block).iconJarBottom, i1, i2, i2, i2, i2, true);
         block.setBlockBounds(W5, W12, W5, W11, W14, W11);
         renderer.setRenderBoundsFromBlock(block);
-        drawFaces(renderer, block, ((BlockJarPrison) block).iconJarBottom, i1, i2, i2, i2, i2, true);
+        drawFaces(renderer, block, ((PrisonJarBlock) block).iconJarBottom, i1, i2, i2, i2, i2, true);
         GL11.glPopMatrix();
     }
 

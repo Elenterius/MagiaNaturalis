@@ -1,13 +1,12 @@
 package com.github.elenterius.magianaturalis.item;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
-import com.github.elenterius.magianaturalis.item.artifact.ItemResearchLog;
-import com.github.elenterius.magianaturalis.tile.TileArcaneChest;
-import com.github.elenterius.magianaturalis.tile.TileTranscribingTable;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
+import com.github.elenterius.magianaturalis.item.artifact.ResearchLogItem;
 import com.github.elenterius.magianaturalis.util.Platform;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,8 +32,11 @@ public class DevTool extends Item {
         super();
         modes = 2;
         maxStackSize = 1;
+
+        setTextureName(MagiaNaturalis.rlString("research_log"));
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         super.addInformation(stack, player, list, par4);
@@ -49,11 +51,6 @@ public class DevTool extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister icon) {
-        itemIcon = icon.registerIcon(MagiaNaturalis.rlString("book_magia_natura"));
-    }
-
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (Platform.isClient()) return stack;
 
@@ -77,6 +74,7 @@ public class DevTool extends Item {
         return stack;
     }
 
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
         if (Platform.isClient()) return false;
 
@@ -93,16 +91,16 @@ public class DevTool extends Item {
                 MagiaNaturalis.LOGGER.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner: %s%nAccessList: %s", x, y, z, owned.owner, owned.accessList.toString()).toString());
                 return true;
             }
-            else if (tile instanceof TileArcaneChest) {
-                TileArcaneChest chest = (TileArcaneChest) tile;
+            else if (tile instanceof ArcaneChestBlockEntity) {
+                ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
                 MagiaNaturalis.LOGGER.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner UUID: %s%nPlayer UUID: %s%nAccessList: %s", x, y, z, chest.owner.toString(), player.getGameProfile().getId(), chest.accessList.toString()).toString());
                 return true;
             }
-            else if (tile instanceof TileTranscribingTable) {
-                TileTranscribingTable table = (TileTranscribingTable) tile;
+            else if (tile instanceof TranscribingTableBlockEntity) {
+                TranscribingTableBlockEntity table = (TranscribingTableBlockEntity) tile;
                 ItemStack stack2 = table.getStackInSlot(0);
-                if (stack2.getItem() instanceof ItemResearchLog) {
-                    ItemResearchLog log = (ItemResearchLog) stack2.getItem();
+                if (stack2.getItem() instanceof ResearchLogItem) {
+                    ResearchLogItem log = (ResearchLogItem) stack2.getItem();
                     int i = 6;
                     if (log.getResearchPoint(stack2, Aspect.AIR) < 64) i--;
                     if (log.getResearchPoint(stack2, Aspect.EARTH) < 64) i--;

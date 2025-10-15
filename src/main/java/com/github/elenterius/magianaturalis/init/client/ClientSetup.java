@@ -1,5 +1,10 @@
 package com.github.elenterius.magianaturalis.init.client;
 
+import com.github.elenterius.magianaturalis.block.banner.CustomBannerBlockEntity;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
+import com.github.elenterius.magianaturalis.block.geopylon.GeoPylonBlockEntity;
+import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlockEntity;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
 import com.github.elenterius.magianaturalis.client.gui.GuiArcaneChest;
 import com.github.elenterius.magianaturalis.client.gui.GuiEvilTrunk;
 import com.github.elenterius.magianaturalis.client.gui.GuiTranscribingTable;
@@ -15,11 +20,9 @@ import com.github.elenterius.magianaturalis.entity.EntityZombieExtended;
 import com.github.elenterius.magianaturalis.entity.taint.EntityTaintBreeder;
 import com.github.elenterius.magianaturalis.init.CommonSetup;
 import com.github.elenterius.magianaturalis.init.MNItems;
-import com.github.elenterius.magianaturalis.tile.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -35,17 +38,18 @@ public class ClientSetup extends CommonSetup {
         super.init(event);
         registerRenderer();
         RenderEventHandler.register();
-        FMLCommonHandler.instance().bus().register(new KeyEventHandler());
+        MNKeyBindings.register();
+        KeyEventHandler.register();
     }
 
     public void registerRenderer() {
         registerBlockRenderer(new BlockEntityRenderer());
-        registerTileEntitySpecialRenderer(TileTranscribingTable.class, new TileTranscribingTableRenderer());
-        registerTileEntitySpecialRenderer(TileArcaneChest.class, new TileArcaneChestRenderer());
-        registerTileEntitySpecialRenderer(TileBannerCustom.class, new TileBannerCustomRenderer());
+        registerTileEntitySpecialRenderer(TranscribingTableBlockEntity.class, new TileTranscribingTableRenderer());
+        registerTileEntitySpecialRenderer(ArcaneChestBlockEntity.class, new TileArcaneChestRenderer());
+        registerTileEntitySpecialRenderer(CustomBannerBlockEntity.class, new TileBannerCustomRenderer());
         registerBlockRenderer(new BlockJarRenderer());
-        registerTileEntitySpecialRenderer(TileJarPrison.class, new TileJarPrisonRenderer());
-        registerTileEntitySpecialRenderer(TileGeoMorpher.class, new TileGeoMorpherRenderer());
+        registerTileEntitySpecialRenderer(PrisonJarBlockEntity.class, new TileJarPrisonRenderer());
+        registerTileEntitySpecialRenderer(GeoPylonBlockEntity.class, new TileGeoMorpherRenderer());
 
         MinecraftForgeClient.registerItemRenderer(MNItems.evilTrunkSpawner, new RenderItemEvilTrunkSpawner());
 
@@ -67,9 +71,9 @@ public class ClientSetup extends CommonSetup {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case 1:
-                return new GuiTranscribingTable(player.inventory, (TileTranscribingTable) world.getTileEntity(x, y, z));
+                return new GuiTranscribingTable(player.inventory, (TranscribingTableBlockEntity) world.getTileEntity(x, y, z));
             case 2:
-                return new GuiArcaneChest(player.inventory, (TileArcaneChest) world.getTileEntity(x, y, z));
+                return new GuiArcaneChest(player.inventory, (ArcaneChestBlockEntity) world.getTileEntity(x, y, z));
             case 3:
                 return new GuiEvilTrunk(player, (EntityEvilTrunk) world.getEntityByID(x));
             default:

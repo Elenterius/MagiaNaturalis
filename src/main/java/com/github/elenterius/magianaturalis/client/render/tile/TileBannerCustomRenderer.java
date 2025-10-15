@@ -1,8 +1,8 @@
 package com.github.elenterius.magianaturalis.client.render.tile;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
+import com.github.elenterius.magianaturalis.block.banner.CustomBannerBlockEntity;
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
-import com.github.elenterius.magianaturalis.tile.TileBannerCustom;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
@@ -18,10 +18,10 @@ public class TileBannerCustomRenderer extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f1)
 	{
-		this.renderTileEntityAt((TileBannerCustom) entity, x, y, z, f1);
+        this.renderTileEntityAt((CustomBannerBlockEntity) entity, x, y, z, f1);
 	}
 
-	public void renderTileEntityAt(TileBannerCustom banner, double x, double y, double z, float f1)
+    public void renderTileEntityAt(CustomBannerBlockEntity banner, double x, double y, double z, float f1)
 	{
 		boolean flag = banner.getWorldObj() != null;
 		long k = flag ? banner.getWorldObj().getTotalWorldTime() : 0L;

@@ -1,8 +1,8 @@
 package com.github.elenterius.magianaturalis.client.gui;
 
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
 import com.github.elenterius.magianaturalis.container.ContainerTranscribingTable;
-import com.github.elenterius.magianaturalis.tile.TileTranscribingTable;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -12,9 +12,9 @@ public class GuiTranscribingTable extends GuiContainer {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation("thaumcraft", "textures/gui/gui_decontable.png");
 
-    private final TileTranscribingTable tileTable;
+    private final TranscribingTableBlockEntity tileTable;
 
-    public GuiTranscribingTable(InventoryPlayer invPlayer, TileTranscribingTable tileTable) {
+    public GuiTranscribingTable(InventoryPlayer invPlayer, TranscribingTableBlockEntity tileTable) {
         super(new ContainerTranscribingTable(invPlayer, tileTable));
         this.tileTable = tileTable;
     }

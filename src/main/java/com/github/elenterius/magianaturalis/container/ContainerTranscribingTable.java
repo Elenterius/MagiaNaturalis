@@ -1,7 +1,7 @@
 package com.github.elenterius.magianaturalis.container;
 
-import com.github.elenterius.magianaturalis.item.artifact.ItemResearchLog;
-import com.github.elenterius.magianaturalis.tile.TileTranscribingTable;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
+import com.github.elenterius.magianaturalis.item.artifact.ResearchLogItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,11 +13,11 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerTranscribingTable extends Container {
 
-    private final TileTranscribingTable table;
+    private final TranscribingTableBlockEntity table;
 
     private int lastPauseTime;
 
-    public ContainerTranscribingTable(InventoryPlayer inventoryPlayer, TileTranscribingTable tile) {
+    public ContainerTranscribingTable(InventoryPlayer inventoryPlayer, TranscribingTableBlockEntity tile) {
         table = tile;
         addSlotToContainer(new Slot(tile, 0, 64, 16));
         addSlotToContainer(new SlotInvalid(tile, 1, 64, 48));
@@ -81,7 +81,7 @@ public class ContainerTranscribingTable extends Container {
                 slot.onSlotChange(selectedStack, stack);
             }
             if (index > 1) {
-                if (selectedStack.getItem() instanceof ItemResearchLog) {
+                if (selectedStack.getItem() instanceof ResearchLogItem) {
                     if (!mergeItemStack(selectedStack, 0, 1, false))
                         return null;
                 }

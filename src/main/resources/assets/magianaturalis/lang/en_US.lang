@@ -71,9 +71,9 @@ tile.magianaturalis.arcane_wood.gw_gold_orn.0.name=Greatwood Gold Ornament
 tile.magianaturalis.arcane_wood.gw_gold_orn.1.name=Greatwood Gold Ornament
 tile.magianaturalis.arcane_wood.gw_gold_trim.name=Greatwood Gold Trim
 tile.magianaturalis.banner.name=Magia Naturalis Banner
-tile.magianaturalis.geo_morpher.name=Geo-Pylon
+tile.magianaturalis.geo_pylon.name=Geo-Pylon
 
-# ENTITIY NAMES
+# ENTITY NAMES
 entity.magianaturalis.taint_breeder.name=Taint Breeder
 entity.magianaturalis.evil_trunk.name=Evil Trunk
 

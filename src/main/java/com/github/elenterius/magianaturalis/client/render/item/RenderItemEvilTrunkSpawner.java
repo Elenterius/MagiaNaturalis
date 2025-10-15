@@ -2,7 +2,7 @@ package com.github.elenterius.magianaturalis.client.render.item;
 
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
 import com.github.elenterius.magianaturalis.client.render.entity.trunk.*;
-import com.github.elenterius.magianaturalis.item.artifact.ItemEvilTrunkSpawner;
+import com.github.elenterius.magianaturalis.item.artifact.EvilTrunkSpawnerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
@@ -45,7 +45,7 @@ public class RenderItemEvilTrunkSpawner implements IItemRenderer {
         GL11.glTranslatef(0.5F, -0.5F, 0.5F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        if (item.getItem() instanceof ItemEvilTrunkSpawner) {
+        if (item.getItem() instanceof EvilTrunkSpawnerItem) {
             switch (item.getItemDamage()) {
                 case 0:
                     RenderUtil.bindTexture(EvilTrunkRenderer.CORRUPTED_TEXTURE);

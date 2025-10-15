@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.container;
 
-import com.github.elenterius.magianaturalis.tile.TileArcaneChest;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -11,9 +11,9 @@ public class ContainerArcaneChest extends Container {
 
     int type;
 
-    private final TileArcaneChest chest;
+    private final ArcaneChestBlockEntity chest;
 
-    public ContainerArcaneChest(InventoryPlayer inventoryPlayer, TileArcaneChest tile) {
+    public ContainerArcaneChest(InventoryPlayer inventoryPlayer, ArcaneChestBlockEntity tile) {
         chest = tile;
         chest.openInventory();
         type = chest.getChestType();

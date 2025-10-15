@@ -19,8 +19,8 @@ public final class MNEntities {
 
     static void register() {
         int id = 0;
-        // TODO: remove registerGlobalEntityID -> leading to major bug - make own spawn eggs
-        EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, "taint_breeder", EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
+
+        EntityRegistry.registerGlobalEntityID(EntityTaintBreeder.class, MagiaNaturalis.translationKey("taint_breeder"), EntityRegistry.findGlobalUniqueEntityId(), 0xFFC0FF, 0x800090);
         EntityRegistry.registerModEntity(EntityTaintBreeder.class, "taint_breeder", id++, MagiaNaturalis.instance, 64, 3, false);
 
         EntityRegistry.registerModEntity(EntityEvilTrunk.class, "evil_trunk", id++, MagiaNaturalis.instance, 64, 3, false);

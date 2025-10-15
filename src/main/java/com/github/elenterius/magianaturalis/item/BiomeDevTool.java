@@ -5,7 +5,6 @@ import com.github.elenterius.magianaturalis.util.Platform;
 import cpw.mods.fml.relauncher.FMLInjectionData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,8 +23,11 @@ public class BiomeDevTool extends Item {
     public BiomeDevTool() {
         super();
         maxStackSize = 1;
+
+        setTextureName(MagiaNaturalis.rlString("research_log"));
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         super.addInformation(stack, player, list, par4);
@@ -33,11 +35,6 @@ public class BiomeDevTool extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister icon) {
-        itemIcon = icon.registerIcon(MagiaNaturalis.rlString("book_magia_natura"));
-    }
-
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (Platform.isClient()) return stack;
         return stack;
@@ -128,4 +125,5 @@ public class BiomeDevTool extends Item {
 
         return false;
     }
+
 }

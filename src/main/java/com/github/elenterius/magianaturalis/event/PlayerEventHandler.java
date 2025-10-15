@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.event;
 
-import com.github.elenterius.magianaturalis.item.artifact.ItemKey;
+import com.github.elenterius.magianaturalis.item.artifact.ArcaneKeyItem;
 import com.github.elenterius.magianaturalis.util.NBTUtil;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +20,7 @@ public final class PlayerEventHandler {
 
         if (player == null || stack == null) return;
 
-        if (stack.getItem() instanceof ItemKey) {
+        if (stack.getItem() instanceof ArcaneKeyItem) {
             NBTTagCompound data = NBTUtil.openNbtData(stack);
             boolean hasAccess = false;
             if (data.hasKey("forger") && UUID.fromString(data.getString("forger")).equals(player.getGameProfile().getId())) {

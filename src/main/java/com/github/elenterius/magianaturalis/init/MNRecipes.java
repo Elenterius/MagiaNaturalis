@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.init;
 
-import com.github.elenterius.magianaturalis.block.BlockArcaneChest;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -96,12 +96,12 @@ public final class MNRecipes {
                 'I', new ItemStack(ConfigItems.itemResource, 1, 2),
                 'N', new ItemStack(ConfigItems.itemNugget, 1, 6),
                 'X', new ItemStack(ConfigItems.itemNugget, 1, 0)};
-        recipes.put("ThaumiumKey1", ThaumcraftApi.addArcaneCraftingRecipe("KEY_SPECIAL", new ItemStack(MNItems.key, 2, 0), aspects, recipe));
+        recipes.put("ThaumiumKey1", ThaumcraftApi.addArcaneCraftingRecipe("KEY_SPECIAL", new ItemStack(MNItems.arcaneKey, 2, 0), aspects, recipe));
         recipe = new Object[]{"NXI", "N  ",
                 'I', new ItemStack(ConfigItems.itemResource, 1, 2),
                 'N', new ItemStack(ConfigItems.itemNugget, 1, 6),
                 'X', Items.gold_nugget};
-        recipes.put("ThaumiumKey2", ThaumcraftApi.addArcaneCraftingRecipe("KEY_SPECIAL", new ItemStack(MNItems.key, 2, 1), aspects, recipe));
+        recipes.put("ThaumiumKey2", ThaumcraftApi.addArcaneCraftingRecipe("KEY_SPECIAL", new ItemStack(MNItems.arcaneKey, 2, 1), aspects, recipe));
 
         aspects = new AspectList().add(Aspect.ORDER, 5).add(Aspect.ENTROPY, 5).add(Aspect.AIR, 5).add(Aspect.EARTH, 5).add(Aspect.FIRE, 5).add(Aspect.WATER, 5);
         recipe = new Object[]{"ILI", "TGT",
@@ -131,7 +131,7 @@ public final class MNRecipes {
                 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
                 'C', Blocks.chest};
         ItemStack arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, 1);
-        BlockArcaneChest.setChestType(arcaneChest, (byte) 1);
+        ArcaneChestBlock.setChestType(arcaneChest, (byte) 1);
         recipes.put("ArcaneChest1", ThaumcraftApi.addArcaneCraftingRecipe("ARCANE_CHEST", arcaneChest, aspects, recipe));
         recipe = new Object[]{"IBI", "WCW", "IWI",
                 'I', new ItemStack(ConfigItems.itemResource, 1, 2),
@@ -139,7 +139,7 @@ public final class MNRecipes {
                 'W', new ItemStack(MNBlocks.arcaneWood, 1, 2),
                 'C', Blocks.chest};
         arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, 2);
-        BlockArcaneChest.setChestType(arcaneChest, (byte) 2);
+        ArcaneChestBlock.setChestType(arcaneChest, (byte) 2);
         recipes.put("ArcaneChest2", ThaumcraftApi.addArcaneCraftingRecipe("ARCANE_CHEST", arcaneChest, aspects, recipe));
     }
 
@@ -158,7 +158,7 @@ public final class MNRecipes {
                 new ItemStack(ConfigItems.itemShard, 1, 4),
                 new ItemStack(ConfigItems.itemShard, 1, 5)
         };
-        recipes.put("GeoPylon", ThaumcraftApi.addInfusionCraftingRecipe("GEO_OCCULTISM", new ItemStack(MNBlocks.geoMorpher), 8, aspects, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 14), recipe));
+        recipes.put("GeoPylon", ThaumcraftApi.addInfusionCraftingRecipe("GEO_OCCULTISM", new ItemStack(MNBlocks.geoPylon), 8, aspects, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 14), recipe));
 
         aspects = new AspectList().add(Aspect.SENSES, 32).add(Aspect.ARMOR, 16).add(Aspect.DARKNESS, 32);
         recipe = new ItemStack[]{

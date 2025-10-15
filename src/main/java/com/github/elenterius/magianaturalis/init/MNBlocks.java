@@ -1,12 +1,21 @@
 package com.github.elenterius.magianaturalis.init;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
-import com.github.elenterius.magianaturalis.block.*;
-import com.github.elenterius.magianaturalis.block.item.BlockArcaneChestItem;
-import com.github.elenterius.magianaturalis.block.item.BlockArcaneWoodItem;
-import com.github.elenterius.magianaturalis.block.item.BlockBannerItem;
-import com.github.elenterius.magianaturalis.block.item.BlockJarPrisonItem;
-import com.github.elenterius.magianaturalis.tile.*;
+import com.github.elenterius.magianaturalis.block.banner.CustomBannerBlock;
+import com.github.elenterius.magianaturalis.block.banner.CustomBannerBlockEntity;
+import com.github.elenterius.magianaturalis.block.banner.CustomBannerBlockItem;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlock;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockItem;
+import com.github.elenterius.magianaturalis.block.geopylon.GeoPylonBlock;
+import com.github.elenterius.magianaturalis.block.geopylon.GeoPylonBlockEntity;
+import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlock;
+import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlockEntity;
+import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlockItem;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlock;
+import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
+import com.github.elenterius.magianaturalis.block.wood.ArcaneWoodBlock;
+import com.github.elenterius.magianaturalis.block.wood.ArcaneWoodBlockItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -22,15 +31,15 @@ public class MNBlocks {
     public static Block jarPrison;
     public static Block arcaneWood;
     public static Block banner;
-    public static Block geoMorpher;
+    public static Block geoPylon;
 
     public static void initBlocks() {
-        transcribingTable = registerBlock("transcribing_table", BlockTranscribingTable::new);
-        arcaneChest = registerBlock("arcane_chest", BlockArcaneChestItem.class, BlockArcaneChest::new);
-        jarPrison = registerBlock("prison_jar", BlockJarPrisonItem.class, BlockJarPrison::new);
-        arcaneWood = registerBlock("arcane_wood", BlockArcaneWoodItem.class, BlockArcaneWood::new);
-        banner = registerBlock("banner", BlockBannerItem.class, BlockBanner::new);
-        geoMorpher = registerBlock("geo_morpher", BlockGeoMorpher::new);
+        transcribingTable = registerBlock("transcribing_table", TranscribingTableBlock::new);
+        arcaneChest = registerBlock("arcane_chest", ArcaneChestBlockItem.class, ArcaneChestBlock::new);
+        jarPrison = registerBlock("prison_jar", PrisonJarBlockItem.class, PrisonJarBlock::new);
+        arcaneWood = registerBlock("arcane_wood", ArcaneWoodBlockItem.class, ArcaneWoodBlock::new);
+        banner = registerBlock("banner", CustomBannerBlockItem.class, CustomBannerBlock::new);
+        geoPylon = registerBlock("geo_pylon", GeoPylonBlock::new);
 
         registerOreDict();
     }
@@ -62,11 +71,11 @@ public class MNBlocks {
     }
 
     public static void initTileEntities() {
-        GameRegistry.registerTileEntity(TileTranscribingTable.class, MagiaNaturalis.rlString("transcribing_table"));
-        GameRegistry.registerTileEntity(TileArcaneChest.class, MagiaNaturalis.rlString("arcane_chest"));
-        GameRegistry.registerTileEntity(TileJarPrison.class, MagiaNaturalis.rlString("prison_jar"));
-        GameRegistry.registerTileEntity(TileBannerCustom.class, MagiaNaturalis.rlString("banner"));
-        GameRegistry.registerTileEntity(TileGeoMorpher.class, MagiaNaturalis.rlString("geo_morpher"));
+        GameRegistry.registerTileEntity(TranscribingTableBlockEntity.class, MagiaNaturalis.rlString("transcribing_table"));
+        GameRegistry.registerTileEntity(ArcaneChestBlockEntity.class, MagiaNaturalis.rlString("arcane_chest"));
+        GameRegistry.registerTileEntity(PrisonJarBlockEntity.class, MagiaNaturalis.rlString("prison_jar"));
+        GameRegistry.registerTileEntity(CustomBannerBlockEntity.class, MagiaNaturalis.rlString("banner"));
+        GameRegistry.registerTileEntity(GeoPylonBlockEntity.class, MagiaNaturalis.rlString("geo_pylon"));
     }
 
 }

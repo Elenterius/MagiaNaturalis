@@ -1,8 +1,8 @@
 package com.github.elenterius.magianaturalis.client.render.tile;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
 import com.github.elenterius.magianaturalis.client.render.RenderUtil;
-import com.github.elenterius.magianaturalis.tile.TileArcaneChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -19,10 +19,10 @@ public class TileArcaneChestRenderer extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
 	{
-		this.renderTileEntityAt((TileArcaneChest)tile, x, y, z, f);
+        this.renderTileEntityAt((ArcaneChestBlockEntity) tile, x, y, z, f);
 	}
 
-	public void renderTileEntityAt(TileArcaneChest tile, double x, double y, double z, float f)
+    public void renderTileEntityAt(ArcaneChestBlockEntity tile, double x, double y, double z, float f)
 	{
 		int meta = 0;
 		if(!tile.hasWorldObj()) {meta = 0;}

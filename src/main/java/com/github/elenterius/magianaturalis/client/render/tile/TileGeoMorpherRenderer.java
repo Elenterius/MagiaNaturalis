@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.client.render.tile;
 
-import com.github.elenterius.magianaturalis.tile.TileGeoMorpher;
+import com.github.elenterius.magianaturalis.block.geopylon.GeoPylonBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -31,10 +31,10 @@ public class TileGeoMorpherRenderer extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
-        renderCrystalPylon((TileGeoMorpher) tile, x, y, z, tick, color.getRGB(), new Random((long) tile.xCoord * tile.yCoord + tile.zCoord));
+        renderCrystalPylon((GeoPylonBlockEntity) tile, x, y, z, tick, color.getRGB(), new Random((long) tile.xCoord * tile.yCoord + tile.zCoord));
     }
 
-    public void renderCrystalPylon(TileGeoMorpher tile, double x, double y, double z, float partialTicks, int color, Random rand) {
+    public void renderCrystalPylon(GeoPylonBlockEntity tile, double x, double y, double z, float partialTicks, int color, Random rand) {
         if (!tile.idle) ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted;
         float shade = MathHelper.sin((ticks + rand.nextInt(10)) / (10.0F + rand.nextFloat())) * 0.05F + 0.95F;
         float bob = MathHelper.sin(ticks / 14.0F) * 0.025F;

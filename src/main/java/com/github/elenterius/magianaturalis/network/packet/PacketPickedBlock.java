@@ -1,8 +1,8 @@
 package com.github.elenterius.magianaturalis.network.packet;
 
-import com.github.elenterius.magianaturalis.item.focus.ItemFocusBuild;
+import com.github.elenterius.magianaturalis.item.focus.BuilderFocusItem;
 import com.github.elenterius.magianaturalis.network.packet.PacketPickedBlock.PickedBlockMessage;
-import com.github.elenterius.magianaturalis.util.FocusBuildHelper;
+import com.github.elenterius.magianaturalis.util.BuilderFocusUtil;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -25,12 +25,12 @@ public class PacketPickedBlock implements IMessageHandler<PickedBlockMessage, IM
             if (stack != null && stack.getItem() instanceof ItemWandCasting) {
                 ItemWandCasting wand = (ItemWandCasting) stack.getItem();
                 ItemFocusBasic focus = wand.getFocus(stack);
-                if (focus instanceof ItemFocusBuild) {
+                if (focus instanceof BuilderFocusItem) {
                     Block block = Block.getBlockById(message.blockID);
                     int meta = message.blockMeta;
 
                     if (block != null && meta >= 0 && meta <= 15) {
-                        FocusBuildHelper.setpickedBlock(wand.getFocusItem(stack), block, meta);
+                        BuilderFocusUtil.setPickedBlock(wand.getFocusItem(stack), block, meta);
                     }
                 }
             }
