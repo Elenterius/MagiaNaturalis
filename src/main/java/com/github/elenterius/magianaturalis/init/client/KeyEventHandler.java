@@ -40,7 +40,7 @@ public final class KeyEventHandler {
                 id = 3;
             }
             else if (GuiScreen.isCtrlKeyDown() && MNKeyBindings.MISC_KEY.isPressed()) {
-                id = 4; //Meta
+                id = 4; //Mode
             }
             else if (MNKeyBindings.MISC_KEY.isPressed()) {
                 id = 5; //Shape

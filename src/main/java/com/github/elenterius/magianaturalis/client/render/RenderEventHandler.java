@@ -6,7 +6,7 @@ import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
 import com.github.elenterius.magianaturalis.item.artifact.DarkCrystalGogglesItem;
 import com.github.elenterius.magianaturalis.item.focus.BuilderFocusItem;
 import com.github.elenterius.magianaturalis.util.BuilderFocusUtil;
-import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Meta;
+import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Mode;
 import com.github.elenterius.magianaturalis.util.Platform;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -42,15 +42,15 @@ import thaumcraft.common.tiles.TileOwned;
 public final class RenderEventHandler {
 
     private static final ResourceLocation SILKTOUCH_TEXTURE = new ResourceLocation("thaumcraft", "textures/foci/silktouch.png");
-    private static final ResourceLocation HUD_FRAME_TEXTURE = MagiaNaturalis.rl("textures/misc/frame-gold.png");
     private static final ResourceLocation GLOWING_EYES_TEXTURE = MagiaNaturalis.rl("textures/models/glowingEyes.png");
     private static final ModelBiped OVERLAY_MODEL = new ModelBiped();
 
-    private RenderItem itemRender = new RenderItem();
-    private ItemStack lastItem = null;
-    private int lastCount = 0;
+    private final RenderItem itemRender;
+    private ItemStack prevPickedBlock = null;
+    private int prevCount = 0;
 
     private RenderEventHandler() {
+        itemRender = new RenderItem();
     }
 
     public static void register() {
@@ -63,7 +63,7 @@ public final class RenderEventHandler {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        if (Minecraft.isGuiEnabled() && !mc.isGamePaused() && mc.currentScreen == null && !mc.gameSettings.showDebugInfo) {
+        if (Minecraft.isGuiEnabled() && !mc.isGamePaused() /*&& mc.currentScreen == null*/ && !mc.gameSettings.showDebugInfo) {
             if (mc.renderViewEntity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) mc.renderViewEntity;
 
@@ -84,6 +84,30 @@ public final class RenderEventHandler {
             }
         }
     }
+
+    //	@SubscribeEvent
+    //	public void renderBlockHighlight(DrawBlockHighlightEvent event)
+    //	{
+    //		int ticks = event.player.ticksExisted;
+    //		MovingObjectPosition target = event.target;
+    //
+    //		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
+    //
+    //		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+    //		{
+    //			if(event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof ItemWandCasting)
+    //			{
+    //				ItemWandCasting wand = (ItemWandCasting) event.player.getHeldItem().getItem();
+    //				ItemStack focus = wand.getFocusItem( event.player.getHeldItem());
+    //				if(focus.getItem() instanceof ItemFocusBuild)
+    //				{
+    //					Log.logger.info("DO IT NOW");
+    //					if(Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
+    //						event.setCanceled(true);
+    //				}
+    //			}
+    //		}
+    //	}
 
     @SubscribeEvent
     public void renderPlayerSpecial(RenderPlayerEvent.Specials.Pre event) {
@@ -117,40 +141,17 @@ public final class RenderEventHandler {
         }
     }
 
-    //	@SubscribeEvent
-    //	public void renderBlockHighlight(DrawBlockHighlightEvent event)
-    //	{
-    //		int ticks = event.player.ticksExisted;
-    //		MovingObjectPosition target = event.target;
-    //
-    //		if(Thaumcraft.instance.renderEventHandler.wandHandler == null) Thaumcraft.instance.renderEventHandler.wandHandler = new REHWandHandler();
-    //
-    //		if(target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-    //		{
-    //			if(event.player.getHeldItem() != null && event.player.getHeldItem().getItem() instanceof ItemWandCasting)
-    //			{
-    //				ItemWandCasting wand = (ItemWandCasting) event.player.getHeldItem().getItem();
-    //				ItemStack focus = wand.getFocusItem( event.player.getHeldItem());
-    //				if(focus.getItem() instanceof ItemFocusBuild)
-    //				{
-    //					Log.logger.info("DO IT NOW");
-    //					if(Thaumcraft.instance.renderEventHandler.wandHandler.handleArchitectOverlay(event.player.getHeldItem(), event, ticks, target))
-    //						event.setCanceled(true);
-    //				}
-    //			}
-    //		}
-    //	}
-
     private void renderBuildFocusHUD(Minecraft mc, ItemStack focusStack, EntityPlayer player) {
         GL11.glClear(GL11.GL_ACCUM);
+        FontRenderer fontRenderer = mc.fontRenderer;
 
-        Meta meta = BuilderFocusUtil.getMeta(focusStack);
+        Mode builderMode = BuilderFocusUtil.getMode(focusStack);
         Block pblock = null;
         int pbdata = 0;
         Item item = null;
         ItemStack pickedBlock = null;
 
-        if (meta == Meta.UNIFORM) {
+        if (builderMode == BuilderFocusUtil.Mode.UNIFORM) {
             if (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
                 pblock = player.worldObj.getBlock(mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ);
                 pbdata = player.worldObj.getBlockMetadata(mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ);
@@ -182,90 +183,91 @@ public final class RenderEventHandler {
             }
         }
 
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glTranslatef(45F, 40F, 0F);
-        RenderUtil.drawTextureQuad(HUD_FRAME_TEXTURE, 32, 32);
-        if (pickedBlock == null && meta == Meta.UNIFORM) {
-            GL11.glTranslatef(1.5F, 1F, 0F);
-            GL11.glColor4f(1F, 1F, 1F, 0.3F);
-            RenderUtil.drawTextureQuad(SILKTOUCH_TEXTURE, 30, 30);
-            GL11.glColor4f(1F, 1F, 1F, 1F);
-        }
-        GL11.glPopMatrix();
-
-        FontRenderer fontRenderer = mc.fontRenderer;
-
         if (pickedBlock != null) {
-            int amount = lastCount;
-            if (player.inventory.inventoryChanged || !pickedBlock.isItemEqual(lastItem)) {
-                amount = 0;
-                for (ItemStack is : player.inventory.mainInventory) {
-                    if (is != null && is.isItemEqual(pickedBlock)) {
-                        amount += is.stackSize;
-                    }
-                }
-                lastItem = pickedBlock;
-                player.inventory.inventoryChanged = false;
-            }
-            lastCount = amount;
+            int amount = prevCount;
 
-            GL11.glPushMatrix();
-            GL11.glTranslatef(49F, 44F, 0F);
-            GL11.glScalef(1.5F, 1.5F, 1.5F);
-
-            if (itemRender != null && fontRenderer != null) {
-                RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
-            }
-            GL11.glEnable(GL11.GL_BLEND); //TODO: REMOVE this Hack when TC4 fixes its shaders issues
-
-            GL11.glPushMatrix();
-            String am = "" + amount;
-            int sw = fontRenderer.getStringWidth(am);
-            GL11.glTranslatef(0.0F, -fontRenderer.FONT_HEIGHT, 500.0F);
-            GL11.glScalef(0.5F, 0.5F, 0.5F);
-            for (int a = -1; a <= 1; a++) {
-                for (int b = -1; b <= 1; b++) {
-                    if ((a == 0 || b == 0) && (a != 0 || b != 0)) {
-                        mc.fontRenderer.drawString(am, a + 16 - sw, b + 24, 0);
-                    }
+            if (!player.capabilities.isCreativeMode) {
+                if (player.inventory.inventoryChanged || pickedBlock != prevPickedBlock || !pickedBlock.isItemEqual(prevPickedBlock)) {
+                    amount = countItemsInInventory(player, pickedBlock);
                 }
             }
-            mc.fontRenderer.drawString(am, 16 - sw, 24, 0xffffff);
 
-            if (meta == Meta.UNIFORM) {
-                GL11.glPushMatrix();
+            GL11.glPushMatrix();
+            {
+                GL11.glTranslatef(49F, 44F, 0F);
                 GL11.glScalef(1.5F, 1.5F, 1.5F);
-                GL11.glTranslatef(15F, 15F, 0F);
-                RenderUtil.drawTextureQuad(SILKTOUCH_TEXTURE, 16, 16);
-                GL11.glPopMatrix();
-            }
+                RenderUtil.drawItemStack(itemRender, fontRenderer, pickedBlock, 0, 0);
+                GL11.glEnable(GL11.GL_BLEND);
 
-            GL11.glPopMatrix();
-            GL11.glPopMatrix();
-        }
-        else if (meta != Meta.UNIFORM) {
-            GL11.glPushMatrix();
-            GL11.glTranslatef(49F, 44F, 0F);
-            GL11.glScalef(1.5F, 1.5F, 1.5F);
+                GL11.glTranslatef(0.0F, -fontRenderer.FONT_HEIGHT, 500F);
+                GL11.glScalef(0.5F, 0.5F, 0.5F);
 
-            GL11.glPushMatrix();
-            String amount = "?";
-            int width = fontRenderer.getStringWidth(amount);
-            GL11.glTranslatef(0.0F, -fontRenderer.FONT_HEIGHT, 500.0F);
-            GL11.glScalef(0.5F, 0.5F, 0.5F);
-            for (int a = -1; a <= 1; a++) {
-                for (int b = -1; b <= 1; b++) {
-                    if ((a == 0 || b == 0) && (a != 0 || b != 0)) {
-                        mc.fontRenderer.drawString(amount, a + 16 - width, b + 24, 0);
+                if (player.capabilities.isCreativeMode) {
+                    RenderUtil.drawStringWithBorder(fontRenderer, "Infinite", 0, 32 + 16, 0xffffff, 0);
+                }
+                else {
+                    RenderUtil.drawStringWithBorder(fontRenderer, "" + amount, 0, 32 + 16, 0xffffff, 0);
+                }
+
+                RenderUtil.drawStringWithBorder(fontRenderer, "Shape: " + BuilderFocusUtil.getShape(focusStack), 0, -2, 0xffffff, 0);
+                RenderUtil.drawStringWithBorder(fontRenderer, "Size: " + BuilderFocusUtil.getSize(focusStack), 0, -1 + fontRenderer.FONT_HEIGHT, 0xffffff, 0);
+
+                if (builderMode == BuilderFocusUtil.Mode.UNIFORM) {
+                    GL11.glPushMatrix();
+                    {
+                        GL11.glScalef(1.5F, 1.5F, 1.5F);
+                        GL11.glTranslatef(15F, 15F, 0F);
+                        RenderUtil.drawTextureQuad(SILKTOUCH_TEXTURE, 16, 16);
                     }
+                    GL11.glPopMatrix();
                 }
             }
-            mc.fontRenderer.drawString(amount, 16 - width, 24, 0xffffff);
+            GL11.glPopMatrix();
 
-            GL11.glPopMatrix();
-            GL11.glPopMatrix();
+            prevCount = amount;
         }
+        else {
+            GL11.glPushMatrix();
+            {
+                GL11.glTranslatef(49F, 44F, 0F);
+                GL11.glScalef(1.5F, 1.5F, 1.5F);
+
+                GL11.glTranslatef(0.0F, -fontRenderer.FONT_HEIGHT, 500F);
+                RenderUtil.drawStringWithBorder(fontRenderer, "?", 6, 14, 0xffffff, 0);
+
+                GL11.glScalef(0.5F, 0.5F, 0.5F);
+                RenderUtil.drawStringWithBorder(fontRenderer, "Shape: " + BuilderFocusUtil.getShape(focusStack), 0, -2, 0xffffff, 0);
+                RenderUtil.drawStringWithBorder(fontRenderer, "Size: " + BuilderFocusUtil.getSize(focusStack), 0, -1 + fontRenderer.FONT_HEIGHT, 0xffffff, 0);
+
+                if (builderMode == BuilderFocusUtil.Mode.UNIFORM) {
+                    GL11.glPushMatrix();
+                    {
+                        GL11.glScalef(1.5F, 1.5F, 1.5F);
+                        GL11.glTranslatef(15F, 15F, 0F);
+                        RenderUtil.drawTextureQuad(SILKTOUCH_TEXTURE, 16, 16);
+                    }
+                    GL11.glPopMatrix();
+                }
+            }
+            GL11.glPopMatrix();
+
+            prevCount = 0;
+        }
+
+        prevPickedBlock = pickedBlock;
+    }
+
+    private int countItemsInInventory(EntityPlayer player, ItemStack itemStack) {
+        int amount = 0;
+
+        for (ItemStack is : player.inventory.mainInventory) {
+            if (is != null && is.isItemEqual(itemStack)) {
+                amount += is.stackSize;
+            }
+        }
+        player.inventory.inventoryChanged = false;
+
+        return amount;
     }
 
     private void renderSpectaclesHUD(Minecraft mc, EntityPlayer player) {

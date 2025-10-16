@@ -59,4 +59,17 @@ public final class RenderUtil {
         //      GL11.glDisable(GL12.GL_RESCALE_NORMAL);
     }
 
+    static void drawStringWithBorder(FontRenderer fontRenderer, String text, int x, int y, int color, int borderColor) {
+        fontRenderer.drawString(text, x - 1, y, borderColor);
+        fontRenderer.drawString(text, x + 1, y, borderColor);
+        fontRenderer.drawString(text, x, y - 1, borderColor);
+        fontRenderer.drawString(text, x, y + 1, borderColor);
+        fontRenderer.drawString(text, x - 1, y - 1, borderColor);
+        fontRenderer.drawString(text, x + 1, y + 1, borderColor);
+        fontRenderer.drawString(text, x + 1, y - 1, borderColor);
+        fontRenderer.drawString(text, x - 1, y + 1, borderColor);
+
+        fontRenderer.drawString(text, x, y, color);
+    }
+
 }

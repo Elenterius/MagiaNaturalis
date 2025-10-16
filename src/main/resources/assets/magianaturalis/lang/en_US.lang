@@ -3,7 +3,7 @@ itemGroup.magianaturalis=Magia Naturalis
 
 enum.magianaturalis.none=None
 enum.magianaturalis.unknown=Unknown
-enum.magianaturalis.meta.uniform=Uniform
+enum.magianaturalis.mode.uniform=Uniform
 enum.magianaturalis.shape.cube=Cube
 enum.magianaturalis.shape.plane=Plane
 enum.magianaturalis.shape.plane.extend=Plane Extend

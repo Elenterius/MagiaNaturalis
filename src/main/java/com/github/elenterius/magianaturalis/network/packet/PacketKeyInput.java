@@ -4,8 +4,6 @@ import com.github.elenterius.magianaturalis.MagiaNaturalis;
 import com.github.elenterius.magianaturalis.item.focus.BuilderFocusItem;
 import com.github.elenterius.magianaturalis.network.packet.PacketKeyInput.KeyInputMessage;
 import com.github.elenterius.magianaturalis.util.BuilderFocusUtil;
-import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Meta;
-import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Shape;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -29,27 +27,21 @@ public class PacketKeyInput implements IMessageHandler<KeyInputMessage, IMessage
                 ItemFocusBasic focus = wand.getFocus(stack);
                 if (focus instanceof BuilderFocusItem) {
                     ItemStack focusStack = wand.getFocusItem(stack);
-
                     switch (message.keyId) {
                         case 2:
-                            int i = BuilderFocusUtil.getSize(focusStack) - 1;
-                            BuilderFocusUtil.setSize(focusStack, i < 1 ? focus.getMaxAreaSize(focusStack) : i);
+                            BuilderFocusUtil.cycleSize(focusStack, -1, 1, focus.getMaxAreaSize(focusStack));
                             break;
                         case 3:
-                            int j = BuilderFocusUtil.getSize(focusStack) + 1;
-                            BuilderFocusUtil.setSize(focusStack, j > focus.getMaxAreaSize(focusStack) ? 1 : j);
+                            BuilderFocusUtil.cycleSize(focusStack, 1, 1, focus.getMaxAreaSize(focusStack));
                             break;
                         case 4:
-                            int k = BuilderFocusUtil.getMeta(focusStack).ordinal();
-                            BuilderFocusUtil.setMeta(focusStack, k == 0 ? Meta.UNIFORM : Meta.NONE);
+                            BuilderFocusUtil.setMode(focusStack, BuilderFocusUtil.getMode(focusStack).cycle());
                             break;
                         case 5:
-                            int l = BuilderFocusUtil.getShape(focusStack).ordinal() + 1;
-                            BuilderFocusUtil.setShape(focusStack, l > 3 ? Shape.PLANE : BuilderFocusUtil.getShapeByID(l));
+                            BuilderFocusUtil.setShape(focusStack, BuilderFocusUtil.getShape(focusStack).next());
                             break;
                         case 51:
-                            int q = BuilderFocusUtil.getShape(focusStack).ordinal() - 1;
-                            BuilderFocusUtil.setShape(focusStack, q < 1 ? Shape.PLANE_EXTEND : BuilderFocusUtil.getShapeByID(q));
+                            BuilderFocusUtil.setShape(focusStack, BuilderFocusUtil.getShape(focusStack).prev());
                             break;
                         default:
                             MagiaNaturalis.LOGGER.error("Invalid KEY ID recieved.");

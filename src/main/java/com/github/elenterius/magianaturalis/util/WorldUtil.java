@@ -113,7 +113,7 @@ public class WorldUtil {
             //            Block oBlock = world.getBlock(ox, oy, oz);
             //            int oBD = world.getBlockMetadata(ox, oy, oz);
 
-            //            Meta lmeta = BuilderFocusUtil.getMeta(focusStack);
+            //            Mode lmeta = BuilderFocusUtil.getMeta(focusStack);
             Shape lshape = BuilderFocusUtil.getShape(focusStack);
             int lsize = BuilderFocusUtil.getSize(focusStack);
 

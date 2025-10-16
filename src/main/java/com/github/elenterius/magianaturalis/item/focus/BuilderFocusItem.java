@@ -2,7 +2,6 @@ package com.github.elenterius.magianaturalis.item.focus;
 
 import com.github.elenterius.magianaturalis.init.client.MNKeyBindings;
 import com.github.elenterius.magianaturalis.util.BuilderFocusUtil;
-import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Meta;
 import com.github.elenterius.magianaturalis.util.BuilderFocusUtil.Shape;
 import com.github.elenterius.magianaturalis.util.Platform;
 import com.github.elenterius.magianaturalis.util.WorldCoord;
@@ -53,7 +52,7 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
     public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean advancedItemTooltips) {
         super.addInformation(stack, player, lines, advancedItemTooltips);
         lines.add("");
-        lines.add(EnumChatFormatting.GRAY + "Mode: " + BuilderFocusUtil.getMeta(stack));
+        lines.add(EnumChatFormatting.GRAY + "Mode: " + BuilderFocusUtil.getMode(stack));
         lines.add(EnumChatFormatting.GRAY + "Shape: " + BuilderFocusUtil.getShape(stack));
         lines.add(EnumChatFormatting.GRAY + "Size: " + BuilderFocusUtil.getSize(stack));
         lines.add("");
@@ -145,7 +144,7 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
         Block pblock = null;
         int pbdata = 0;
 
-        if (BuilderFocusUtil.getMeta(focusStack) == Meta.UNIFORM) {
+        if (BuilderFocusUtil.getMode(focusStack) == BuilderFocusUtil.Mode.UNIFORM) {
             pblock = world.getBlock(x, y, z);
             pbdata = world.getBlockMetadata(x, y, z);
         }
