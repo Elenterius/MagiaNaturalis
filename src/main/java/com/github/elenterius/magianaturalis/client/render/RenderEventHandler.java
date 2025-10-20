@@ -300,7 +300,7 @@ public final class RenderEventHandler {
                     if (node.getNodeModifier() != null)
                         meta = meta + ", " + Platform.translate("nodemod." + node.getNodeModifier() + ".name");
 
-                    String name = Platform.translate("table.blockAiry.0.name");
+                    String name = Platform.translate("tile.blockAiry.0.name");
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
@@ -314,7 +314,7 @@ public final class RenderEventHandler {
                     if (nodeEnergized.getNodeModifier() != null)
                         meta = meta + ", " + Platform.translate("nodemod." + nodeEnergized.getNodeModifier() + ".name");
 
-                    String name = Platform.translate("table.blockAiry.5.name");
+                    String name = Platform.translate("tile.blockAiry.5.name");
                     GL11.glPushMatrix();
                     GL11.glTranslatef(w / 2, h / 2, 0F);
                     fontRenderer.drawStringWithShadow(name, -fontRenderer.getStringWidth(name) / 2, 25, 0xF057BC);
