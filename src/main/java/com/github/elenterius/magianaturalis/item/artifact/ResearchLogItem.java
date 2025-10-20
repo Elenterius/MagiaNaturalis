@@ -5,7 +5,6 @@ import com.github.elenterius.magianaturalis.util.NBTUtil;
 import com.github.elenterius.magianaturalis.util.Platform;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -24,6 +23,8 @@ import java.util.List;
 
 public class ResearchLogItem extends Item {
 
+    public static final Aspect[] RESEARCH_ASPECTS = {Aspect.AIR, Aspect.EARTH, Aspect.WATER, Aspect.FIRE, Aspect.ORDER, Aspect.ENTROPY};
+
     public ResearchLogItem() {
         super();
         maxStackSize = 1;
@@ -33,17 +34,26 @@ public class ResearchLogItem extends Item {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         super.addInformation(stack, player, list, par4);
-        if (GuiScreen.isCtrlKeyDown()) {
-            list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.AIR), EnumChatFormatting.YELLOW, Aspect.AIR.getName()));
-            list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.EARTH), EnumChatFormatting.GREEN, Aspect.EARTH.getName()));
-            list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.WATER), EnumChatFormatting.AQUA, Aspect.WATER.getName()));
-            list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.FIRE), EnumChatFormatting.RED, Aspect.FIRE.getName()));
-            list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.ORDER), EnumChatFormatting.WHITE, Aspect.ORDER.getName()));
-            list.add(String.format("%dx %s%s", getResearchPoint(stack, Aspect.ENTROPY), EnumChatFormatting.DARK_GRAY, Aspect.ENTROPY.getName()));
+
+        short airResearch = getResearchPoint(stack, Aspect.AIR);
+        short earthResearch = getResearchPoint(stack, Aspect.EARTH);
+        short waterResearch = getResearchPoint(stack, Aspect.WATER);
+        short fireResearch = getResearchPoint(stack, Aspect.FIRE);
+        short orderResearch = getResearchPoint(stack, Aspect.ORDER);
+        short entropyResearch = getResearchPoint(stack, Aspect.ENTROPY);
+
+        int totalResearch = airResearch + earthResearch + waterResearch + fireResearch + orderResearch + entropyResearch;
+        if (totalResearch == 0) {
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.empty"));
+            return;
         }
-        else {
-            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.ctrl"));
-        }
+
+        if (airResearch > 0) list.add(String.format("%dx %s%s", airResearch, EnumChatFormatting.YELLOW, Aspect.AIR.getName()));
+        if (earthResearch > 0) list.add(String.format("%dx %s%s", earthResearch, EnumChatFormatting.GREEN, Aspect.EARTH.getName()));
+        if (waterResearch > 0) list.add(String.format("%dx %s%s", waterResearch, EnumChatFormatting.AQUA, Aspect.WATER.getName()));
+        if (fireResearch > 0) list.add(String.format("%dx %s%s", fireResearch, EnumChatFormatting.RED, Aspect.FIRE.getName()));
+        if (orderResearch > 0) list.add(String.format("%dx %s%s", orderResearch, EnumChatFormatting.WHITE, Aspect.ORDER.getName()));
+        if (entropyResearch > 0) list.add(String.format("%dx %s%s", entropyResearch, EnumChatFormatting.DARK_GRAY, Aspect.ENTROPY.getName()));
     }
 
     @Override
@@ -52,8 +62,7 @@ public class ResearchLogItem extends Item {
         if (Platform.isClient()) return stack;
         if (player.isSneaking()) return stack;
 
-        Aspect[] array = {Aspect.AIR, Aspect.EARTH, Aspect.WATER, Aspect.FIRE, Aspect.ORDER, Aspect.ENTROPY};
-        for (Aspect aspect : array) {
+        for (Aspect aspect : RESEARCH_ASPECTS) {
             short amount = NBTUtil.getOrCreate(stack).getShort("rp:" + aspect.getTag());
             if (amount > 0 && MagiaNaturalis.proxyTC4.playerKnowledge.addAspectPool(player.getCommandSenderName(), aspect, amount)) {
                 ResearchManager.scheduleSave(player);
@@ -72,13 +81,13 @@ public class ResearchLogItem extends Item {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TileDeconstructionTable) {
             TileDeconstructionTable table = (TileDeconstructionTable) tile;
-            boolean bool = addResearchPoint(stack, table.aspect, (short) 1);
-            if (bool) {
+            if (addResearchPoint(stack, table.aspect, (short) 1)) {
                 table.aspect = null;
                 world.markBlockForUpdate(x, y, z);
+                return true;
             }
-            return bool;
         }
+
         return false;
     }
 
