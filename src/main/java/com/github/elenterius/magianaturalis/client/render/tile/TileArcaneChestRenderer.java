@@ -10,52 +10,65 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-public class TileArcaneChestRenderer extends TileEntitySpecialRenderer
-{
-	private static final ResourceLocation rl_gw = new ResourceLocation(MagiaNaturalis.MOD_ID, "textures/models/" + "chest_greatwood.png");
-	private static final ResourceLocation rl_sw = new ResourceLocation(MagiaNaturalis.MOD_ID, "textures/models/" + "chest_silverwood.png");
-	private final ModelChest chestModel = new ModelChest();
+public class TileArcaneChestRenderer extends TileEntitySpecialRenderer {
 
-	@Override
-	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
-	{
-        this.renderTileEntityAt((ArcaneChestBlockEntity) tile, x, y, z, f);
-	}
+    private static final ResourceLocation rl_gw = new ResourceLocation(MagiaNaturalis.MOD_ID, "textures/models/" + "chest_greatwood.png");
+    private static final ResourceLocation rl_sw = new ResourceLocation(MagiaNaturalis.MOD_ID, "textures/models/" + "chest_silverwood.png");
+    private final ModelChest chestModel = new ModelChest();
 
-    public void renderTileEntityAt(ArcaneChestBlockEntity tile, double x, double y, double z, float f)
-	{
-		int meta = 0;
-		if(!tile.hasWorldObj()) {meta = 0;}
-		else {meta = tile.getBlockMetadata();}
+    @Override
+    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks) {
+        renderTileEntityAt((ArcaneChestBlockEntity) tile, x, y, z, partialTicks);
+    }
 
-		if(tile.getChestType() == 1)
-			RenderUtil.bindTexture(rl_gw);
-		else if(tile.getChestType() == 2)
-			RenderUtil.bindTexture(rl_sw);
+    public void renderTileEntityAt(ArcaneChestBlockEntity tile, double x, double y, double z, float partialTicks) {
+        int metadata = !tile.hasWorldObj() ? 0 : tile.getBlockMetadata();
 
-		GL11.glPushMatrix();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
-		GL11.glScalef(1.0F, -1.0F, -1.0F);
-		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		short angle = 0;
-		if(meta == 2) {angle = 180;}
-		else if(meta == 3) {angle = 0;}
-		else if(meta == 4) {angle = 90;}
-		else if(meta == 5) {angle = -90;}
+        switch (tile.getChestType()) {
+            case GREAT_WOOD:
+                RenderUtil.bindTexture(rl_gw);
+                break;
+            case SILVER_WOOD:
+                RenderUtil.bindTexture(rl_sw);
+                break;
+        }
 
-		GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		float anglef = tile.prevLidAngle + (tile.lidAngle - tile.prevLidAngle) * f;
+        GL11.glPushMatrix();
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glTranslated(x, y + 1.0d, z + 1.0d);
+        GL11.glScalef(1.0F, -1.0F, -1.0F);
+        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 
-		anglef = 1.0F - anglef;
-		anglef = 1.0F - anglef * anglef * anglef;
-		this.chestModel.chestLid.rotateAngleX = (-(anglef * 3.141593F / 2.0F));
-		this.chestModel.renderAll();
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		GL11.glPopMatrix();
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-	}
+        float facingAngle = 0f;
+        switch (metadata) {
+            case 2:
+                facingAngle = 180f;
+                break;
+            case 3:
+                facingAngle = 0f;
+                break;
+            case 4:
+                facingAngle = 90f;
+                break;
+            case 5:
+                facingAngle = -90f;
+                break;
+        }
+
+        GL11.glRotatef(facingAngle, 0.0F, 1.0F, 0.0F);
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+
+        float lidAngle = tile.prevLidAngle + (tile.lidAngle - tile.prevLidAngle) * partialTicks;
+        lidAngle = 1.0F - lidAngle;
+        lidAngle = 1.0F - lidAngle * lidAngle * lidAngle;
+        chestModel.chestLid.rotateAngleX = (-(lidAngle * 3.141593F / 2.0F));
+
+        chestModel.renderAll();
+
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        GL11.glPopMatrix();
+    }
+
 }

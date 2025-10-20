@@ -69,11 +69,11 @@ public final class NBTUtil {
         return NBTUtil.loadInventoryFromNBT(NBTUtil.getOrCreate(stack), invSize);
     }
 
-    public static ItemStack[] loadInventoryFromNBT(NBTTagCompound data, int invSize) {
-        if (!data.hasKey("Items")) return null;
+    public static ItemStack[] loadInventoryFromNBT(NBTTagCompound data, int inventorySize) {
+        if (!data.hasKey("Items")) return new ItemStack[inventorySize];
 
         NBTTagList items = data.getTagList("Items", NBT.TAG_COMPOUND);
-        ItemStack[] inventory = new ItemStack[invSize];
+        ItemStack[] inventory = new ItemStack[inventorySize];
         for (int i = 0; i < items.tagCount(); ++i) {
             NBTTagCompound tempData = items.getCompoundTagAt(i);
             byte j = tempData.getByte("Slot");
@@ -99,7 +99,7 @@ public final class NBTUtil {
         for (UserAccess user : users) {
             NBTTagCompound tempData = new NBTTagCompound();
             tempData.setString("UUID", user.getUUID().toString());
-            tempData.setByte("Type", user.getAccessLevel());
+            tempData.setByte("ArcaneChestType", user.getAccessLevel());
             accessList.appendTag(tempData);
         }
         data.setTag("AccessList", accessList);
@@ -116,7 +116,7 @@ public final class NBTUtil {
             NBTTagCompound tempData = tagList.getCompoundTagAt(i);
             user = new UserAccess();
             user.setUUID(UUID.fromString(tempData.getString("UUID")));
-            user.setAccesLevel(tempData.getByte("Type"));
+            user.setAccesLevel(tempData.getByte("ArcaneChestType"));
             accessList.add(user);
         }
         return accessList;

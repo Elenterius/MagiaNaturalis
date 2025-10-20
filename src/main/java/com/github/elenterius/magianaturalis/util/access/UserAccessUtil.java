@@ -33,7 +33,7 @@ public final class UserAccessUtil {
             if (tile == null) return 0;
             if (tile instanceof ArcaneChestBlockEntity) {
                 ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
-                if (!chest.owner.equals(gameProfile.getId())) {
+                if (!chest.getOwner().equals(gameProfile.getId())) {
                     if (!chest.accessList.contains(new UserAccess(gameProfile.getId(), (byte) 1)) && !chest.accessList.contains(new UserAccess(gameProfile.getId(), (byte) 2)) && !chest.accessList.contains(new UserAccess(gameProfile.getId(), (byte) 0))) {
                         chest.accessList.add(new UserAccess(gameProfile.getId(), accesLevel));
                         world.markBlockForUpdate(x, y, z);

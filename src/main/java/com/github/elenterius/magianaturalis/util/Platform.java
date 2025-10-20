@@ -12,6 +12,8 @@ import java.util.UUID;
 
 public final class Platform {
 
+    public static final UUID NIL_UUID = new UUID(0L, 0L);
+
     public static boolean isClient() {
         return FMLCommonHandler.instance().getEffectiveSide().isClient();
     }

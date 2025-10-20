@@ -159,7 +159,7 @@ public class ArcaneKeyItem extends Item {
 
                 boolean bool = false;
                 if (tile instanceof ArcaneChestBlockEntity) {
-                    bool = ((ArcaneChestBlockEntity) tile).owner.equals(getKeyForger(stack));
+                    bool = ((ArcaneChestBlockEntity) tile).getOwner().equals(getKeyForger(stack));
                 }
                 else if (tile instanceof TileOwned) {
                     if (!data.hasKey("forgerNick")) return false;
@@ -185,7 +185,7 @@ public class ArcaneKeyItem extends Item {
 
                 if (tile instanceof ArcaneChestBlockEntity) {
                     ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
-                    if (player.getGameProfile().getId().equals(chest.owner)) {
+                    if (player.getGameProfile().getId().equals(chest.getOwner())) {
                         hasAccess = true;
                     }
                     else {
@@ -207,7 +207,7 @@ public class ArcaneKeyItem extends Item {
                 NBTTagList accessList = data.getTagList("AccessList", NBT.TAG_COMPOUND);
                 for (int i = 0; i < accessList.tagCount(); i++) {
                     NBTTagCompound tempData = accessList.getCompoundTagAt(i);
-                    UserAccessUtil.addPlayerToAccessList(new GameProfile(UUID.fromString(tempData.getString("UUID")), tempData.getString("Nick")), tempData.getByte("Type"), world, x, y, z);
+                    UserAccessUtil.addPlayerToAccessList(new GameProfile(UUID.fromString(tempData.getString("UUID")), tempData.getString("Nick")), tempData.getByte("ArcaneChestType"), world, x, y, z);
                 }
                 return true;
             }
@@ -220,9 +220,9 @@ public class ArcaneKeyItem extends Item {
             if (!(entity instanceof EntityPlayer)) return false;
             EntityPlayer player2 = (EntityPlayer) entity;
 
-            boolean bool = setBoundPlayer(stack, player2.getGameProfile());
-            if (bool)
+            if (setBoundPlayer(stack, player2.getGameProfile())) {
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + String.format(Platform.translate("chat.magianaturalis.key.boundplayer"), player2.getGameProfile().getName())));
+            }
         }
         else if (stack.getItemDamage() == 1) {
             if (!(entity instanceof EntityPlayer)) return false;
@@ -239,7 +239,7 @@ public class ArcaneKeyItem extends Item {
             NBTTagCompound tempData = new NBTTagCompound();
             tempData.setString("UUID", player2.getGameProfile().getId().toString());
             tempData.setString("Nick", player2.getGameProfile().getName());
-            tempData.setByte("Type", data.getByte("AccessLevel"));
+            tempData.setByte("ArcaneChestType", data.getByte("AccessLevel"));
             accessList.appendTag(tempData);
             data.setTag("AccessList", accessList);
 

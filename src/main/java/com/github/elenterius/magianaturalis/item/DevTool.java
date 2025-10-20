@@ -88,12 +88,12 @@ public class DevTool extends Item {
 
             if (tile instanceof TileOwned) {
                 TileOwned owned = (TileOwned) tile;
-                MagiaNaturalis.LOGGER.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner: %s%nAccessList: %s", x, y, z, owned.owner, owned.accessList.toString()).toString());
+                MagiaNaturalis.LOGGER.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner: %s%nAccessList: %s", x, y, z, owned.owner, owned.accessList.toString()));
                 return true;
             }
             else if (tile instanceof ArcaneChestBlockEntity) {
                 ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
-                MagiaNaturalis.LOGGER.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner UUID: %s%nPlayer UUID: %s%nAccessList: %s", x, y, z, chest.owner.toString(), player.getGameProfile().getId(), chest.accessList.toString()).toString());
+                MagiaNaturalis.LOGGER.info(String.format("%nX= %d, Y= %d, Z= %d%nOwner UUID: %s%nPlayer UUID: %s%nAccessList: %s", x, y, z, chest.getOwner().toString(), player.getGameProfile().getId(), chest.accessList.toString()));
                 return true;
             }
             else if (tile instanceof TranscribingTableBlockEntity) {

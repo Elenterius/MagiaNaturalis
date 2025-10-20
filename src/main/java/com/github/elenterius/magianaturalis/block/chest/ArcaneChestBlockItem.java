@@ -15,8 +15,6 @@ import java.util.List;
 
 public class ArcaneChestBlockItem extends ItemBlock {
 
-    final String[] unlocal = {"unknown", "gw", "sw"};
-
     public ArcaneChestBlockItem(Block block) {
         super(block);
         setMaxDamage(0);
@@ -27,15 +25,15 @@ public class ArcaneChestBlockItem extends ItemBlock {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         NBTTagCompound data = NBTUtil.getOrCreate(stack);
-        if (data != null) {
-            if (data.hasKey("Items")) {
-                list.add("");
-                list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.chest.items"));
-            }
-            if (data.hasKey("AccessList")) {
-                if (!data.hasKey("Items")) list.add("");
-                list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.chest.access"));
-            }
+
+        if (data.hasKey("Items")) {
+            list.add("");
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.chest.items"));
+        }
+
+        if (data.hasKey("AccessList")) {
+            if (!data.hasKey("Items")) list.add("");
+            list.add(EnumChatFormatting.DARK_GRAY + Platform.translate("hint.magianaturalis.chest.access"));
         }
     }
 
@@ -46,7 +44,12 @@ public class ArcaneChestBlockItem extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName() + "." + unlocal[stack.getItemDamage()];
+        return ArcaneChestType.parseId((byte) stack.getItemDamage()).translationKey;
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        return Platform.translate(getUnlocalizedName(stack));
     }
 
 }

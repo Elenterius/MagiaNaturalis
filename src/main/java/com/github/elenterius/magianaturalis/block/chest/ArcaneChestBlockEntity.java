@@ -1,6 +1,5 @@
 package com.github.elenterius.magianaturalis.block.chest;
 
-import com.github.elenterius.magianaturalis.MagiaNaturalis;
 import com.github.elenterius.magianaturalis.init.MNBlocks;
 import com.github.elenterius.magianaturalis.util.NBTUtil;
 import com.github.elenterius.magianaturalis.util.Platform;
@@ -19,28 +18,43 @@ import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.wands.IWandable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInventory, IWandable {
 
-    private ItemStack[] inventory = new ItemStack[54];
+    private static final int[] sides = {0, 1, 2, 3, 4, 5};
+
     public float lidAngle;
     public float prevLidAngle;
     public int numUsingPlayers;
 
-    public UUID owner;
-    private String ownerName;
     //UserAccess - accessLevel: 0 - nothing, 1 - access, 2 - administrator;
     public ArrayList<UserAccess> accessList = new ArrayList<>();
-    private byte chestType = 0;
 
-    public final String[] name = new String[]{"unknown", "gw", "sw"};
+    private ArcaneChestType chestType = ArcaneChestType.GREAT_WOOD;
+    private ItemStack[] inventory = new ItemStack[chestType.inventorySize];
+
+    private UUID owner = Platform.NIL_UUID;
+    private String ownerName;
     private String customName;
-    private static final int[] sides = {0, 1, 2, 3, 4, 5};
 
     @Override
     public boolean canUpdate() {
         return false;
+    }
+
+    public UUID getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UUID uuid) {
+        owner = uuid;
+
+        if (!worldObj.isRemote) {
+            markDirty();
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
     }
 
     public String getOwnerName() {
@@ -62,7 +76,7 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
 
     @Override
     public int getSizeInventory() {
-        return getChestType() == 2 ? 77 : 54;
+        return chestType.inventorySize;
     }
 
     @Override
@@ -110,8 +124,8 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
             stack.stackSize = getInventoryStackLimit();
         }
 
-        markDirty();
         if (!worldObj.isRemote) {
+            markDirty();
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
@@ -127,7 +141,7 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
 
     @Override
     public String getInventoryName() {
-        return hasCustomInventoryName() ? customName : Platform.translate("tile." + MagiaNaturalis.MOD_ID + "." + "arcane_chest." + name[getChestType()] + ".name");
+        return hasCustomInventoryName() ? customName : Platform.translate(chestType.translationKey);
     }
 
     @Override
@@ -139,11 +153,11 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
         customName = name;
     }
 
-    public int getChestType() {
+    public ArcaneChestType getChestType() {
         return chestType;
     }
 
-    public void setChestType(byte type) {
+    public void setChestType(ArcaneChestType type) {
         chestType = type;
 
         if (worldObj != null && !worldObj.isRemote) {
@@ -156,15 +170,19 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
     public void readCustomNBT(NBTTagCompound data) {
         owner = UUID.fromString(data.getString("owner"));
         ownerName = data.getString("owner_name");
-        chestType = data.getByte("Type");
+        chestType = ArcaneChestType.parseId(data.getByte("Type"));
         accessList = NBTUtil.loadUserAccessFromNBT(data);
+
+        if (inventory.length != getSizeInventory()) {
+            inventory = Arrays.copyOf(inventory, getSizeInventory()); //update inventory size to match chest type
+        }
     }
 
     @Override
     public void writeCustomNBT(NBTTagCompound data) {
-        data.setString("owner", owner.toString());
+        data.setString("owner", owner != null ? owner.toString() : Platform.NIL_UUID.toString());
         data.setString("owner_name", getOwnerName());
-        data.setByte("Type", chestType);
+        data.setByte("Type", chestType.id());
         NBTUtil.saveUserAccessToNBT(data, accessList);
     }
 
@@ -198,8 +216,9 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
 
     @Override
     public void openInventory() {
-        if (numUsingPlayers < 0)
+        if (numUsingPlayers < 0) {
             numUsingPlayers = 0;
+        }
 
         numUsingPlayers += 1;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, MNBlocks.arcaneChest, 1, numUsingPlayers);
@@ -274,12 +293,12 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
     }
 
     @Override
-    public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
+    public int onWandRightClick(World world, ItemStack wandStack, EntityPlayer player, int x, int y, int z, int side, int md) {
         return 0;
     }
 
     @Override
-    public ItemStack onWandRightClick(World world, ItemStack stack, EntityPlayer player) {
+    public ItemStack onWandRightClick(World world, ItemStack wandStack, EntityPlayer player) {
         if (Platform.isServer() && !world.restoringBlockSnapshots) {
             boolean hasAccess = false;
             if (player.capabilities.isCreativeMode || owner.equals(player.getGameProfile().getId())) {
@@ -290,15 +309,17 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
             }
             if (!hasAccess) {
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + Platform.translate("chat.magianaturalis.chest.resist")));
-                return stack;
+                return wandStack;
             }
 
             Block block = world.getBlock(xCoord, yCoord, zCoord);
-            if (block == null) return stack;
-            ItemStack stack1 = new ItemStack(MNBlocks.arcaneChest, 1, chestType);
-            ArcaneChestBlock.setChestType(stack1, chestType);
-            NBTUtil.saveInventoryToNBT(stack1, inventory);
-            if (!accessList.isEmpty()) NBTUtil.saveUserAccessToNBT(stack1, accessList);
+            if (block == null) return wandStack;
+
+            ItemStack chestStack = new ItemStack(MNBlocks.arcaneChest, 1, chestType.id());
+            NBTUtil.saveInventoryToNBT(chestStack, inventory);
+            if (!accessList.isEmpty()) {
+                NBTUtil.saveUserAccessToNBT(chestStack, accessList);
+            }
 
             //chest.breakBlock(world, xCoord, yCoord, zCoord, chest, blockMetadata);
             world.removeTileEntity(xCoord, yCoord, zCoord);
@@ -308,19 +329,19 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
             double d0 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
             double d1 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
             double d2 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-            EntityItem entityitem = new EntityItem(world, (double) xCoord + d0, (double) yCoord + d1, (double) zCoord + d2, stack1);
+            EntityItem entityitem = new EntityItem(world, (double) xCoord + d0, (double) yCoord + d1, (double) zCoord + d2, chestStack);
             entityitem.delayBeforeCanPickup = 10;
             world.spawnEntityInWorld(entityitem);
         }
-        return stack;
+        return wandStack;
     }
 
     @Override
-    public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {
+    public void onUsingWandTick(ItemStack wandStack, EntityPlayer player, int count) {
     }
 
     @Override
-    public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {
+    public void onWandStoppedUsing(ItemStack wandStack, World world, EntityPlayer player, int count) {
     }
 
 }

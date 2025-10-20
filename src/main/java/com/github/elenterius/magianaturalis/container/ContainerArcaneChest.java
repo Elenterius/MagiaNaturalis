@@ -1,6 +1,7 @@
 package com.github.elenterius.magianaturalis.container;
 
 import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlockEntity;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -9,28 +10,35 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerArcaneChest extends Container {
 
-    int type;
-
     private final ArcaneChestBlockEntity chest;
 
     public ContainerArcaneChest(InventoryPlayer inventoryPlayer, ArcaneChestBlockEntity tile) {
         chest = tile;
         chest.openInventory();
-        type = chest.getChestType();
 
+        ArcaneChestType type = chest.getChestType();
+        int offset = type == ArcaneChestType.GREAT_WOOD ? 0 : 18;
+        int rows = type == ArcaneChestType.GREAT_WOOD ? 6 : 7;
+        int columns = type == ArcaneChestType.GREAT_WOOD ? 9 : 11;
         int tempIndex = 0;
-        int offset = ((type - 1) * 18);
 
-        for (int i = 0; i < 6 - 1 + type; i++)
-            for (int j = 0; j < 9 + ((type - 1) * 2); j++)
-                addSlotToContainer(new Slot(tile, tempIndex++, 8 + j * 18, 18 + i * 18));
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
+                addSlotToContainer(new Slot(chest, tempIndex++, 8 + col * 18, 18 + row * 18));
+            }
+        }
 
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 9; j++)
-                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18 + offset, 140 + i * 18 + offset));
+        //player main inventory
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
+                addSlotToContainer(new Slot(inventoryPlayer, col + row * 9 + 9, 8 + col * 18 + offset, 140 + row * 18 + offset));
+            }
+        }
 
-        for (int i = 0; i < 9; i++)
-            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18 + offset, 198 + offset));
+        //player hotbar
+        for (int col = 0; col < 9; col++) {
+            addSlotToContainer(new Slot(inventoryPlayer, col, 8 + col * 18 + offset, 198 + offset));
+        }
     }
 
     @Override
@@ -47,19 +55,19 @@ public class ContainerArcaneChest extends Container {
             ItemStack tempStack = slot.getStack();
             stack = tempStack.copy();
 
-            int inv = 54 + ((type - 1) * 23);
+            int inventorySize = chest.getSizeInventory();
 
-            if (index < inv + 1) {
-                if (!mergeItemStack(tempStack, inv, inventorySlots.size(), true)) {
+            if (index < inventorySize + 1) {
+                if (!mergeItemStack(tempStack, inventorySize, inventorySlots.size(), true)) {
                     return null;
                 }
             }
-            else if (!mergeItemStack(tempStack, 0, inv, false)) {
+            else if (!mergeItemStack(tempStack, 0, inventorySize, false)) {
                 return null;
             }
 
             if (tempStack.stackSize == 0)
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             else
                 slot.onSlotChanged();
 

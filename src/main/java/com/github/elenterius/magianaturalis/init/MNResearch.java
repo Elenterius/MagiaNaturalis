@@ -1,7 +1,7 @@
 package com.github.elenterius.magianaturalis.init;
 
 import com.github.elenterius.magianaturalis.MagiaNaturalis;
-import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlock;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestType;
 import com.github.elenterius.magianaturalis.research.CustomResearchItem;
 import com.github.elenterius.magianaturalis.research.FakeResearchItem;
 import net.minecraft.item.ItemStack;
@@ -65,8 +65,7 @@ public class MNResearch {
         research.setPages(new ResearchPage("mn.research_page.KEY_SPECIAL.1"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ThaumiumKey1")), new ResearchPage("mn.research_page.KEY_SPECIAL.2"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ThaumiumKey2")));
         research.setParents("MN_WARDEDARCANA").registerResearchItem();
 
-        ItemStack chest = new ItemStack(MNBlocks.arcaneChest, 1, 1);
-        ArcaneChestBlock.setChestType(chest, (byte) 1);
+        ItemStack chest = new ItemStack(MNBlocks.arcaneChest, 1, ArcaneChestType.GREAT_WOOD.id());
         research = new CustomResearchItem("ARCANE_CHEST", new AspectList().add(Aspect.VOID, 4).add(Aspect.MIND, 3).add(Aspect.MECHANISM, 3).add(Aspect.ARMOR, 3), -7, -3, 3, chest);
         research.setPages(new ResearchPage("mn.research_page.ARCANE_CHEST.1"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ArcaneChest1")), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("ArcaneChest2"))).setParents("MN_WARDEDARCANA").registerResearchItem();
 

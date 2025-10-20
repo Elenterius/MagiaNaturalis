@@ -41,7 +41,7 @@ import java.util.List;
 
 public class ArcaneChestBlock extends BlockContainer {
 
-    private byte CacheChestType;
+    private ArcaneChestType cachedChestType;
 
     public ArcaneChestBlock() {
         super(Material.wood);
@@ -50,24 +50,11 @@ public class ArcaneChestBlock extends BlockContainer {
         setStepSound(soundTypeWood);
     }
 
-    public static boolean setChestType(ItemStack stack, byte type) {
-        if (stack != null && type > 0) {
-            if (type > 2) return false;
-            NBTUtil.getOrCreate(stack).setByte("chestType", type);
-            return true;
-        }
-        return false;
-    }
-
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-        ItemStack stack = new ItemStack(item, 1, 1);
-        setChestType(stack, (byte) 1);
-        list.add(stack);
-        stack = new ItemStack(item, 1, 2);
-        setChestType(stack, (byte) 2);
-        list.add(stack);
+        list.add(new ItemStack(item, 1, ArcaneChestType.GREAT_WOOD.id()));
+        list.add(new ItemStack(item, 1, ArcaneChestType.SILVER_WOOD.id()));
     }
 
     @Override
@@ -98,7 +85,7 @@ public class ArcaneChestBlock extends BlockContainer {
         ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) world.getTileEntity(target.blockX, target.blockY, target.blockZ);
 
         if (chest != null && player != null) {
-            if (chest.owner.equals(player.getGameProfile().getId())) {
+            if (chest.getOwner().equals(player.getGameProfile().getId())) {
                 return false;
             }
             else {
@@ -114,12 +101,6 @@ public class ArcaneChestBlock extends BlockContainer {
         return true;
     }
 
-    public byte getChestType(ItemStack stack) {
-        if (stack != null) return NBTUtil.getOrCreate(stack).getByte("chestType");
-
-        return 0;
-    }
-
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new ArcaneChestBlockEntity();
@@ -127,18 +108,17 @@ public class ArcaneChestBlock extends BlockContainer {
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-        int meta = BlockPistonBase.determineOrientation(world, x, y, z, entity);
-        world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+        int metadata = BlockPistonBase.determineOrientation(world, x, y, z, entity);
+        world.setBlockMetadataWithNotify(x, y, z, metadata, 3);
         ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) world.getTileEntity(x, y, z);
 
         if (chest != null) {
             EntityPlayer player = (EntityPlayer) entity;
-            chest.owner = player.getUniqueID();
-            chest.setChestType(getChestType(stack));
+            chest.setOwner(player.getUniqueID());
+            chest.setChestType(ArcaneChestType.parseId((byte) stack.getItemDamage()));
 
             ItemStack[] items = NBTUtil.loadInventoryFromNBT(stack, chest.getSizeInventory());
-            if (items != null && items.length == chest.getSizeInventory()) chest.setInvetory(items);
-            else if (chest.getChestType() == 2) chest.setInvetory(new ItemStack[77]);
+            chest.setInventory(items);
 
             ArrayList<UserAccess> users = NBTUtil.loadUserAccessFromNBT(stack);
             if (!users.isEmpty()) chest.accessList = users;
@@ -154,7 +134,7 @@ public class ArcaneChestBlock extends BlockContainer {
         if (tile instanceof ArcaneChestBlockEntity) {
             ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
             boolean hasAccess = false;
-            if (player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.owner)) {
+            if (player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.getOwner())) {
                 hasAccess = true;
             }
             else {
@@ -179,64 +159,65 @@ public class ArcaneChestBlock extends BlockContainer {
 
     @Override
     public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
-        if (Platform.isServer()) {
-            TileEntity tile = world.getTileEntity(x, y, z);
-            if (tile != null && tile instanceof ArcaneChestBlockEntity) {
-                ItemStack curStack = player.getCurrentEquippedItem();
-                if (curStack != null && curStack.getItem() == ConfigItems.itemKey) {
-                    ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
-                    int isKeyAdmin = 0;
+        if (!Platform.isServer()) return;
 
-                    if (player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.owner)) {
-                        isKeyAdmin = 2;
-                    }
-                    else {
-                        if (chest.accessList != null && chest.accessList.size() > 0) for (UserAccess user : chest.accessList)
-                            if (user.getUUID().equals(player.getGameProfile().getId())) {
-                                if (user.getAccessLevel() > 0) isKeyAdmin = 1;
-                                break;
-                            }
-                    }
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof ArcaneChestBlockEntity) {
+            ItemStack curStack = player.getCurrentEquippedItem();
+            if (curStack != null && curStack.getItem() == ConfigItems.itemKey) {
+                ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
+                int keyAccessLevel = 0;
 
-                    if (curStack.hasTagCompound() && curStack.stackTagCompound.hasKey("location")) {
-                        String loc = x + "," + y + "," + z;
-                        if (!loc.equals(curStack.stackTagCompound.getString("location"))) {
-                            player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("tc.key7")));
+                if (player.capabilities.isCreativeMode || player.getGameProfile().getId().equals(chest.getOwner())) {
+                    keyAccessLevel = 2;
+                }
+                else {
+                    if (chest.accessList != null && !chest.accessList.isEmpty()) for (UserAccess user : chest.accessList)
+                        if (user.getUUID().equals(player.getGameProfile().getId())) {
+                            if (user.getAccessLevel() > 0) keyAccessLevel = 1;
+                            break;
                         }
-                        else if (loc.equals(curStack.stackTagCompound.getString("location"))) {
-                            if (isKeyAdmin > 0) {
-                                player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("tc.key8")));
-                            }
-                            else if (isKeyAdmin == 0) {
-                                chest.accessList.add(new UserAccess(player.getGameProfile().getId(), (byte) curStack.getItemDamage()));
-                                world.markBlockForUpdate(x, y, z);
+                }
 
-                                if (!player.capabilities.isCreativeMode) if (--curStack.stackSize <= 0) player.inventory.mainInventory[player.inventory.currentItem] = null;
-
-                                player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis.key.access.chest")));
-                                world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
-                            }
-                        }
+                if (curStack.hasTagCompound() && curStack.stackTagCompound.hasKey("location")) {
+                    String loc = x + "," + y + "," + z;
+                    if (!loc.equals(curStack.stackTagCompound.getString("location"))) {
+                        player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("tc.key7")));
                     }
-                    else if (!curStack.hasTagCompound()) {
-                        if (isKeyAdmin > 0) {
-                            String loc = x + "," + y + "," + z;
-                            ItemStack stack = new ItemStack(ConfigItems.itemKey, 1, curStack.getItemDamage());
-                            stack.setTagInfo("location", new NBTTagString(loc));
-                            stack.setTagInfo("type", new NBTTagByte((byte) -1));
+                    else if (loc.equals(curStack.stackTagCompound.getString("location"))) {
+                        if (keyAccessLevel > 0) {
+                            player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("tc.key8")));
+                        }
+                        else {
+                            chest.accessList.add(new UserAccess(player.getGameProfile().getId(), (byte) curStack.getItemDamage()));
+                            world.markBlockForUpdate(x, y, z);
 
                             if (!player.capabilities.isCreativeMode) if (--curStack.stackSize <= 0) player.inventory.mainInventory[player.inventory.currentItem] = null;
 
-                            if (!player.inventory.addItemStackToInventory(stack)) world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack));
-                            //player.inventoryContainer.detectAndSendChanges();
+                            player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis.key.access.chest")));
                             world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
                         }
-                        else {
-                            player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis.chest.access.denied")));
-                            world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
-                        }
                     }
+                }
+                else if (!curStack.hasTagCompound()) {
+                    if (keyAccessLevel > 0) {
+                        String loc = x + "," + y + "," + z;
+                        ItemStack stack = new ItemStack(ConfigItems.itemKey, 1, curStack.getItemDamage());
+                        stack.setTagInfo("location", new NBTTagString(loc));
+                        stack.setTagInfo("type", new NBTTagByte((byte) -1));
 
+                        if (!player.capabilities.isCreativeMode) if (--curStack.stackSize <= 0) player.inventory.mainInventory[player.inventory.currentItem] = null;
+
+                        if (!player.inventory.addItemStackToInventory(stack)) {
+                            world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack));
+                        }
+                        //player.inventoryContainer.detectAndSendChanges();
+                        world.playSoundEffect(x, y, z, "thaumcraft:key", 1.0F, 0.9F);
+                    }
+                    else {
+                        player.addChatMessage(new ChatComponentText("§5§o" + Platform.translate("chat.magianaturalis.chest.access.denied")));
+                        world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
+                    }
                 }
             }
         }
@@ -250,12 +231,12 @@ public class ArcaneChestBlock extends BlockContainer {
     @Override
     public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
         ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) world.getTileEntity(x, y, z);
-        if (chest != null && player != null && player instanceof EntityPlayer) {
-            if (chest.owner.equals(player.getGameProfile().getId())) {
+        if (chest != null && player != null) {
+            if (chest.getOwner().equals(player.getGameProfile().getId())) {
                 return ForgeHooks.blockStrength(this, player, world, x, y, z);
             }
             else {
-                if (chest.accessList != null && chest.accessList.size() > 0) for (UserAccess user : chest.accessList)
+                if (chest.accessList != null && !chest.accessList.isEmpty()) for (UserAccess user : chest.accessList)
                     if (user.getUUID().equals(player.getGameProfile().getId())) {
                         if (user.getAccessLevel() > 1) return ForgeHooks.blockStrength(this, player, world, x, y, z);
                         break;
@@ -268,12 +249,12 @@ public class ArcaneChestBlock extends BlockContainer {
     @Override
     public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
         ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) world.getTileEntity(x, y, z);
-        if (chest != null && entity != null && entity instanceof EntityPlayer) {
-            if (chest.owner.equals(entity.getUniqueID())) {
+        if (chest != null && entity instanceof EntityPlayer) {
+            if (chest.getOwner().equals(entity.getUniqueID())) {
                 return true;
             }
             else {
-                if (chest.accessList != null && chest.accessList.size() > 0) for (UserAccess user : chest.accessList)
+                if (chest.accessList != null && !chest.accessList.isEmpty()) for (UserAccess user : chest.accessList)
                     if (user.getUUID().equals(entity.getUniqueID())) return user.getAccessLevel() > 1;
             }
         }
@@ -288,7 +269,7 @@ public class ArcaneChestBlock extends BlockContainer {
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) world.getTileEntity(x, y, z);
         if (chest != null) {
-            CacheChestType = (byte) chest.getChestType();
+            cachedChestType = chest.getChestType();
         }
 
         InventoryUtils.dropItems(world, x, y, z);
@@ -297,12 +278,11 @@ public class ArcaneChestBlock extends BlockContainer {
 
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> drops = new ArrayList<>();
 
-        if (CacheChestType != -1) {
-            ItemStack stack = new ItemStack(this, 1, CacheChestType);
-            ArcaneChestBlock.setChestType(stack, CacheChestType);
-            CacheChestType = -1;
+        if (cachedChestType != null) {
+            ItemStack stack = new ItemStack(this, 1, cachedChestType.id());
+            cachedChestType = null;
             drops.add(stack);
         }
 
@@ -325,10 +305,7 @@ public class ArcaneChestBlock extends BlockContainer {
         ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) world.getTileEntity(x, y, z);
         if (chest == null) return null;
 
-        ItemStack stack = new ItemStack(this, 1, chest.getChestType());
-        ArcaneChestBlock.setChestType(stack, (byte) chest.getChestType());
-
-        return stack;
+        return new ItemStack(this, 1, chest.getChestType().id());
     }
 
 }

@@ -1,6 +1,6 @@
 package com.github.elenterius.magianaturalis.init;
 
-import com.github.elenterius.magianaturalis.block.chest.ArcaneChestBlock;
+import com.github.elenterius.magianaturalis.block.chest.ArcaneChestType;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -130,16 +130,14 @@ public final class MNRecipes {
                 'B', ConfigItems.itemZombieBrain,
                 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
                 'C', Blocks.chest};
-        ItemStack arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, 1);
-        ArcaneChestBlock.setChestType(arcaneChest, (byte) 1);
+        ItemStack arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, ArcaneChestType.GREAT_WOOD.id());
         recipes.put("ArcaneChest1", ThaumcraftApi.addArcaneCraftingRecipe("ARCANE_CHEST", arcaneChest, aspects, recipe));
         recipe = new Object[]{"IBI", "WCW", "IWI",
                 'I', new ItemStack(ConfigItems.itemResource, 1, 2),
                 'B', ConfigItems.itemZombieBrain,
                 'W', new ItemStack(MNBlocks.arcaneWood, 1, 2),
                 'C', Blocks.chest};
-        arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, 2);
-        ArcaneChestBlock.setChestType(arcaneChest, (byte) 2);
+        arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, ArcaneChestType.SILVER_WOOD.id());
         recipes.put("ArcaneChest2", ThaumcraftApi.addArcaneCraftingRecipe("ARCANE_CHEST", arcaneChest, aspects, recipe));
     }
 
