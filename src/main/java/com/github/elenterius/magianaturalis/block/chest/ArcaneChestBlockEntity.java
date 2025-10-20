@@ -38,6 +38,11 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
     private String customName;
     private static final int[] sides = {0, 1, 2, 3, 4, 5};
 
+    @Override
+    public boolean canUpdate() {
+        return false;
+    }
+
     public String getOwnerName() {
         if (ownerName != null && !ownerName.isEmpty())
             return ownerName;
@@ -48,7 +53,7 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
                 return ownerName = profile.getName();
             }
             else {
-                return ownerName = "Only UUID Available";
+                return ownerName = owner.toString();
             }
         }
 
@@ -69,9 +74,14 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
     public ItemStack decrStackSize(int index, int amount) {
         if (inventory[index] == null) return null;
 
+        if (!worldObj.isRemote) {
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
+
         if (inventory[index].stackSize <= amount) {
             ItemStack stack = inventory[index];
             inventory[index] = null;
+            markDirty();
             return stack;
         }
 
@@ -79,6 +89,8 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
         if (inventory[index].stackSize == 0) {
             inventory[index] = null;
         }
+
+        markDirty();
         return stack;
     }
 
@@ -97,10 +109,20 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
         if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
+
+        markDirty();
+        if (!worldObj.isRemote) {
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
     }
 
-    public void setInvetory(ItemStack[] inventory) {
+    public void setInventory(ItemStack[] inventory) {
         this.inventory = inventory;
+
+        if (!worldObj.isRemote) {
+            markDirty();
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
     }
 
     @Override
@@ -123,6 +145,27 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
 
     public void setChestType(byte type) {
         chestType = type;
+
+        if (worldObj != null && !worldObj.isRemote) {
+            markDirty();
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
+    }
+
+    @Override
+    public void readCustomNBT(NBTTagCompound data) {
+        owner = UUID.fromString(data.getString("owner"));
+        ownerName = data.getString("owner_name");
+        chestType = data.getByte("Type");
+        accessList = NBTUtil.loadUserAccessFromNBT(data);
+    }
+
+    @Override
+    public void writeCustomNBT(NBTTagCompound data) {
+        data.setString("owner", owner.toString());
+        data.setString("owner_name", getOwnerName());
+        data.setByte("Type", chestType);
+        NBTUtil.saveUserAccessToNBT(data, accessList);
     }
 
     @Override
@@ -134,12 +177,6 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
         }
     }
 
-    public void readCustomNBT(NBTTagCompound data) {
-        owner = UUID.fromString(data.getString("owner"));
-        chestType = data.getByte("Type");
-        accessList = NBTUtil.loadUserAccessFromNBT(data);
-    }
-
     @Override
     public void writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
@@ -147,12 +184,6 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
         if (hasCustomInventoryName()) {
             data.setString("CustomName", customName);
         }
-    }
-
-    public void writeCustomNBT(NBTTagCompound data) {
-        data.setString("owner", owner.toString());
-        data.setByte("Type", chestType);
-        NBTUtil.saveUserAccessToNBT(data, accessList);
     }
 
     @Override
@@ -229,14 +260,14 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
     }
 
     @Override
-    public boolean receiveClientEvent(int eventID, int arg) {
-        if (eventID == 1) {
-            numUsingPlayers = arg;
+    public boolean receiveClientEvent(int id, int data) {
+        if (id == 1) {
+            numUsingPlayers = data;
             return true;
         }
 
-        if (eventID == 2) {
-            if (lidAngle < arg / 10.0F) lidAngle = (arg / 10.0F);
+        if (id == 2) {
+            if (lidAngle < data / 10.0F) lidAngle = (data / 10.0F);
             return true;
         }
         return tileEntityInvalid;
@@ -291,4 +322,5 @@ public class ArcaneChestBlockEntity extends TileThaumcraft implements ISidedInve
     @Override
     public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {
     }
+
 }
