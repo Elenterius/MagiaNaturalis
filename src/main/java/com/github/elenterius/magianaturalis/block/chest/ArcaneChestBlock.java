@@ -127,10 +127,10 @@ public class ArcaneChestBlock extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f0, float f1, float f3) {
-        if (Platform.isClient()) return false;
+        if (player.isSneaking()) return false;
+        if (Platform.isClient()) return true;
 
         TileEntity tile = world.getTileEntity(x, y, z);
-        if (tile == null) return false;
         if (tile instanceof ArcaneChestBlockEntity) {
             ArcaneChestBlockEntity chest = (ArcaneChestBlockEntity) tile;
             boolean hasAccess = false;
@@ -138,11 +138,14 @@ public class ArcaneChestBlock extends BlockContainer {
                 hasAccess = true;
             }
             else {
-                if (chest.accessList != null && chest.accessList.size() > 0) for (UserAccess user : chest.accessList)
-                    if (user.getUUID().equals(player.getGameProfile().getId())) {
-                        hasAccess = user.hasAccess();
-                        break;
+                if (chest.accessList != null && !chest.accessList.isEmpty()) {
+                    for (UserAccess user : chest.accessList) {
+                        if (user.getUUID().equals(player.getGameProfile().getId())) {
+                            hasAccess = user.hasAccess();
+                            break;
+                        }
                     }
+                }
             }
 
             if (hasAccess) {
@@ -152,9 +155,9 @@ public class ArcaneChestBlock extends BlockContainer {
                 world.playSoundEffect(x, y, z, "thaumcraft:doorfail", 0.66F, 1.0F);
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + Platform.translate("chat.magianaturalis.chest.access.denied")));
             }
-            return true;
         }
-        return false;
+
+        return true;
     }
 
     @Override
