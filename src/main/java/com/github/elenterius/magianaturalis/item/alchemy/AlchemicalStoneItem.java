@@ -28,7 +28,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +42,14 @@ public class AlchemicalStoneItem extends Item implements IArchitect {
         maxStackSize = 1;
         setHasSubtypes(true);
         setMaxDamage(0);
+    }
+
+    public boolean isQuicksilverStone(ItemStack stack) {
+        return stack.getItemDamage() == 1;
+    }
+
+    public boolean isMutationStone(ItemStack stack) {
+        return stack.getItemDamage() == 0;
     }
 
     @Override
@@ -67,11 +74,11 @@ public class AlchemicalStoneItem extends Item implements IArchitect {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-        if (stack.getItemDamage() == 0) {
-            list.add(EnumChatFormatting.DARK_PURPLE + "Mold the Visual");
+        if (isQuicksilverStone(stack)) {
+            list.add(EnumChatFormatting.DARK_PURPLE + "Of Twisting and Molding Status Effects");
         }
         else {
-            list.add(EnumChatFormatting.DARK_PURPLE + "Of Twisting and Molding Status Effects");
+            list.add(EnumChatFormatting.DARK_PURPLE + "Mold the Visual");
         }
     }
 
@@ -116,7 +123,7 @@ public class AlchemicalStoneItem extends Item implements IArchitect {
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
         if (Platform.isClient()) return false;
 
-        if (stack.getItemDamage() == 0) {
+        if (isMutationStone(stack)) {
             boolean success = BlockMorpher.setMorphOrRotation(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z), player.isSneaking());
             if (success) world.playSoundAtEntity(player, "thaumcraft:zap", 0.5F, 1.0F);
             return success;
@@ -127,45 +134,49 @@ public class AlchemicalStoneItem extends Item implements IArchitect {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        if (Platform.isServer() && stack.getItemDamage() == 1 && !player.isSneaking()) {
-            if (MagiaNaturalis.proxyTC4.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), Aspect.EXCHANGE)) {
-                //noinspection unchecked
-                Collection<PotionEffect> collection = player.getActivePotionEffects();
-                for (PotionEffect effect : collection) {
-                    if (player.inventory.consumeInventoryItem(Items.glowstone_dust)) {
-                        if (effect.getAmplifier() + 1 <= 2)
-                            player.addPotionEffect(new PotionEffect(effect.getPotionID(), (int) (effect.getDuration() * 0.3F), effect.getAmplifier() + 1));
-                        else {
-                            player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 288, 2));
-                            player.addPotionEffect(new PotionEffect(Potion.poison.getId(), 144, 0));
-                        }
-                    }
-                    else {
-                        player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 144, 1));
-                        break;
-                    }
+        if (!Platform.isServer()) return stack;
+        if (!isQuicksilverStone(stack)) return stack;
+        if (player.isSneaking()) return stack;
+
+        if (!MagiaNaturalis.proxyTC4.playerKnowledge.hasDiscoveredAspect(player.getCommandSenderName(), Aspect.EXCHANGE)) {
+            player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 144, 1));
+            return stack;
+        }
+
+        //noinspection unchecked,rawtypes
+        List<PotionEffect> activePotionEffects = new ArrayList<>(player.getActivePotionEffects()); //make copy to avoid concurrent modification exceptions
+
+        for (PotionEffect effect : activePotionEffects) {
+            if (player.inventory.consumeInventoryItem(Items.glowstone_dust)) {
+                if (effect.getAmplifier() + 1 <= 2) {
+                    player.addPotionEffect(new PotionEffect(effect.getPotionID(), (int) (effect.getDuration() * 0.3F), effect.getAmplifier() + 1));
                 }
-                player.inventoryContainer.detectAndSendChanges();
+                else {
+                    player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 288, 2));
+                    player.addPotionEffect(new PotionEffect(Potion.poison.getId(), 144, 0));
+                }
             }
             else {
                 player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 144, 1));
+                break;
             }
         }
+        player.inventoryContainer.detectAndSendChanges();
+
         return stack;
     }
 
     @Override
     public ArrayList<BlockCoordinates> getArchitectBlocks(ItemStack stack, World world, int x, int y, int z, int side, EntityPlayer player) {
-        if (stack.getItemDamage() == 0) {
-            Block block = world.getBlock(x, y, z);
-            if (block != null && block != Blocks.air) {
-                if (canMorphBlock(block)) {
-                    ArrayList<BlockCoordinates> blocks = new ArrayList<>();
-                    blocks.add(new BlockCoordinates(x, y, z));
-                    return blocks;
-                }
-            }
+        if (!isMutationStone(stack)) return null;
+
+        Block block = world.getBlock(x, y, z);
+        if (!block.isAir(world, x, y, z) && canMorphBlock(block)) {
+            ArrayList<BlockCoordinates> blocks = new ArrayList<>();
+            blocks.add(new BlockCoordinates(x, y, z));
+            return blocks;
         }
+
         return null;
     }
 
