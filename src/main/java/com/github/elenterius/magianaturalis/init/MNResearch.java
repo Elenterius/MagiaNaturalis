@@ -34,7 +34,7 @@ public class MNResearch {
     }
 
     private static void initCategory() {
-        ResearchCategories.registerCategory(MagiaNaturalis.MOD_ID, MagiaNaturalis.rl("textures/items/book_magia_natura.png"), MagiaNaturalis.rl("textures/gui/background.png"));
+        ResearchCategories.registerCategory(MagiaNaturalis.MOD_ID, MagiaNaturalis.rl("textures/items/research_log.png"), MagiaNaturalis.rl("textures/gui/background.png"));
     }
 
     private static void initEntry() {
