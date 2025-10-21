@@ -78,6 +78,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         dataWatcher.addObject(UPGRADE_DATA_ID, (byte) 0);
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(75.0D);
@@ -109,12 +110,14 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         dataWatcher.updateObject(UPGRADE_DATA_ID, i);
     }
 
+    @Override
     public void writeEntityToNBT(NBTTagCompound data) {
         super.writeEntityToNBT(data);
         data.setByte("TrunkType", getType());
         data.setTag("Inventory", inventory.writeToNBT(new NBTTagList()));
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound data) {
         super.readEntityFromNBT(data);
         setType(data.getByte("TrunkType"));
@@ -123,10 +126,12 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         inventory.readFromNBT(nbttaglist);
     }
 
+    @Override
     public boolean isAIEnabled() {
         return true;
     }
 
+    @Override
     protected void updateAITick() {
         if (eatDelay > 0) eatDelay -= 1;
         fallDistance = 0.0F;
@@ -145,6 +150,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         }
     }
 
+    @Override
     public boolean attackEntityFrom(DamageSource damage, float amount) {
         if (isEntityInvulnerable()) {
             return false;
@@ -156,6 +162,11 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
             if (damage == DamageSource.drown) return false;
             return super.attackEntityFrom(damage, amount);
         }
+    }
+
+    @Override
+    public boolean canBreatheUnderwater() {
+        return true;
     }
 
     @Override
@@ -177,6 +188,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         }
     }
 
+    @Override
     public void onUpdate() {
         super.onUpdate();
 
@@ -200,6 +212,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         }
     }
 
+    @Override
     public boolean interact(EntityPlayer player) {
         ItemStack stack = player.inventory.getCurrentItem();
 
@@ -254,10 +267,12 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         return false;
     }
 
+    @Override
     protected String getHurtSound() {
         return Blocks.log2.stepSound.getStepResourcePath();
     }
 
+    @Override
     protected String getDeathSound() {
         return "random.break";
     }
@@ -277,6 +292,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void handleHealthUpdate(byte id) {
         if (id == SKULL_ROT_UPDATE_ID) {
@@ -289,6 +305,14 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         else {
             super.handleHealthUpdate(id);
         }
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource) {
+        if (!worldObj.isRemote) {
+            inventory.dropAllItems();
+        }
+        super.onDeath(damageSource);
     }
 
 }
