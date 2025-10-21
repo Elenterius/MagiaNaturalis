@@ -214,7 +214,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
 
     @Override
     public boolean interact(EntityPlayer player) {
-        ItemStack stack = player.inventory.getCurrentItem();
+        ItemStack stack = player.getCurrentEquippedItem();
 
         if (stack != null && stack.getItem() instanceof ItemFood && getHealth() < getMaxHealth()) {
             ItemFood itemfood = (ItemFood) stack.getItem();
@@ -236,6 +236,17 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
             return true;
         }
 
+        if (Platform.isServer() && !player.isSneaking() && isOwner(player)) {
+            player.openGui(MagiaNaturalis.instance, 3, worldObj, getEntityId(), 0, 0);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean handleLeftClick(EntityPlayer player) {
+        ItemStack stack = player.getCurrentEquippedItem();
+
         if (!isDead && isOwner(player) && stack != null && stack.getItem() instanceof ItemGolemBell) {
             if (Platform.isClient()) {
                 spawnExplosionParticle();
@@ -243,7 +254,7 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
             else if (Platform.isServer()) {
                 ItemStack drop = new ItemStack(MNItems.evilTrunkSpawner, 1, getType());
 
-                if (player.isSneaking()) {
+                if (!player.isSneaking()) {
                     if (inventory.hasItems()) {
                         drop.setTagInfo("inventory", inventory.writeToNBT(new NBTTagList()));
                     }
@@ -258,11 +269,6 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
 
                 setDead();
             }
-            return true;
-        }
-
-        if (Platform.isServer() && !player.isSneaking() && isOwner(player)) {
-            player.openGui(MagiaNaturalis.instance, 3, worldObj, getEntityId(), 0, 0);
             return true;
         }
 

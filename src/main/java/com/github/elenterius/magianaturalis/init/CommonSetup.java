@@ -7,6 +7,7 @@ import com.github.elenterius.magianaturalis.container.ContainerArcaneChest;
 import com.github.elenterius.magianaturalis.container.ContainerEvilTrunk;
 import com.github.elenterius.magianaturalis.container.ContainerTranscribingTable;
 import com.github.elenterius.magianaturalis.entity.EntityEvilTrunk;
+import com.github.elenterius.magianaturalis.event.PlayerEventHandler;
 import com.github.elenterius.magianaturalis.event.WorldEventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -30,6 +31,7 @@ public class CommonSetup implements IGuiHandler {
         MNEntities.registerThaumcraftChampions();
         NetworkRegistry.INSTANCE.registerGuiHandler(MagiaNaturalis.instance, this);
         WorldEventHandler.register();
+        PlayerEventHandler.register();
     }
 
     public void postInit(FMLPostInitializationEvent event) {
