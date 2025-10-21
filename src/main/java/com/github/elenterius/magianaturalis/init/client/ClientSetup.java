@@ -6,7 +6,7 @@ import com.github.elenterius.magianaturalis.block.geopylon.GeoPylonBlockEntity;
 import com.github.elenterius.magianaturalis.block.jar.PrisonJarBlockEntity;
 import com.github.elenterius.magianaturalis.block.table.TranscribingTableBlockEntity;
 import com.github.elenterius.magianaturalis.client.gui.ArcaneChestGui;
-import com.github.elenterius.magianaturalis.client.gui.GuiEvilTrunk;
+import com.github.elenterius.magianaturalis.client.gui.EvilTrunkGui;
 import com.github.elenterius.magianaturalis.client.gui.GuiTranscribingTable;
 import com.github.elenterius.magianaturalis.client.render.RenderEventHandler;
 import com.github.elenterius.magianaturalis.client.render.block.BlockEntityRenderer;
@@ -75,7 +75,7 @@ public class ClientSetup extends CommonSetup {
             case 2:
                 return new ArcaneChestGui(player.inventory, (ArcaneChestBlockEntity) world.getTileEntity(x, y, z));
             case 3:
-                return new GuiEvilTrunk(player, (EntityEvilTrunk) world.getEntityByID(x));
+                return new EvilTrunkGui(player, (EntityEvilTrunk) world.getEntityByID(x));
             default:
                 return null;
         }

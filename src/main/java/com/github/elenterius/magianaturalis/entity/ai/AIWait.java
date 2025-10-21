@@ -7,37 +7,37 @@ import net.minecraft.entity.ai.EntityAIBase;
 public class AIWait extends EntityAIBase {
 
     private EntityOwnableCreature taskOwner;
-    private boolean isWaiting;
 
     public AIWait(EntityOwnableCreature entity) {
-        this.taskOwner = entity;
-        this.setMutexBits(5);
+        taskOwner = entity;
+        setMutexBits(5);
     }
 
     @Override
     public boolean shouldExecute() {
-        if (this.taskOwner.isInWater()) {
+        if (taskOwner.isInWater()) {
             return false;
         }
-        else if (!this.taskOwner.onGround) {
+        else if (!taskOwner.onGround) {
             return false;
         }
         else {
-            EntityLivingBase entitylivingbase = this.taskOwner.getOwner();
-            return entitylivingbase == null ? true : (this.taskOwner.getDistanceSqToEntity(entitylivingbase) < 144.0D && entitylivingbase.getAITarget() != null ? false : this.isWaiting);
+            EntityLivingBase creatureOwner = taskOwner.getOwner();
+            if (creatureOwner == null) return true;
+            if (taskOwner.getDistanceSqToEntity(creatureOwner) < 144.0D && creatureOwner.getAITarget() != null) return false;
+            return taskOwner.isWaiting();
         }
     }
 
+    @Override
     public void startExecuting() {
-        this.taskOwner.getNavigator().clearPathEntity();
-        this.taskOwner.setWaiting(true);
+        taskOwner.getNavigator().clearPathEntity();
+        taskOwner.setWaiting(true);
     }
 
+    @Override
     public void resetTask() {
-        this.taskOwner.setWaiting(false);
+        taskOwner.setWaiting(false);
     }
 
-    public void setWaiting(boolean par1) {
-        this.isWaiting = par1;
-    }
 }

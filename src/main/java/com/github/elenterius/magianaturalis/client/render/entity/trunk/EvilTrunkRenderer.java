@@ -27,7 +27,7 @@ public class EvilTrunkRenderer extends RenderLiving {
     protected void renderModel(EntityLivingBase entity, float x, float y, float z, float f1, float f2, float f3) {
         if (entity != null) {
             //"corrupted", "sinister", "demonic", "tainted"
-            switch (((EntityEvilTrunk) entity).getTrunkType()) {
+            switch (((EntityEvilTrunk) entity).getType()) {
                 case 0:
                     this.mainModel = modelTC;
                     break;
@@ -46,7 +46,7 @@ public class EvilTrunkRenderer extends RenderLiving {
     }
 
     protected ResourceLocation getEntityTexture(EntityEvilTrunk entity) {
-        switch (entity.getTrunkType()) {
+        switch (entity.getType()) {
             case 1:
                 return SINISTER_TEXTURE;
             case 2:

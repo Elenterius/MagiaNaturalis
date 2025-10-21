@@ -6,16 +6,17 @@ import com.github.elenterius.magianaturalis.util.Platform;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import thaumcraft.client.lib.UtilsFX;
 
-public class GuiEvilTrunk extends GuiContainer {
+public class EvilTrunkGui extends GuiContainer {
+
+    public static final ResourceLocation TEXTURE = new ResourceLocation("thaumcraft", "textures/gui/guitrunkbase.png");
 
     private final EntityPlayer entityPlayer;
     private final EntityEvilTrunk entityTrunk;
-    //	private int inventoryRows = 4;
 
-    public GuiEvilTrunk(EntityPlayer player, EntityEvilTrunk entity) {
+    public EvilTrunkGui(EntityPlayer player, EntityEvilTrunk entity) {
         super(new ContainerEvilTrunk(player.inventory, player.worldObj, entity));
         entityPlayer = player;
         entityTrunk = entity;
@@ -25,7 +26,7 @@ public class GuiEvilTrunk extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        fontRendererObj.drawString(entityTrunk.getOwner().getCommandSenderName() + Platform.translate("entity.trunk.guiname"), 8, 4, 0xC0A0F0);
+        fontRendererObj.drawString(entityTrunk.getOwnerName() + Platform.translate("entity.trunk.guiname"), 8, 4, 0xC0A0F0);
         GL11.glPopMatrix();
     }
 
@@ -33,7 +34,7 @@ public class GuiEvilTrunk extends GuiContainer {
         if (entityTrunk.isDead) mc.thePlayer.closeScreen();
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        UtilsFX.bindTexture("textures/gui/guitrunkbase.png");
+        mc.renderEngine.bindTexture(TEXTURE);
         GL11.glEnable(GL11.GL_BLEND);
 
         int j = (width - xSize) / 2;
@@ -44,8 +45,9 @@ public class GuiEvilTrunk extends GuiContainer {
         drawTexturedModalRect(j + 134, k + 2, 176, 16, healthbar, 6);
         drawTexturedModalRect(j, k + 80, 0, 206, xSize, 27);
 
-        if (entityTrunk.isWaiting())
+        if (entityTrunk.isWaiting()) {
             drawTexturedModalRect(j + 112, k, 176, 0, 10, 10);
+        }
 
         GL11.glDisable(GL11.GL_BLEND);
     }
@@ -73,4 +75,5 @@ public class GuiEvilTrunk extends GuiContainer {
         entityTrunk.setOpen(false);
         super.onGuiClosed();
     }
+
 }

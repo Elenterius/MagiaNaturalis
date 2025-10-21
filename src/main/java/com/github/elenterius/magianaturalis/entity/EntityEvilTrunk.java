@@ -28,32 +28,37 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import thaumcraft.common.config.ConfigItems;
+import thaumcraft.common.entities.golems.ItemGolemBell;
 
 public class EntityEvilTrunk extends EntityOwnableCreature {
 
-    public float skullrot;
-    private int jumpDelay;
-    private int eatDelay;
+    protected static final int TYPE_DATA_ID = 23;
+    protected static final int UPGRADE_DATA_ID = 24;
+    protected static final int IS_OPEN_DATA_ID = 25;
+
+    protected static final byte SKULL_ROT_UPDATE_ID = 10;
+    protected static final byte SHOW_HEARTS_UPDATE_ID = 11;
+
     public InventoryEvilTrunk inventory = new InventoryEvilTrunk(this, 36);
-    public String[] name = new String[]{"corrupted", "sinister", "demonic", "tainted"};
+
+    public float skullrot;
+    protected int eatDelay;
 
     public EntityEvilTrunk(World world, int type) {
         this(world);
-        setTrunkType((byte) type);
+        setType((byte) type);
     }
 
     public EntityEvilTrunk(World world) {
         super(world);
         setSize(0.8F, 0.8F);
-        skullrot = 0.0F;
+        skullrot = 0F;
         preventEntitySpawning = true;
         isImmuneToFire = true;
 
         // if(getTrunkType() == 3)
         // ADD FLIGHT
 
-        tasks.addTask(2, aiWait);
         tasks.addTask(3, new AILeapAtTarget(this));
         tasks.addTask(4, new EntityAIAttackOnCollide(this, 0.6D, true));
         tasks.addTask(5, new AIFollowJumpOwner(this));
@@ -68,9 +73,9 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
     @Override
     protected void entityInit() {
         super.entityInit();
-        dataWatcher.addObject(14, (byte) 0);
-        dataWatcher.addObject(15, (byte) 0);
-        dataWatcher.addObject(18, (byte) 0);
+        dataWatcher.addObject(TYPE_DATA_ID, (byte) 0);
+        dataWatcher.addObject(IS_OPEN_DATA_ID, (byte) 0);
+        dataWatcher.addObject(UPGRADE_DATA_ID, (byte) 0);
     }
 
     protected void applyEntityAttributes() {
@@ -80,15 +85,39 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
         getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(6.0D);
     }
 
+    public byte getType() {
+        return dataWatcher.getWatchableObjectByte(TYPE_DATA_ID);
+    }
+
+    public void setType(byte id) {
+        dataWatcher.updateObject(TYPE_DATA_ID, id);
+    }
+
+    public boolean isOpen() {
+        return dataWatcher.getWatchableObjectByte(IS_OPEN_DATA_ID) == 1;
+    }
+
+    public void setOpen(boolean flag) {
+        dataWatcher.updateObject(IS_OPEN_DATA_ID, (byte) (flag ? 1 : 0));
+    }
+
+    public byte getUpgrade() {
+        return dataWatcher.getWatchableObjectByte(UPGRADE_DATA_ID);
+    }
+
+    public void setUpgrade(byte i) {
+        dataWatcher.updateObject(UPGRADE_DATA_ID, i);
+    }
+
     public void writeEntityToNBT(NBTTagCompound data) {
         super.writeEntityToNBT(data);
-        data.setByte("TrunkType", getTrunkType());
+        data.setByte("TrunkType", getType());
         data.setTag("Inventory", inventory.writeToNBT(new NBTTagList()));
     }
 
     public void readEntityFromNBT(NBTTagCompound data) {
         super.readEntityFromNBT(data);
-        setTrunkType(data.getByte("TrunkType"));
+        setType(data.getByte("TrunkType"));
 
         NBTTagList nbttaglist = data.getTagList("Inventory", 10);
         inventory.readFromNBT(nbttaglist);
@@ -104,11 +133,11 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
 
         if (getOwner() != null) {
             if (getAttackTarget() != null && !getAttackTarget().isDead && getAttackTarget() != getOwner()) {
-                faceEntity(getAttackTarget(), 10.0F, 20.0F);
+                faceEntity(getAttackTarget(), 10F, 20F);
                 if ((attackTime <= 0) && (getDistanceToEntity(getAttackTarget()) < 1.5D) && (getAttackTarget().boundingBox.maxY > boundingBox.minY) && (getAttackTarget().boundingBox.minY < boundingBox.maxY)) {
                     attackTime = (10 + worldObj.rand.nextInt(5));
                     getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue());
-                    worldObj.setEntityState(this, (byte) 17);
+                    worldObj.setEntityState(this, SKULL_ROT_UPDATE_ID);
                     worldObj.playSoundAtEntity(this, "mob.blaze.hit", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
                 }
 
@@ -173,47 +202,51 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
 
     public boolean interact(EntityPlayer player) {
         ItemStack stack = player.inventory.getCurrentItem();
-        if (stack != null) {
-            if (stack.getItem() instanceof ItemFood && getHealth() < getMaxHealth()) {
-                ItemFood itemfood = (ItemFood) stack.getItem();
-                stack.stackSize -= 1;
-                heal(itemfood.func_150905_g(stack));
 
-                if (getHealth() == getMaxHealth())
-                    worldObj.playSoundAtEntity(this, "random.burp", 0.5F, worldObj.rand.nextFloat() * 0.5F + 0.5F);
-                else
-                    worldObj.playSoundAtEntity(this, "random.eat", 0.5F, worldObj.rand.nextFloat() * 0.5F + 0.5F);
+        if (stack != null && stack.getItem() instanceof ItemFood && getHealth() < getMaxHealth()) {
+            ItemFood itemfood = (ItemFood) stack.getItem();
+            stack.stackSize -= 1;
+            heal(itemfood.func_150905_g(stack));
 
-                worldObj.setEntityState(this, (byte) 18);
-                skullrot = 0.15F;
+            if (getHealth() == getMaxHealth())
+                worldObj.playSoundAtEntity(this, "random.burp", 0.5F, worldObj.rand.nextFloat() * 0.5F + 0.5F);
+            else
+                worldObj.playSoundAtEntity(this, "random.eat", 0.5F, worldObj.rand.nextFloat() * 0.5F + 0.5F);
 
-                if (stack.stackSize <= 0)
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+            worldObj.setEntityState(this, SHOW_HEARTS_UPDATE_ID);
+            skullrot = 0.15F;
 
-                return true;
+            if (stack.stackSize <= 0) {
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
             }
-            else if (isOwner(player) && stack.getItem() == ConfigItems.itemGolemBell && !isDead) {
-                if (Platform.isClient()) {
-                    spawnExplosionParticle();
-                    return true;
-                }
-                else if (Platform.isServer()) {
-                    ItemStack drop = new ItemStack(MNItems.evilTrunkSpawner, 1, getTrunkType());
 
-                    if (player.isSneaking())
-                        drop.setTagInfo("inventory", inventory.writeToNBT(new NBTTagList()));
-                    else
-                        inventory.dropAllItems();
-
-                    entityDropItem(drop, 0.5F);
-                    worldObj.playSoundAtEntity(this, "thaumcraft:zap", 0.5F, 1.0F);
-                    setDead();
-                    return true;
-                }
-            }
+            return true;
         }
 
-        if (Platform.isServer() && isOwner(player) && !player.isSneaking()) {
+        if (!isDead && isOwner(player) && stack != null && stack.getItem() instanceof ItemGolemBell) {
+            if (Platform.isClient()) {
+                spawnExplosionParticle();
+            }
+            else if (Platform.isServer()) {
+                ItemStack drop = new ItemStack(MNItems.evilTrunkSpawner, 1, getType());
+
+                if (player.isSneaking()) {
+                    drop.setTagInfo("inventory", inventory.writeToNBT(new NBTTagList()));
+                }
+                else {
+                    inventory.dropAllItems();
+                }
+
+                entityDropItem(drop, 0.5F);
+
+                worldObj.playSoundAtEntity(this, "thaumcraft:zap", 0.5F, 1F);
+
+                setDead();
+            }
+            return true;
+        }
+
+        if (Platform.isServer() && !player.isSneaking() && isOwner(player)) {
             player.openGui(MagiaNaturalis.instance, 3, worldObj, getEntityId(), 0, 0);
             return true;
         }
@@ -227,30 +260,6 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
 
     protected String getDeathSound() {
         return "random.break";
-    }
-
-    public void setTrunkType(byte id) {
-        dataWatcher.updateObject(14, id);
-    }
-
-    public byte getTrunkType() {
-        return dataWatcher.getWatchableObjectByte(14);
-    }
-
-    public boolean isOpen() {
-        return dataWatcher.getWatchableObjectByte(15) == 1;
-    }
-
-    public void setOpen(boolean par1) {
-        dataWatcher.updateObject(15, (byte) (par1 ? 1 : 0));
-    }
-
-    public void setUpgrade(byte i) {
-        dataWatcher.updateObject(18, i);
-    }
-
-    public byte getUpgrade() {
-        return dataWatcher.getWatchableObjectByte(18);
     }
 
     void showHeartsOrSmokeFX(boolean flag) {
@@ -269,16 +278,17 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1) {
-        if (par1 == 17) {
+    public void handleHealthUpdate(byte id) {
+        if (id == SKULL_ROT_UPDATE_ID) {
             skullrot = 0.15F;
         }
-        else if (par1 == 18) {
+        else if (id == SHOW_HEARTS_UPDATE_ID) {
             skullrot = 0.15F;
             showHeartsOrSmokeFX(true);
         }
         else {
-            super.handleHealthUpdate(par1);
+            super.handleHealthUpdate(id);
         }
     }
+
 }

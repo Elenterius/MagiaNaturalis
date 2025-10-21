@@ -13,12 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.List;
 
 public class EvilTrunkSpawnerItem extends Item {
 
-    public String[] name = new String[]{"corrupted", "sinister", "demonic", "tainted"};
+    protected static String[] NAME = new String[]{"corrupted", "sinister", "demonic", "tainted"};
 
     public EvilTrunkSpawnerItem() {
         setMaxStackSize(1);
@@ -26,8 +27,8 @@ public class EvilTrunkSpawnerItem extends Item {
     }
 
     @Override
-    public Item setTextureName(String iconString) {
-        this.iconString = MagiaNaturalis.rlString("empty_texture");
+    public Item setTextureName(String icon) {
+        iconString = MagiaNaturalis.rlString("empty_texture");
         return this;
     }
 
@@ -50,7 +51,7 @@ public class EvilTrunkSpawnerItem extends Item {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName() + "." + name[stack.getItemDamage()];
+        return super.getUnlocalizedName() + "." + NAME[stack.getItemDamage()];
     }
 
     @Override
@@ -62,25 +63,33 @@ public class EvilTrunkSpawnerItem extends Item {
         y += net.minecraft.util.Facing.offsetsYForSide[side];
         z += net.minecraft.util.Facing.offsetsZForSide[side];
 
-        double d0 = 0.0D;
-        if (side == 1 && !block.isAir(world, x, y, z) && block.getRenderType() == 11) d0 = 0.5D;
+        double yOffset = 0D;
+        if (side == 1 && !block.isAir(world, x, y, z) && block.getRenderType() == 11) {
+            yOffset = 0.5D;
+        }
+
         EntityEvilTrunk entity = new EntityEvilTrunk(world, stack.getItemDamage());
 
         if (stack.hasTagCompound() && stack.stackTagCompound.hasKey("inventory")) {
-            NBTTagList dataList = stack.stackTagCompound.getTagList("inventory", 10);
-            entity.inventory.readFromNBT(dataList);
+            NBTTagList list = stack.stackTagCompound.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
+            entity.inventory.readFromNBT(list);
         }
 
-        entity.setOwnerUUID(player.getGameProfile().getId().toString());
-        entity.setLocationAndAngles(x, y + d0, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+        entity.setOwner(player);
+
+        if (stack.hasDisplayName()) {
+            entity.setCustomNameTag(stack.getDisplayName());
+        }
+
+        entity.setLocationAndAngles(x, y + yOffset, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360F), 0F);
         entity.rotationYawHead = entity.rotationYaw;
         entity.renderYawOffset = entity.rotationYaw;
-        if (stack.hasDisplayName()) entity.setCustomNameTag(stack.getDisplayName());
 
         if (world.spawnEntityInWorld(entity)) {
             entity.playLivingSound();
-
-            if (!player.capabilities.isCreativeMode) stack.stackSize -= 1;
+            if (!player.capabilities.isCreativeMode) {
+                stack.stackSize -= 1;
+            }
         }
 
         return true;
