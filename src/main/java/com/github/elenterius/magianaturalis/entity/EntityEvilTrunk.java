@@ -244,7 +244,9 @@ public class EntityEvilTrunk extends EntityOwnableCreature {
                 ItemStack drop = new ItemStack(MNItems.evilTrunkSpawner, 1, getType());
 
                 if (player.isSneaking()) {
-                    drop.setTagInfo("inventory", inventory.writeToNBT(new NBTTagList()));
+                    if (inventory.hasItems()) {
+                        drop.setTagInfo("inventory", inventory.writeToNBT(new NBTTagList()));
+                    }
                 }
                 else {
                     inventory.dropAllItems();

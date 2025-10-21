@@ -15,18 +15,16 @@ public class InventoryEvilTrunk implements IInventory {
     public ItemStack[] inventory;
     public EntityEvilTrunk entityTrunk;
     public boolean inventoryChanged;
-    public int slotCount;
 
     public InventoryEvilTrunk(EntityEvilTrunk entity, int slots) {
-        slotCount = slots;
-        inventory = new ItemStack[36];
+        inventory = new ItemStack[slots];
         inventoryChanged = false;
         entityTrunk = entity;
     }
 
     @Override
     public int getSizeInventory() {
-        return slotCount;
+        return inventory.length;
     }
 
     @Override
@@ -106,6 +104,13 @@ public class InventoryEvilTrunk implements IInventory {
                 inventory[index] = null;
             }
         }
+    }
+
+    public boolean hasItems() {
+        for (ItemStack stack : inventory) {
+            if (stack != null) return true;
+        }
+        return false;
     }
 
     public NBTBase writeToNBT(NBTTagList dataList) {
