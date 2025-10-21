@@ -1,4 +1,3 @@
-import org.jetbrains.gradle.ext.Application
 import org.jetbrains.gradle.ext.Gradle
 import org.jetbrains.gradle.ext.RunConfigurationContainer
 
@@ -136,8 +135,11 @@ repositories {
 dependencies {
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.3.39-GTNH:dev")
 
-    api(rfg.deobf("curse.maven:thaumcraft-223628:2227552")) // Thaumcraft v4.2.3.5
-    api(rfg.deobf("curse.maven:baubles-227083:2224857")) // Baubles v1.0.1.10
+//    api(rfg.deobf("curse.maven:thaumcraft-223628:2227552")) // Thaumcraft v4.2.3.5
+//    api(rfg.deobf("curse.maven:baubles-227083:2224857")) // Baubles v1.0.1.10
+
+    api("com.github.GTNewHorizons:Baubles-Expanded:2.2.0-GTNH:dev")
+    api("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
 }
 
 // Publishing to a Maven repository
