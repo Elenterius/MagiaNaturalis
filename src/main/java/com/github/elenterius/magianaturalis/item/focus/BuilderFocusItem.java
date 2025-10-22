@@ -95,6 +95,7 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
     @Override
     public ItemStack onFocusRightClick(ItemStack wandStack, World world, EntityPlayer player, MovingObjectPosition movingObjectPosition) {
         player.swingItem();
+
         if (Platform.isClient()) return wandStack;
 
         MovingObjectPosition target = WorldUtil.getMovingObjectPositionFromPlayer(world, player, reachDistance, true);
@@ -119,11 +120,15 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
             float hitZ = (float) (target.hitVec.zCoord - z);
 
             hitX = Math.abs(hitX);
-            hitY = Math.abs(hitY); //Wasted Operation since blocks can't be placed below y=0 in "default" Minecraft!
+            hitY = Math.abs(hitY);
             hitZ = Math.abs(hitZ);
 
-            if (!onFocusUse(wandStack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ))
+            if (onFocusUse(wandStack, player, world, x, y, z, target.sideHit, hitX, hitY, hitZ)) {
+                world.playSoundAtEntity(player, "thaumcraft:wand", 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+            }
+            else {
                 world.playSoundAtEntity(player, "thaumcraft:wandfail", 0.5F, 0.8F + world.rand.nextFloat() * 0.1F);
+            }
         }
 
         return wandStack;
@@ -161,7 +166,7 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
     }
 
     private boolean buildAction(ItemStack wandStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int size, Block pickedblock, int pbData) {
-        List<WorldCoord> blocks = null;
+        List<WorldCoord> shape = null;
         ForgeDirection face = ForgeDirection.getOrientation(side);
         ItemWandCasting wand = (ItemWandCasting) wandStack.getItem();
 
@@ -170,28 +175,28 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
                 x += face.offsetX * size;
                 y += face.offsetY * size;
                 z += face.offsetZ * size;
-                blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                shape = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
                 break;
 
             case PLANE:
                 x += face.offsetX;
                 y += face.offsetY;
                 z += face.offsetZ;
-                blocks = WorldUtil.plot2DPlane(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                shape = WorldUtil.plot2DPlane(player, world, x, y, z, side, hitX, hitY, hitZ, size);
                 break;
 
             case PLANE_EXTEND:
                 x += face.offsetX * (size + 1) / 2;
                 y += face.offsetY * (size + 1) / 2;
                 z += face.offsetZ * (size + 1) / 2;
-                blocks = WorldUtil.plot2DPlaneExtension(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                shape = WorldUtil.plot2DPlaneExtension(player, world, x, y, z, side, hitX, hitY, hitZ, size);
                 break;
 
             case SPHERE:
                 x += face.offsetX * size;
                 y += face.offsetY * size;
                 z += face.offsetZ * size;
-                blocks = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
+                shape = WorldUtil.plot3DCubeArea(player, world, x, y, z, side, hitX, hitY, hitZ, size);
                 break;
 
             case NONE:
@@ -199,52 +204,53 @@ public class BuilderFocusItem extends ItemFocusBasic implements IArchitect {
                 break;
         }
 
-        if (blocks == null || blocks.isEmpty()) return false;
+        if (shape == null || shape.isEmpty()) return false;
 
-        int ls = blocks.size();
+        int blockCount = shape.size();
+
         if (!player.capabilities.isCreativeMode) {
-            double costD = blocks.size() * 5;
-            if (costD > wand.getVis(wandStack, Aspect.ORDER)) {
-                int i = (int) (blocks.size() - (blocks.size() - wand.getVis(wandStack, Aspect.ORDER) / 5));
-                ls = i;
+            int availableOrderVis = wand.getVis(wandStack, Aspect.ORDER);
+            if (shape.size() * 5 > availableOrderVis) {
+                blockCount = shape.size() - (shape.size() - availableOrderVis / 5);
             }
 
-            if (ls == 0) return false;
+            if (blockCount == 0) return false;
 
             ItemStack tempStack = new ItemStack(pickedblock, 1, pbData);
             if (tempStack.getItem() != null) {
-                int itemAmount = 0;
+                int availableBlocks = 0;
                 for (int i = 0; i < player.inventory.mainInventory.length; ++i) {
                     if (player.inventory.mainInventory[i] != null && player.inventory.mainInventory[i].isItemEqual(tempStack)) {
-                        itemAmount += player.inventory.mainInventory[i].stackSize;
+                        availableBlocks += player.inventory.mainInventory[i].stackSize;
                     }
                 }
 
-                if (itemAmount < ls)
-                    ls = itemAmount;
+                if (availableBlocks < blockCount) {
+                    blockCount = availableBlocks;
+                }
 
-                if (ls == 0) return false;
+                if (blockCount == 0) return false;
 
-                for (int j = 0; j < ls; j++) {
+                for (int j = 0; j < blockCount; j++) {
                     player.inventory.consumeInventoryItem(tempStack.getItem());
                 }
 
                 player.inventoryContainer.detectAndSendChanges();
 
-                int costN = 5 * ls;
+                int costN = 5 * blockCount;
                 if (!ThaumcraftApiHelper.consumeVisFromWand(wandStack, player, new AspectList().add(Aspect.ORDER, costN).add(Aspect.EARTH, costN), true, false)) {
                     return false;
                 }
             }
             else {
-                ls = 0;
+                blockCount = 0;
             }
         }
 
-        if (ls == 0) return false;
+        if (blockCount == 0) return false;
 
-        for (int i = 0; i < ls; i++) {
-            WorldCoord temp = blocks.get(i);
+        for (int i = 0; i < blockCount; i++) {
+            WorldCoord temp = shape.get(i);
             world.setBlock(temp.x, temp.y, temp.z, pickedblock, pbData, 3);
         }
         return true;
