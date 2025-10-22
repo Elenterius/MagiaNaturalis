@@ -1,5 +1,6 @@
 package com.github.elenterius.magianaturalis.client.render.entity.trunk;
 
+import com.github.elenterius.magianaturalis.client.render.RenderUtil;
 import com.github.elenterius.magianaturalis.entity.EntityEvilTrunk;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -109,47 +110,53 @@ public class DemonicTrunkModel extends ModelBase {
         GL11.glTranslatef(-0.5F, 0.5F, -0.5F);
 
         if (entity != null) {
-            float f7 = 1.0F - ((EntityEvilTrunk) entity).skullrot;
-            f7 = 1.0F - f7 * f7 * f7;
-            f7 = (-(f7 * 3.141593F / 2.0F));
+            float rotation = 1.0F - ((EntityEvilTrunk) entity).skullrot;
+            rotation = 1.0F - rotation * rotation * rotation;
+            rotation = (-(rotation * RenderUtil.PI_f / 2.0F));
 
-            this.chestJaw.rotateAngleX = f7;
-            this.chestTooth1.rotateAngleX = f7;
-            this.chestTooth2.rotateAngleX = f7;
-            this.chestTooth3.rotateAngleX = f7;
-            this.chestTooth4.rotateAngleX = f7;
-            this.chestToothTop1.rotateAngleX = f7;
-            this.chestToothTop2.rotateAngleX = f7;
+            chestSkull.rotateAngleX = rotation;
+            chestHorn1.rotateAngleX = rotation;
+            chestHorn2.rotateAngleX = rotation;
+            chestHorn3.rotateAngleX = rotation;
+            chestHorn4.rotateAngleX = rotation;
+            chestHornTop1.rotateAngleX = rotation;
+            chestHornTop2.rotateAngleX = rotation;
+
+            chestRightWing.rotateAngleX = rotation;
+            chestOuterRightWing.rotateAngleX = rotation;
+            chestLeftWing.rotateAngleX = rotation;
+            chestOuterLeftWing.rotateAngleX = rotation;
         }
 
-        this.chestRightWing.rotateAngleY = MathHelper.cos(f2 * 0.5F) * (float) Math.PI * 0.25F;
-        this.chestLeftWing.rotateAngleY = -this.chestRightWing.rotateAngleY;
-        double X = 10 * Math.cos(this.chestRightWing.rotateAngleY);
-        double Z = 10 * Math.sin(this.chestRightWing.rotateAngleY);
-        this.chestOuterRightWing.setRotationPoint(15F + (float) X, 11F, (float) (9F - Z));
-        this.chestOuterLeftWing.setRotationPoint((float) (1F - X), 11F, (float) (9F - Z));
-        this.chestOuterRightWing.rotateAngleY = (float) this.chestRightWing.rotateAngleY * 1.9F;
-        this.chestOuterLeftWing.rotateAngleY = (float) -this.chestRightWing.rotateAngleY * 1.9F;
+        chestRightWing.rotateAngleY = MathHelper.cos(f2 * 0.5F) * RenderUtil.PI_f * 0.25F;
+        chestLeftWing.rotateAngleY = -chestRightWing.rotateAngleY;
+        float X = 10f * MathHelper.cos(chestRightWing.rotateAngleY);
+        float Z = 10f * MathHelper.sin(chestRightWing.rotateAngleY);
+        chestOuterRightWing.setRotationPoint(15F + X, 11F, 9F - Z);
+        chestOuterLeftWing.setRotationPoint(1F - X, 11F, 9F - Z);
+        chestOuterRightWing.rotateAngleY = chestRightWing.rotateAngleY * 1.9F;
+        chestOuterLeftWing.rotateAngleY = -chestRightWing.rotateAngleY * 1.9F;
 
-        float f6 = 0.0625F;
-        chestSkull.render(f6);
-        chestJaw.render(f6);
-        chestTooth1.render(f6);
-        chestToothTop1.render(f6);
-        chestTooth2.render(f6);
-        chestToothTop2.render(f6);
-        chestTooth3.render(f6);
-        chestTooth4.render(f6);
-        chestHorn1.render(f6);
-        chestHorn2.render(f6);
-        chestHorn3.render(f6);
-        chestHorn4.render(f6);
-        chestHornTop1.render(f6);
-        chestHornTop2.render(f6);
-        chestRightWing.render(f6);
-        chestOuterRightWing.render(f6);
-        chestLeftWing.render(f6);
-        chestOuterLeftWing.render(f6);
+        float scale = 0.0625F;
+        chestSkull.render(scale);
+        chestJaw.render(scale);
+        chestTooth1.render(scale);
+        chestToothTop1.render(scale);
+        chestTooth2.render(scale);
+        chestToothTop2.render(scale);
+        chestTooth3.render(scale);
+        chestTooth4.render(scale);
+        chestHorn1.render(scale);
+        chestHorn2.render(scale);
+        chestHorn3.render(scale);
+        chestHorn4.render(scale);
+        chestHornTop1.render(scale);
+        chestHornTop2.render(scale);
+        chestRightWing.render(scale);
+        chestOuterRightWing.render(scale);
+        chestLeftWing.render(scale);
+        chestOuterLeftWing.render(scale);
+
         GL11.glPopMatrix();
     }
 }
