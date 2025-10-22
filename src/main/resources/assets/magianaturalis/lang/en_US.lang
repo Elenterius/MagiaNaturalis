@@ -107,7 +107,7 @@ mn.research_page.ARCANE_CHEST.1=Crafted from Greatwood or Silverwood, this Arcan
 
 mn.research_name.GOGGLES_DARK=Dark Crystal Goggles
 mn.research_text.GOGGLES_DARK=I see Your glowing Red Eyes
-mn.research_page.GOGGLES_DARK.1=You have always wondered how some entities could stay unseen to your eyes. Even though you have mastered the revealing of aura nodes you can't see invisible beings. During your travels you have started to notice that spiders often appear invisible. Through the dissection of a spider body you figured out that darkness is somehow involved in cloaking the entities. Luckily you also discovered that Spider Eyes have the ability detect it.<BR>Crafted from Spider Eyes and Dark Crystals, these Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings. Finally the times are over being surprised by the unseen.
+mn.research_page.GOGGLES_DARK.1=You have always wondered how some entities could stay unseen to your eyes. Even though you have mastered the revealing of aura nodes you can't see invisible beings. During your travels you have started to notice that spiders often appear invisible. Through the dissection of a spider body you figured out that darkness is somehow involved in cloaking the entities. Luckily you also discovered that Spider Eyes have the ability detect it.<BR>These Goggles provide peering Sight that is unaffected by Blindness and grants the player the ability to see the Shapes of Invisible Beings. Finally the times are over being surprised by the unseen.
 
 mn.research_name.SPECTACLES=Spectacles
 mn.research_text.SPECTACLES=Sharper Sight
@@ -137,9 +137,9 @@ mn.research_name.ENDER_POUCH=Enderpouch
 mn.research_text.ENDER_POUCH=Extra-dimensional Storage
 mn.research_page.ENDER_POUCH.1=This Infused Pouch allows the possessor to access his private Storage anywhere he desires. Any Foci stored inside is fully accessible with a Wand.
 
-mn.research_name.SICKLE_THAUM=Thaumium Sickle
-mn.research_text.SICKLE_THAUM=Reaping Crops
-mn.research_page.SICKLE_THAUM.1=Destroys Crops and Plants in a small radius of about 3x3x3 Blocks. Can harvest any Plants, Crops, Leaves, Web and other Vegetation and shear Entities such as Sheep.
+mn.research_name.SICKLES=Sickles
+mn.research_text.SICKLES=Reaping Crops
+mn.research_page.SICKLES.1=Destroys Crops and Plants in a small radius of about 3x3x3 Blocks. Can harvest any Plants, Crops, Leaves, Web and other Vegetation and shear Entities such as Sheep.
 
 mn.research_name.SICKLE_ABUNDANCE=Sickle of Abundance
 mn.research_text.SICKLE_ABUNDANCE=Harvest Feast

@@ -13,6 +13,8 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.crafting.IArcaneRecipe;
+import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 
@@ -31,6 +33,22 @@ public final class MNRecipes {
         initDefault();
         initArcane();
         initInfusion();
+    }
+
+    public static IRecipe getRecipe(String key) {
+        return (IRecipe) recipes.get(key);
+    }
+
+    public static IRecipe[] getRecipes(String key) {
+        return (IRecipe[]) recipes.get(key);
+    }
+
+    public static IArcaneRecipe getArcaneRecipe(String key) {
+        return (IArcaneRecipe) recipes.get(key);
+    }
+
+    public static InfusionRecipe getInfusionRecipe(String key) {
+        return (InfusionRecipe) recipes.get(key);
     }
 
     private static IRecipe addRecipe(IRecipe recipe) {
@@ -297,4 +315,5 @@ public final class MNRecipes {
         };
         recipes.put("SinisterTrunk", ThaumcraftApi.addInfusionCraftingRecipe("EVIL_TRUNK", new ItemStack(MNItems.evilTrunkSpawner, 1, 1), 6, aspects, new ItemStack(MNItems.evilTrunkSpawner, 1, 0), recipe));
     }
+
 }
