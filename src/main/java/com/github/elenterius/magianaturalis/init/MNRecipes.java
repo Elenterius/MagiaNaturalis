@@ -1,7 +1,6 @@
 package com.github.elenterius.magianaturalis.init;
 
 import com.github.elenterius.magianaturalis.block.chest.ArcaneChestType;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
@@ -10,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -24,31 +24,55 @@ public final class MNRecipes {
 
     public static HashMap<String, Object> recipes = new HashMap<>();
 
+    private MNRecipes() {
+    }
+
     static void init() {
         initDefault();
         initArcane();
         initInfusion();
     }
 
-    static IRecipe addShapelessRecipe(ItemStack stackResult, ItemStack... ingredients) {
-        ArrayList<ItemStack> list = new ArrayList<>();
-        Collections.addAll(list, ingredients);
-        IRecipe recipe = new ShapelessRecipes(stackResult, list);
+    private static IRecipe addRecipe(IRecipe recipe) {
         //noinspection unchecked
         CraftingManager.getInstance().getRecipeList().add(recipe);
         return recipe;
     }
 
-    static void initDefault() {
-        recipes.put("SickleThaumium", GameRegistry.addShapedRecipe(new ItemStack(MNItems.sickleThaumium, 1), " I ", "  I", "SI ", 'I', new ItemStack(ConfigItems.itemResource, 1, 2), 'S', Items.stick));
+    private static IRecipe addShapedRecipe(ItemStack stackResult, Object... params) {
+        return CraftingManager.getInstance().addRecipe(stackResult, params);
+    }
 
-        recipes.put("GreatwoodOrn", GameRegistry.addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 1, 1), "W", "W", 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 0)));
-        recipes.put("GreatwoodSlab", new IRecipe[]{GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 0), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 0)), GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 0), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 1))});
-        recipes.put("SilverwoodSlab", new IRecipe[]{GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 1), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 2)), GameRegistry.addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 1), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 3))});
-        recipes.put("PlankSilverwood", GameRegistry.addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 1, 2), "W", "W", 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 1)));
-        recipes.put("GreatwoodGoldTrim", GameRegistry.addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 3, 6), "WWW", "NNN", "WWW", 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 0)));
-        recipes.put("GreatwoodGoldOrn1", GameRegistry.addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 4, 4), "NWN", "WNW", "NWN", 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)));
-        recipes.put("GreatwoodGoldOrn2", GameRegistry.addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 4, 5), "NWN", "WIW", "NWN", 'I', Items.gold_ingot, 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)));
+    private static IRecipe addShapedOreDictRecipe(ItemStack stackResult, Object... params) {
+        IRecipe recipe = new ShapedOreRecipe(stackResult, params);
+        return addRecipe(recipe);
+    }
+
+    private static IRecipe addShapelessRecipe(ItemStack stackResult, ItemStack... ingredients) {
+        ArrayList<ItemStack> list = new ArrayList<>();
+        Collections.addAll(list, ingredients);
+        IRecipe recipe = new ShapelessRecipes(stackResult, list);
+        return addRecipe(recipe);
+    }
+
+    static void initDefault() {
+        recipes.put("ThaumiumSickle", addShapedOreDictRecipe(new ItemStack(MNItems.sickleThaumium, 1), " I ", "  I", "SI ", 'I', "ingotThaumium", 'S', "stickWood"));
+        recipes.put("VoidSickle", addShapedOreDictRecipe(new ItemStack(MNItems.voidSickle, 1), " I ", "  I", "SI ", 'I', "ingotVoid", 'S', "stickWood"));
+
+        recipes.put("GreatwoodSlab", new IRecipe[]{
+                addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 0), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 0)),
+                addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 0), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 1))
+        });
+        recipes.put("SilverwoodSlab", new IRecipe[]{
+                addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 1), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 2)),
+                addShapedRecipe(new ItemStack(ConfigBlocks.blockSlabWood, 6, 1), "WWW", 'W', new ItemStack(MNBlocks.arcaneWood, 1, 3))
+        });
+
+        recipes.put("PlankSilverwood", addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 1, 2), "W", "W", 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 1)));
+        recipes.put("GreatwoodOrn", addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 1, 1), "W", "W", 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 0)));
+        recipes.put("GreatwoodGoldTrim", addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 3, 6), "WWW", "NNN", "WWW", 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockSlabWood, 6, 0)));
+        recipes.put("GreatwoodGoldOrn1", addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 4, 4), "NWN", "WNW", "NWN", 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)));
+        recipes.put("GreatwoodGoldOrn2", addShapedRecipe(new ItemStack(MNBlocks.arcaneWood, 4, 5), "NWN", "WIW", "NWN", 'I', Items.gold_ingot, 'N', Items.gold_nugget, 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)));
 
         recipes.put("WoodConversion", new IRecipe[]{
                 addShapelessRecipe(new ItemStack(MNBlocks.arcaneWood, 1, 0), new ItemStack(MNItems.alchemicalStone, 1, 0), new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6)),
@@ -68,8 +92,8 @@ public final class MNRecipes {
     }
 
     static void initArcane() {
-        AspectList aspects = null;
-        Object[] recipe = null;
+        AspectList aspects;
+        Object[] recipe;
 
         aspects = new AspectList().add(Aspect.ORDER, 4).add(Aspect.ENTROPY, 2).add(Aspect.AIR, 2).add(Aspect.EARTH, 4).add(Aspect.FIRE, 2).add(Aspect.WATER, 2);
         recipe = new Object[]{" L ", "TBS", " L ",
@@ -142,8 +166,8 @@ public final class MNRecipes {
     }
 
     static void initInfusion() {
-        AspectList aspects = null;
-        ItemStack[] recipe = null;
+        AspectList aspects;
+        ItemStack[] recipe;
 
         aspects = new AspectList().add(Aspect.WEATHER, 9).add(Aspect.AURA, 16).add(Aspect.EXCHANGE, 8).add(Aspect.MECHANISM, 12);
         recipe = new ItemStack[]{
@@ -180,7 +204,7 @@ public final class MNRecipes {
                 new ItemStack(ConfigItems.itemResource, 1, 2),
                 new ItemStack(ConfigItems.itemResource, 1, 2),
                 stackBook};
-        recipes.put("SickleElemental", ThaumcraftApi.addInfusionCraftingRecipe("SICKLE_ABUNDANCE", new ItemStack(MNItems.sickleElemental), 1, aspects, new ItemStack(MNItems.sickleThaumium), recipe));
+        recipes.put("ElementalSickle", ThaumcraftApi.addInfusionCraftingRecipe("SICKLE_ABUNDANCE", new ItemStack(MNItems.sickleElemental), 1, aspects, new ItemStack(MNItems.sickleThaumium), recipe));
 
         aspects = new AspectList().add(Aspect.CRAFT, 32).add(Aspect.TOOL, 16).add(Aspect.EXCHANGE, 8).add(Aspect.MECHANISM, 3);
         recipe = new ItemStack[]{

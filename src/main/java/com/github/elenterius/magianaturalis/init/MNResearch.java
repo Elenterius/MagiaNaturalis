@@ -97,10 +97,10 @@ public class MNResearch {
         research.setPages(new ResearchPage("mn.research_page.JAR_PRISON.1"), new ResearchPage((InfusionRecipe) MNRecipes.recipes.get("JarPrison"))).setParentsHidden("JARLABEL").registerResearchItem();
 
         research = new CustomResearchItem("SICKLE_THAUM", new AspectList().add(Aspect.TOOL, 3).add(Aspect.CROP, 3).add(Aspect.HARVEST, 3), -4, 3, 1, new ItemStack(MNItems.sickleThaumium, 1, 0));
-        research.setPages(new ResearchPage("mn.research_page.SICKLE_THAUM.1"), new ResearchPage((IRecipe) MNRecipes.recipes.get("SickleThaumium"))).setParentsHidden("THAUMIUM").setSecondary().registerResearchItem();
+        research.setPages(new ResearchPage("mn.research_page.SICKLE_THAUM.1"), new ResearchPage((IRecipe) MNRecipes.recipes.get("ThaumiumSickle"))).setParentsHidden("THAUMIUM").setSecondary().registerResearchItem();
 
         research = new CustomResearchItem("SICKLE_ABUNDANCE", new AspectList().add(Aspect.TOOL, 3).add(Aspect.CROP, 3).add(Aspect.HARVEST, 3).add(Aspect.GREED, 6), -5, 5, 2, new ItemStack(MNItems.sickleElemental, 1, 0));
-        research.setPages(new ResearchPage("mn.research_page.SICKLE_ABUNDANCE.1"), new ResearchPage((InfusionRecipe) MNRecipes.recipes.get("SickleElemental"))).setParents("SICKLE_THAUM").setParentsHidden("INFUSION").registerResearchItem();
+        research.setPages(new ResearchPage("mn.research_page.SICKLE_ABUNDANCE.1"), new ResearchPage((InfusionRecipe) MNRecipes.recipes.get("ElementalSickle"))).setParents("SICKLE_THAUM").setParentsHidden("INFUSION").registerResearchItem();
 
         research = new CustomResearchItem("GEO_OCCULTISM", new AspectList().add(Aspect.AURA, 4).add(Aspect.EXCHANGE, 3).add(Aspect.WEATHER, 3).add(Aspect.MAGIC, 6).add(Aspect.EARTH, 2).add(Aspect.AIR, 2), 0, -5, 0, new ItemStack(MNBlocks.geoPylon));
         research.setPages(new ResearchPage("mn.research_page.GEO_OCCULTISM.1"), new ResearchPage((InfusionRecipe) MNRecipes.recipes.get("GeoPylon")), new ResearchPage("mn.research_page.GEO_OCCULTISM.2"), new ResearchPage((IArcaneRecipe) MNRecipes.recipes.get("BiomeReport"))).setParentsHidden("INFUSION", "STONE_PHENO").registerResearchItem();
