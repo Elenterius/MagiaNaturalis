@@ -49,7 +49,7 @@ public class TranscribingTableBlock extends BlockContainer {
 
     @Override
     public int getRenderType() {
-        return RenderUtil.RenderID;
+        return RenderUtil.RENDER_ID_1;
     }
 
     @SideOnly(Side.CLIENT)

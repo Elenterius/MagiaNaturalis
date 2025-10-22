@@ -31,12 +31,11 @@ public class RenderItemEvilTrunkSpawner implements IItemRenderer {
 
         if ((type == IItemRenderer.ItemRenderType.EQUIPPED) || (type == IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON)) {
             GL11.glTranslatef(-0.25F, -0.5F, -0.25F);
-            if ((type == IItemRenderer.ItemRenderType.EQUIPPED) && (type != IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON)) {
+            if (type == ItemRenderType.EQUIPPED) {
                 GL11.glTranslatef(1.0F, 0.0F, 0.0F);
             }
             else {
-                float angle = 90.0F;
-                GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glTranslatef(0.25F, -0.25F, 0.25F);
             }
         }
@@ -49,22 +48,22 @@ public class RenderItemEvilTrunkSpawner implements IItemRenderer {
             switch (item.getItemDamage()) {
                 case 0:
                     RenderUtil.bindTexture(EvilTrunkRenderer.CORRUPTED_TEXTURE);
-                    this.modelTC.render(null, 0, 0, 0, 0, 0, 0);
+                    modelTC.render(null, 0, 0, 0, 0, 0, 0);
                     break;
 
                 case 1:
                     RenderUtil.bindTexture(EvilTrunkRenderer.SINISTER_TEXTURE);
-                    this.modelTS.render(null, 0, 0, 3, 0, 0, 0);
+                    modelTS.render(null, 0, 0, 3, 0, 0, 0);
                     break;
 
                 case 2:
                     RenderUtil.bindTexture(EvilTrunkRenderer.DEMONIC_TEXTURE);
-                    this.modelTD.render(null, 0, 0, 0, 0, 0, 0);
+                    modelTD.render(null, 0, 0, 0, 0, 0, 0);
                     break;
 
                 case 3:
                     RenderUtil.bindTexture(EvilTrunkRenderer.TAINTED_TEXTURE);
-                    this.modelTT.render(null, 0, 0, 0, 0, 0, 0);
+                    modelTT.render(null, 0, 0, 0, 0, 0, 0);
                     break;
             }
         }

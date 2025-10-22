@@ -15,8 +15,11 @@ import org.lwjgl.opengl.GL12;
 
 public final class RenderUtil {
 
-    public static int RenderID = RenderingRegistry.getNextAvailableRenderId();
-    public static int RenderID2 = RenderingRegistry.getNextAvailableRenderId();
+    public static final int RENDER_ID_1 = RenderingRegistry.getNextAvailableRenderId();
+    public static final int RENDER_ID_2 = RenderingRegistry.getNextAvailableRenderId();
+
+    public static final float PI_f = (float) Math.PI;
+    public static final float PI_HALF_f = (float) (Math.PI / 2d);
 
     public static void bindTexture(ResourceLocation resource) {
         Minecraft.getMinecraft().renderEngine.bindTexture(resource);

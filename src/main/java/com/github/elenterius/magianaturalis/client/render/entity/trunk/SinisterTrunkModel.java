@@ -1,5 +1,6 @@
 package com.github.elenterius.magianaturalis.client.render.entity.trunk;
 
+import com.github.elenterius.magianaturalis.client.render.RenderUtil;
 import com.github.elenterius.magianaturalis.entity.EntityEvilTrunk;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -66,30 +67,30 @@ public class SinisterTrunkModel extends ModelBase {
         GL11.glTranslatef(-0.5F, 0.5F, -0.5F);
 
         if (entity != null) {
-            float f7 = 1.0F - ((EntityEvilTrunk) entity).skullrot;
-            f7 = 1.0F - f7 * f7 * f7;
-            f7 = (-(f7 * 3.141593F / 2.0F));
+            float rotation = 1.0F - ((EntityEvilTrunk) entity).skullrot;
+            rotation = 1.0F - rotation * rotation * rotation;
+            rotation = (-(rotation * RenderUtil.PI_f / 2.0F));
 
-            this.chestSkull.rotateAngleX = f7;
-            this.chestBrain.rotateAngleX = f7;
-            this.chestJar.rotateAngleX = f7;
+            chestSkull.rotateAngleX = rotation;
+            chestBrain.rotateAngleX = rotation;
+            chestJar.rotateAngleX = rotation;
         }
 
-        float f6 = 0.0625F;
-        chestSkull.render(f6);
-        chestJaw.render(f6);
-        chestTooth1.render(f6);
-        chestToothTop1.render(f6);
-        chestTooth2.render(f6);
-        chestToothTop2.render(f6);
-        chestTooth3.render(f6);
-        chestKTooth4.render(f6);
-        chestBrain.render(f6);
+        float scale = 0.0625F;
+        chestSkull.render(scale);
+        chestJaw.render(scale);
+        chestTooth1.render(scale);
+        chestToothTop1.render(scale);
+        chestTooth2.render(scale);
+        chestToothTop2.render(scale);
+        chestTooth3.render(scale);
+        chestKTooth4.render(scale);
+        chestBrain.render(scale);
 
         GL11.glEnable(GL11.GL_NORMALIZE);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        chestJar.render(f6);
+        chestJar.render(scale);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }

@@ -75,7 +75,7 @@ public class ArcaneChestBlock extends BlockContainer {
 
     @Override
     public int getRenderType() {
-        return RenderUtil.RenderID;
+        return RenderUtil.RENDER_ID_1;
     }
 
     @Override

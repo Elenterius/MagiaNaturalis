@@ -76,7 +76,7 @@ public class PrisonJarBlock extends BlockContainer {
 
     @Override
     public int getRenderType() {
-        return RenderUtil.RenderID2;
+        return RenderUtil.RENDER_ID_2;
     }
 
     @SideOnly(Side.CLIENT)

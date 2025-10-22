@@ -64,7 +64,7 @@ public class BlockEntityRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public int getRenderId() {
-        return RenderUtil.RenderID;
+        return RenderUtil.RENDER_ID_1;
     }
 
 }

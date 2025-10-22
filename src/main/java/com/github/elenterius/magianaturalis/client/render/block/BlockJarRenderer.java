@@ -57,6 +57,6 @@ public class BlockJarRenderer extends BlockRenderer implements ISimpleBlockRende
 
     @Override
     public int getRenderId() {
-        return RenderUtil.RenderID2;
+        return RenderUtil.RENDER_ID_2;
     }
 }
