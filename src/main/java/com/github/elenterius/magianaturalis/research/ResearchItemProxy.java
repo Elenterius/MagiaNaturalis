@@ -29,6 +29,10 @@ public class ResearchItemProxy extends ResearchItem {
         setHidden();
     }
 
+    public static ResearchItemProxy createNamespaced(ResourceLocation name, String originalResearchKey, int x, int y) {
+        return create(name.toString(), name.getResourceDomain(), originalResearchKey, x, y);
+    }
+
     public static ResearchItemProxy create(String key, String category, String originalResearchKey, int x, int y) {
         ResearchItem research = ResearchCategories.getResearch(originalResearchKey);
 

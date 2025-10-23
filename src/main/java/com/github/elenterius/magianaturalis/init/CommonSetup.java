@@ -36,8 +36,8 @@ public class CommonSetup implements IGuiHandler {
 
     public void postInit(FMLPostInitializationEvent event) {
         MNEntities.addMobSpawns();
-        MNRecipes.init();
-        MNResearch.init();
+        MNRecipes.register();
+        MNResearch.register();
     }
 
     @Override
