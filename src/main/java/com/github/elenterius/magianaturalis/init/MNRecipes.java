@@ -125,25 +125,25 @@ public final class MNRecipes {
 
         aspects = new AspectList().add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 20).add(Aspect.AIR, 20).add(Aspect.EARTH, 20).add(Aspect.FIRE, 20).add(Aspect.WATER, 20);
         recipe = new Object[]{"ALI", "TBW", "OLE",
-                'A', new ItemStack(ConfigItems.itemShard, 1, 0),
-                'I', new ItemStack(ConfigItems.itemShard, 1, 1),
-                'T', new ItemStack(ConfigItems.itemShard, 1, 2),
-                'W', new ItemStack(ConfigItems.itemShard, 1, 3),
-                'O', new ItemStack(ConfigItems.itemShard, 1, 4),
-                'E', new ItemStack(ConfigItems.itemShard, 1, 5),
+                'A', Shard.AIR.createItem(),
+                'I', Shard.FIRE.createItem(),
+                'T', Shard.WATER.createItem(),
+                'W', Shard.EARTH.createItem(),
+                'O', Shard.ORDER.createItem(),
+                'E', Shard.ENTROPY.createItem(),
                 'L', Items.leather,
                 'B', Items.book};
         RECIPES.put("ResearchLog", registerArcaneRecipe(MNResearch.RESEARCH_LOG.getId(), new ItemStack(MNItems.researchLog, 1), aspects, recipe));
 
         aspects = new AspectList().add(Aspect.ORDER, 2).add(Aspect.ENTROPY, 2).add(Aspect.AIR, 2).add(Aspect.EARTH, 2).add(Aspect.FIRE, 2).add(Aspect.WATER, 2);
         recipe = new Object[]{"NXI", "N  ",
-                'I', new ItemStack(ConfigItems.itemResource, 1, 2),
-                'N', new ItemStack(ConfigItems.itemNugget, 1, 6),
-                'X', new ItemStack(ConfigItems.itemNugget, 1, 0)};
+                'I', Resource.THAUMIUM_INGOT.createItem(),
+                'N', ResourceNugget.THAUMIUM_NUGGET.createItem(),
+                'X', ResourceNugget.IRON_NUGGET.createItem()};
         RECIPES.put("ThaumiumKey1", registerArcaneRecipe(MNResearch.ARCANE_KEYS.getId(), new ItemStack(MNItems.arcaneKey, 2, 0), aspects, recipe));
         recipe = new Object[]{"NXI", "N  ",
-                'I', new ItemStack(ConfigItems.itemResource, 1, 2),
-                'N', new ItemStack(ConfigItems.itemNugget, 1, 6),
+                'I', Resource.THAUMIUM_INGOT.createItem(),
+                'N', ResourceNugget.THAUMIUM_NUGGET.createItem(),
                 'X', Items.gold_nugget};
         RECIPES.put("ThaumiumKey2", registerArcaneRecipe(MNResearch.ARCANE_KEYS.getId(), new ItemStack(MNItems.arcaneKey, 2, 1), aspects, recipe));
 
@@ -157,12 +157,12 @@ public final class MNRecipes {
 
         aspects = new AspectList().add(Aspect.ORDER, 30).add(Aspect.ENTROPY, 30).add(Aspect.AIR, 30).add(Aspect.EARTH, 30).add(Aspect.FIRE, 30).add(Aspect.WATER, 30);
         recipe = new Object[]{"ASI", "TDW", "OBE",
-                'A', new ItemStack(ConfigItems.itemShard, 1, 0),
-                'I', new ItemStack(ConfigItems.itemShard, 1, 1),
-                'T', new ItemStack(ConfigItems.itemShard, 1, 2),
-                'W', new ItemStack(ConfigItems.itemShard, 1, 3),
-                'O', new ItemStack(ConfigItems.itemShard, 1, 4),
-                'E', new ItemStack(ConfigItems.itemShard, 1, 5),
+                'A', Shard.AIR.createItem(),
+                'I', Shard.FIRE.createItem(),
+                'T', Shard.WATER.createItem(),
+                'W', Shard.EARTH.createItem(),
+                'O', Shard.ORDER.createItem(),
+                'E', Shard.ENTROPY.createItem(),
                 'S', ConfigItems.itemInkwell,
                 'D', new ItemStack(ConfigBlocks.blockTable, 1, 14),
                 'B', new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6)};
@@ -170,14 +170,14 @@ public final class MNRecipes {
 
         aspects = new AspectList().add(Aspect.WATER, 20).add(Aspect.ORDER, 15).add(Aspect.EARTH, 15).add(Aspect.FIRE, 10);
         recipe = new Object[]{"IBI", "WCW", "IWI",
-                'I', new ItemStack(ConfigItems.itemResource, 1, 2),
+                'I', Resource.THAUMIUM_INGOT.createItem(),
                 'B', ConfigItems.itemZombieBrain,
                 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
                 'C', Blocks.chest};
         ItemStack arcaneChest = new ItemStack(MNBlocks.arcaneChest, 1, ArcaneChestType.GREAT_WOOD.id());
         RECIPES.put("ArcaneChest1", registerArcaneRecipe(MNResearch.ARCANE_CHEST.getId(), arcaneChest, aspects, recipe));
         recipe = new Object[]{"IBI", "WCW", "IWI",
-                'I', new ItemStack(ConfigItems.itemResource, 1, 2),
+                'I', Resource.THAUMIUM_INGOT.createItem(),
                 'B', ConfigItems.itemZombieBrain,
                 'W', new ItemStack(MNBlocks.arcaneWood, 1, 2),
                 'C', Blocks.chest};
@@ -192,20 +192,20 @@ public final class MNRecipes {
         aspects = new AspectList().add(Aspect.WEATHER, 9).add(Aspect.AURA, 16).add(Aspect.EXCHANGE, 8).add(Aspect.MECHANISM, 12);
         recipe = new ItemStack[]{
                 new ItemStack(ConfigItems.itemFocusTrade),
-                new ItemStack(MNItems.alchemicalStone, 1, 0),
-                new ItemStack(ConfigItems.itemShard, 1, 0),
-                new ItemStack(ConfigItems.itemShard, 1, 1),
-                new ItemStack(ConfigItems.itemShard, 1, 2),
-                new ItemStack(ConfigItems.itemShard, 1, 3),
-                new ItemStack(ConfigItems.itemShard, 1, 4),
-                new ItemStack(ConfigItems.itemShard, 1, 5)
+                new ItemStack(MNItems.alchemicalStone),
+                Shard.AIR.createItem(),
+                Shard.FIRE.createItem(),
+                Shard.WATER.createItem(),
+                Shard.EARTH.createItem(),
+                Shard.ORDER.createItem(),
+                Shard.ENTROPY.createItem()
         };
         RECIPES.put("GeoPylon", registerInfusionRecipe(MNResearch.GEO_OCCULTISM.getId(), new ItemStack(MNBlocks.geoPylon), 8, aspects, new ItemStack(ConfigBlocks.blockMetalDevice, 1, 14), recipe));
 
         aspects = new AspectList().add(Aspect.SENSES, 32).add(Aspect.ARMOR, 16).add(Aspect.DARKNESS, 32);
         recipe = new ItemStack[]{
-                new ItemStack(ConfigItems.itemShard, 1, 5),
-                new ItemStack(ConfigItems.itemShard, 1, 5),
+                Shard.ENTROPY.createItem(),
+                Shard.ENTROPY.createItem(),
                 new ItemStack(Items.spider_eye),
                 new ItemStack(Items.spider_eye),
                 new ItemStack(Items.iron_ingot),
@@ -218,23 +218,23 @@ public final class MNRecipes {
         ItemStack stackBook = new ItemStack(Items.enchanted_book);
         Items.enchanted_book.addEnchantment(stackBook, new EnchantmentData(Enchantment.fortune.effectId, 2));
         recipe = new ItemStack[]{
-                new ItemStack(ConfigItems.itemShard, 1, 4),
-                new ItemStack(ConfigItems.itemShard, 1, 5),
+                Shard.ORDER.createItem(),
+                Shard.ENTROPY.createItem(),
                 new ItemStack(Items.wheat_seeds),
-                new ItemStack(ConfigItems.itemResource, 1, 2),
-                new ItemStack(ConfigItems.itemResource, 1, 2),
+                Resource.THAUMIUM_INGOT.createItem(),
+                Resource.THAUMIUM_INGOT.createItem(),
                 stackBook};
         RECIPES.put("ElementalSickle", registerInfusionRecipe(MNResearch.SICKLE_OF_ABUNDANCE.getId(), new ItemStack(MNItems.sickleElemental), 1, aspects, new ItemStack(MNItems.sickleThaumium), recipe));
 
         aspects = new AspectList().add(Aspect.CRAFT, 32).add(Aspect.TOOL, 16).add(Aspect.EXCHANGE, 8).add(Aspect.MECHANISM, 3);
         recipe = new ItemStack[]{
-                new ItemStack(ConfigItems.itemShard, 1, 4),
-                new ItemStack(ConfigItems.itemShard, 1, 6),
-                new ItemStack(ConfigItems.itemShard, 1, 5),
+                Shard.ORDER.createItem(),
+                Shard.BALANCED.createItem(),
+                Shard.ENTROPY.createItem(),
                 new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 7),
                 new ItemStack(ConfigItems.itemShovelElemental),
                 new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 7),
-                new ItemStack(ConfigItems.itemResource, 1, 3),
+                Resource.QUICKSILVER.createItem(),
                 new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 7)
         };
         RECIPES.put("ConstructionFocus", registerInfusionRecipe(MNResearch.CONSTRUCTION_FOCUS.getId(), new ItemStack(MNItems.focusBuild), 5, aspects, new ItemStack(ConfigItems.itemFocusTrade), recipe));
@@ -271,13 +271,13 @@ public final class MNRecipes {
                 new ItemStack(Items.glowstone_dust),
                 new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6)
         };
-        RECIPES.put("StoneQuick", registerInfusionRecipe(MNResearch.QUICKSILVER_STONE.getId(), new ItemStack(MNItems.alchemicalStone, 1, 1), 2, aspects, new ItemStack(ConfigItems.itemResource, 1, 3), recipe));
+        RECIPES.put("StoneQuick", registerInfusionRecipe(MNResearch.QUICKSILVER_STONE.getId(), new ItemStack(MNItems.alchemicalStone, 1, 1), 2, aspects, Resource.QUICKSILVER.createItem(), recipe));
 
         aspects = new AspectList().add(Aspect.MOTION, 16).add(Aspect.SOUL, 16).add(Aspect.ENTROPY, 16).add(Aspect.FLESH, 6);
         recipe = new ItemStack[]{
                 new ItemStack(Items.gold_ingot),
                 new ItemStack(ConfigItems.itemZombieBrain),
-                new ItemStack(ConfigItems.itemShard, 1, 6),
+                Shard.BALANCED.createItem(),
                 new ItemStack(Items.iron_ingot),
                 new ItemStack(Items.spider_eye),
                 new ItemStack(Items.ender_eye)
@@ -286,12 +286,12 @@ public final class MNRecipes {
 
         aspects = new AspectList().add(Aspect.TAINT, 16).add(Aspect.SOUL, 16).add(Aspect.ENTROPY, 16).add(Aspect.FLESH, 8);
         recipe = new ItemStack[]{
-                new ItemStack(ConfigItems.itemResource, 1, 12),
+                Resource.TAINT_TENDRIL.createItem(),
                 new ItemStack(Items.gold_ingot),
-                new ItemStack(ConfigItems.itemResource, 1, 11),
-                new ItemStack(ConfigItems.itemResource, 1, 12),
+                Resource.TAINTED_GOO.createItem(),
+                Resource.TAINT_TENDRIL.createItem(),
                 new ItemStack(Items.ender_eye),
-                new ItemStack(ConfigItems.itemResource, 1, 11)
+                Resource.TAINTED_GOO.createItem()
         };
         RECIPES.put("TaintedTrunk", registerInfusionRecipe(MNResearch.EVIL_TRUNK.getId(), new ItemStack(MNItems.evilTrunkSpawner, 1, 3), 6, aspects, new ItemStack(MNItems.evilTrunkSpawner), recipe));
 
@@ -324,6 +324,89 @@ public final class MNRecipes {
 
     public static ShapedArcaneRecipe registerArcaneRecipe(ResourceLocation research, ItemStack result, AspectList aspects, Object... recipe) {
         return ThaumcraftApi.addArcaneCraftingRecipe(research.toString(), result, aspects, recipe);
+    }
+
+    private enum Shard {
+        AIR, FIRE, WATER, EARTH, ORDER, ENTROPY, BALANCED;
+
+        public ItemStack createItem() {
+            return createItem(1);
+        }
+
+        public ItemStack createItem(int count) {
+            return new ItemStack(ConfigItems.itemShard, count, ordinal());
+        }
+
+    }
+
+    private enum Resource {
+        ALUMENTUM(0),
+        NITOR(1),
+        THAUMIUM_INGOT(2),
+        QUICKSILVER(3),
+        MAGIC_TALLOW(4),
+        //#5 ZOMBIE BRAIN was removed and turned into a standalone item
+        AMBER(6),
+        ENCHANTED_FABRIC(7),
+        VIS_FILTER(8),
+        KNOWLEDGE_FRAGMENT(9),
+        MIRRORED_GLASS(10),
+        TAINTED_GOO(11),
+        TAINT_TENDRIL(12),
+        JAR_LABEL(13),
+        SALIS_MUNDUS(14),
+        PRIMAL_CHARM(15),
+        VOID_METAL_INGOT(16),
+        VOID_SEED(17),
+        GOLD_COIN(18);
+
+        private final int metadata;
+
+        Resource(int metadata) {
+            this.metadata = metadata;
+        }
+
+        public ItemStack createItem() {
+            return createItem(1);
+        }
+
+        public ItemStack createItem(int count) {
+            return new ItemStack(ConfigItems.itemResource, count, metadata);
+        }
+
+    }
+
+    private enum ResourceNugget {
+        IRON_NUGGET(0),
+        COPPER_NUGGER(1),
+        TIN_NUGGET(2),
+        SILVER_NUGGET(3),
+        LEAD_NUGGET(4),
+        QUICKSILVER_DROP(5),
+        THAUMIUM_NUGGET(6),
+        VOID_METAL_NUGGET(7),
+        NATIVE_IRON_CLUSTER(16),
+        NATIVE_COPPER_CLUSTER(17),
+        NATIVE_TIN_CLUSTER(18),
+        NATIVE_SILVER_CLUSTER(19),
+        NATIVE_LEAD_CLUSTER(20),
+        NATIVE_CINNABAR_CLUSTER(21),
+        NATIVE_GOLD_CLUSTER(31);
+
+        private final int metadata;
+
+        ResourceNugget(int metadata) {
+            this.metadata = metadata;
+        }
+
+        public ItemStack createItem() {
+            return createItem(1);
+        }
+
+        public ItemStack createItem(int count) {
+            return new ItemStack(ConfigItems.itemNugget, count, metadata);
+        }
+
     }
 
 }
