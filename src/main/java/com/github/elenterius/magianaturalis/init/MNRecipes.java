@@ -239,6 +239,17 @@ public final class MNRecipes {
         };
         RECIPES.put("ConstructionFocus", registerInfusionRecipe(MNResearch.CONSTRUCTION_FOCUS.getId(), new ItemStack(MNItems.focusBuild), 5, aspects, new ItemStack(ConfigItems.itemFocusTrade), recipe));
 
+        aspects = (new AspectList()).add(Aspect.UNDEAD, 25).add(Aspect.FLESH, 15).add(Aspect.BEAST, 15).add(Aspect.ENTROPY, 25);
+        recipe = new ItemStack[]{
+                new ItemStack(ConfigItems.itemZombieBrain),
+                Shard.EARTH.createItem(),
+                new ItemStack(Items.rotten_flesh),
+                Shard.WATER.createItem(),
+                new ItemStack(Items.rotten_flesh),
+                Shard.ENTROPY.createItem()
+        };
+        RECIPES.put("RevenantFocus", registerInfusionRecipe(MNResearch.REVENANT_FOCUS.getId(), new ItemStack(MNItems.focusRevenant), 3, aspects, Resource.QUICKSILVER.createItem(), recipe));
+
         aspects = new AspectList().add(Aspect.ELDRITCH, 8).add(Aspect.VOID, 8).add(Aspect.TRAVEL, 8).add(Aspect.EXCHANGE, 3);
         recipe = new ItemStack[]{
                 new ItemStack(Items.ender_pearl),

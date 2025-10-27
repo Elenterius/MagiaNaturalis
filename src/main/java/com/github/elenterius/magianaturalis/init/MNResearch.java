@@ -115,6 +115,24 @@ public class MNResearch {
             .setParents(EQUAL_TRADE_FOCUS_PROXY.getId())
     );
 
+
+    public static final DeferredHolder<ResearchItem> REVENANT_FOCUS = register("revenant_focus", key -> {
+        ResearchItem research = new NamespacedResearchItem(key, new AspectList().add(Aspect.TRAVEL, 3).add(Aspect.BEAST, 6).add(Aspect.UNDEAD, 3).add(Aspect.MAGIC, 3), 3, -7, 2, new ItemStack(MNItems.focusRevenant))
+                .setPages(
+                        createTextResearchPage(key, 1),
+                        new ResearchPage(MNRecipes.getInfusionRecipe("RevenantFocus"))
+                )
+                .setHidden()
+                .setEntityTriggers("Zombie")
+                .setAspectTriggers(Aspect.UNDEAD)
+                .setParentsHidden("BASICTHAUMATURGY", "INFUSION");
+
+        ThaumcraftApi.addWarpToResearch(research.key, 2);
+        ThaumcraftApi.addWarpToItem(new ItemStack(MNItems.focusRevenant), 1);
+
+        return research;
+    });
+
     public static final DeferredHolder<ResearchItem> CRUCIBLE_PROXY = register("tc_crucible", key -> ResearchItemProxy.createNamespaced(key, "CRUCIBLE", 3, -1));
 
     public static final DeferredHolder<ResearchItem> MUTATION_STONE = register("mutation_stone", key -> new NamespacedResearchItem(key, new AspectList().add(Aspect.MAGIC, 3).add(Aspect.EXCHANGE, 4).add(Aspect.EARTH, 2), 4, -3, 2, new ItemStack(MNItems.alchemicalStone, 1, 0))

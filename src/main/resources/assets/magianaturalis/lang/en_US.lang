@@ -115,7 +115,11 @@ research.magianaturalis.spectacles.page.1=Assess Aura Node Types and Modifiers w
 
 research.magianaturalis.construction_focus.name=Focus Of Construction
 research.magianaturalis.construction_focus.text=Grand Architecture
-research.magianaturalis.construction_focus.page.1=While the Shovel of the Earthmover already possessed a slight potential at building in a bigger manner, you have refined and expanded the shear Potential to its maximum. This Masterpiece of Focus etching has brought forth a Tool befitting a Grand Architect.<BR>'V' or 'Ctrl + V' -> toggle mode/shape<BR> '+' or '-' -> to increase/decrease size<BR>'Pick Block Button' -> pick block for default mode<BR>Check Wiki for more precise and better explanation
+research.magianaturalis.construction_focus.page.1=While the Shovel of the Earthmover already possessed a slight potential at building in a bigger manner, you have refined and expanded the shear Potential to its maximum. This Masterpiece of Focus etching has brought forth a Tool befitting a Grand Architect.
+
+research.magianaturalis.revenant_focus.name=Focus Of the Revenant
+research.magianaturalis.revenant_focus.text=Annoying touch of death
+research.magianaturalis.revenant_focus.page.1=Your combat encounters with baby zombies have ingrained into you the annoyance of small and fast moving enemies. You have uncovered a way to temporarily summon these rascals and sic them on your enemies.
 
 research.magianaturalis.prison_jar.name=Entity in a Jar
 research.magianaturalis.prison_jar.text=Minimized Pets
